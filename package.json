@@ -1,0 +1,51 @@
+{
+  "name": "signal-forge",
+  "version": "1.0.0",
+  "description": "Strategic content generation system for decks, POVs, and papers",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "forge": "./dist/cli/index.js",
+    "signal-forge": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "generate": "tsx src/cli/index.ts",
+    "migrate-decks": "tsx scripts/migrate-decks.ts"
+  },
+  "keywords": [
+    "content-generation",
+    "ai",
+    "strategy",
+    "presentations",
+    "documents"
+  ],
+  "author": "Nino Chavez",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "*",
+    "@google/generative-ai": "*",
+    "commander": "*",
+    "docx": "*",
+    "dotenv": "*",
+    "fs-extra": "*",
+    "googleapis": "*",
+    "gray-matter": "*",
+    "inquirer": "*",
+    "marked": "*",
+    "openai": "*",
+    "pptxgenjs": "*"
+  },
+  "devDependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
+    "@mermaid-js/mermaid-cli": "^11.12.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^22.10.5",
+    "excalidraw-to-svg": "^3.1.0",
+    "puppeteer": "^23.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,277 @@
+# Design System: Default Font Pack
+
+## Rival Sans Font Family (Primary)
+
+**Rival Sans** is the default font family for all generated content in this project. It is loaded via Adobe Fonts (Typekit).
+
+### Adobe Fonts Configuration
+
+**Default Project - Typekit Kit ID:** `wbj0oqh` (includes all fonts below)  
+**Rival Sans Project - Typekit Kit ID:** `tjp7ihm` (backup/alternative)
+
+**Font Loading:**
+```html
+<!-- Default Project: All fonts (Rival Sans, Komet, Darkmode-Off, Apparat, Elza, Articulat) -->
+<link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
+
+<!-- Rival Sans Project (backup/alternative) -->
+<link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
+
+<!-- Preconnect for faster font loading -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+```
+
+### Available Font Variants
+
+#### Standard Rival Sans (Primary)
+- **Regular:**
+  - `font-family: "rival-sans", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: normal;`
+
+- **Regular Italic:**
+  - `font-family: "rival-sans", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: italic;`
+
+- **Bold:**
+  - `font-family: "rival-sans", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: normal;`
+
+- **Bold Italic:**
+  - `font-family: "rival-sans", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: italic;`
+
+#### Rival Sans Narrow Variant
+- **Regular Narrow:**
+  - `font-family: "rival-sans-narrow", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: normal;`
+
+- **Regular Narrow Italic:**
+  - `font-family: "rival-sans-narrow", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: italic;`
+
+- **Bold Narrow:**
+  - `font-family: "rival-sans-narrow", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: normal;`
+
+- **Bold Narrow Italic:**
+  - `font-family: "rival-sans-narrow", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: italic;`
+
+#### Komet Font Family (Alternate)
+- **Komet Regular
+  - `font-family: "komet", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: normal;`
+
+- **Regular Italic:**
+  - `font-family: "komet", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: italic;`
+
+- **Bold:**
+  - `font-family: "komet", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: normal;`
+
+- **Bold Italic:**
+  - `font-family: "komet", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: italic;`
+
+#### Small Caps Variant (komet-sc)
+- **Regular SC:**
+  - `font-family: "komet-sc", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: normal;`
+
+- **Regular SC Italic:**
+  - `font-family: "komet-sc", sans-serif;`
+  - `font-weight: 400;`
+  - `font-style: italic;`
+
+- **Bold SC:**
+  - `font-family: "komet-sc", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: normal;`
+
+- **Bold SC Italic:**
+  - `font-family: "komet-sc", sans-serif;`
+  - `font-weight: 700;`
+  - `font-style: italic;`
+
+### CSS Configuration
+
+#### Base Typography
+```css
+/* Body text - Regular weight */
+body {
+    font-family: "rival-sans", "komet", sans-serif;
+    font-weight: 400;
+    color: var(--accenture-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings - Bold weight */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "rival-sans", "komet", sans-serif;
+    font-weight: 700;
+    color: var(--accenture-text-primary);
+    letter-spacing: -0.01em;
+}
+
+/* Universal application */
+* {
+    font-family: "rival-sans", "komet", sans-serif;
+}
+```
+
+#### Narrow Variant Utility Class
+```css
+.rival-sans-narrow {
+    font-family: "rival-sans-narrow", "komet-sc", sans-serif;
+}
+```
+
+#### Komet Alternate Utility Classes (for backwards compatibility)
+```css
+.komet {
+    font-family: "komet", sans-serif;
+}
+
+.komet-sc {
+    font-family: "komet-sc", sans-serif;
+}
+```
+
+### Usage Guidelines
+
+1. **Default Font Stack:** Always use `"rival-sans", "komet", sans-serif` as the primary font family
+   - Rival Sans is the primary font
+   - Komet is the alternate/fallback font
+   - System fonts (`sans-serif`) are the final fallback
+2. **Font Weights:**
+   - Use `400` (Regular) for body text and standard content
+   - Use `700` (Bold) for headings, emphasis, and important labels
+3. **Narrow Variant:** Use `"rival-sans-narrow"` for condensed typography when needed
+4. **Fallback:** The font stack ensures graceful degradation if fonts fail to load
+
+### Implementation Examples
+
+#### HTML Template
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Title</title>
+    
+    <!-- Rival Sans Font from Adobe Fonts (Primary) -->
+    <link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
+    
+    <!-- Komet Font from Adobe Fonts (Alternate) -->
+    <link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
+    
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+    
+    <style>
+        body {
+            font-family: "rival-sans", "komet", sans-serif;
+            font-weight: 400;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "rival-sans", "komet", sans-serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Content -->
+</body>
+</html>
+```
+
+#### React/JSX Component
+```jsx
+const Component = () => (
+    <div style={{ fontFamily: '"rival-sans", "komet", sans-serif' }}>
+        <h1 style={{ fontWeight: 700 }}>Heading</h1>
+        <p style={{ fontWeight: 400 }}>Body text</p>
+    </div>
+);
+```
+
+#### Tailwind CSS Configuration
+```javascript
+// tailwind.config.js
+module.exports = {
+    theme: {
+        extend: {
+            fontFamily: {
+                'sans': ['"rival-sans"', '"komet"', 'sans-serif'],
+                'rival-sans': ['"rival-sans"', 'sans-serif'],
+                'rival-sans-narrow': ['"rival-sans-narrow"', '"komet-sc"', 'sans-serif'],
+                'komet': ['"komet"', 'sans-serif'],
+                'komet-sc': ['"komet-sc"', 'sans-serif'],
+            },
+        },
+    },
+}
+```
+
+### Additional Font Families Available
+
+#### Apparat SemiCond Light
+- **Font Family:** `apparat-semicond-light`
+- **Weights:** 400 (Light), 400 italic (Light Italic)
+- **Usage:** Lightweight condensed text
+
+#### Apparat SemiCond
+- **Font Family:** `apparat-semicond`
+- **Weights:** 400 (Medium), 400 italic (Medium Italic), 700 (Extrabold), 700 italic (Extrabold Italic)
+- **Usage:** Condensed text with medium to heavy weights
+
+#### Elza Narrow
+- **Font Family:** `elza-narrow`
+- **Weights:** 400 (Narrow), 400 italic (Narrow Oblique), 700 (Narrow Bold), 700 italic (Narrow Bold Oblique)
+- **Usage:** Narrow condensed typography
+
+#### Articulat CF
+- **Font Family:** `articulat-cf`
+- **Weights:** 400 (Normal), 400 italic (Normal Oblique), 700 (Demi Bold), 700 italic (Demi Bold Oblique)
+- **Usage:** Standard geometric sans-serif
+
+#### Articulat Heavy CF
+- **Font Family:** `articulat-heavy-cf`
+- **Weights:** 900 (Heavy), 900 italic (Heavy Oblique)
+- **Usage:** Heavy weight display text
+
+### Notes
+
+- **Adobe Fonts Access:** Requires an active Adobe Creative Cloud subscription with Adobe Fonts access
+- **Default Project Kit ID:** `wbj0oqh` - Contains all 10 font families (34 fonts total)
+- **Rival Sans Project Kit ID:** `tjp7ihm` - Backup/alternative Rival Sans project
+- **Performance:** Fonts are loaded asynchronously via Adobe Fonts CDN for optimal performance
+- **Fallback:** Font stack ensures graceful degradation: Rival Sans → Komet → Darkmode-Off → Apparat → Elza → Articulat → System fonts
+- **Total Available Fonts:** 34 fonts across 10 font families
+
+### Related Documentation
+
+- See `docs/design-system-colors.md` for color palette configuration
+- See `docs/strategic-content-voice-guide.md` for content guidelines
+
+---
+
+**Last Updated:** November 2024  
+**Maintained By:** Signal Forge Project
+
