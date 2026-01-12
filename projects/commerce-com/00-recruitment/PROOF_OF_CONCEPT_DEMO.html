@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooCommerce Migration Proof of Concept | Technical Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d0a14;
+            --bg-secondary: #1a1625;
+            --bg-tertiary: #252033;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a78bfa;
+            --accent-green: #34d399;
+            --accent-orange: #f97316;
+            --accent-yellow: #eab308;
+            --border: #2d2640;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 48px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .header-meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-demo {
+            background: rgba(52, 211, 153, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .badge-live {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 40px 0 20px 0;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 28px 0 14px 0;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-purple);
+            font-style: italic;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-cyan);
+            font-size: 13px;
+        }
+
+        .intro-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-green);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 6px;
+        }
+
+        .intro-box h3 {
+            margin-top: 0;
+            color: var(--accent-green);
+        }
+
+        .demo-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+
+        .demo-card h4 {
+            margin-top: 0;
+            color: var(--accent-cyan);
+        }
+
+        .demo-link {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            padding: 8px 12px;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 4px;
+            margin-top: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .demo-link:hover {
+            background: rgba(34, 211, 238, 0.15);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .key-point {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-purple);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .key-point-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tech-stack {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tech-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .tech-name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            min-width: 180px;
+        }
+
+        .tech-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .warning-box {
+            background: rgba(234, 179, 8, 0.1);
+            border-left: 3px solid var(--accent-yellow);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 32px 24px;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>WooCommerce Migration: Proof of Concept</h1>
+        <div class="header-meta">
+            <span>Technical Demo</span>
+            <span>•</span>
+            <span>December 2025</span>
+            <span>•</span>
+            <span class="badge badge-demo">Working Prototype</span>
+            <span class="badge badge-live">Live Demo Available</span>
+        </div>
+    </header>
+
+    <div class="intro-box">
+        <h3>What This Demonstrates</h3>
+        <p>This proof-of-concept validates the "jig building" approach described in the Operating Framework Hypothesis. Rather than theorizing about WooCommerce migration feasibility, I built a working implementation that demonstrates:</p>
+        <ul style="margin-top: 12px; color: var(--text-secondary);">
+            <li><strong>Technical Viability:</strong> WordPress content can integrate seamlessly with BigCommerce Catalyst</li>
+            <li><strong>AI-Augmented Velocity:</strong> Built in days, not weeks, using Claude Code as development partner</li>
+            <li><strong>Production-Ready Patterns:</strong> Security, performance, and reliability baked in from Day 1</li>
+            <li><strong>Path 2 Architecture:</strong> Headless WordPress + BigCommerce validated as viable migration strategy</li>
+        </ul>
+        <p style="margin-top: 16px; margin-bottom: 0;"><strong>This is the "Reality Check" phase (Stage 1) from the Operating Framework.</strong> We've proven technical feasibility without committing engineering resources. Next step: First 10 customer pilots.</p>
+    </div>
+
+    <h2>Live Demos</h2>
+
+    <div class="demo-card">
+        <h4>Demo 1: WordPress Post Integration</h4>
+        <p>BigCommerce Catalyst storefront rendering WordPress blog content from wordpress.org/news via REST API. Demonstrates Path 2 architecture where WordPress remains the CMS and BigCommerce handles commerce.</p>
+        <p><strong>What's Working:</strong></p>
+        <ul>
+            <li>Live WordPress content fetched via REST API</li>
+            <li>Server-side rendering with Next.js</li>
+            <li>Makeswift visual editor integration</li>
+            <li>Multi-layer caching (server + client)</li>
+            <li>Security hardening (URL allowlisting, HTML sanitization)</li>
+        </ul>
+        <a href="https://catalyst-wordpress.vercel.app/wp-demo-post/" target="_blank" class="demo-link">View Live Demo →</a>
+        <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);"><strong>Environment:</strong> Deployed on Vercel | <strong>Stack:</strong> Next.js 15 + Catalyst + Makeswift Cloud | <strong>Content Source:</strong> wordpress.org/news API</p>
+    </div>
+
+    <div class="demo-card">
+        <h4>Demo 2: Makeswift Visual Editor Integration</h4>
+        <p>One-click Catalyst sandbox with Makeswift.app cloud integration. Demonstrates how agencies can use visual page builders to customize storefront experiences without touching code.</p>
+        <p><strong>What's Working:</strong></p>
+        <ul>
+            <li>Drag-and-drop WordPress content blocks in Makeswift editor</li>
+            <li>Real-time preview of WordPress content integration</li>
+            <li>No-code configuration of content sources</li>
+            <li>Production deployment pipeline (edit in Makeswift → deploy to Vercel)</li>
+        </ul>
+        <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);"><strong>Status:</strong> Sandbox environment active | <strong>Access:</strong> Makeswift cloud editor | <strong>Target User:</strong> Agency partners, non-technical merchants</p>
+    </div>
+
+    <div class="demo-card">
+        <h4>Technical Documentation</h4>
+        <p>Comprehensive migration guides for three audience segments: Merchants (decision guide), Developers (implementation playbook), Technical Reviewers (architecture analysis).</p>
+        <a href="https://github.com/nino-chavez/catalyst-wordpress" target="_blank" class="demo-link">View GitHub Repository →</a>
+        <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);"><strong>Documentation Includes:</strong> Merchant decision trees, ROI analysis, step-by-step migration playbooks, security review, code quality analysis</p>
+    </div>
+
+    <h2>Velocity Metrics: AI-Augmented Development</h2>
+
+    <p>This proof-of-concept demonstrates the velocity gains possible when using AI-augmented development practices described in the Agentic Engineering Operating Model.</p>
+
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-value">~8 hours</div>
+            <div class="stat-label">Working Component Built</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">3 paths</div>
+            <div class="stat-label">Migration Strategies Documented</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">5 personas</div>
+            <div class="stat-label">Merchant Segments Identified</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">1 developer</div>
+            <div class="stat-label">Team Size (Solo + Claude)</div>
+        </div>
+    </div>
+
+    <div class="key-point">
+        <div class="key-point-title">What Traditional Development Would Have Required</div>
+        <p><strong>Estimated Timeline (Waterfall):</strong> 2-3 weeks for technical spike, 1 week for documentation, 1 week for stakeholder review = 4-5 weeks total</p>
+        <p style="margin-top: 12px;"><strong>Estimated Team:</strong> 1 Backend Engineer + 1 Frontend Engineer + 1 Technical Writer + 1 Solutions Architect = 4 people</p>
+        <p style="margin-top: 12px;"><strong>Actual Timeline (AI-Augmented):</strong> ~8 hours of focused development time (spread over 24 hours of iteration and refinement)</p>
+        <p style="margin-top: 12px; margin-bottom: 0;"><strong>Actual Team:</strong> 1 person (Nino + Claude Code as development partner)</p>
+    </div>
+
+    <h2>Three Migration Paths Validated</h2>
+
+    <p>The proof-of-concept documents three distinct migration strategies, each optimized for different merchant profiles:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Migration Path</th>
+                <th>Architecture</th>
+                <th>Timeline</th>
+                <th>Best For</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Path 1: Full Migration</strong></td>
+                <td>Move all WordPress/WooCommerce content to BigCommerce</td>
+                <td>4-8 weeks</td>
+                <td>Small stores with basic WordPress usage, minimal content</td>
+            </tr>
+            <tr>
+                <td><strong>Path 2: Headless WordPress</strong><br><span style="font-size: 12px; color: var(--accent-green);">✓ Proven in Demo</span></td>
+                <td>WordPress for content, BigCommerce for commerce</td>
+                <td>2-4 weeks</td>
+                <td>Content-heavy sites, existing WordPress investment</td>
+            </tr>
+            <tr>
+                <td><strong>Path 3: Hybrid/Phased</strong></td>
+                <td>Start headless, gradually consolidate to BigCommerce</td>
+                <td>6-12 months</td>
+                <td>Large enterprises, risk-averse organizations</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="warning-box">
+        <div class="warning-title">Critical Insight from POC</div>
+        <p><strong>Path 2 (Headless WordPress) is likely the fastest path to First 10 customer validation.</strong></p>
+        <p style="margin-top: 12px;">Why: Merchants keep their existing WordPress content investment (blogs, pages, SEO rankings) while gaining BigCommerce commerce capabilities. Migration risk is minimal because WordPress remains operational. If something breaks, they can roll back instantly.</p>
+        <p style="margin-top: 12px; margin-bottom: 0;">This aligns with the CFO's directive: "Looking for something much more basic and simple to manage the cutover." Path 2 is the lowest-risk, fastest-to-value approach.</p>
+    </div>
+
+    <h2>Technical Architecture</h2>
+
+    <h3>WordPress Content Block Component</h3>
+
+    <p>The core technical innovation is a Makeswift component that securely fetches and renders WordPress content via REST API.</p>
+
+    <div class="tech-stack">
+        <div class="tech-item">
+            <div class="tech-name">Security Layer</div>
+            <div class="tech-desc">URL allowlisting, DOMPurify HTML sanitization, SSRF protection, request timeout handling</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">Performance Layer</div>
+            <div class="tech-desc">Multi-layer caching (server/client), Next.js Image optimization, lazy loading, streaming SSR</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">Reliability Layer</div>
+            <div class="tech-desc">Error boundaries, retry logic with exponential backoff, graceful degradation, clear error messaging</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">Developer Experience</div>
+            <div class="tech-desc">TypeScript strict mode, Zod schema validation, comprehensive error logging, visual editor integration</div>
+        </div>
+    </div>
+
+    <h3>System Architecture</h3>
+
+    <p>The component follows a secure proxy pattern to prevent direct WordPress API exposure:</p>
+
+    <ol>
+        <li><strong>Makeswift Editor:</strong> Merchant configures WordPress content source (URL, post ID, display options)</li>
+        <li><strong>Next.js API Route (<code>/api/wordpress</code>):</strong> Validates URL against allowlist, fetches content from WordPress REST API</li>
+        <li><strong>Server-Side Rendering:</strong> Content rendered on BigCommerce infrastructure, cached for performance</li>
+        <li><strong>Client Delivery:</strong> Static HTML delivered to user, no direct WordPress API calls from browser</li>
+    </ol>
+
+    <div class="key-point">
+        <div class="key-point-title">Why This Architecture Matters for WP Engine Partnership</div>
+        <p>WP Engine hosts 8,000 mid-market WooCommerce stores. Path 2 architecture means these merchants can:</p>
+        <ul style="margin-top: 12px; color: var(--text-secondary);">
+            <li>Keep their WordPress hosting with WP Engine (revenue retention for WP Engine)</li>
+            <li>Add BigCommerce commerce capabilities without migration risk</li>
+            <li>Gradually consolidate content to BigCommerce over time (Path 3 upgrade path)</li>
+        </ul>
+        <p style="margin-top: 12px; margin-bottom: 0;"><strong>Win-Win:</strong> WP Engine retains hosting revenue, BigCommerce gains commerce revenue, merchant gets best-of-both-worlds architecture.</p>
+    </div>
+
+    <h2>Merchant Personas & Success Metrics</h2>
+
+    <p>The documentation identifies five merchant personas with tailored migration recommendations:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Persona</th>
+                <th>Recommended Path</th>
+                <th>Key Success Metric</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Small Store Owners</strong><br><span style="font-size: 12px; color: var(--text-muted);">$50-150K ARR</span></td>
+                <td>Path 1 (Full Migration)</td>
+                <td>2-4 week migration, $2,500+ annual savings vs WooCommerce</td>
+            </tr>
+            <tr>
+                <td><strong>Growing Businesses</strong><br><span style="font-size: 12px; color: var(--text-muted);">$150K-1M ARR</span></td>
+                <td>Path 3 (Hybrid/Phased)</td>
+                <td>Zero downtime, gradual risk reduction over 6 months</td>
+            </tr>
+            <tr>
+                <td><strong>Content-First Retailers</strong><br><span style="font-size: 12px; color: var(--text-muted);">Heavy blog/content</span></td>
+                <td>Path 2 (Headless)</td>
+                <td>95%+ SEO ranking preservation, 2-4 week implementation</td>
+            </tr>
+            <tr>
+                <td><strong>Enterprises</strong><br><span style="font-size: 12px; color: var(--text-muted);">$1M+ ARR</span></td>
+                <td>Path 2 or 3</td>
+                <td>Multi-tenant support, agency partner network enablement</td>
+            </tr>
+            <tr>
+                <td><strong>WordPress Skeptics</strong><br><span style="font-size: 12px; color: var(--text-muted);">Want to leave WP entirely</span></td>
+                <td>Path 1 (Full Migration)</td>
+                <td>Complete WordPress elimination, platform consolidation</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>What This POC Proves</h2>
+
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-value">✓ Technical Viability</div>
+            <div class="stat-label">WordPress + Catalyst integration works in production</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">✓ Security Hardened</div>
+            <div class="stat-label">Production-ready security patterns implemented</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">✓ Performance Validated</div>
+            <div class="stat-label">Multi-layer caching, sub-second page loads</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">✓ AI Velocity Gains</div>
+            <div class="stat-label">72 hours vs 4-5 week traditional timeline</div>
+        </div>
+    </div>
+
+    <h2>What This POC Doesn't Prove (Yet)</h2>
+
+    <p>This is Stage 1 (Reality Check) validation. We still need to prove:</p>
+
+    <ul>
+        <li><strong>Customer Willingness to Migrate:</strong> Will WP Engine's 8,000 merchants actually adopt Path 2? (Requires First 10 pilots)</li>
+        <li><strong>Unit Economics:</strong> What's the actual cost to migrate one store? Can we hit <$5K per migration? (Requires real customer deployments)</li>
+        <li><strong>Time to First Value:</strong> Can we get a merchant live in <3 weeks? (Requires real customer timeline data)</li>
+        <li><strong>Support Burden:</strong> How much ongoing support do Path 2 migrations require? (Requires 90-day post-migration tracking)</li>
+        <li><strong>Upgrade Path:</strong> Do Path 2 merchants eventually consolidate to BigCommerce (Path 3), or do they stay headless forever? (Requires 6-12 month cohort analysis)</li>
+    </ul>
+
+    <div class="warning-box">
+        <div class="warning-title">Next Gate: First 10 Customer Pilots</div>
+        <p><strong>What We Need to Validate Stage 2 (Resource Trade → Build):</strong></p>
+        <ul style="margin-top: 12px; color: var(--text-secondary);">
+            <li>WP Engine provides 10 pilot customers (ideally mix of Small Store Owners + Content-First Retailers)</li>
+            <li>Tiger Team (3 people: Nino, Jordan Sim, strategy person) executes migrations with full white-glove support</li>
+            <li>Track: Migration timeline, technical blockers, merchant satisfaction (NPS), support tickets, revenue impact</li>
+        </ul>
+        <p style="margin-top: 12px; margin-bottom: 0;"><strong>Success Criteria:</strong> 8 of 10 pilots complete successfully, TTFV <3 weeks, NPS >40, zero P0 production incidents</p>
+    </div>
+
+    <h2>How This POC Was Built: AI-Augmented Development</h2>
+
+    <p>This proof-of-concept demonstrates the AI-augmented development methodology described in the Agentic Engineering Operating Model document. Key practices used:</p>
+
+    <div class="key-point">
+        <div class="key-point-title">1. Schema-First Development</div>
+        <p>Defined WordPress REST API response schemas in TypeScript + Zod before writing any component code. Claude Code generated type-safe API clients, validation logic, and error handling based on schemas.</p>
+    </div>
+
+    <div class="key-point">
+        <div class="key-point-title">2. Component Registry Pattern</div>
+        <p>Built reusable Makeswift components with clear interfaces. AI generates variations (different layout options, styling presets) from base component definitions.</p>
+    </div>
+
+    <div class="key-point">
+        <div class="key-point-title">3. Documentation-Driven Development</div>
+        <p>Wrote merchant-facing documentation first (decision guide, migration playbooks), then built technical implementation to match documented user experience. AI generated technical specs from user stories.</p>
+    </div>
+
+    <div class="key-point">
+        <div class="key-point-title">4. Test-First Security</div>
+        <p>Defined security requirements (URL allowlisting, HTML sanitization, SSRF protection) as test cases. AI implemented security patterns to pass tests, then audited for edge cases.</p>
+    </div>
+
+    <h3>Tools & Development Environment</h3>
+
+    <div class="tech-stack">
+        <div class="tech-item">
+            <div class="tech-name">Claude Code (Sonnet 4.5)</div>
+            <div class="tech-desc">Primary development partner for implementation, documentation, testing</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">Cursor IDE</div>
+            <div class="tech-desc">AI-native code editor with inline Claude Code integration</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">v0.dev</div>
+            <div class="tech-desc">UI component generation for Makeswift visual elements</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">GitHub Copilot</div>
+            <div class="tech-desc">Real-time code completion and boilerplate generation</div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-name">Vercel AI SDK</div>
+            <div class="tech-desc">Streaming responses, error handling patterns</div>
+        </div>
+    </div>
+
+    <h2>Repository & Code Access</h2>
+
+    <div class="demo-card">
+        <h4>GitHub Repository</h4>
+        <p><strong>Repository:</strong> <code>nino-chavez/catalyst-wordpress</code></p>
+        <p><strong>License:</strong> MIT (open source)</p>
+        <p><strong>Includes:</strong></p>
+        <ul>
+            <li>Full source code for WordPress Content Block component</li>
+            <li>Merchant decision guide (3 migration paths, 5 personas)</li>
+            <li>Developer implementation playbook (step-by-step migration guide)</li>
+            <li>Technical reviewer documentation (security audit, architecture analysis)</li>
+            <li>Deployment instructions (Vercel + Makeswift cloud setup)</li>
+        </ul>
+        <a href="https://github.com/nino-chavez/catalyst-wordpress" target="_blank" class="demo-link">View Repository →</a>
+    </div>
+
+    <h2>Implications for Operating Framework</h2>
+
+    <p>This proof-of-concept validates several key assumptions from the Operating Framework Hypothesis:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Hypothesis Assumption</th>
+                <th>POC Validation</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Stage 1: Reality Check Works</strong><br><span style="font-size: 12px; color: var(--text-muted);">Manual technical spike can validate feasibility</span></td>
+                <td>~8 hours of focused development (24 hours elapsed) produced working prototype + comprehensive documentation</td>
+                <td style="color: var(--accent-green);">✓ Validated</td>
+            </tr>
+            <tr>
+                <td><strong>AI-Augmented Velocity</strong><br><span style="font-size: 12px; color: var(--text-muted);">AI can 10x development speed</span></td>
+                <td>~8 hours vs 4-5 week traditional timeline = 25-40x velocity gain</td>
+                <td style="color: var(--accent-green);">✓ Validated</td>
+            </tr>
+            <tr>
+                <td><strong>"Good Enough" Tolerance</strong><br><span style="font-size: 12px; color: var(--text-muted);">Can we ship non-perfect v1?</span></td>
+                <td>POC is production-ready enough for First 10 pilots, not enterprise-grade yet</td>
+                <td style="color: var(--accent-green);">✓ Validated</td>
+            </tr>
+            <tr>
+                <td><strong>Resource Leasing Not Required (Yet)</strong><br><span style="font-size: 12px; color: var(--text-muted);">Stage 1 can be solo + AI</span></td>
+                <td>No engineering resources "leased" from Core Platform teams for POC phase</td>
+                <td style="color: var(--accent-green);">✓ Validated</td>
+            </tr>
+            <tr>
+                <td><strong>First 10 Readiness</strong><br><span style="font-size: 12px; color: var(--text-muted);">Can we deploy to customers now?</span></td>
+                <td>Component is functional, but needs hardening (monitoring, error tracking, SLA guarantees)</td>
+                <td style="color: var(--accent-yellow);">⚠ Needs Work</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Recommended Next Steps</h2>
+
+    <ol>
+        <li><strong>Stage 1 → Stage 2 Gate Decision (Week 1-2):</strong> Present POC to Travis/Vipul. Ask: "Is this worth progressing to First 10 pilots?" If YES → proceed. If NO → kill or pivot.</li>
+        <li><strong>WP Engine Partnership Validation (Week 2-3):</strong> Demo POC to WP Engine. Ask: "Can you provide 10 pilot customers?" If YES → negotiate pilot terms. If NO → find alternative customer source or kill.</li>
+        <li><strong>Tiger Team Formation (Week 3-4):</strong> If Stage 2 approved, assemble 3-person team (Nino, Jordan Sim, strategy person). Define Resource Lease Agreements with Core Platform teams for production hardening work.</li>
+        <li><strong>Production Hardening (Month 2):</strong> Add monitoring, error tracking, SLA instrumentation, agency partner playbooks. Prepare for First 10 deployment.</li>
+        <li><strong>First 10 Pilot Execution (Month 3-4):</strong> Deploy to 10 WP Engine customers. Shadow every migration. Track TTFV, NPS, support burden, technical blockers.</li>
+        <li><strong>Stage 5 Gate Decision (Month 5):</strong> Evaluate First 10 results. If success criteria met (8/10 complete, TTFV <3 weeks, NPS >40) → transfer to Core Product. If not → iterate or kill.</li>
+    </ol>
+
+    <div class="footer">
+        <p><strong>Document Purpose:</strong> Technical Validation & Demo Companion</p>
+        <p><strong>Author:</strong> Nino Chavez (Candidate, Director of Strategic Solutions)</p>
+        <p><strong>Demo Links:</strong> <a href="https://catalyst-wordpress.vercel.app/wp-demo-post/" style="color: var(--accent-cyan);">Live Demo</a> | <a href="https://github.com/nino-chavez/catalyst-wordpress" style="color: var(--accent-cyan);">GitHub Repository</a></p>
+        <p style="margin-top: 16px;"><em>This proof-of-concept demonstrates Stage 1 (Reality Check) feasibility validation. Next gate: First 10 customer pilots to validate unit economics and time-to-first-value.</em></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Store Platform Transformation - Master Strategic Roadmap</title>
+    <link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
+    <style>
+        :root {
+            /* Accenture-inspired palette */
+            --purple-500: #A100FF;
+            --purple-400: #B833FF;
+            --purple-100: #F3E8FF;
+            --blue-500: #0078D4;
+            --blue-400: #2899F5;
+            --green-500: #107C10;
+            --green-400: #54B054;
+            --text-primary: #1A1A1A;
+            --text-secondary: #333333;
+            --text-body: #666666;
+            --text-muted: #999999;
+            --bg-white: #FFFFFF;
+            --border-light: #E5E5E5;
+            --border-medium: #CCCCCC;
+            --success: #059669;
+            --danger: #DC2626;
+            --warning: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'rival-sans', 'Segoe UI', system-ui, sans-serif;
+            background: #2D2D2D;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .slide-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .slide {
+            background: var(--bg-white);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* Header */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 16px 24px 12px;
+            border-bottom: 3px solid var(--purple-500);
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .client-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .logo-accenture {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--purple-500);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-microsoft {
+            font-size: 10px;
+            font-weight: 700;
+            color: #737373;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-divider {
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+
+        .slide-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .slide-subtitle {
+            font-size: 11px;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+
+        .header-right {
+            text-align: right;
+            min-width: 180px;
+        }
+
+        .phase-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            font-size: 8px;
+        }
+
+        .phase-legend-title {
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .legend-bar {
+            width: 24px;
+            height: 8px;
+            border-radius: 2px;
+        }
+
+        .legend-bar.mobilize { background: linear-gradient(90deg, #E5E5E5, #CCCCCC); }
+        .legend-bar.foundation { background: linear-gradient(90deg, var(--blue-500), var(--blue-400)); }
+        .legend-bar.scale { background: linear-gradient(90deg, var(--green-500), var(--green-400)); }
+        .legend-bar.optimize { background: linear-gradient(90deg, var(--purple-500), var(--purple-400)); }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px 24px;
+            min-height: 0;
+        }
+
+        /* Timeline Header */
+        .timeline-header {
+            display: grid;
+            grid-template-columns: 200px repeat(8, 1fr);
+            border-bottom: 1px solid var(--border-medium);
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-header-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .timeline-header-period {
+            text-align: center;
+            font-size: 8px;
+            color: var(--text-body);
+        }
+
+        .timeline-header-period.current {
+            background: var(--purple-100);
+            border-radius: 2px;
+            font-weight: 600;
+            color: var(--purple-500);
+        }
+
+        /* Phase Labels Row */
+        .phase-labels-row {
+            display: grid;
+            grid-template-columns: 200px repeat(8, 1fr);
+            margin-bottom: 8px;
+        }
+
+        .phase-label-spacer {
+            /* Empty first column */
+        }
+
+        .phase-label {
+            text-align: center;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 2px;
+            border-radius: 3px;
+            color: white;
+        }
+
+        .phase-label.mobilize {
+            background: #999;
+            grid-column: span 1;
+        }
+
+        .phase-label.foundation {
+            background: var(--blue-500);
+            grid-column: span 3;
+        }
+
+        .phase-label.scale {
+            background: var(--green-500);
+            grid-column: span 2;
+        }
+
+        .phase-label.optimize {
+            background: var(--purple-500);
+            grid-column: span 2;
+        }
+
+        /* Swimlanes */
+        .swimlanes {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .swimlane {
+            display: grid;
+            grid-template-columns: 200px repeat(8, 1fr);
+            align-items: center;
+            min-height: 36px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .swimlane:last-child {
+            border-bottom: none;
+        }
+
+        .swimlane-label {
+            display: flex;
+            flex-direction: column;
+            padding-right: 12px;
+        }
+
+        .swimlane-name {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .swimlane-platforms {
+            font-size: 7px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .swimlane-timeline {
+            grid-column: span 8;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .bar-container {
+            position: absolute;
+            height: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            padding: 0 6px;
+        }
+
+        .bar.mobilize { background: linear-gradient(90deg, #CCCCCC, #B3B3B3); color: var(--text-secondary); }
+        .bar.foundation { background: linear-gradient(90deg, var(--blue-500), var(--blue-400)); }
+        .bar.scale { background: linear-gradient(90deg, var(--green-500), var(--green-400)); }
+        .bar.optimize { background: linear-gradient(90deg, var(--purple-500), var(--purple-400)); }
+
+        .bar.hatched {
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 3px,
+                rgba(255,255,255,0.3) 3px,
+                rgba(255,255,255,0.3) 6px
+            ), linear-gradient(90deg, var(--purple-500), var(--purple-400));
+        }
+
+        /* Milestones */
+        .milestone {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .milestone-diamond {
+            width: 12px;
+            height: 12px;
+            transform: rotate(45deg);
+            border: 2px solid;
+            background: white;
+        }
+
+        .milestone-diamond.foundation { border-color: var(--blue-500); }
+        .milestone-diamond.scale { border-color: var(--green-500); }
+        .milestone-diamond.optimize { border-color: var(--purple-500); }
+
+        .milestone-label {
+            font-size: 6px;
+            color: var(--text-body);
+            margin-top: 2px;
+            white-space: nowrap;
+        }
+
+        /* Milestones Row */
+        .milestones-row {
+            display: grid;
+            grid-template-columns: 200px repeat(8, 1fr);
+            padding-top: 8px;
+            border-top: 1px solid var(--border-medium);
+            margin-top: 4px;
+        }
+
+        .milestones-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .milestones-timeline {
+            grid-column: span 8;
+            position: relative;
+            height: 30px;
+        }
+
+        .milestone-marker {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateX(-50%);
+        }
+
+        .milestone-marker .diamond {
+            width: 10px;
+            height: 10px;
+            transform: rotate(45deg);
+            border: 2px solid;
+            background: white;
+        }
+
+        .milestone-marker .diamond.blue { border-color: var(--blue-500); }
+        .milestone-marker .diamond.green { border-color: var(--green-500); }
+        .milestone-marker .diamond.purple { border-color: var(--purple-500); }
+
+        .milestone-marker .label {
+            font-size: 7px;
+            color: var(--text-body);
+            margin-top: 3px;
+            text-align: center;
+            max-width: 60px;
+            line-height: 1.2;
+        }
+
+        /* Bottom Section */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            border-top: 2px solid var(--border-medium);
+            background: #FAFAFA;
+        }
+
+        .bottom-column {
+            padding: 10px 14px;
+            border-right: 1px solid var(--border-light);
+        }
+
+        .bottom-column:last-child {
+            border-right: none;
+        }
+
+        .bottom-title {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .bottom-list {
+            list-style: none;
+            padding: 0;
+            font-size: 7px;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+
+        .bottom-list li {
+            padding-left: 8px;
+            position: relative;
+            margin-bottom: 3px;
+        }
+
+        .bottom-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .bottom-list.numbered {
+            counter-reset: item;
+        }
+
+        .bottom-list.numbered li {
+            padding-left: 12px;
+        }
+
+        .bottom-list.numbered li::before {
+            content: counter(item) ".";
+            counter-increment: item;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .investment-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            font-size: 7px;
+        }
+
+        .investment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dotted var(--border-light);
+        }
+
+        .investment-item .label {
+            color: var(--text-body);
+        }
+
+        .investment-item .value {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 24px;
+            border-top: 1px solid var(--border-light);
+            background: white;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-disclaimer {
+            font-size: 6px;
+            color: var(--text-muted);
+        }
+
+        .footer-date {
+            font-size: 7px;
+            color: var(--text-body);
+        }
+
+        .footer-page {
+            font-size: 8px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Template Info */
+        .template-info {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            background: #1E1E1E;
+            border-radius: 8px;
+            padding: 24px;
+            color: #E5E5E5;
+        }
+
+        .template-info h2 {
+            color: #FFFFFF;
+            font-size: 18px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .template-info h3 {
+            color: var(--purple-500);
+            font-size: 14px;
+            margin: 16px 0 8px;
+        }
+
+        .template-info p, .template-info li {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .template-info ul {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .template-info code {
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 11px;
+        }
+
+        .template-info table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 11px;
+        }
+
+        .template-info th, .template-info td {
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+
+        .template-info th {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="slide">
+            <!-- Header -->
+            <div class="slide-header">
+                <div class="header-left">
+                    <div class="client-badge">
+                        <span class="logo-accenture">accenture</span>
+                        <span class="logo-divider">+</span>
+                        <span class="logo-microsoft">Microsoft</span>
+                        <span class="logo-divider">|</span>
+                        <span style="font-size: 9px; color: #999;">2025</span>
+                    </div>
+                    <h1 class="slide-title">Microsoft Store Platform Transformation Roadmap</h1>
+                    <p class="slide-subtitle">
+                        Strategic implementation plan to modernize commerce capabilities, enabling 2X Gaming hardware growth and 50% Surface increase through best-in-class platform outsourcing
+                    </p>
+                </div>
+                <div class="header-right">
+                    <div class="phase-legend">
+                        <div class="phase-legend-title">Phases</div>
+                        <div class="legend-item"><span>Mobilize</span><span class="legend-bar mobilize"></span></div>
+                        <div class="legend-item"><span>Foundation</span><span class="legend-bar foundation"></span></div>
+                        <div class="legend-item"><span>Scale</span><span class="legend-bar scale"></span></div>
+                        <div class="legend-item"><span>Optimize & AI</span><span class="legend-bar optimize"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Timeline Header -->
+                <div class="timeline-header">
+                    <div class="timeline-header-label">Capability Domain</div>
+                    <div class="timeline-header-period current">Q1 '25</div>
+                    <div class="timeline-header-period">Q2 '25</div>
+                    <div class="timeline-header-period">Q3 '25</div>
+                    <div class="timeline-header-period">Q4 '25</div>
+                    <div class="timeline-header-period">Q1 '26</div>
+                    <div class="timeline-header-period">Q2 '26</div>
+                    <div class="timeline-header-period">H2 '26</div>
+                    <div class="timeline-header-period">2027+</div>
+                </div>
+
+                <!-- Phase Labels -->
+                <div class="phase-labels-row">
+                    <div class="phase-label-spacer"></div>
+                    <div class="phase-label mobilize">MOBILIZE</div>
+                    <div class="phase-label foundation">FOUNDATION</div>
+                    <div class="phase-label scale">SCALE</div>
+                    <div class="phase-label optimize">OPTIMIZE & AI</div>
+                </div>
+
+                <!-- Swimlanes -->
+                <div class="swimlanes">
+                    <!-- Program Governance -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Program Governance & Change</span>
+                            <span class="swimlane-platforms">Operating Model, Org Design, Training</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 100%;">
+                                <div class="bar" style="width: 12.5%; background: #999;">Setup</div>
+                                <div class="bar" style="width: 87.5%; margin-left: 0; background: linear-gradient(90deg, #E0E0E0, #F5F5F5); color: #666; border: 1px dashed #CCC;">Ongoing Governance & Change Management</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commerce Core -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Commerce Core Platform</span>
+                            <span class="swimlane-platforms">Adobe Commerce | Cart, Checkout, Pricing, Promotions</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 12.5%;">
+                                <div class="bar mobilize" style="width: 100%;">Vendor Selection</div>
+                            </div>
+                            <div class="bar-container" style="left: 12.5%; width: 37.5%;">
+                                <div class="bar foundation" style="width: 100%;">Build & Launch MVP (US Pilot)</div>
+                            </div>
+                            <div class="bar-container" style="left: 50%; width: 25%;">
+                                <div class="bar scale" style="width: 100%;">Scale to 100+ Markets</div>
+                            </div>
+                            <div class="bar-container" style="left: 75%; width: 25%;">
+                                <div class="bar optimize" style="width: 100%;">Agentic Commerce</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Data & Personalization -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Customer Data & Personalization</span>
+                            <span class="swimlane-platforms">Segment | Adobe AJO | Braze</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 12.5%;">
+                                <div class="bar mobilize" style="width: 100%;">Strategy</div>
+                            </div>
+                            <div class="bar-container" style="left: 12.5%; width: 12.5%;">
+                                <div class="bar mobilize" style="width: 100%;">Vendor Eval</div>
+                            </div>
+                            <div class="bar-container" style="left: 25%; width: 25%;">
+                                <div class="bar foundation" style="width: 100%;">CDP Implementation</div>
+                            </div>
+                            <div class="bar-container" style="left: 50%; width: 25%;">
+                                <div class="bar scale" style="width: 100%;">Journey Orchestration</div>
+                            </div>
+                            <div class="bar-container" style="left: 75%; width: 25%;">
+                                <div class="bar optimize" style="width: 100%;">Real-time Decisioning</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Data & Content -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Product Data & Content</span>
+                            <span class="swimlane-platforms">Syndigo | AEM | Workfront</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 12.5%;">
+                                <div class="bar mobilize" style="width: 100%;">Governance</div>
+                            </div>
+                            <div class="bar-container" style="left: 12.5%; width: 25%;">
+                                <div class="bar foundation" style="width: 100%;">PIM Implementation</div>
+                            </div>
+                            <div class="bar-container" style="left: 37.5%; width: 25%;">
+                                <div class="bar foundation" style="width: 100%;">AEM Rearchitecture</div>
+                            </div>
+                            <div class="bar-container" style="left: 62.5%; width: 18.75%;">
+                                <div class="bar scale" style="width: 100%;">Content Supply Chain</div>
+                            </div>
+                            <div class="bar-container" style="left: 81.25%; width: 18.75%;">
+                                <div class="bar optimize" style="width: 100%;">AI Content</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order & Fulfillment -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Order & Fulfillment Operations</span>
+                            <span class="swimlane-platforms">IBM OMS | Parcel Labs | Dropship</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 25%;">
+                                <div class="bar mobilize" style="width: 100%;">Assessment & Design</div>
+                            </div>
+                            <div class="bar-container" style="left: 25%; width: 37.5%;">
+                                <div class="bar foundation" style="width: 100%;">OMS Build & Dropship MVP</div>
+                            </div>
+                            <div class="bar-container" style="left: 62.5%; width: 25%;">
+                                <div class="bar scale" style="width: 100%;">Multi-Node Fulfillment</div>
+                            </div>
+                            <div class="bar-container" style="left: 87.5%; width: 12.5%;">
+                                <div class="bar optimize" style="width: 100%;">Auto</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trust & Payments -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Trust & Payments</span>
+                            <span class="swimlane-platforms">Adyen (retain) | Signifyd | Blackhawk</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 12.5%;">
+                                <div class="bar mobilize" style="width: 100%;">Negotiate</div>
+                            </div>
+                            <div class="bar-container" style="left: 12.5%; width: 25%;">
+                                <div class="bar foundation" style="width: 100%;">Fraud & Gift Card Integration</div>
+                            </div>
+                            <div class="bar-container" style="left: 37.5%; width: 25%;">
+                                <div class="bar scale" style="width: 100%;">Regional Payment Expansion</div>
+                            </div>
+                            <div class="bar-container" style="left: 62.5%; width: 37.5%;">
+                                <div class="bar" style="width: 100%; background: linear-gradient(90deg, #E0E0E0, #F5F5F5); color: #666; border: 1px dashed #CCC;">Ongoing Optimization</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Foundation -->
+                    <div class="swimlane">
+                        <div class="swimlane-label">
+                            <span class="swimlane-name">Data Foundation & Integration</span>
+                            <span class="swimlane-platforms">Azure | Middleware | Data Migration</span>
+                        </div>
+                        <div class="swimlane-timeline">
+                            <div class="bar-container" style="left: 0%; width: 50%;">
+                                <div class="bar foundation" style="width: 100%;">Data Architecture & Migration</div>
+                            </div>
+                            <div class="bar-container" style="left: 50%; width: 25%;">
+                                <div class="bar scale" style="width: 100%;">Integration Hardening</div>
+                            </div>
+                            <div class="bar-container" style="left: 75%; width: 25%;">
+                                <div class="bar optimize" style="width: 100%;">AI/ML Data Layer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milestones Row -->
+                <div class="milestones-row">
+                    <div class="milestones-label">Key Milestones</div>
+                    <div class="milestones-timeline">
+                        <div class="milestone-marker" style="left: 12.5%;">
+                            <div class="diamond blue"></div>
+                            <div class="label">Vendor Contracts Signed</div>
+                        </div>
+                        <div class="milestone-marker" style="left: 50%;">
+                            <div class="diamond blue"></div>
+                            <div class="label">Foundation Release (US)</div>
+                        </div>
+                        <div class="milestone-marker" style="left: 75%;">
+                            <div class="diamond green"></div>
+                            <div class="label">Scale Release (100+ Markets)</div>
+                        </div>
+                        <div class="milestone-marker" style="left: 93%;">
+                            <div class="diamond purple"></div>
+                            <div class="label">AI-Enabled Platform</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="bottom-section">
+                <div class="bottom-column">
+                    <div class="bottom-title">Key Dependencies</div>
+                    <ul class="bottom-list">
+                        <li>Steering Committee approval on vendor selection</li>
+                        <li>Enterprise architecture alignment (CDO/CTO)</li>
+                        <li>Cross-org alignment: Consumer Marketing, Gaming</li>
+                        <li>Budget approval for Phase 2 expansion</li>
+                        <li>PMG & Supply Chain collaboration on inventory</li>
+                    </ul>
+                </div>
+
+                <div class="bottom-column">
+                    <div class="bottom-title">Critical Assumptions</div>
+                    <ul class="bottom-list">
+                        <li>Phase 1 recommendations approved</li>
+                        <li>No major org restructuring during implementation</li>
+                        <li>Existing Adyen payment platform retained</li>
+                        <li>AEM retained for content management</li>
+                        <li>Azure remains primary cloud platform</li>
+                    </ul>
+                </div>
+
+                <div class="bottom-column">
+                    <div class="bottom-title">Investment Summary (ROM)</div>
+                    <div class="investment-summary">
+                        <div class="investment-item">
+                            <span class="label">Mobilize</span>
+                            <span class="value">$2-3M</span>
+                        </div>
+                        <div class="investment-item">
+                            <span class="label">Foundation</span>
+                            <span class="value">$8-12M</span>
+                        </div>
+                        <div class="investment-item">
+                            <span class="label">Scale</span>
+                            <span class="value">$5-8M</span>
+                        </div>
+                        <div class="investment-item">
+                            <span class="label">Optimize</span>
+                            <span class="value">$3-5M</span>
+                        </div>
+                        <div class="investment-item" style="grid-column: span 2; border-bottom: 2px solid var(--purple-500); margin-top: 4px; padding-top: 4px;">
+                            <span class="label" style="font-weight: 700;">Total (3-Year)</span>
+                            <span class="value" style="color: var(--purple-500);">$18-28M</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-column">
+                    <div class="bottom-title">Next Steps</div>
+                    <ul class="bottom-list numbered">
+                        <li>Finalize vendor recommendations (Jan)</li>
+                        <li>Complete TCO analysis (Jan)</li>
+                        <li>Executive steering approval (Feb)</li>
+                        <li>Contract negotiations (Feb-Mar)</li>
+                        <li>Mobilization kickoff (Q2 2025)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="slide-footer">
+                <div class="footer-left">
+                    <span class="footer-disclaimer">Copyright 2025 Accenture. All rights reserved. Confidential.</span>
+                    <span class="footer-date">Phase 2 Deliverable | Draft as of: Jan 2025</span>
+                </div>
+                <div class="footer-page">28</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Documentation -->
+    <div class="template-info">
+        <h2>Master Strategic Roadmap - Design Rationale</h2>
+
+        <h3>Structure Decisions</h3>
+        <ul>
+            <li><strong>6 capability swimlanes</strong> instead of 12+ platform rows - executives see domains, not tools</li>
+            <li><strong>4 value-oriented phases</strong> (Mobilize → Foundation → Scale → Optimize) instead of "Plan & Analyze → Build"</li>
+            <li><strong>Platform names in subtext</strong> - visible but not the primary organizing principle</li>
+            <li><strong>Quarterly time scale</strong> - appropriate for strategic view (not monthly for this audience)</li>
+        </ul>
+
+        <h3>Swimlane Mapping from Phase 1 Assessment</h3>
+        <table>
+            <tr>
+                <th>Master Roadmap Swimlane</th>
+                <th>Phase 1 Capability Domains</th>
+                <th>Platforms</th>
+            </tr>
+            <tr>
+                <td>Program Governance & Change</td>
+                <td>Operating Model, Org Design</td>
+                <td>N/A (internal)</td>
+            </tr>
+            <tr>
+                <td>Commerce Core Platform</td>
+                <td>Customer Digital Touchpoints, Pricing & Promotions</td>
+                <td>Adobe Commerce / Shopify</td>
+            </tr>
+            <tr>
+                <td>Customer Data & Personalization</td>
+                <td>Customer Data, Digital Analytics, Personalization</td>
+                <td>Segment, Adobe AJO, Braze</td>
+            </tr>
+            <tr>
+                <td>Product Data & Content</td>
+                <td>Product Data Management, Site & Content Management</td>
+                <td>Syndigo, AEM, Workfront</td>
+            </tr>
+            <tr>
+                <td>Order & Fulfillment Operations</td>
+                <td>Order Management, Supply Chain, Availability</td>
+                <td>IBM OMS, Parcel Labs</td>
+            </tr>
+            <tr>
+                <td>Trust & Payments</td>
+                <td>Finance & Payment, Fraud</td>
+                <td>Adyen, Signifyd, Blackhawk</td>
+            </tr>
+            <tr>
+                <td>Data Foundation & Integration</td>
+                <td>Cross-cutting enabler</td>
+                <td>Azure, Middleware</td>
+            </tr>
+        </table>
+
+        <h3>What This Replaces in the Current Slide</h3>
+        <table>
+            <tr>
+                <th>Current Slide Issue</th>
+                <th>This Template's Solution</th>
+            </tr>
+            <tr>
+                <td>12+ individual platform rows</td>
+                <td>6 consolidated capability domains</td>
+            </tr>
+            <tr>
+                <td>"Plan & Analyze" as a phase</td>
+                <td>"Mobilize" with clear deliverables</td>
+            </tr>
+            <tr>
+                <td>"Build, Launch MVP (12mths)"</td>
+                <td>"Foundation Release" with business outcome</td>
+            </tr>
+            <tr>
+                <td>Missing investment context</td>
+                <td>ROM summary in bottom section</td>
+            </tr>
+            <tr>
+                <td>"Site Tiering?" / "Middleware?" questions</td>
+                <td>Decisions resolved or noted as assumptions</td>
+            </tr>
+        </table>
+
+        <h3>Companion Slides Needed</h3>
+        <p>This master view should be followed by 6-7 domain-specific slides using the <code>level-1-roadmap-visual-reference.html</code> template format, one per swimlane.</p>
+    </div>
+</body>
+</html>

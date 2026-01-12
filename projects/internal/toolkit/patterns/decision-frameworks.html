@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture Decision Records - Agentic Commerce</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body { max-width: 1000px; margin: 0 auto; padding: 48px; background: var(--bg-card); }
+    h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem; }
+    p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+    .doc-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .doc-subtitle { color: var(--primary); font-weight: 600; font-size: 0.875rem; }
+    .doc-meta { display: flex; gap: 1rem; margin-top: 1rem; }
+    .doc-badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0 2rem; font-size: 0.875rem; }
+    th { background: var(--bg-surface); color: var(--text-primary); font-weight: 600; text-align: left; padding: 0.75rem 1rem; border: 1px solid var(--border); }
+    td { padding: 0.75rem 1rem; border: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; color: var(--text-secondary); }
+    li { margin-bottom: 0.5rem; line-height: 1.5; }
+
+    /* ADR Card */
+    .adr-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .adr-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .adr-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+    .adr-status { background: var(--color-success); color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    .adr-section { margin: 1.25rem 0; }
+    .adr-section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .adr-content { color: var(--text-secondary); line-height: 1.6; }
+    .adr-content p { margin-bottom: 0.5rem; }
+    .consequence-positive { color: var(--color-success); }
+    .consequence-negative { color: var(--color-trust); }
+
+    /* Summary table */
+    .summary-table { margin-top: 3rem; }
+    .summary-table th:first-child { width: 60px; }
+    .summary-table td:first-child { font-weight: 600; color: var(--text-primary); }
+
+    @media print {
+      body { padding: 24px; max-width: 100%; }
+      .adr-card { page-break-inside: avoid; box-shadow: none; border: 1px solid #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="background: #fef3c7; border-bottom: 2px solid #f59e0b; padding: 0.75rem 1.5rem; margin: -48px -48px 2rem -48px; font-size: 0.875rem;">
+    <strong style="color: #92400e;">Reference Pattern</strong> — <span style="color: #78350f;">Decisions you'll face. Adapt context and options to client situation.</span>
+    <a href="../index.html" style="float: right; color: #92400e;">← Back to Toolkit</a>
+  </div>
+
+  <header class="doc-header">
+    <div class="doc-subtitle">Agentic Commerce Toolkit</div>
+    <h1>Decision Frameworks</h1>
+    <p>Key architectural decisions with context, options, and trade-offs</p>
+    <div class="doc-meta">
+      <span class="doc-badge">Reference Pattern</span>
+      <span class="doc-badge" style="background: var(--color-data);">10 Decisions</span>
+    </div>
+  </header>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-001: Multi-Protocol Support vs Single Protocol</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Multiple LLM platforms (OpenAI, Anthropic, Google) are introducing different protocols for agent-commerce interaction: ACP, MCP, and AP2. We need to decide whether to support one protocol or multiple.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Support all three protocols (ACP, MCP, AP2)</strong> through a Protocol Adapter layer that normalizes external requests to a unified internal API.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Maximum agent reach across platforms</li>
+          <li><span class="consequence-positive">(+)</span> No vendor lock-in</li>
+          <li><span class="consequence-positive">(+)</span> Future-proof as standards evolve</li>
+          <li><span class="consequence-negative">(-)</span> Higher initial integration complexity</li>
+          <li><span class="consequence-negative">(-)</span> Ongoing maintenance for protocol updates</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>MCP-only</strong> (open standard) &mdash; Rejected: would miss GPT-4 users</li>
+          <li><strong>ACP-only</strong> (highest volume) &mdash; Rejected: vendor lock-in risk</li>
+          <li><strong>Custom protocol</strong> &mdash; Rejected: no platform adoption</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-002: Consent Layer Architecture</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>External agents requesting customer data create compliance risks (GDPR, CCPA). We need a mechanism to verify agent identity and enforce data access policies.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement a dedicated Consent & Data Access Control layer</strong> between the Protocol Layer and API Gateway, including:</p>
+        <ul>
+          <li>Agent identity verification</li>
+          <li>Data classification tags on all responses</li>
+          <li>Consent propagation from CDP</li>
+          <li>Comprehensive audit logging</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Regulatory compliance by design</li>
+          <li><span class="consequence-positive">(+)</span> Clear audit trail for all agent data access</li>
+          <li><span class="consequence-positive">(+)</span> Granular control over data exposure</li>
+          <li><span class="consequence-negative">(-)</span> Additional latency (~20-50ms per request)</li>
+          <li><span class="consequence-negative">(-)</span> Complexity in consent flow management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Rely on platform consent</strong> (e.g., ChatGPT's user consent) &mdash; Rejected: insufficient control</li>
+          <li><strong>Embed in API Gateway</strong> &mdash; Rejected: too complex for single layer</li>
+          <li><strong>Per-service consent checks</strong> &mdash; Rejected: inconsistent enforcement</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-003: Agent Payment Authorization Model</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Agents need to complete purchases on customer behalf, but exposing full payment credentials to agents is unacceptable. We need a secure payment delegation model.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement a Mandate-based payment system</strong> with:</p>
+        <ol>
+          <li><strong>Mandate Manager:</strong> Captures customer authorization with scope limits</li>
+          <li><strong>Secure Payment Tokens (SPT):</strong> Tokenized payment methods</li>
+          <li><strong>Token Lifecycle:</strong> Issuance, usage tracking, expiration</li>
+          <li><strong>Payment Audit Log:</strong> Complete trail of agent-initiated payments</li>
+        </ol>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Secure payment handling without credential exposure</li>
+          <li><span class="consequence-positive">(+)</span> Customer control via mandate limits</li>
+          <li><span class="consequence-positive">(+)</span> Auditable for disputes</li>
+          <li><span class="consequence-negative">(-)</span> Requires customer onboarding to create mandates</li>
+          <li><span class="consequence-negative">(-)</span> Additional complexity vs direct payment</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Full credential access with scope</strong> &mdash; Rejected: security risk</li>
+          <li><strong>Redirect to merchant checkout</strong> &mdash; Rejected: breaks agent flow</li>
+          <li><strong>Platform-managed payments only</strong> &mdash; Rejected: limited to platform users</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-004: LLM Provider Strategy</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Multiple LLM providers offer different strengths (GPT-4 for reasoning, Claude for long context, Gemini for multimodal). We need to decide on provider strategy.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement an LLM Gateway</strong> with:</p>
+        <ul>
+          <li>Multi-provider support (GPT-4, Claude, Gemini)</li>
+          <li>Intelligent routing based on task type</li>
+          <li>Fallback chain for resilience (GPT-4 &rarr; Claude &rarr; Gemini &rarr; Local &rarr; Cache)</li>
+          <li>Cost optimization through provider selection</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Best-in-class for each task type</li>
+          <li><span class="consequence-positive">(+)</span> Resilience through redundancy</li>
+          <li><span class="consequence-positive">(+)</span> Cost optimization opportunities</li>
+          <li><span class="consequence-negative">(-)</span> Complexity in managing multiple providers</li>
+          <li><span class="consequence-negative">(-)</span> Prompt tuning per provider</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Single provider (GPT-4 only)</strong> &mdash; Rejected: single point of failure</li>
+          <li><strong>Local models only</strong> &mdash; Rejected: capability limitations</li>
+          <li><strong>Provider per use case (fixed)</strong> &mdash; Rejected: no failover</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-005: Memory and Context Persistence</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Agents need to remember customer context across sessions to provide personalized experiences ("You bought X last month"). Current LLM context windows are insufficient for long-term memory.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement a dedicated Memory Store</strong> with:</p>
+        <ul>
+          <li><strong>Session memory:</strong> Current conversation context</li>
+          <li><strong>Short-term memory:</strong> Recent interactions (7 days)</li>
+          <li><strong>Long-term memory:</strong> Customer preferences, purchase patterns</li>
+          <li><strong>Semantic indexing:</strong> Vector-based retrieval</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Personalized agent experiences</li>
+          <li><span class="consequence-positive">(+)</span> Reduced repetition in conversations</li>
+          <li><span class="consequence-positive">(+)</span> Context for complex multi-turn interactions</li>
+          <li><span class="consequence-negative">(-)</span> Data storage and privacy considerations</li>
+          <li><span class="consequence-negative">(-)</span> Memory relevance decay management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Rely on LLM context window</strong> &mdash; Rejected: limited to ~128K tokens</li>
+          <li><strong>CDP only</strong> &mdash; Rejected: not conversation-aware</li>
+          <li><strong>No persistent memory</strong> &mdash; Rejected: poor experience</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-006: Domain Agent Architecture</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>We need to decide whether to build a single "mega-agent" or specialized domain agents for different commerce functions.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement specialized Domain Agents:</strong></p>
+        <ul>
+          <li><strong>Shopping Agent:</strong> Discovery, comparison, cart</li>
+          <li><strong>Service Agent:</strong> Support, FAQ, warranties</li>
+          <li><strong>Returns Agent:</strong> RMA, refunds, exchanges</li>
+          <li><strong>Fulfillment Agent:</strong> Tracking, delivery</li>
+          <li><strong>Pricing Agent:</strong> Dynamic pricing, promotions</li>
+        </ul>
+        <p>Agents communicate via orchestration layer (LangGraph) with clear handoff protocols.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Separation of concerns</li>
+          <li><span class="consequence-positive">(+)</span> Independent scaling and iteration</li>
+          <li><span class="consequence-positive">(+)</span> Specialized prompt optimization</li>
+          <li><span class="consequence-positive">(+)</span> Clear ownership boundaries</li>
+          <li><span class="consequence-negative">(-)</span> Inter-agent coordination complexity</li>
+          <li><span class="consequence-negative">(-)</span> Potential context loss during handoff</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Single mega-agent</strong> &mdash; Rejected: unmaintainable prompt, no specialization</li>
+          <li><strong>Microservice per intent</strong> &mdash; Rejected: too granular, coordination overhead</li>
+          <li><strong>Vendor-specific agents</strong> &mdash; Rejected: lock-in, inconsistent experience</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-007: Observability Strategy</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Traditional APM tools are insufficient for LLM-based systems. We need specialized observability for tracing, evaluation, and cost tracking.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement LLM-specific observability</strong> using LangSmith or Phoenix:</p>
+        <ul>
+          <li>Request-level tracing (prompt &rarr; response)</li>
+          <li>Token usage and cost tracking</li>
+          <li>Quality evaluation (automated + human)</li>
+          <li>Latency breakdown by component</li>
+          <li>A/B testing for prompts</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Debuggable LLM interactions</li>
+          <li><span class="consequence-positive">(+)</span> Cost visibility and optimization</li>
+          <li><span class="consequence-positive">(+)</span> Quality measurement over time</li>
+          <li><span class="consequence-negative">(-)</span> Additional instrumentation overhead</li>
+          <li><span class="consequence-negative">(-)</span> Observability platform cost</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Traditional APM only</strong> &mdash; Rejected: no LLM-specific insights</li>
+          <li><strong>Custom logging</strong> &mdash; Rejected: reinventing the wheel</li>
+          <li><strong>No observability</strong> &mdash; Rejected: unacceptable for production</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-008: Human-in-the-Loop Design</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>Agents will encounter situations where they shouldn't proceed autonomously (low confidence, high-value transactions, frustrated customers). We need a structured escalation path.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement Trust & Escalation domain</strong> with:</p>
+        <ul>
+          <li><strong>Confidence Scoring:</strong> ML-based uncertainty detection</li>
+          <li><strong>Human Handoff Protocol:</strong> Seamless transfer to live support</li>
+          <li><strong>Guardrails:</strong> Policy enforcement before response</li>
+          <li><strong>Approval Workflows:</strong> For high-value operations</li>
+        </ul>
+        <p><strong>Escalation triggers:</strong></p>
+        <ul>
+          <li>Confidence &lt; 0.7</li>
+          <li>Order value &gt; $500</li>
+          <li>Mandate exceeded</li>
+          <li>Customer frustration detected</li>
+          <li>Explicit escalation request</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Safety net for agent failures</li>
+          <li><span class="consequence-positive">(+)</span> Customer satisfaction preservation</li>
+          <li><span class="consequence-positive">(+)</span> Liability management</li>
+          <li><span class="consequence-negative">(-)</span> Operational cost for human support</li>
+          <li><span class="consequence-negative">(-)</span> Latency in escalated scenarios</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Full automation</strong> &mdash; Rejected: unacceptable risk</li>
+          <li><strong>Human approval for all</strong> &mdash; Rejected: defeats automation value</li>
+          <li><strong>Fixed thresholds only</strong> &mdash; Rejected: no adaptability</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-009: Structured Data for GEO</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>AI search engines (Perplexity, Google AI Overviews) source information from structured data. We need to optimize for Generative Engine Optimization (GEO).</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Implement comprehensive Schema.org markup:</strong></p>
+        <ul>
+          <li>Product schema with all attributes</li>
+          <li>FAQ schema for common questions</li>
+          <li>Review/Rating aggregates</li>
+          <li>Offer/Price markup</li>
+          <li>Organization and brand identity</li>
+        </ul>
+        <p><strong>Add GEO-specific content:</strong></p>
+        <ul>
+          <li>Buying guides</li>
+          <li>Comparison articles</li>
+          <li>How-to content</li>
+          <li>Expert reviews (E-E-A-T)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> AI search visibility</li>
+          <li><span class="consequence-positive">(+)</span> Rich snippets in traditional search</li>
+          <li><span class="consequence-positive">(+)</span> Source citations from AI engines</li>
+          <li><span class="consequence-negative">(-)</span> Content creation investment</li>
+          <li><span class="consequence-negative">(-)</span> Ongoing content freshness management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Ignore AI search</strong> &mdash; Rejected: growing traffic source</li>
+          <li><strong>Schema only</strong> &mdash; Rejected: insufficient for citations</li>
+          <li><strong>Content only</strong> &mdash; Rejected: no structured extraction</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="adr-card">
+    <div class="adr-header">
+      <h2 class="adr-title" style="border: none; margin: 0; padding: 0;">ADR-010: B2C Focus with B2B Extensibility</h2>
+      <span class="adr-status">Accepted</span>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Context</div>
+      <div class="adr-content">
+        <p>The architecture must balance immediate B2C retail needs with potential B2B commerce extension.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Decision</div>
+      <div class="adr-content">
+        <p><strong>Design architecture with B2C focus:</strong></p>
+        <ul>
+          <li>Consumer checkout flows</li>
+          <li>Individual customer identity</li>
+          <li>Standard payment methods</li>
+          <li>Simple cart/checkout</li>
+        </ul>
+        <p><strong>Add B2B extension points:</strong></p>
+        <ul>
+          <li>Customer vs Account abstraction</li>
+          <li>Quote workflow hooks</li>
+          <li>Approval workflow (reusable from Trust domain)</li>
+          <li>Contract pricing placeholders</li>
+        </ul>
+        <p>Create separate B2B variant architecture document if B2B becomes priority.</p>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Consequences</div>
+      <div class="adr-content">
+        <ul style="margin-left: 0; list-style: none;">
+          <li><span class="consequence-positive">(+)</span> Focused B2C delivery</li>
+          <li><span class="consequence-positive">(+)</span> Clear extension path</li>
+          <li><span class="consequence-positive">(+)</span> Reusable Trust domain patterns</li>
+          <li><span class="consequence-negative">(-)</span> B2B not immediately supported</li>
+          <li><span class="consequence-negative">(-)</span> May require refactoring for B2B</li>
+        </ul>
+      </div>
+    </div>
+    <div class="adr-section">
+      <div class="adr-section-title">Alternatives Considered</div>
+      <div class="adr-content">
+        <ol>
+          <li><strong>Full B2B+B2C from start</strong> &mdash; Rejected: scope creep</li>
+          <li><strong>B2C only, no extension</strong> &mdash; Rejected: limits future</li>
+          <li><strong>B2B first</strong> &mdash; Rejected: not primary use case</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <section class="summary-table">
+    <h2>Decision Log Summary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ADR</th>
+          <th>Decision</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td>Multi-protocol support with Protocol Adapter</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>002</td>
+          <td>Dedicated Consent & Data Access Control layer</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>003</td>
+          <td>Mandate-based payment with SPT</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>004</td>
+          <td>Multi-provider LLM Gateway with fallback</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>005</td>
+          <td>Dedicated Memory Store (session + long-term)</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>006</td>
+          <td>Specialized Domain Agents with orchestration</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>007</td>
+          <td>LLM-specific observability (LangSmith/Phoenix)</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>008</td>
+          <td>Trust & Escalation domain for HITL</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>009</td>
+          <td>Schema.org + GEO content strategy</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+        <tr>
+          <td>010</td>
+          <td>B2C focus with B2B extension points</td>
+          <td><span style="color: var(--color-success);">Accepted</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+    <p><em>Architecture Decision Records v1.0 | Agentic Commerce Reference Architecture</em></p>
+  </footer>
+
+</body>
+</html>

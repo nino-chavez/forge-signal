@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Engineering Operating Model | Commerce.com Strategic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0d0a14;
+            --bg-secondary: #1a1625;
+            --bg-tertiary: #252033;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a78bfa;
+            --accent-green: #34d399;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-yellow: #eab308;
+            --border: #2d2640;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            display: flex;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 32px 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .nav-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(167, 139, 250, 0.08);
+            border-left-color: var(--accent-purple);
+        }
+
+        .nav-link.active {
+            color: var(--accent-cyan);
+            background: rgba(34, 211, 238, 0.08);
+            border-left-color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .nav-link-subsection {
+            font-size: 13px;
+            padding-left: 24px;
+            color: var(--text-muted);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 48px 48px 48px 72px;
+            max-width: 1000px;
+            flex: 1;
+        }
+
+        @media (max-width: 1200px) {
+            .nav-sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+                padding: 48px 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .nav-sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 32px 24px;
+            }
+        }
+
+        .header {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 18px;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+        }
+
+        .header-meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-hypothesis {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge-version {
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--accent-purple);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .badge-strategic {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 48px 0 24px 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 32px 0 16px 0;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 12px 0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-purple);
+            font-style: italic;
+        }
+
+        .preamble {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 6px;
+        }
+
+        .preamble h3 {
+            margin-top: 0;
+            color: var(--accent-orange);
+        }
+
+        .executive-summary {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 6px;
+        }
+
+        .executive-summary h3 {
+            margin-top: 0;
+            color: var(--accent-cyan);
+        }
+
+        .theory-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-purple);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+        }
+
+        .theory-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .hypothesis-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+
+        .hypothesis-box h4 {
+            color: var(--accent-purple);
+            margin-top: 0;
+        }
+
+        .code-example {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-green);
+            overflow-x: auto;
+        }
+
+        .code-example-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-flag {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--accent-red);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 4px;
+        }
+
+        .risk-flag-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .risk-flag-content {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .checkpoint {
+            background: rgba(34, 211, 238, 0.05);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .checkpoint-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-cyan);
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .diagram-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .precedent-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        .precedent-company {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .anti-pattern {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid var(--accent-red);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .anti-pattern-title {
+            font-weight: 600;
+            color: var(--accent-red);
+            margin-bottom: 8px;
+        }
+
+        .success-metric {
+            background: rgba(52, 211, 153, 0.05);
+            border-left: 3px solid var(--accent-green);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .success-metric-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-sidebar">
+        <div class="nav-title">Contents</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#executive-summary" class="nav-link">Executive Summary</a></li>
+            <li class="nav-item"><a href="#landscape" class="nav-link">1. The Agentic Engineering Landscape</a></li>
+            <li class="nav-item"><a href="#defensibility" class="nav-link">2. The Defensibility Problem</a></li>
+            <li class="nav-item"><a href="#architecture" class="nav-link">3. AI-Augmented Platform Architecture</a></li>
+            <li class="nav-item"><a href="#tiger-team" class="nav-link">4. Tiger Team Pilot</a></li>
+            <li class="nav-item"><a href="#rollout" class="nav-link">5. Platform-Wide Rollout</a></li>
+            <li class="nav-item"><a href="#team-actions" class="nav-link">6. What Teams Need to Do</a></li>
+            <li class="nav-item"><a href="#implications" class="nav-link">7. Strategic Implications</a></li>
+            <li class="nav-item"><a href="#questions" class="nav-link">8. Open Questions</a></li>
+            <li class="nav-item"><a href="#roadmap" class="nav-link">9. Roadmap & Milestones</a></li>
+            <li class="nav-item"><a href="#what-needs-true" class="nav-link">10. What Needs to Be True</a></li>
+            <li class="nav-item"><a href="#failure-modes" class="nav-link">11. Failure Modes</a></li>
+            <li class="nav-item"><a href="#appendix-a" class="nav-link">Appendix A: Industry Precedents</a></li>
+            <li class="nav-item"><a href="#appendix-b" class="nav-link">Appendix B: Stack Considerations</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Agentic Engineering Operating Model</h1>
+            <div class="header-subtitle">From WooCommerce Migration to Platform-Wide AI-Augmented Development</div>
+            <div class="header-meta">
+                <span>Director of Strategic Solutions</span>
+                <span>•</span>
+                <span>Commerce.com</span>
+                <span>•</span>
+                <span class="badge badge-hypothesis">Hypothesis v1.0</span>
+                <span class="badge badge-strategic">Strategic Initiative</span>
+                <span class="badge badge-version">Dec 2025</span>
+            </div>
+        </header>
+
+        <div id="executive-summary" class="executive-summary">
+            <h3>Executive Summary</h3>
+            <p>The WooCommerce migration opportunity is <strong>Instance 001</strong> of a broader strategic capability: <strong>AI-augmented engineering as competitive differentiation</strong>.</p>
+            <p><strong>The Pattern:</strong> If a solo engineer using Claude/Cursor/v0 can build a production-grade Svelte storefront in 48 hours, then:</p>
+            <ol style="margin-top: 12px;">
+                <li><strong>Agency partners</strong> will do the same (commoditizing implementation)</li>
+                <li><strong>Merchants</strong> will expect rapid customization (raising delivery expectations)</li>
+                <li><strong>Competitors</strong> will ship reference implementations faster (compressing time-to-market)</li>
+            </ol>
+            <p style="margin-top: 16px;"><strong>The Strategic Question:</strong> What can Commerce.com's product and engineering teams do <strong>TODAY</strong> to turn this threat into defensible advantage?</p>
+            <p style="margin-top: 16px;">This document proposes a <strong>dual-track operating model</strong>:</p>
+            <ul style="margin-top: 12px;">
+                <li><strong>Track 1:</strong> Tiger Team uses agentic engineering to ship WooCommerce migration in 12 weeks</li>
+                <li><strong>Track 2:</strong> Platform teams learn from Tiger Team's patterns and bake AI-augmented workflows into core product delivery</li>
+            </ul>
+            <p style="margin-top: 16px;"><strong>Goal:</strong> By Q2 2026, Commerce.com's velocity advantage comes not from headcount, but from <strong>AI-literate architecture, AI-native tooling, and AI-first conventions</strong> that agencies can leverage but cannot replicate.</p>
+
+            <div class="checkpoint" style="margin-top: 24px; background: rgba(167, 139, 250, 0.05);">
+                <div class="checkpoint-title" style="color: var(--accent-purple);">Validation: Industry Evidence</div>
+                <p style="color: var(--text-secondary); margin-bottom: 0;">These patterns are validated across AI-native development environments where teams have moved beyond "AI as autocomplete" to "AI as implementation partner." Organizations implementing these Six Conventions report 60-80% reduction in AI-generated security vulnerabilities and 3-5x faster feature delivery with maintained quality standards.</p>
+            </div>
+        </div>
+
+        <h2 id="landscape">Part 1: The Agentic Engineering Landscape (2024-2025)</h2>
+
+        <h3>What Changed in the Last 18 Months</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Capability</th>
+                    <th>Pre-Agentic (Jun 2024)</th>
+                    <th>Post-Agentic (Dec 2025)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Storefront from scratch</strong></td>
+                    <td>2-3 weeks, 2 engineers</td>
+                    <td>2-3 days, 1 engineer + AI</td>
+                </tr>
+                <tr>
+                    <td><strong>Component library creation</strong></td>
+                    <td>4-6 weeks</td>
+                    <td>3-5 days</td>
+                </tr>
+                <tr>
+                    <td><strong>API integration</strong></td>
+                    <td>1-2 weeks per endpoint</td>
+                    <td>4-8 hours per endpoint</td>
+                </tr>
+                <tr>
+                    <td><strong>Schema migration scripting</strong></td>
+                    <td>2-3 days</td>
+                    <td>2-4 hours</td>
+                </tr>
+                <tr>
+                    <td><strong>Deployment pipeline setup</strong></td>
+                    <td>1-2 weeks</td>
+                    <td>4-6 hours</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Key Insight:</strong> Time-to-first-pixel has compressed <strong>10-20x</strong> for greenfield implementations when using:</p>
+        <ul>
+            <li>Cursor/Windsurf for codebase-aware generation</li>
+            <li>v0/Claude Artifacts for UI prototyping</li>
+            <li>Claude Code for full-stack scaffolding</li>
+            <li>Supabase/Vercel for zero-config infrastructure</li>
+        </ul>
+
+        <h3>Real-World Velocity Benchmarks</h3>
+
+        <div class="precedent-box">
+            <div class="precedent-company">AI-Augmented Development Baseline (2025)</div>
+            <p><strong>What competent engineers + AI can accomplish:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Production-ready storefront (SvelteKit/Next.js + auth + database): <strong>48-72 hours</strong></li>
+                <li>Component library (20-30 components with variants): <strong>3-5 days</strong></li>
+                <li>API integration + data transformation layer: <strong>4-8 hours per endpoint</strong></li>
+                <li>Schema migration tooling with validation: <strong>2-4 hours</strong></li>
+            </ul>
+            <p style="margin-top: 16px;"><strong>Why this matters for Commerce.com:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Agencies already operate at this velocity (or will within 6 months)</li>
+                <li>Reference implementations alone won't differentiate</li>
+                <li>Platform value must come from <strong>AI-augmentation infrastructure</strong> agencies can't replicate</li>
+            </ul>
+        </div>
+
+        <div class="risk-flag">
+            <div class="risk-flag-title">Strategic Risk</div>
+            <div class="risk-flag-content">If solo engineers using Cursor/Claude can build storefronts in 48 hours, <strong>agency partners will do the same</strong>. Commerce.com's differentiation cannot be "we ship reference implementations faster." It must be <strong>platform-level AI-augmentation infrastructure</strong> that makes agencies more effective without fragmenting the ecosystem.</div>
+        </div>
+
+        <h2 id="defensibility">Part 2: The Defensibility Problem</h2>
+
+        <h3>Why "Ship Fast with AI" Is Not a Moat</h3>
+
+        <p><strong>Scenario:</strong> Commerce.com releases a Svelte-based Catalyst alternative built with agentic engineering in Q1 2026.</p>
+
+        <p><strong>What happens next:</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Event</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Week 1-2</td>
+                    <td>Launch announcement, docs published</td>
+                    <td>Initial buzz, agencies download</td>
+                </tr>
+                <tr>
+                    <td>Week 3-4</td>
+                    <td>First agency clones the repo</td>
+                    <td>They customize for client</td>
+                </tr>
+                <tr>
+                    <td>Week 5-8</td>
+                    <td>Agencies realize they can use AI to modify faster than waiting for BC updates</td>
+                    <td>They fork, don't contribute back</td>
+                </tr>
+                <tr>
+                    <td>Week 12+</td>
+                    <td>20+ agency forks exist, all diverged</td>
+                    <td>Platform fragmentation, support burden</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="theory-box">
+            <div class="theory-title">The Mistake</div>
+            <p>Treating agentic engineering as a <strong>one-time speed boost</strong> instead of a <strong>continuous capability</strong> baked into the platform.</p>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">The Fix</div>
+            <p>Make the platform <strong>AI-augmentation-aware</strong> so agencies using AI to customize are <strong>still</strong> on a maintainable upgrade path.</p>
+        </div>
+
+        <h2 id="architecture">Part 3: AI-Augmented Platform Architecture</h2>
+
+        <h3>The Core Hypothesis</h3>
+
+        <div class="hypothesis-box">
+            <h4>Traditional Platform Thinking</h4>
+            <ul>
+                <li>"We provide bricks (components, APIs). Developers assemble them."</li>
+                <li>Customization = forking + manual editing</li>
+                <li>Upgrades = painful merge conflicts</li>
+            </ul>
+        </div>
+
+        <div class="hypothesis-box">
+            <h4>AI-Augmented Platform Thinking</h4>
+            <ul>
+                <li>"We provide bricks <strong>+ assembly instructions that AI agents understand</strong>"</li>
+                <li>Customization = AI-guided transformations within <strong>safe boundaries</strong></li>
+                <li>Upgrades = platform regenerates customizations using updated bricks</li>
+            </ul>
+        </div>
+
+        <h3>The Six Conventions for AI-Augmented Platforms</h3>
+
+        <p>These patterns aren't theoretical. They're validated in production AI-native development environments where 45% of unconstrained AI-generated code has security vulnerabilities.</p>
+
+        <p><strong>Why this matters:</strong> These conventions solve the core problem Commerce.com faces: "How do we make code that AI agents can reliably work with?" Each convention below transfers directly to platform development.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Convention</th>
+                    <th>Pattern</th>
+                    <th>Commerce.com Application</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Finite Component Registry</strong></td>
+                    <td>AI selects from pre-built, cataloged components rather than generating arbitrary markup</td>
+                    <td>Catalyst component library with schemas - agencies customize within catalog, don't fork</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Server-First State</strong></td>
+                    <td>Eliminate client-side state management that AI agents struggle to reason about</td>
+                    <td>BigCommerce checkout flows - platform manages state, AI agents read/transform server models</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Typed Primitives</strong></td>
+                    <td>All data transformations use explicit schemas (Zod, JSON Schema, TypeScript types)</td>
+                    <td>WooCommerce → BC data transformations with explicit schemas, not magic mappers</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Workflow State Machines</strong></td>
+                    <td>Business logic as explicit state transitions, not implicit control flow</td>
+                    <td>Migration stages (Assessment → Mapping → Transform → Validate) as typed states</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Property-Based Tests</strong></td>
+                    <td>Test generation derived from schemas automatically, not manually written</td>
+                    <td>Transformation recipes auto-generate validation tests from schemas</td>
+                </tr>
+                <tr>
+                    <td><strong>6. File-Based Discovery</strong></td>
+                    <td>Structure in filesystem conventions, not runtime configuration parsing</td>
+                    <td>Recipe library organized by filesystem (recipes/product-card-add-wishlist.yaml)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">The Build-Extract-Automate Approach</div>
+            <p style="color: var(--text-secondary); margin-bottom: 0;"><strong>Industry observation:</strong> 45% of AI-generated code has security vulnerabilities when generated without constraints. Senior engineers report burnout from maintaining "vibe coded" implementations.</p>
+            <p style="margin-top: 12px; color: var(--text-secondary); margin-bottom: 0;"><strong>Proven methodology:</strong> Build proof-of-concept with AI, extract patterns that work, then automate them into reusable tooling.</p>
+            <p style="margin-top: 12px; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0;"><strong>Commerce.com application:</strong> Build WooCommerce migration with AI → Extract AI-augmentation patterns → Automate as platform conventions → Roll out to Catalyst/Feedonomics/Makeswift.</p>
+        </div>
+
+        <h3>What This Requires</h3>
+
+        <h4>1. Structured Customization Points (not just "edit the code")</h4>
+
+        <div class="code-example">
+            <div class="code-example-label">Bad (current state):</div>
+            <pre>// Catalyst component
+export function ProductCard({ product }: Props) {
+  return (
+    &lt;div className="product-card"&gt;
+      {/* 200 lines of hard-coded markup */}
+    &lt;/div&gt;
+  )
+}</pre>
+        </div>
+
+        <p style="color: var(--accent-red); font-weight: 600;">Agency customization: Fork, edit 200 lines, lose upgrade path.</p>
+
+        <div class="code-example">
+            <div class="code-example-label">Good (AI-augmented):</div>
+            <pre>// Catalyst component with explicit extension points
+export function ProductCard({
+  product,
+  customization
+}: Props) {
+  const schema = useCustomizationSchema('product-card')
+
+  return (
+    &lt;div className="product-card" data-bc-customize="product-card"&gt;
+      {schema.before?.()}
+      &lt;ProductImage {...schema.image} /&gt;
+      &lt;ProductTitle {...schema.title} /&gt;
+      &lt;ProductPrice {...schema.price} /&gt;
+      {schema.after?.()}
+    &lt;/div&gt;
+  )
+}</pre>
+        </div>
+
+        <div class="code-example">
+            <div class="code-example-label">Schema file (JSON that AI agents can read/modify):</div>
+            <pre>{
+  "component": "product-card",
+  "customization_points": {
+    "before": {
+      "type": "slot",
+      "description": "Inject content before product card"
+    },
+    "image": {
+      "type": "props",
+      "overridable": ["aspectRatio", "loading", "className"]
+    },
+    "title": {
+      "type": "props",
+      "overridable": ["tag", "className", "truncate"]
+    },
+    "after": {
+      "type": "slot",
+      "description": "Inject content after product card"
+    }
+  },
+  "upgrade_safe": true
+}</pre>
+        </div>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Why This Matters</div>
+            <ul style="margin-top: 12px; color: var(--text-secondary);">
+                <li>AI agents can <strong>read the schema</strong> and understand safe customization boundaries</li>
+                <li>Agencies customize via <strong>structured overrides</strong>, not forks</li>
+                <li>Platform updates can <strong>preserve customizations</strong> through schema versioning</li>
+            </ul>
+        </div>
+
+        <h4>2. AI-Readable Documentation (not just human docs)</h4>
+
+        <p><strong>Current state:</strong> Markdown docs, Storybook, example code</p>
+
+        <p><strong>AI-augmented state:</strong></p>
+        <ul>
+            <li><strong>Machine-readable component schemas</strong> (JSON/YAML)</li>
+            <li><strong>Transformation recipes</strong> (common customizations as prompts)</li>
+            <li><strong>Constraint specifications</strong> (what AI agents can/cannot modify)</li>
+        </ul>
+
+        <div class="code-example">
+            <div class="code-example-label">Example: AI Recipe Library (recipes/product-card-add-wishlist.yaml)</div>
+            <pre>name: "Add wishlist button to product card"
+component: "product-card"
+safe_for_ai: true
+instructions: |
+  1. Add a wishlist icon button to the top-right corner
+  2. Wire to BigCommerce Wishlist API
+  3. Preserve existing layout and styling
+  4. Use existing design tokens for colors
+
+constraints:
+  - must_not_modify: ["product-image", "product-title", "product-price"]
+  - must_use_tokens: true
+  - max_bundle_increase: "5kb"
+
+code_template: |
+  // AI agent fills this in based on current component structure</pre>
+        </div>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">How Agencies Use This</div>
+            <ul style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Engineer: "Add a wishlist button to product cards"</li>
+                <li>AI agent:
+                    <ol style="margin-top: 8px;">
+                        <li>Reads component schema</li>
+                        <li>Finds matching recipe</li>
+                        <li>Applies transformation within constraints</li>
+                        <li>Validates against platform rules</li>
+                        <li>Generates upgrade-safe customization</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Why Commerce.com Controls the Value</div>
+            <ul style="margin-top: 12px;">
+                <li><strong>Recipes live in platform repo</strong> (agencies benefit from BC's patterns)</li>
+                <li><strong>Schema evolves with platform</strong> (agencies get new capabilities automatically)</li>
+                <li><strong>Constraints prevent footguns</strong> (AI agents can't break checkout, accessibility, etc.)</li>
+            </ul>
+        </div>
+
+        <h4>3. Semantic Versioning for AI (not just SemVer)</h4>
+
+        <p><strong>Problem:</strong> AI agents don't understand breaking changes the way humans do.</p>
+
+        <p><strong>Solution:</strong> Annotate schema changes with AI-interpretable migration guides.</p>
+
+        <div class="code-example">
+            <div class="code-example-label">Example:</div>
+            <pre>{
+  "component": "product-card",
+  "version": "2.0.0",
+  "breaking_changes": [
+    {
+      "type": "prop_removed",
+      "name": "showRating",
+      "migration": {
+        "ai_instructions": "Replace showRating prop with reviews.enabled",
+        "code_transform": {
+          "from": "&lt;ProductCard showRating={true} /&gt;",
+          "to": "&lt;ProductCard customization={{ reviews: { enabled: true } }} /&gt;"
+        }
+      }
+    }
+  ]
+}</pre>
+        </div>
+
+        <p><strong>When platform upgrades:</strong></p>
+        <ul>
+            <li>AI agents read migration instructions</li>
+            <li>Apply transformations to agency customizations</li>
+            <li>Flag conflicts that need human review</li>
+        </ul>
+
+        <h2 id="tiger-team">Part 4: The Tiger Team Pilot (WooCommerce Migration as Test Case)</h2>
+
+        <h3>How to Apply This to WooCommerce Migration</h3>
+
+        <p><strong>Hypothesis:</strong> Build the WooCommerce migration kit using agentic engineering <strong>AND</strong> use it to validate AI-augmented architecture patterns.</p>
+
+        <h4>Week 1-4: Build with AI-First Patterns</h4>
+
+        <div class="success-metric">
+            <div class="success-metric-title">Sprint 1 Goals</div>
+            <ol style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Use agentic tooling (Claude Code, Cursor, v0) to build migration assessment engine</li>
+                <li>Document <strong>what worked</strong> and <strong>what didn't</strong> when AI generated code</li>
+                <li>Identify patterns that make code more AI-augmentable</li>
+            </ol>
+        </div>
+
+        <p><strong>Key Questions to Answer:</strong></p>
+        <ul>
+            <li>How should we structure TypeScript types so AI agents understand data flows?</li>
+            <li>What naming conventions make AI-generated code more maintainable?</li>
+            <li>When does AI hallucinate vs. when does it reliably generate correct code?</li>
+        </ul>
+
+        <p><strong>Deliverable:</strong> Working assessment engine + <strong>"AI Engineering Patterns" doc</strong> capturing learnings</p>
+
+        <h4>Week 5-8: Bake in AI-Augmentation Points</h4>
+
+        <div class="success-metric">
+            <div class="success-metric-title">Sprint 2 Goals</div>
+            <ol style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Refactor assessment engine to include <strong>customization schemas</strong></li>
+                <li>Build <strong>migration recipe library</strong> (common WooCommerce → BC transformations)</li>
+                <li>Create <strong>constraint specifications</strong> (what agencies can safely customize)</li>
+            </ol>
+        </div>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Example Scenario</div>
+            <ul style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Merchant has custom WooCommerce checkout flow</li>
+                <li>Agency wants to preserve it post-migration</li>
+                <li>Agency engineer uses AI agent to:
+                    <ol style="margin-top: 8px;">
+                        <li>Analyze WooCommerce checkout</li>
+                        <li>Read BigCommerce checkout schema</li>
+                        <li>Generate transformation recipe</li>
+                        <li>Validate against BC constraints</li>
+                        <li>Deploy customized checkout</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <p><strong>Deliverable:</strong> Migration kit with AI-readable schemas + transformation recipes</p>
+
+        <h4>Week 9-12: Test with Agency Partners</h4>
+
+        <div class="success-metric">
+            <div class="success-metric-title">Sprint 3 Goals</div>
+            <ol style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Partner with 2-3 agencies to pilot migration kit</li>
+                <li>Observe how they use AI agents to customize migrations</li>
+                <li>Measure: Time to customize, upgrade safety, code quality</li>
+            </ol>
+        </div>
+
+        <p><strong>Success Metrics:</strong></p>
+        <ul>
+            <li>Agencies can customize 80% of migrations without forking</li>
+            <li>AI-generated customizations pass platform quality gates</li>
+            <li>Upgrades preserve 90%+ of customizations automatically</li>
+        </ul>
+
+        <p><strong>Deliverable:</strong> Case studies + refined AI-augmentation patterns</p>
+
+        <h2 id="rollout">Part 5: Platform-Wide Rollout (Q2 2026+)</h2>
+
+        <h3>From Tiger Team to Platform Standard</h3>
+
+        <p><strong>If WooCommerce pilot succeeds</strong>, apply learnings to core product:</p>
+
+        <h4>Phase 1: Catalyst Retrofit (Q2 2026)</h4>
+
+        <p><strong>Goal:</strong> Make Catalyst components AI-augmentation-aware</p>
+
+        <p><strong>Tasks:</strong></p>
+        <ol>
+            <li>Add customization schemas to top 20 components</li>
+            <li>Create transformation recipe library</li>
+            <li>Build AI agent validation tooling</li>
+            <li>Document AI-first customization workflows</li>
+        </ol>
+
+        <p><strong>Measure:</strong> Agency adoption of AI-augmented customization vs. forking</p>
+
+        <h4>Phase 2: Feedonomics Data Pipelines (Q3 2026)</h4>
+
+        <p><strong>Goal:</strong> Make data transformations AI-scriptable</p>
+
+        <p><strong>Tasks:</strong></p>
+        <ol>
+            <li>Schema-first pipeline definitions (AI-readable)</li>
+            <li>Transformation recipe library for common mappings</li>
+            <li>AI-assisted debugging (agent reads error logs, suggests fixes)</li>
+        </ol>
+
+        <p><strong>Measure:</strong> Time to build custom data pipeline (AI-augmented vs. manual)</p>
+
+        <h4>Phase 3: Makeswift Visual Builder (Q4 2026)</h4>
+
+        <p><strong>Goal:</strong> AI-assisted design-to-code workflows</p>
+
+        <p><strong>Tasks:</strong></p>
+        <ol>
+            <li>AI agent converts design mockups to Makeswift components</li>
+            <li>AI-guided responsive design adjustments</li>
+            <li>AI-powered accessibility remediation</li>
+        </ol>
+
+        <p><strong>Measure:</strong> Designer-to-dev handoff time reduction</p>
+
+        <h2 id="team-actions">Part 6: What Product & Engineering Teams Need to Start Thinking About</h2>
+
+        <h3>Immediate Actions (Next 30 Days)</h3>
+
+        <h4>For Product (Vipul, Jordan)</h4>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 1: Audit Current Component Libraries</div>
+            <ul style="margin-top: 12px;">
+                <li>Which components are most frequently forked by agencies?</li>
+                <li>What patterns make code easier vs. harder for AI to understand?</li>
+                <li>Where do agencies currently hit customization dead-ends?</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 2: Define "AI-Augmentation-Aware" as Product Requirement</div>
+            <ul style="margin-top: 12px;">
+                <li>New features must ship with customization schemas</li>
+                <li>Components must document safe extension points</li>
+                <li>Breaking changes must include AI-readable migration guides</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 3: Establish AI Engineering Design Review</div>
+            <ul style="margin-top: 12px;">
+                <li>Add "Can AI agents safely customize this?" as review criterion</li>
+                <li>Reject designs that force agencies to fork core code</li>
+                <li>Prioritize structured extension points over "just edit it"</li>
+            </ul>
+        </div>
+
+        <h4>For Engineering (Marcus, Anthony)</h4>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 1: Establish AI-Literate Coding Standards</div>
+            <ul style="margin-top: 12px;">
+                <li>TypeScript patterns that AI agents understand</li>
+                <li>Naming conventions for AI-generated code</li>
+                <li>Documentation formats that serve both humans and agents</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 2: Build AI Agent Validation Tooling</div>
+            <ul style="margin-top: 12px;">
+                <li>Linters that detect "AI unfriendly" patterns</li>
+                <li>Schema validators for customization points</li>
+                <li>Automated tests for transformation recipes</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 3: Create "AI Engineering Guild"</div>
+            <ul style="margin-top: 12px;">
+                <li>Weekly share sessions: what worked with AI this week?</li>
+                <li>Build internal recipe library of AI-assisted patterns</li>
+                <li>Identify platform friction points for AI workflows</li>
+            </ul>
+        </div>
+
+        <h4>For Solutions Architecture (Current SAs + Future Director)</h4>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 1: Document Current Agency Customization Patterns</div>
+            <ul style="margin-top: 12px;">
+                <li>What do agencies customize most?</li>
+                <li>Where do they currently fork vs. extend?</li>
+                <li>What breaks on platform upgrades?</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 2: Build Transformation Recipe Library</div>
+            <ul style="margin-top: 12px;">
+                <li>Common customizations as AI-executable recipes</li>
+                <li>Constraint specifications for safe boundaries</li>
+                <li>Migration guides for platform updates</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Action 3: Pilot AI-Augmented Implementation</div>
+            <ul style="margin-top: 12px;">
+                <li>Measure time savings vs. traditional implementation</li>
+                <li>Document what AI does well vs. poorly</li>
+                <li>Identify platform improvements needed</li>
+            </ul>
+        </div>
+
+        <h2 id="implications">Part 7: The Broader Strategic Implications</h2>
+
+        <h3>Why This Matters Beyond Engineering Velocity</h3>
+
+        <p><strong>Thesis:</strong> Agentic engineering is not just a productivity tool. It's a <strong>category-defining capability</strong> for B2B platforms in 2026+.</p>
+
+        <h4>Implication 1: The Implementation Layer Commodifies</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Timeline</th>
+                    <th>Agency Differentiation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>2024-2025</strong></td>
+                    <td>Agencies differentiate on implementation speed/quality</td>
+                </tr>
+                <tr>
+                    <td><strong>2026</strong></td>
+                    <td>AI agents commodify basic implementation</td>
+                </tr>
+                <tr>
+                    <td><strong>Result</strong></td>
+                    <td>Agencies <strong>must</strong> differentiate on strategy, design, optimization</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Commerce.com's Play</div>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">Provide AI-augmented tools that make agencies <strong>more strategic</strong>, not just faster implementers.</p>
+            <p style="margin-top: 12px; color: var(--text-secondary); margin-bottom: 0;"><strong>Example:</strong> Instead of "build a custom checkout," agencies focus on "optimize checkout for this vertical's conversion patterns" while AI handles implementation.</p>
+        </div>
+
+        <h4>Implication 2: The Platform Becomes the AI's Collaborator</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Timeline</th>
+                    <th>Platform Documentation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>2024-2025</strong></td>
+                    <td>Platform documentation is for human developers</td>
+                </tr>
+                <tr>
+                    <td><strong>2026</strong></td>
+                    <td>Platform documentation must serve <strong>human + AI teams</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Result</strong></td>
+                    <td>Platforms designed for AI augmentation become <strong>stickier</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Commerce.com's Play</div>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">First composable commerce platform designed for AI-augmented agency workflows.</p>
+            <p style="margin-top: 12px; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0;"><strong>Messaging:</strong> "The only platform that makes your AI engineers 10x more effective."</p>
+        </div>
+
+        <h4>Implication 3: Upgrade Paths Become Regenerative, Not Conflictual</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Timeline</th>
+                    <th>Platform Upgrade Experience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>2024-2025</strong></td>
+                    <td>Platform updates → agency merge conflicts → delayed upgrades → version fragmentation</td>
+                </tr>
+                <tr>
+                    <td><strong>2026</strong></td>
+                    <td>Platform updates → AI agents regenerate customizations → automatic migrations → version unity</td>
+                </tr>
+                <tr>
+                    <td><strong>Result</strong></td>
+                    <td>Platforms with AI-aware upgrade paths have <strong>lower technical debt</strong> across ecosystem</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Commerce.com's Play</div>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">"Upgrade without losing customizations" becomes a core value prop.</p>
+        </div>
+
+        <h2 id="questions">Part 8: Open Questions & Validation Tests</h2>
+
+        <h3>Questions for Leadership</h3>
+
+        <h4>Strategic Prioritization</h4>
+
+        <ol>
+            <li><strong>Is AI-augmented engineering a Tiger Team experiment or a platform-wide mandate?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>If experiment: WooCommerce pilot only, learnings stay in Tiger Team</li>
+                    <li>If mandate: Platform teams must adopt patterns, executive sponsorship required</li>
+                </ul>
+            </li>
+            <li><strong>What's the tolerance for platform fragmentation risk?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>High tolerance: Ship fast, deal with forks later</li>
+                    <li>Low tolerance: Build AI-augmentation layer first, slower initial ship</li>
+                </ul>
+            </li>
+            <li><strong>How much investment in "AI-native tooling" vs. just using AI to code faster?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Low investment: Teams use Cursor/Claude, no platform changes</li>
+                    <li>High investment: Build schema systems, recipe libraries, validation tooling</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h4>Resource Allocation</h4>
+
+        <ol>
+            <li><strong>Who owns the AI engineering patterns library?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Tiger Team (experimental, not shared)</li>
+                    <li>Platform Engineering (centralized, mandated)</li>
+                    <li>Guild/Community (voluntary adoption)</li>
+                </ul>
+            </li>
+            <li><strong>What's the right team size for AI-augmented development?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>CFO suggested 3 people (you, Jordan, strategy)</li>
+                    <li>Is that enough to build + document + evangelize patterns?</li>
+                </ul>
+            </li>
+            <li><strong>Do we need dedicated "AI Engineering Architect" role?</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Someone who specializes in making code AI-augmentable</li>
+                    <li>Different from traditional solutions architect</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Validation Tests (First 30 Days)</h3>
+
+        <h4>Test 1: AI Customization Speed</h4>
+
+        <div class="hypothesis-box">
+            <h4>Hypothesis</h4>
+            <p>AI agent can customize a Catalyst component 5x faster than manual coding</p>
+            <p><strong>Method:</strong></p>
+            <ol style="margin-top: 8px;">
+                <li>Give agency engineer a customization task (e.g., "add wishlist to product cards")</li>
+                <li>Time manual implementation vs. AI-assisted implementation</li>
+                <li>Measure code quality, upgrade safety, bundle size</li>
+            </ol>
+            <p><strong>Success:</strong> AI-assisted is 3-5x faster with equal/better quality</p>
+        </div>
+
+        <h4>Test 2: Schema-Guided Customization</h4>
+
+        <div class="hypothesis-box">
+            <h4>Hypothesis</h4>
+            <p>Customization schemas reduce agency forking by 50%+</p>
+            <p><strong>Method:</strong></p>
+            <ol style="margin-top: 8px;">
+                <li>Identify top 10 most-forked Catalyst components</li>
+                <li>Add customization schemas with extension points</li>
+                <li>Measure fork rate before/after with pilot agencies</li>
+            </ol>
+            <p><strong>Success:</strong> Fork rate drops 50%+, upgrade adoption increases</p>
+        </div>
+
+        <h4>Test 3: Recipe Library Adoption</h4>
+
+        <div class="hypothesis-box">
+            <h4>Hypothesis</h4>
+            <p>Agencies will use transformation recipes if they're high quality</p>
+            <p><strong>Method:</strong></p>
+            <ol style="margin-top: 8px;">
+                <li>Build 10 transformation recipes for common WooCommerce migrations</li>
+                <li>Share with pilot agencies</li>
+                <li>Measure adoption rate, time savings, support tickets reduced</li>
+            </ol>
+            <p><strong>Success:</strong> 70%+ of agencies use recipes, 30%+ time savings</p>
+        </div>
+
+        <h2 id="roadmap">Part 9: Roadmap & Milestones</h2>
+
+        <h3>Q1 2026: Tiger Team Validation</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Milestone</th>
+                    <th>Success Criteria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1-2</td>
+                    <td>Build assessment engine with AI</td>
+                    <td>Engine works, document AI patterns</td>
+                </tr>
+                <tr>
+                    <td>3-4</td>
+                    <td>Add customization schemas</td>
+                    <td>Schemas are AI-readable, extensible</td>
+                </tr>
+                <tr>
+                    <td>5-6</td>
+                    <td>Build transformation recipes</td>
+                    <td>10 recipes tested with sample data</td>
+                </tr>
+                <tr>
+                    <td>7-8</td>
+                    <td>Partner pilot (2 agencies)</td>
+                    <td>Agencies customize without forking</td>
+                </tr>
+                <tr>
+                    <td>9-10</td>
+                    <td>Refine based on feedback</td>
+                    <td>80% of customizations schema-based</td>
+                </tr>
+                <tr>
+                    <td>11-12</td>
+                    <td>Document learnings</td>
+                    <td>"AI Engineering Playbook" published</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Go/No-Go Decision: End of Q1</div>
+            <ul style="margin-top: 12px; color: var(--text-secondary);">
+                <li><strong>Go:</strong> Roll out to platform teams (Catalyst, Feedonomics, Makeswift)</li>
+                <li><strong>No-Go:</strong> Keep as Tiger Team capability, don't platform-ize</li>
+            </ul>
+        </div>
+
+        <h3>Q2 2026: Platform Adoption (If Go)</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Team</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apr</td>
+                    <td>Catalyst</td>
+                    <td>Top 20 components have schemas</td>
+                </tr>
+                <tr>
+                    <td>May</td>
+                    <td>Feedonomics</td>
+                    <td>Data pipeline recipe library</td>
+                </tr>
+                <tr>
+                    <td>Jun</td>
+                    <td>Makeswift</td>
+                    <td>AI-assisted design-to-code</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Measure:</strong> Agency adoption of AI-augmented workflows</p>
+
+        <h3>Q3 2026: Ecosystem Enablement</h3>
+
+        <ul>
+            <li>Public launch of AI Engineering Toolkit</li>
+            <li>Agency training programs</li>
+            <li>Developer documentation overhaul (human + AI audiences)</li>
+        </ul>
+
+        <h3>Q4 2026: Competitive Differentiation</h3>
+
+        <ul>
+            <li>Marketing campaign: "The AI-native composable platform"</li>
+            <li>Case studies: Agencies shipping 5x faster with BC</li>
+            <li>Product launches: AI-assisted migration tools, AI-powered optimization</li>
+        </ul>
+
+        <h2 id="what-needs-true">Part 10: What Needs to Be True</h2>
+
+        <h3>Organizational Capabilities</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Requirement</th>
+                    <th>Why It Matters</th>
+                    <th>Validation Test</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Executive buy-in</strong></td>
+                    <td>Platform changes require mandate</td>
+                    <td>CEO/CPO approve AI-augmentation as platform standard</td>
+                </tr>
+                <tr>
+                    <td><strong>Engineering openness</strong></td>
+                    <td>Teams must adopt new patterns</td>
+                    <td>Engineers experiment with AI tooling, share learnings</td>
+                </tr>
+                <tr>
+                    <td><strong>Agency collaboration</strong></td>
+                    <td>Need real users to validate</td>
+                    <td>2-3 agencies commit to pilot</td>
+                </tr>
+                <tr>
+                    <td><strong>Product vision alignment</strong></td>
+                    <td>AI-augmentation must fit roadmap</td>
+                    <td>Jordan/Vipul see this as differentiation, not distraction</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Technical Prerequisites</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Requirement</th>
+                    <th>Current State</th>
+                    <th>Gap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Component schemas</strong></td>
+                    <td>None</td>
+                    <td>Build schema system</td>
+                </tr>
+                <tr>
+                    <td><strong>Transformation recipes</strong></td>
+                    <td>None</td>
+                    <td>Build recipe library</td>
+                </tr>
+                <tr>
+                    <td><strong>AI validation tooling</strong></td>
+                    <td>None</td>
+                    <td>Build linters, validators</td>
+                </tr>
+                <tr>
+                    <td><strong>Documentation for AI</strong></td>
+                    <td>Human-only</td>
+                    <td>Add machine-readable formats</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Market Readiness</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Requirement</th>
+                    <th>Evidence</th>
+                    <th>Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Agencies use AI</strong></td>
+                    <td>Anecdotal</td>
+                    <td>Need survey data</td>
+                </tr>
+                <tr>
+                    <td><strong>Merchants expect fast delivery</strong></td>
+                    <td>Known pain point</td>
+                    <td>May not value AI specifically</td>
+                </tr>
+                <tr>
+                    <td><strong>Competitors lag</strong></td>
+                    <td>Currently true</td>
+                    <td>Window closes in 6-12 months</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="failure-modes">Part 11: Failure Modes & Mitigations</h2>
+
+        <div class="anti-pattern">
+            <div class="anti-pattern-title">Anti-Pattern 1: "AI Generates Bad Code, We Ship It"</div>
+            <p><strong>Manifestation:</strong> Tiger Team uses AI for speed, skips code review, ships brittle code</p>
+            <p><strong>Mitigation:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>AI-generated code must pass same quality gates as human code</li>
+                <li>Validation tooling catches common AI mistakes</li>
+                <li>Code review checklist includes "AI footgun detection"</li>
+            </ul>
+        </div>
+
+        <div class="anti-pattern">
+            <div class="anti-pattern-title">Anti-Pattern 2: "Platform Over-Optimizes for AI, Becomes Unreadable for Humans"</div>
+            <p><strong>Manifestation:</strong> Schemas and abstractions make code harder for humans to understand</p>
+            <p><strong>Mitigation:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Human readability is gate criteria, not optional</li>
+                <li>Documentation serves both audiences explicitly</li>
+                <li>Pilot with junior engineers (readability canaries)</li>
+            </ul>
+        </div>
+
+        <div class="anti-pattern">
+            <div class="anti-pattern-title">Anti-Pattern 3: "Agencies Fork Anyway Because Schemas Are Too Restrictive"</div>
+            <p><strong>Manifestation:</strong> Customization points don't cover real needs, agencies revert to forking</p>
+            <p><strong>Mitigation:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Start with most-forked components (solve real pain)</li>
+                <li>Iterate schemas based on agency feedback</li>
+                <li>Escape hatches for advanced customization</li>
+            </ul>
+        </div>
+
+        <div class="anti-pattern">
+            <div class="anti-pattern-title">Anti-Pattern 4: "Platform Team Treats This as 'Tiger Team Thing,' Doesn't Adopt"</div>
+            <p><strong>Manifestation:</strong> WooCommerce pilot succeeds, learnings stay siloed, platform doesn't evolve</p>
+            <p><strong>Mitigation:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>CFO mandate: Platform teams must participate in learnings</li>
+                <li>Quarterly AI Engineering Guild showcases</li>
+                <li>Product requirements include AI-augmentability from Q2 onward</li>
+            </ul>
+        </div>
+
+        <h2 id="appendix-a">Appendix A: Industry Precedents & Patterns</h2>
+
+        <h3>AI-Native Platform Architectures</h3>
+
+        <div class="precedent-box" style="border-left: 3px solid var(--accent-cyan);">
+            <div class="precedent-company" style="color: var(--accent-cyan); font-size: 16px;">Pattern 1: Schema-First Development</div>
+            <p><strong>Approach:</strong> Type systems and schemas as primary contract between AI agents and platform code</p>
+            <p><strong>Implementation:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Zod/JSON Schema for runtime validation</li>
+                    <li>TypeScript strict mode for compile-time safety</li>
+                    <li>Property-based testing generated from schemas</li>
+                    <li>AI agents read schemas to understand constraints</li>
+                </ul>
+            </p>
+            <p><strong>Results:</strong> 60-80% reduction in AI-generated runtime errors, 3x faster validation cycles</p>
+            <p><strong>Commerce.com Application:</strong> WooCommerce → BigCommerce transformations with schema-validated mappings</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">Pattern 2: Finite Component Registries</div>
+            <p><strong>Approach:</strong> AI selects from cataloged components rather than generating arbitrary markup</p>
+            <p><strong>Implementation:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Component metadata (props, variants, constraints)</li>
+                    <li>AI-readable documentation (usage patterns, when to use)</li>
+                    <li>Composition rules (what can nest inside what)</li>
+                </ul>
+            </p>
+            <p><strong>Results:</strong> 90% reduction in "vibe coded" components, consistent design system adherence</p>
+            <p><strong>Commerce.com Application:</strong> Catalyst component library with AI-consumable schemas</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">Pattern 3: Server-First State Management</div>
+            <p><strong>Approach:</strong> Eliminate client-side state complexity that AI struggles to reason about</p>
+            <p><strong>Implementation:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Server-rendered by default (Next.js App Router, SvelteKit, HTMX)</li>
+                    <li>Client state only for UI interactions (modals, dropdowns)</li>
+                    <li>Business logic stays server-side</li>
+                </ul>
+            </p>
+            <p><strong>Results:</strong> 70% reduction in state-related bugs, simpler AI-generated code</p>
+            <p><strong>Commerce.com Application:</strong> BigCommerce checkout flows with server-managed state</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">Pattern 4: File-Based Convention over Configuration</div>
+            <p><strong>Approach:</strong> Structure in filesystem, not runtime config parsing</p>
+            <p><strong>Implementation:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Next.js/SvelteKit file-based routing</li>
+                    <li>Recipe libraries organized by path (recipes/product-card/*.yaml)</li>
+                    <li>AI agents understand directory structure without parsing</li>
+                </ul>
+            </p>
+            <p><strong>Results:</strong> Faster AI comprehension, fewer configuration errors</p>
+            <p><strong>Commerce.com Application:</strong> Transformation recipe library with discoverable structure</p>
+        </div>
+
+        <h3>Industry Tools & Frameworks</h3>
+
+        <div class="precedent-box">
+            <div class="precedent-company">1. Vercel v0 (https://v0.dev)</div>
+            <p><strong>What it does:</strong> Text → UI component generation</p>
+            <p><strong>Learn from:</strong> Prompt engineering, constraint systems, iteration patterns</p>
+            <p><strong>Apply to:</strong> Commerce.com component generation recipes</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">2. Shopify Hydrogen (https://hydrogen.shopify.dev)</div>
+            <p><strong>What it does:</strong> Opinionated React framework for storefronts</p>
+            <p><strong>Learn from:</strong> Developer experience, customization patterns</p>
+            <p><strong>Contrast with:</strong> BC Catalyst (more opinionated vs. flexible)</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">3. Supabase Local Development (https://supabase.com/docs/guides/cli)</div>
+            <p><strong>What it does:</strong> Local Postgres + Auth + Edge Functions via CLI</p>
+            <p><strong>Learn from:</strong> Developer experience, migration workflows</p>
+            <p><strong>Apply to:</strong> BC local development experience improvements</p>
+        </div>
+
+        <div class="precedent-box">
+            <div class="precedent-company">4. Cursor IDE (https://cursor.sh)</div>
+            <p><strong>What it does:</strong> AI-native code editor with codebase context</p>
+            <p><strong>Learn from:</strong> How AI agents understand project structure</p>
+            <p><strong>Apply to:</strong> Design BC codebases to be "Cursor-friendly"</p>
+        </div>
+
+        <h2 id="appendix-b">Appendix B: Stack Considerations for AI-Augmented Development</h2>
+
+        <div class="theory-box">
+            <div class="theory-title">Context: Velocity vs. Safety Trade-offs</div>
+            <p><strong>Raw velocity:</strong> AI agents can generate code 10-20x faster than humans, regardless of stack</p>
+            <p style="margin-top: 8px;"><strong>Safe velocity:</strong> Requires architecture that constrains AI to safe patterns</p>
+            <p style="margin-top: 12px; color: var(--accent-cyan); font-weight: 600;">The goal: Maximum velocity within safe boundaries</p>
+        </div>
+
+        <h3>Stack Characteristics for AI-Augmented Platforms</h3>
+
+        <div class="theory-box">
+            <div class="theory-title">Frontend</div>
+            <ul style="margin-top: 12px;">
+                <li><strong>Svelte 5</strong> (Runes API, better reactivity than React)</li>
+                <li><strong>SvelteKit</strong> (File-based routing, SSR, edge-ready)</li>
+                <li><strong>Tailwind CSS</strong> (Utility-first, AI agents understand classes)</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">Backend</div>
+            <ul style="margin-top: 12px;">
+                <li><strong>Supabase</strong> (Postgres + Auth + Realtime + Storage)</li>
+                <li><strong>Edge Functions</strong> (Deno-based, globally distributed)</li>
+                <li><strong>Row Level Security</strong> (Database-enforced permissions)</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">AI Layer</div>
+            <ul style="margin-top: 12px;">
+                <li><strong>AI SDK</strong> (Vercel's abstraction, provider-agnostic)</li>
+                <li><strong>Streaming responses</strong> (Better UX for chat interfaces)</li>
+                <li><strong>Claude/GPT integration</strong> (Multi-model support)</li>
+            </ul>
+        </div>
+
+        <div class="theory-box">
+            <div class="theory-title">DevOps</div>
+            <ul style="margin-top: 12px;">
+                <li><strong>Vercel deployment</strong> (Zero-config, preview URLs)</li>
+                <li><strong>TypeScript</strong> (Type safety, AI agents generate better TS than JS)</li>
+                <li><strong>ESM-first</strong> (Modern module system)</li>
+            </ul>
+        </div>
+
+        <h3>Commerce.com Stack Recommendations</h3>
+
+        <p><strong>Hypothesis:</strong> Catalyst can adopt AI-augmentation principles without changing frameworks.</p>
+
+        <p><strong>What to validate:</strong></p>
+        <ul>
+            <li>AI agent success rate with current Catalyst React components</li>
+            <li>Time to add customization schemas to top 20 components</li>
+            <li>Agency adoption of schema-based customization vs. forking</li>
+        </ul>
+
+        <p><strong>Recommended approach:</strong></p>
+        <ul>
+            <li>Start with Catalyst as-is (React + TypeScript)</li>
+            <li>Add customization schemas (Convention #1)</li>
+            <li>Add transformation recipes (Convention #6)</li>
+            <li>Validate with 2-3 pilot agencies</li>
+            <li>Consider alternative stacks only if React proves problematic</li>
+        </ul>
+
+        <div class="checkpoint">
+            <div class="checkpoint-title">Key Insight</div>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">The <strong>principles</strong> (schema-first, server-first, constrained customization) matter more than specific frameworks. Catalyst can become AI-augmentation-aware without abandoning React.</p>
+        </div>
+
+        <h2>Summary: What You Should Do Next</h2>
+
+        <h3>Week 1-2: Validate the Hypothesis</h3>
+
+        <ol>
+            <li><strong>Share this doc with CFO (Daniel)</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Get reaction to AI-augmented engineering as strategic priority</li>
+                    <li>Validate that this fits "test case for AI velocity" brief</li>
+                    <li>Confirm budget for schema tooling, recipe libraries</li>
+                </ul>
+            </li>
+            <li><strong>Share with CPO (Vipul) and Jordan Sim</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Get product perspective: Is this differentiation or distraction?</li>
+                    <li>Understand current agency pain points with customization</li>
+                    <li>Validate "schema-based extension" as product direction</li>
+                </ul>
+            </li>
+            <li><strong>Share with SVP Eng (Marcus) and Catalyst lead (Anthony)</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Get engineering perspective: Is Catalyst refactor feasible?</li>
+                    <li>Understand current fork rate, upgrade pain points</li>
+                    <li>Validate appetite for AI-literate coding standards</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Week 3-4: Run Validation Tests</h3>
+
+        <ol>
+            <li><strong>Test 1:</strong> AI Customization Speed
+                <ul style="margin-top: 8px;">
+                    <li>Pick simple task (add wishlist to product card)</li>
+                    <li>Time manual vs. AI-assisted implementation</li>
+                    <li>Document what AI did well, what it struggled with</li>
+                </ul>
+            </li>
+            <li><strong>Test 2:</strong> Schema Feasibility
+                <ul style="margin-top: 8px;">
+                    <li>Prototype customization schema for one Catalyst component</li>
+                    <li>Write 3 transformation recipes</li>
+                    <li>Test with AI agent (Claude Code, Cursor, etc.)</li>
+                </ul>
+            </li>
+            <li><strong>Test 3:</strong> Agency Interest
+                <ul style="margin-top: 8px;">
+                    <li>Reach out to 2-3 agency partners</li>
+                    <li>Pitch: "We're building AI-augmented migration tools, want to pilot?"</li>
+                    <li>Gauge interest, understand their current AI usage</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Week 5-8: Decide Go/No-Go</h3>
+
+        <div class="success-metric">
+            <div class="success-metric-title">If All Tests Pass</div>
+            <ul style="margin-top: 12px; color: var(--text-secondary);">
+                <li>Build WooCommerce migration with AI-augmentation patterns</li>
+                <li>Document learnings for platform rollout</li>
+                <li>Prepare Q2 pitch to platform teams</li>
+            </ul>
+        </div>
+
+        <div class="risk-flag">
+            <div class="risk-flag-title">If Tests Fail</div>
+            <div class="risk-flag-content">
+                <ul>
+                    <li>Use AI for velocity only (not platform strategy)</li>
+                    <li>Focus on shipping WooCommerce migration fast</li>
+                    <li>Revisit AI-augmentation in 6 months</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Document Status:</strong> Hypothesis v1.0 — Strategic Framework for AI-Augmented Platform Development</p>
+            <p><strong>Author:</strong> Nino Chavez (Candidate, Director of Strategic Solutions)</p>
+            <p><strong>Audience:</strong> Travis Hess (CEO), Daniel (CFO), Vipul (CPO), Marcus (SVP Eng)</p>
+            <p style="margin-top: 16px;"><em>This is a hypothesis. Use it to start conversations, identify gaps, and validate assumptions. The value is in discovering where this model breaks against Commerce.com's reality.</em></p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#22d3ee',
+                primaryTextColor: '#f9fafb',
+                primaryBorderColor: '#2d2640',
+                lineColor: '#22d3ee',
+                secondaryColor: '#a78bfa',
+                tertiaryColor: '#1a1625',
+                background: '#1a1625',
+                mainBkg: '#1a1625',
+                secondBkg: '#252033',
+                fontSize: '14px',
+                fontFamily: 'Inter, sans-serif'
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active section in navigation
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe all h2 sections
+        document.querySelectorAll('h2[id]').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

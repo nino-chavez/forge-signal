@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VP Product Architecture: 90-Day Plan — Commerce.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    :root {
+      --bg: #0a0f1a;
+      --bg-card: #131b2e;
+      --bg-card-elevated: #1a2540;
+      --bg-divider: #060a12;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-primary: #8b5cf6;
+      --accent-primary-bright: #a78bfa;
+      --accent-primary-muted: rgba(139, 92, 246, 0.15);
+      --accent-secondary: #22d3ee;
+      --accent-secondary-muted: rgba(34, 211, 238, 0.15);
+      --accent-orange: #f97316;
+      --accent-orange-muted: rgba(249, 115, 22, 0.15);
+      --positive: #34d399;
+      --positive-muted: rgba(52, 211, 153, 0.15);
+      --negative: #f87171;
+      --negative-muted: rgba(248, 113, 113, 0.15);
+      --warning: #fbbf24;
+      --warning-muted: rgba(251, 191, 36, 0.15);
+      --border: #1e293b;
+      --border-subtle: #131b2e;
+    }
+
+    .display { font-size: 3.5rem; font-weight: 300; letter-spacing: -0.02em; line-height: 1.1; }
+    .display-lg { font-size: 4.5rem; font-weight: 200; letter-spacing: -0.03em; line-height: 1; }
+    .display-accent { color: var(--accent-primary-bright); }
+    .display-cyan { color: var(--accent-secondary); }
+    .headline { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
+    .section-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent-primary-bright); }
+    .subhead { font-size: 0.875rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); }
+    .body-lg { font-size: 1.25rem; line-height: 1.7; color: var(--text-muted); }
+    .caption { font-size: 0.875rem; color: var(--text-muted); }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    .source { font-size: 0.65rem; color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    .source a { color: var(--text-dim); text-decoration: underline; }
+
+    .slide {
+      min-height: 100vh;
+      height: 100vh;
+      width: 100%;
+      padding: 4rem 6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .slide-divider {
+      background: var(--bg-divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .divider-content { max-width: 900px; }
+    .divider-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8rem;
+      font-weight: 200;
+      color: var(--accent-primary-bright);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .divider-title { font-size: 3rem; font-weight: 300; color: var(--text); margin-bottom: 1rem; }
+    .divider-subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+    .slide-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+    .slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .page-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem; color: var(--text-muted); }
+    .brand { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-primary-bright); }
+
+    .slide-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-section {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      padding: 0.25rem 0.75rem;
+      background: var(--accent-primary-muted);
+      border-radius: 4px;
+    }
+    .breadcrumb-title { font-size: 0.875rem; color: var(--text-muted); }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .card-elevated { background: var(--bg-card-elevated); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+    .card-highlight { border-left: 3px solid var(--accent-primary); }
+    .card-cyan { border-left: 3px solid var(--accent-secondary); }
+    .card-green { border-left: 3px solid var(--positive); }
+    .card-red { border-left: 3px solid var(--negative); }
+    .card-warning { border-left: 3px solid var(--warning); }
+    .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
+    .card-value { font-family: 'IBM Plex Mono', monospace; font-size: 2.5rem; font-weight: 600; color: var(--accent-secondary); line-height: 1; }
+    .card-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.5rem; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .metric-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .metric-value.negative { color: var(--negative); }
+    .metric-value.warning { color: var(--warning); }
+    .metric-value.positive { color: var(--positive); }
+    .metric-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .metric-context {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .data-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .data-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .highlight { color: var(--accent-secondary); font-weight: 600; }
+    .data-table .negative { color: var(--negative); }
+    .data-table .positive { color: var(--positive); }
+    .data-table .warning { color: var(--warning); }
+
+    .swot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .swot-card {
+      padding: 1.25rem;
+      border-radius: 8px;
+    }
+    .swot-card.strength { background: var(--positive-muted); border: 1px solid var(--positive); }
+    .swot-card.weakness { background: var(--negative-muted); border: 1px solid var(--negative); }
+    .swot-card.opportunity { background: var(--accent-secondary-muted); border: 1px solid var(--accent-secondary); }
+    .swot-card.threat { background: var(--warning-muted); border: 1px solid var(--warning); }
+    .swot-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .swot-card.strength .swot-title { color: var(--positive); }
+    .swot-card.weakness .swot-title { color: var(--negative); }
+    .swot-card.opportunity .swot-title { color: var(--accent-secondary); }
+    .swot-card.threat .swot-title { color: var(--warning); }
+    .swot-list { font-size: 0.8rem; line-height: 1.6; color: var(--text); }
+    .swot-list li { margin-bottom: 0.25rem; }
+
+    .callout {
+      background: var(--accent-primary-muted);
+      border: 1px solid var(--accent-primary);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout.warning { background: var(--warning-muted); border-color: var(--warning); }
+    .callout.negative { background: var(--negative-muted); border-color: var(--negative); }
+    .callout-title { font-size: 0.875rem; font-weight: 600; color: var(--accent-primary-bright); margin-bottom: 0.5rem; }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.negative .callout-title { color: var(--negative); }
+    .callout-text { font-size: 0.9375rem; color: var(--text); }
+
+    .hero-slide {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-card) 100%);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-role {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title { font-size: 5rem; font-weight: 200; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.5rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 3rem; }
+    .hero-meta { display: flex; gap: 3rem; justify-content: center; font-size: 0.875rem; color: var(--text-dim); }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .hero-meta-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-meta-value { color: var(--text); font-weight: 500; }
+
+    .stat-highlight {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent-primary-muted);
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+    }
+    .stat-highlight.negative { background: var(--negative-muted); color: var(--negative); }
+    .stat-highlight.warning { background: var(--warning-muted); color: var(--warning); }
+    .stat-highlight.positive { background: var(--positive-muted); color: var(--positive); }
+
+    .competitive-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .competitive-label { font-size: 0.875rem; width: 140px; color: var(--text); }
+    .competitive-track {
+      flex: 1;
+      height: 8px;
+      background: var(--bg-card);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .competitive-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--accent-secondary);
+    }
+    .competitive-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      width: 50px;
+      text-align: right;
+      color: var(--accent-secondary);
+    }
+
+    .timeline-phases {
+      display: flex;
+      gap: 0;
+      margin: 2rem 0;
+    }
+    .timeline-phase {
+      flex: 1;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .timeline-phase:first-child { border-radius: 8px 0 0 8px; }
+    .timeline-phase:last-child { border-radius: 0 8px 8px 0; }
+    .timeline-phase::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    .timeline-phase.phase-1::before { background: var(--accent-primary); }
+    .timeline-phase.phase-2::before { background: var(--accent-secondary); }
+    .timeline-phase.phase-3::before { background: var(--positive); }
+    .phase-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+    .phase-1 .phase-badge { background: rgba(139, 92, 246, 0.2); color: var(--accent-primary); }
+    .phase-2 .phase-badge { background: rgba(34, 211, 238, 0.2); color: var(--accent-secondary); }
+    .phase-3 .phase-badge { background: rgba(52, 211, 153, 0.2); color: var(--positive); }
+    .phase-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .phase-days { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text-dim); }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .kpi-name { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+    .kpi-owner { font-size: 0.65rem; padding: 0.15rem 0.4rem; background: var(--accent-primary-muted); color: var(--accent-primary); border-radius: 3px; }
+    .kpi-current { font-family: 'IBM Plex Mono', monospace; font-size: 1.5rem; font-weight: 600; }
+    .kpi-target { font-size: 0.75rem; color: var(--text-dim); }
+
+    @media print {
+      html { scroll-snap-type: none; }
+      .slide { page-break-after: always; height: auto; min-height: auto; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: Hero -->
+  <section class="slide hero-slide">
+    <div class="hero-content">
+      <div class="hero-role">VP Product Architecture</div>
+      <h1 class="hero-title">A Board-Level <span class="display-accent">Investment Case</span></h1>
+      <p class="hero-subtitle">
+        Establishing product architecture leadership at a critical inflection point for Commerce.com
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Ticker</span>
+          <span class="hero-meta-value">CMRC (formerly BIGC)</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">FY24 Revenue</span>
+          <span class="hero-meta-value">$332.9M</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Total ARR</span>
+          <span class="hero-meta-value">$349.6M</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Cash Position</span>
+          <span class="hero-meta-value">$179.6M</span>
+        </div>
+      </div>
+      <p class="source" style="margin-top: 2rem;">Source: BigCommerce Q4 2024 Earnings Release (Feb 2025)</p>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">01 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 2: The Problem Statement -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Context</span>
+      <span class="breadcrumb-title">The Board's Problem</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">Commerce.com is at an <span class="display-accent">inflection point</span></h2>
+
+      <div class="grid-4" style="margin-bottom: 2rem;">
+        <div class="metric-card">
+          <div class="metric-value warning">8%</div>
+          <div class="metric-label">FY24 Revenue Growth</div>
+          <div class="metric-context">$332.9M total</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value warning">4%</div>
+          <div class="metric-label">ARR Growth YoY</div>
+          <div class="metric-context">$349.6M total</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value negative">-2%</div>
+          <div class="metric-label">Enterprise Accounts</div>
+          <div class="metric-context">5,884 accounts</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value positive">+9%</div>
+          <div class="metric-label">ARPA Growth</div>
+          <div class="metric-context">$44,458 avg</div>
+        </div>
+      </div>
+      <p class="source">Source: BigCommerce Q4 2024 Earnings, Investor Relations (Feb 20, 2025)</p>
+
+      <div class="callout warning" style="margin-top: 1.5rem;">
+        <div class="callout-title">CEO Transition in October 2024</div>
+        <div class="callout-text">
+          Brent Bellm departed after 9 years. Travis Hess (previously President, ex-Accenture where he led DTC commerce strategy) appointed as CEO.
+          The board is signaling urgency for execution-focused leadership.
+        </div>
+        <p class="source">Source: Digital Commerce 360, Oct 2024; BigCommerce Press Release</p>
+      </div>
+
+      <div class="grid-2" style="margin-top: 1.5rem;">
+        <div class="card card-warning">
+          <div class="card-title">Mixed Signals</div>
+          <p class="caption">Revenue growing but enterprise account count declining. Winning larger deals (+9% ARPA) but losing volume (-2% accounts). Classic "move upmarket" pattern with execution risk.</p>
+        </div>
+        <div class="card card-warning">
+          <div class="card-title">Analyst Sentiment</div>
+          <p class="caption">Consensus "Hold" rating. Stock at $5-7 range vs. $25+ IPO high. "Cautious optimism with a focus on execution" — TipRanks earnings analysis.</p>
+          <p class="source">Source: TipRanks, StockAnalysis.com</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">02 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 3: Competitive Landscape -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Context</span>
+      <span class="breadcrumb-title">Competitive Reality</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">Market position <span class="display-accent">context</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Gartner Magic Quadrant Position</h3>
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <table class="data-table" style="font-size: 0.85rem;">
+              <thead>
+                <tr>
+                  <th>Vendor</th>
+                  <th>2023 Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Shopify</td>
+                  <td class="positive">Leader</td>
+                </tr>
+                <tr>
+                  <td>Salesforce</td>
+                  <td class="positive">Leader</td>
+                </tr>
+                <tr>
+                  <td>Adobe</td>
+                  <td class="positive">Leader</td>
+                </tr>
+                <tr>
+                  <td>commercetools</td>
+                  <td class="positive">Leader</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">BigCommerce</td>
+                  <td class="warning">Challenger (5th year)</td>
+                </tr>
+                <tr>
+                  <td>VTEX</td>
+                  <td class="warning">Challenger</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="source">Source: Gartner Magic Quadrant for Digital Commerce, 2023</p>
+          </div>
+
+          <div class="card card-red">
+            <div class="card-title">The Challenge</div>
+            <p class="caption">Five consecutive years as Challenger, not Leader. Meanwhile, VTEX was named sole "Customers' Choice" in 2025 Gartner Voice of the Customer.</p>
+            <p class="source">Source: BigCommerce Resources; Gartner Peer Insights 2025</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Competitive Differentiation</h3>
+
+          <div class="card card-highlight" style="margin-bottom: 1rem;">
+            <div class="card-title">BigCommerce Strengths</div>
+            <ul class="caption" style="line-height: 1.8;">
+              <li>Open SaaS / composable architecture</li>
+              <li>No transaction fees on external payment gateways</li>
+              <li>Native B2B Edition capabilities</li>
+              <li>Feedonomics data orchestration (Dell, Lululemon scale)</li>
+              <li>Makeswift visual editing</li>
+              <li>Multi-storefront, multi-currency native</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Shopify Advantages (per Shopify claims)</div>
+            <ul class="caption" style="line-height: 1.8;">
+              <li>Dominant brand awareness and market presence</li>
+              <li>8,000+ app ecosystem</li>
+              <li>Hydrogen/Oxygen headless stack</li>
+              <li>Mature enterprise offering (Shopify Plus)</li>
+            </ul>
+            <p class="source">Note: TCO and conversion claims from Shopify marketing materials—independent verification recommended</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">03 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 4: SWOT Analysis -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Analysis</span>
+      <span class="breadcrumb-title">SWOT: Commerce.com Position</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="swot-grid">
+        <div class="swot-card strength">
+          <div class="swot-title">Strengths</div>
+          <ul class="swot-list">
+            <li>Open SaaS architecture—composable by design</li>
+            <li>Feedonomics: proven at Dell, Lululemon scale</li>
+            <li>B2B Edition: native enterprise buyer support</li>
+            <li>No transaction fee on external gateways</li>
+            <li>Multi-storefront, multi-currency native</li>
+            <li>GraphQL Storefront API for headless</li>
+            <li>Strong cash position ($179.6M)</li>
+          </ul>
+        </div>
+        <div class="swot-card weakness">
+          <div class="swot-title">Weaknesses</div>
+          <ul class="swot-list">
+            <li>Enterprise account count declining (-2% YoY)</li>
+            <li>Gartner Challenger status (not Leader)</li>
+            <li>Catalyst complexity cited as adoption barrier</li>
+            <li>Integration seams between BC/Feedonomics/Makeswift</li>
+            <li>Brand awareness gap vs. Shopify</li>
+            <li>ARR growth slowing (4% YoY vs. historical)</li>
+          </ul>
+        </div>
+        <div class="swot-card opportunity">
+          <div class="swot-title">Opportunities</div>
+          <ul class="swot-list">
+            <li>WooCommerce: 5M+ active stores (BuiltWith)</li>
+            <li>WPEngine partnership: mid-market migration path</li>
+            <li>Commerce.com rebrand: unified AI-driven positioning</li>
+            <li>B2B ecommerce segment growing fastest</li>
+            <li>Composable commerce market shift</li>
+            <li>New CEO from Accenture—execution focus</li>
+          </ul>
+        </div>
+        <div class="swot-card threat">
+          <div class="swot-title">Threats</div>
+          <ul class="swot-list">
+            <li>Shopify Plus aggressive enterprise targeting</li>
+            <li>VTEX rising as Gartner "Customers' Choice"</li>
+            <li>commercetools as composable-native alternative</li>
+            <li>Automattic improving WooCommerce (HPOS)</li>
+            <li>Analyst skepticism: consensus "Hold" rating</li>
+            <li>Enterprise account attrition trend</li>
+          </ul>
+        </div>
+      </div>
+      <p class="source" style="margin-top: 1rem;">Sources: BigCommerce Q4 2024 Earnings; Gartner MQ 2023; BuiltWith; Analyst reports</p>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">04 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 5: What PLG Actually Means -->
+  <section class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">PLG</div>
+      <h2 class="divider-title">What Product-Led Growth Actually Means</h2>
+      <p class="divider-subtitle">And how it applies to Commerce.com's challenge</p>
+    </div>
+  </section>
+
+  <!-- Slide 6: PLG Definition -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">PLG</span>
+      <span class="breadcrumb-title">Product-Led Growth Principles</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">The product is the <span class="display-cyan">primary growth engine</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <p class="body-lg" style="margin-bottom: 1.5rem;">
+            PLG companies grow at <span class="stat-highlight positive">50% YoY</span> vs. 21% for sales-led SaaS (OpenView 2023 Benchmarks).
+          </p>
+          <p class="body-lg" style="margin-bottom: 1.5rem;">
+            PLG companies report <span class="stat-highlight positive">15-20% higher NRR</span> than sales-led counterparts (G2 2024 Report).
+          </p>
+          <p class="source">Sources: OpenView 2023 Product Benchmarks; G2 2024 PLG Report</p>
+
+          <h3 class="section-title" style="margin: 2rem 0 1rem;">Core PLG Metrics</h3>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Time-to-Value (TTV)</div>
+            <p class="caption">Best-in-class: minutes to "aha moment," not days. Users experience core value within the product before sales engagement.</p>
+          </div>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Activation Rate</div>
+            <p class="caption">Industry benchmark: 20-40% of signups experience core value. Measures product's ability to self-demonstrate value.</p>
+          </div>
+
+          <div class="card card-cyan">
+            <div class="card-title">Net Revenue Retention (NRR)</div>
+            <p class="caption">Best-in-class PLG: 130-150%. Indicates expansion exceeds churn within existing customer base.</p>
+          </div>
+          <p class="source">Source: ProductLed.com; ProductLed.org Foundations</p>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Commerce.com Reality Check</h3>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>PLG Best Practice</th>
+                <th>Commerce.com</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primary GTM Motion</td>
+                <td class="positive">Product-led</td>
+                <td class="warning">Sales + Partner-led</td>
+              </tr>
+              <tr>
+                <td>Self-Service Trial</td>
+                <td class="positive">Core offering</td>
+                <td class="warning">Limited</td>
+              </tr>
+              <tr>
+                <td>Time to First Store</td>
+                <td class="positive">Minutes-hours</td>
+                <td class="negative">Days-weeks</td>
+              </tr>
+              <tr>
+                <td>Implementation</td>
+                <td class="positive">Self-serve 90%+</td>
+                <td class="negative">Requires partners</td>
+              </tr>
+              <tr>
+                <td>In-Product Upsell</td>
+                <td class="positive">Automated</td>
+                <td class="warning">Sales-driven</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout negative" style="margin-top: 1.5rem;">
+            <div class="callout-title">The Diagnosis</div>
+            <div class="callout-text">
+              Commerce.com operates a sales-led model with enterprise complexity. The product doesn't self-serve acquisition, activation, or expansion at scale—partners and sales do. This is expensive and limits growth velocity.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">06 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 7: What the Board Expects -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Accountability</span>
+      <span class="breadcrumb-title">Board-Level Expectations</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">What the board <span class="display-accent">actually measures</span></h2>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">ARR Growth</span>
+            <span class="kpi-owner">CEO</span>
+          </div>
+          <div class="kpi-current" style="color: var(--warning);">4%</div>
+          <div class="kpi-target">FY24 actual (official)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">Enterprise ARR Growth</span>
+            <span class="kpi-owner">SALES + PRODUCT</span>
+          </div>
+          <div class="kpi-current" style="color: var(--positive);">7%</div>
+          <div class="kpi-target">FY24 actual (official)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">Enterprise Accounts</span>
+            <span class="kpi-owner">SALES</span>
+          </div>
+          <div class="kpi-current" style="color: var(--negative);">-2%</div>
+          <div class="kpi-target">5,884 accounts (declining)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">ARPA</span>
+            <span class="kpi-owner">SALES + CS</span>
+          </div>
+          <div class="kpi-current" style="color: var(--positive);">+9%</div>
+          <div class="kpi-target">$44,458 avg (growing)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">Operating Cash Flow</span>
+            <span class="kpi-owner">CFO</span>
+          </div>
+          <div class="kpi-current" style="color: var(--positive);">$26.3M</div>
+          <div class="kpi-target">vs. -$24.2M prior year</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-name">Non-GAAP Op Income</span>
+            <span class="kpi-owner">CFO</span>
+          </div>
+          <div class="kpi-current" style="color: var(--positive);">$19.5M</div>
+          <div class="kpi-target">vs. -$5.7M loss prior year</div>
+        </div>
+      </div>
+      <p class="source" style="margin-top: 1rem;">Source: BigCommerce Q4 2024 Earnings Release, Investor Relations</p>
+
+      <div class="callout" style="margin-top: 1.5rem;">
+        <div class="callout-title">The Tension</div>
+        <div class="callout-text">
+          Profitability improving dramatically. But enterprise account count declining while ARPA grows—classic "move upmarket" pattern.
+          The board question: Can we grow accounts AND ARPA, not one at the expense of the other?
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">07 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 8: Role Definition -->
+  <section class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">Role</div>
+      <h2 class="divider-title">Defining VP Product Architecture</h2>
+      <p class="divider-subtitle">What this role must accomplish to be worth the investment</p>
+    </div>
+  </section>
+
+  <!-- Slide 9: Role Responsibilities -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Role</span>
+      <span class="breadcrumb-title">Responsibilities & Accountability</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">Not just strategy—<span class="display-cyan">execution accountability</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Primary Accountabilities</h3>
+
+          <div class="card card-highlight" style="margin-bottom: 1rem;">
+            <div class="card-title">1. Platform Integration Architecture</div>
+            <p class="caption">Define how BigCommerce + Feedonomics + Makeswift work as a unified stack. Eliminate integration seams that cause customer friction.</p>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-secondary);">Measurable: Integration-related support tickets, TTV for composable implementations</div>
+          </div>
+
+          <div class="card card-highlight" style="margin-bottom: 1rem;">
+            <div class="card-title">2. Developer Experience Post-Catalyst</div>
+            <p class="caption">Own the headless story. Catalyst complexity cited as barrier—define the alternative that balances flexibility with ease-of-use.</p>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-secondary);">Measurable: Time to first deploy, developer NPS, headless adoption rate</div>
+          </div>
+
+          <div class="card card-highlight" style="margin-bottom: 1rem;">
+            <div class="card-title">3. Migration Path Innovation</div>
+            <p class="caption">Turn WooCommerce's 5M+ stores into TAM expansion. Build assessment + migration tooling that reduces friction and cost.</p>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-secondary);">Measurable: Migration velocity, cost per migration, post-migration NPS</div>
+          </div>
+
+          <div class="card card-highlight">
+            <div class="card-title">4. API Strategy & Governance</div>
+            <p class="caption">GraphQL vs REST guidance, versioning strategy, deprecation policy. Ensure API decisions support both PLG motions and enterprise needs.</p>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-secondary);">Measurable: API adoption rate, breaking change frequency, partner satisfaction</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">What This Role Is Not</h3>
+
+          <div class="card card-red" style="margin-bottom: 1rem;">
+            <div class="card-title">Not an Ivory Tower Strategist</div>
+            <p class="caption">Must be hands-on. If you can't build it, you can't architect it. Credibility earned through execution.</p>
+          </div>
+
+          <div class="card card-red" style="margin-bottom: 1rem;">
+            <div class="card-title">Not a Technology Evangelist</div>
+            <p class="caption">Goal isn't tech adoption—it's business outcomes. Technology choices serve revenue and retention metrics.</p>
+          </div>
+
+          <div class="card card-red">
+            <div class="card-title">Not a Single-Product Owner</div>
+            <p class="caption">Horizontal across three engineering orgs (BigCommerce, Feedonomics, Makeswift). Influence without direct authority.</p>
+          </div>
+
+          <h3 class="section-title" style="margin: 2rem 0 1rem;">Decision Authority</h3>
+
+          <div class="card">
+            <table class="data-table" style="font-size: 0.8rem;">
+              <tbody>
+                <tr>
+                  <td>Architecture Decisions</td>
+                  <td class="highlight">DECIDE</td>
+                </tr>
+                <tr>
+                  <td>API Strategy</td>
+                  <td class="highlight">DECIDE</td>
+                </tr>
+                <tr>
+                  <td>Integration Patterns</td>
+                  <td class="highlight">DECIDE</td>
+                </tr>
+                <tr>
+                  <td>Team Hiring</td>
+                  <td class="warning">RECOMMEND</td>
+                </tr>
+                <tr>
+                  <td>Budget Allocation</td>
+                  <td class="warning">RECOMMEND</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">09 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 10: Candidate Value Proposition -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Role</span>
+      <span class="breadcrumb-title">Candidate Value Proposition</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">What <span class="display-accent">this candidate</span> brings</h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <div class="card card-elevated" style="margin-bottom: 1.5rem;">
+            <div style="font-size: 0.75rem; color: var(--accent-primary); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Current Role</div>
+            <div style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Enterprise Architect & Strategic Advisor</div>
+            <div style="color: var(--text-muted);">Accenture Song (2023–Present)</div>
+          </div>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Relevant Experience</h3>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">25+ Years Enterprise Delivery</div>
+            <p class="caption">Fortune 500 commerce transformations. Managed 100+ global resources. Led $10M+ programs while maintaining hands-on involvement.</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">Commerce Platform Expertise</div>
+            <p class="caption">SAP, Salesforce, Adobe ecosystems. Microservices, event-driven, API-first, headless commerce. MACH architecture implementations.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">AI-Native Delivery</div>
+            <p class="caption">5+ enterprise Gen AI implementations. Documented productivity multipliers on real delivery projects.</p>
+          </div>
+          <p class="source">Source: ninochavez.co/cv</p>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Why This Candidate Specifically</h3>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Accenture Alignment</div>
+            <p class="caption">Travis Hess (new CEO) came from Accenture where he led DTC commerce strategy. Shared context, language, and delivery expectations.</p>
+          </div>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Builder, Not Just Strategist</div>
+            <p class="caption">"Ships production apps in days using AI agents." Zero-to-production capability demonstrated. Focus on shipping over process.</p>
+            <p class="source">Source: ninochavez.co/one-pager</p>
+          </div>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Enterprise + Startup Velocity</div>
+            <p class="caption">Understands Fortune 500 governance AND can move at startup speed. Bridges strategy-execution gap.</p>
+          </div>
+
+          <div class="card card-cyan">
+            <div class="card-title">Migration-Specific Value</div>
+            <p class="caption">Platform migrations at scale. Knows friction points, automation opportunities, partner enablement patterns.</p>
+          </div>
+
+          <div class="callout" style="margin-top: 1.5rem;">
+            <div class="callout-title">Selection Criteria Alignment</div>
+            <div class="callout-text">
+              "Teams measuring output over utilization, valuing builders over process managers."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">10 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 11: The WooCommerce Opportunity -->
+  <section class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">TAM</div>
+      <h2 class="divider-title">The WooCommerce Migration Opportunity</h2>
+      <p class="divider-subtitle">5+ million active stores. Untapped acquisition channel.</p>
+    </div>
+  </section>
+
+  <!-- Slide 12: WooCommerce Market -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Opportunity</span>
+      <span class="breadcrumb-title">WooCommerce Market Analysis</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h2 class="display" style="margin-bottom: 1.5rem; font-size: 2.5rem;">5M+ <span class="display-cyan">Active Stores</span></h2>
+
+          <div class="grid-2" style="gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="metric-card">
+              <div class="metric-value">5.2M+</div>
+              <div class="metric-label">Active WC Stores</div>
+              <div class="metric-context">BuiltWith 2024</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">2M+</div>
+              <div class="metric-label">Weekly Downloads</div>
+              <div class="metric-context">WordPress.org</div>
+            </div>
+          </div>
+          <p class="source">Sources: BuiltWith; WordPress.org download stats; WooCommerce Stats 2025</p>
+
+          <h3 class="section-title" style="margin: 1.5rem 0 1rem;">Why WooCommerce Stores Consider Migration</h3>
+
+          <div class="card card-warning" style="margin-bottom: 1rem;">
+            <div class="card-title">Performance at Scale</div>
+            <p class="caption">WordPress + WooCommerce struggles with high-volume catalogs. HPOS improves this, but perception persists.</p>
+          </div>
+
+          <div class="card card-warning" style="margin-bottom: 1rem;">
+            <div class="card-title">Maintenance Burden</div>
+            <p class="caption">Plugin updates, security patches, hosting management. Merchants want managed SaaS simplicity.</p>
+          </div>
+
+          <div class="card card-warning">
+            <div class="card-title">Enterprise Features</div>
+            <p class="caption">B2B pricing, multi-storefront, advanced inventory require extensive plugin configurations.</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">The Commerce.com Angle</h3>
+
+          <div class="card card-green" style="margin-bottom: 1.5rem;">
+            <div class="card-title">WordPress Preservation</div>
+            <p class="caption">
+              <strong>Typical migration pitch: "Replace everything."</strong><br><br>
+              <strong>Commerce.com can offer: "Keep WordPress. Upgrade the commerce engine."</strong><br><br>
+              Content, SEO equity, editorial workflows, media library—all stay intact. Only the commerce backend changes.
+            </p>
+          </div>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">WPEngine Partnership Context</h3>
+
+          <div class="card">
+            <div class="card-title">Target: Mid-Market WooCommerce</div>
+            <p class="caption">
+              WPEngine hosts thousands of mid-market WooCommerce stores—the exact segment where BigCommerce's enterprise features provide clear value over WooCommerce's plugin complexity.
+            </p>
+          </div>
+
+          <div class="callout" style="margin-top: 1.5rem;">
+            <div class="callout-title">Validation Required</div>
+            <div class="callout-text">
+              Migration destination data is limited. Most available data is from migration tool vendors (LitExtension, Cart2Cart) with inherent bias. 90-day pilot will generate first-party data.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">12 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 13: 90-Day Plan Overview -->
+  <section class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">90</div>
+      <h2 class="divider-title">The 90-Day Plan</h2>
+      <p class="divider-subtitle">Foundation, Prove, Scale — with clear exit criteria</p>
+    </div>
+  </section>
+
+  <!-- Slide 14: Phase Overview -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Plan</span>
+      <span class="breadcrumb-title">Three Phases</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="timeline-phases">
+        <div class="timeline-phase phase-1">
+          <div class="phase-badge">Phase 1</div>
+          <div class="phase-title">Foundation</div>
+          <div class="phase-days">Days 1-30</div>
+          <ul style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.8;">
+            <li>Stakeholder mapping</li>
+            <li>Post-Catalyst ADR</li>
+            <li>3 pilot assessments</li>
+            <li>Risk register</li>
+          </ul>
+        </div>
+        <div class="timeline-phase phase-2">
+          <div class="phase-badge">Phase 2</div>
+          <div class="phase-title">Prove</div>
+          <div class="phase-days">Days 31-60</div>
+          <ul style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.8;">
+            <li>Execute Pilot #1</li>
+            <li>Assessment Engine MVP</li>
+            <li>Friction log (20+ issues)</li>
+            <li>Migration playbook v1</li>
+          </ul>
+        </div>
+        <div class="timeline-phase phase-3">
+          <div class="phase-badge">Phase 3</div>
+          <div class="phase-title">Scale</div>
+          <div class="phase-days">Days 61-90</div>
+          <ul style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.8;">
+            <li>Complete 3 pilots</li>
+            <li>Agency enablement</li>
+            <li>Phase 1 proposal</li>
+            <li>6-month roadmap</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="margin: 2rem 0 1rem;">90-Day Exit Criteria (Board Accountability)</h3>
+
+      <div class="grid-2">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Target</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pilot migrations completed</td>
+              <td class="highlight">3</td>
+              <td>VP Product Arch</td>
+            </tr>
+            <tr>
+              <td>Migration NPS</td>
+              <td class="highlight">&gt;40</td>
+              <td>VP Product Arch</td>
+            </tr>
+            <tr>
+              <td>Assessment engine</td>
+              <td class="highlight">Functional prototype</td>
+              <td>VP Product Arch</td>
+            </tr>
+            <tr>
+              <td>Post-Catalyst ADR</td>
+              <td class="highlight">CPO approved</td>
+              <td>VP Product Arch</td>
+            </tr>
+            <tr>
+              <td>Phase 1 proposal</td>
+              <td class="highlight">CPO/CFO buy-in</td>
+              <td>VP Product Arch</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <div class="callout negative">
+            <div class="callout-title">If These Aren't Met</div>
+            <div class="callout-text">
+              If exit criteria aren't met, the role investment has failed. No Phase 1 funding. Clear accountability, not fuzzy "learnings."
+            </div>
+          </div>
+          <div class="callout" style="margin-top: 1rem;">
+            <div class="callout-title">Investment Ask</div>
+            <div class="callout-text">
+              $190K Phase 0 budget. 12-week validation window. Ultra-lean team (3 people). Success triggers Phase 1 proposal with refined ROI.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">14 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 15: Phase 1 Detail -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-primary);">Phase 1</span>
+      <span class="breadcrumb-title">Days 1-30: Foundation</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem; font-size: 2.5rem;">Validate assumptions <span class="display-accent">before building</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Key Questions to Answer</h3>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">1. Why exactly is Catalyst out?</div>
+            <p class="caption">Technical limitations? Political? Resource constraints? The answer determines the alternative path.</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">2. Real state of BC + Feedonomics + Makeswift integration?</div>
+            <p class="caption">Marketing says unified. Engineering reality may differ. Find the seams.</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">3. What do pilot WooCommerce stores look like?</div>
+            <p class="caption">Plugin diversity, customization depth, data complexity. Assess, don't assume.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">4. Who can block progress?</div>
+            <p class="caption">Hidden stakeholders, turf considerations, technical debt owners. Map the terrain.</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Week 1-2: Discovery</h3>
+          <table class="data-table" style="font-size: 0.8rem; margin-bottom: 1.5rem;">
+            <thead>
+              <tr>
+                <th>Stakeholder</th>
+                <th>Deliverable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>CPO</td><td>Alignment doc, decision authority</td></tr>
+              <tr><td>CFO</td><td>Financial framework, success metrics</td></tr>
+              <tr><td>Platform Engineering</td><td>Architecture options</td></tr>
+              <tr><td>3 Pilot Customers</td><td>Customer profiles</td></tr>
+              <tr><td>3 Partner Agencies</td><td>Enablement needs</td></tr>
+            </tbody>
+          </table>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Week 3-4: Architecture</h3>
+          <div class="card card-highlight">
+            <div class="card-title">ADR-002: Post-Catalyst Reference Architecture</div>
+            <p class="caption">
+              Define the simplified stack:<br>
+              WordPress (Content) &#8594; Feedonomics (ETL) &#8594; BigCommerce (Commerce)<br>
+              + Makeswift (Visual) + Vercel (Hosting)
+            </p>
+            <div style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--positive);">Exit: CPO approval on ADR-002</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">15 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 16: Phase 2 Detail -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section" style="background: rgba(34, 211, 238, 0.15); color: var(--accent-secondary);">Phase 2</span>
+      <span class="breadcrumb-title">Days 31-60: Prove</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem; font-size: 2.5rem;">Credibility through <span class="display-cyan">execution</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Pilot #1: Hands-On Execution</h3>
+
+          <div class="callout" style="background: var(--accent-secondary-muted); border-color: var(--accent-secondary); margin-bottom: 1.5rem;">
+            <div class="callout-title" style="color: var(--accent-secondary);">Why Hands-On</div>
+            <div class="callout-text">
+              Credibility earned through execution. Pilot #1 is where you feel pain points, identify automation opportunities, build trust.
+            </div>
+          </div>
+
+          <table class="data-table" style="font-size: 0.8rem;">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>WC Store Assessment</td><td class="highlight">VP Product Arch</td></tr>
+              <tr><td>Feedonomics Configuration</td><td>Jordan Sim + Feedonomics</td></tr>
+              <tr><td>Makeswift Setup</td><td>Agency Partner</td></tr>
+              <tr><td>Integration Wiring</td><td class="highlight">VP Product Arch</td></tr>
+              <tr><td>UAT / Go-Live</td><td>All</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Assessment Engine MVP</h3>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">Input</div>
+            <p class="caption">WooCommerce store URL + API credentials</p>
+          </div>
+
+          <div class="card card-cyan" style="margin-bottom: 1rem;">
+            <div class="card-title">Output</div>
+            <p class="caption">
+              Complexity score (0-100)<br>
+              Risk level (low/medium/high)<br>
+              Estimated effort hours<br>
+              Plugin compatibility matrix<br>
+              Blockers and recommendations
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Technology</div>
+            <p class="caption">
+              Node.js + WooCommerce REST API<br>
+              TypeScript + Zod schemas<br>
+              Supabase (storage)<br>
+              Next.js (dashboard)
+            </p>
+          </div>
+
+          <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--positive);">Exit: Assessment Engine validates 3+ stores accurately</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">16 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 17: Phase 3 Detail -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section" style="background: rgba(52, 211, 153, 0.15); color: var(--positive);">Phase 3</span>
+      <span class="breadcrumb-title">Days 61-90: Scale</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem; font-size: 2.5rem;">Prove <span style="color: var(--positive);">repeatability</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Parallel Pilot Execution</h3>
+
+          <table class="data-table" style="margin-bottom: 1.5rem;">
+            <thead>
+              <tr>
+                <th>Pilot</th>
+                <th>Target Completion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>#1 (from Phase 2)</td><td class="highlight">Day 45</td></tr>
+              <tr><td>#2</td><td class="highlight">Day 75</td></tr>
+              <tr><td>#3</td><td class="highlight">Day 85</td></tr>
+            </tbody>
+          </table>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Agency Enablement</h3>
+
+          <div class="card card-green" style="margin-bottom: 1rem;">
+            <div class="card-title">Certification Checklist</div>
+            <ul class="caption" style="line-height: 1.8;">
+              <li>Architecture training completed</li>
+              <li>Shadowed one migration end-to-end</li>
+              <li>Assessment engine proficiency</li>
+              <li>Makeswift proficiency</li>
+              <li>Escalation paths understood</li>
+            </ul>
+          </div>
+
+          <div style="font-size: 0.75rem; color: var(--positive);">Goal: 3 agencies self-sufficient for standard migrations</div>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Phase 1 Proposal Structure</h3>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">Executive Summary</div>
+            <p class="caption">1-pager for CPO/CFO with clear GO/NO-GO recommendation</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">What We Learned</div>
+            <p class="caption">Pilot outcomes (NPS, timelines, costs), technical findings, agency gaps</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">Refined Business Case</div>
+            <p class="caption">Updated TAM based on pilot data, realistic capture rate, revised ROI with actuals</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="card-title">Resource Request</div>
+            <p class="caption">Headcount, tooling investment, partner incentives, total ask</p>
+          </div>
+
+          <div class="card card-green">
+            <div class="card-title">Recommendation</div>
+            <p class="caption" style="font-weight: 600; color: var(--positive);">GO / CONDITIONAL GO / NO-GO</p>
+            <p class="caption" style="margin-top: 0.5rem;">Based on data, not optimism.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">17 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 18: Risk Register -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Risks</span>
+      <span class="breadcrumb-title">Key Risks & Mitigations</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Technical Risks</h3>
+          <table class="data-table" style="font-size: 0.8rem; margin-bottom: 1.5rem;">
+            <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+            <tbody>
+              <tr><td>Makeswift + non-Catalyst complexity</td><td>Week 2 spike; fallback to custom Next.js</td></tr>
+              <tr><td>WC plugin diversity breaks automation</td><td>80/20 focus; manual path for edge cases</td></tr>
+              <tr><td>SEO redirect volume causes ranking impact</td><td>Staged rollout, monitoring, rollback plan</td></tr>
+            </tbody>
+          </table>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Operational Risks</h3>
+          <table class="data-table" style="font-size: 0.8rem;">
+            <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+            <tbody>
+              <tr><td>Pilot customer disengages</td><td>Over-communicate; exec sponsor required</td></tr>
+              <tr><td>Agency partners lack capacity</td><td>Parallel training; backup agencies ID'd</td></tr>
+              <tr><td>Key person availability</td><td>Document everything; cross-train early</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">Strategic Risks</h3>
+          <table class="data-table" style="font-size: 0.8rem; margin-bottom: 1.5rem;">
+            <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+            <tbody>
+              <tr><td>WPEngine builds own migration tool</td><td>Speed to market; deep integration</td></tr>
+              <tr><td>Automattic improves WooCommerce</td><td>Differentiate on managed simplicity</td></tr>
+              <tr><td>Phase 1 funding not approved</td><td>Strong Phase 0 outcomes; conservative projections</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout negative">
+            <div class="callout-title">The Biggest Risk</div>
+            <div class="callout-text">
+              <strong>This role has influence, not authority.</strong> Success requires alignment across three engineering orgs (BigCommerce, Feedonomics, Makeswift) that have operated independently. Political navigation is as critical as technical skill.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">18 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 19: Beyond 90 Days -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Future</span>
+      <span class="breadcrumb-title">Role Expansion: Q2-Q4</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">Migration is the <span class="display-accent">entry point</span>, not the destination</h2>
+
+      <div class="grid-3" style="gap: 2rem;">
+        <div class="card">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--accent-secondary); margin-bottom: 0.75rem;">Q2</div>
+          <div style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Integration & Developer Experience</div>
+          <ul class="caption" style="line-height: 1.8;">
+            <li>Unified BC + Feedonomics + Makeswift stack</li>
+            <li>Post-Catalyst headless narrative</li>
+            <li>API strategy and governance</li>
+            <li>Developer NPS baseline</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--accent-secondary); margin-bottom: 0.75rem;">Q3</div>
+          <div style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Platform Architecture</div>
+          <ul class="caption" style="line-height: 1.8;">
+            <li>Long-term platform vision document</li>
+            <li>Architecture review processes</li>
+            <li>Competitive technical analysis</li>
+            <li>Technical debt prioritization</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--accent-secondary); margin-bottom: 0.75rem;">Q4</div>
+          <div style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Enterprise & Scale</div>
+          <ul class="caption" style="line-height: 1.8;">
+            <li>Enterprise reference architectures</li>
+            <li>M&A technical due diligence</li>
+            <li>Strategic account reviews</li>
+            <li>Composable commerce positioning</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 2rem;">
+        <div class="callout-title">Ultimate Objective</div>
+        <div class="callout-text">
+          Move Commerce.com from Gartner "Challenger" toward "Leader." This requires: platform integration excellence, developer experience competitive with market leaders, and a clear composable commerce narrative for enterprise buyers.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">19 / 20</span>
+    </div>
+  </section>
+
+  <!-- Slide 20: Summary -->
+  <section class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Summary</span>
+      <span class="breadcrumb-title">The Investment Case</span>
+    </div>
+
+    <div class="slide-content">
+      <h2 class="display" style="margin-bottom: 2rem;">Board-Level <span class="display-accent">Summary</span></h2>
+
+      <div class="grid-2" style="gap: 3rem;">
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">The Situation (Verified Data)</h3>
+          <ul class="body-lg" style="line-height: 2; font-size: 1rem;">
+            <li>FY24: $332.9M revenue (+8%), $349.6M ARR (+4%)</li>
+            <li>Enterprise accounts: 5,884 (-2% YoY)</li>
+            <li>ARPA: $44,458 (+9% YoY)—winning larger, losing volume</li>
+            <li>Cash: $179.6M, Op Income: $19.5M (vs. loss prior year)</li>
+            <li>Gartner: Challenger (5 consecutive years)</li>
+            <li>New CEO (ex-Accenture) signaling execution focus</li>
+          </ul>
+          <p class="source">Source: BigCommerce Q4 2024 Earnings Release</p>
+
+          <h3 class="section-title" style="margin: 2rem 0 1rem;">The Role</h3>
+          <ul class="body-lg" style="line-height: 2; font-size: 1rem;">
+            <li>VP Product Architecture: execution-focused, hands-on</li>
+            <li>Owns platform integration, developer experience, migration</li>
+            <li>Entry point: WPEngine partnership, 3 pilot migrations</li>
+            <li>90-day validation with clear exit criteria</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="section-title" style="margin-bottom: 1rem;">The Ask</h3>
+
+          <div class="grid-2" style="gap: 1rem; margin-bottom: 2rem;">
+            <div class="metric-card">
+              <div class="metric-value">$190K</div>
+              <div class="metric-label">Phase 0 Budget</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">12wk</div>
+              <div class="metric-label">Validation Window</div>
+            </div>
+          </div>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Success = Phase 1 Funding</h3>
+          <div class="card card-green" style="margin-bottom: 1rem;">
+            <ul class="caption" style="line-height: 1.8;">
+              <li>3 pilot migrations completed</li>
+              <li>Migration NPS &gt;40</li>
+              <li>Assessment engine functional</li>
+              <li>Post-Catalyst architecture defined</li>
+              <li>Refined ROI with actual pilot data</li>
+            </ul>
+          </div>
+
+          <h3 class="section-title" style="margin-bottom: 1rem;">Failure = Clear No-Go</h3>
+          <div class="card card-red">
+            <p class="caption">
+              If exit criteria aren't met, the investment has failed. Data-driven decision, not fuzzy "learnings."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="brand">Commerce.com</span>
+      <span class="page-num">20 / 20</span>
+    </div>
+  </section>
+
+</body>
+</html>

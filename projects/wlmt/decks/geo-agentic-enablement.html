@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEO: Agentic Enablement — Walmart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* Dark Landscape Theme - Walmart Blue Accent */
+    :root {
+      /* Backgrounds */
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-elevated: #263548;
+      --bg-divider: #0a1018;
+
+      /* Text hierarchy */
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Primary accent: Walmart Blue */
+      --accent-primary: #0071ce;
+      --accent-primary-bright: #3b9eff;
+      --accent-primary-muted: rgba(0, 113, 206, 0.15);
+
+      /* Secondary accent: Yellow (Spark) */
+      --accent-secondary: #ffc220;
+      --accent-secondary-muted: rgba(255, 194, 32, 0.15);
+
+      /* Tertiary: Cyan for tech elements */
+      --accent-cyan: #22d3ee;
+      --accent-cyan-muted: rgba(34, 211, 238, 0.15);
+
+      /* Semantic colors */
+      --positive: #34d399;
+      --negative: #f87171;
+      --warning: #fbbf24;
+
+      /* Borders */
+      --border: #334155;
+      --border-subtle: #1e293b;
+
+      /* Workstream colors */
+      --ws-agent-ready: #22d3ee;
+      --ws-agent-enabled: #a78bfa;
+      --ws-rmn: #fbbf24;
+      --ws-content: #34d399;
+    }
+
+    /* Typography */
+    .display {
+      font-size: 3.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .display-accent { color: var(--accent-primary-bright); }
+    .display-spark { color: var(--accent-secondary); }
+    .display-lg {
+      font-size: 4.5rem;
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .headline {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
+    }
+    .subhead {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .body-lg { font-size: 1.25rem; line-height: 1.7; color: var(--text-muted); }
+    .caption { font-size: 0.875rem; color: var(--text-muted); }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    /* Slide Layout */
+    .slide {
+      min-height: 100vh;
+      height: 100vh;
+      width: 100%;
+      padding: 4rem 6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Section Divider Slide */
+    .slide-divider {
+      background: var(--bg-divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .divider-content {
+      max-width: 900px;
+    }
+    .divider-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8rem;
+      font-weight: 200;
+      color: var(--accent-primary-bright);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .divider-title {
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .divider-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .page-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .brand {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
+    }
+
+    /* Breadcrumb */
+    .slide-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-section {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-primary-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .breadcrumb-divider {
+      color: var(--border);
+    }
+    .breadcrumb-page {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Navigation dots */
+    .nav-dots {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--accent-secondary);
+      transform: scale(1.3);
+    }
+    .nav-dot.section-start {
+      width: 10px;
+      height: 10px;
+      background: var(--accent-primary-bright);
+      opacity: 0.6;
+    }
+    .nav-dot.section-start:hover, .nav-dot.section-start.active {
+      opacity: 1;
+    }
+    .nav-separator {
+      height: 8px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+    @media (max-width: 1200px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-5 { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .slide { padding: 2rem; height: auto; min-height: 100vh; }
+      .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+      .nav-dots { display: none; }
+      html { scroll-snap-type: none; }
+    }
+
+    /* Spacing */
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 0.75rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.5rem; }
+    .mb-6 { margin-bottom: 2rem; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-6 { margin-top: 2rem; }
+
+    /* Panels & Cards */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .panel-header {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-highlight {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary-bright);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-elevated {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary-bright);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-elevated .panel-header {
+      color: var(--accent-primary-bright);
+    }
+
+    /* Stat Cards */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .stat-value {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent-secondary);
+      line-height: 1;
+    }
+    .stat-value-alt {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent-primary-bright);
+      line-height: 1;
+    }
+
+    /* List styles */
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+    .marker {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-primary-bright);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .marker-muted { background: var(--text-dim); }
+    .marker-secondary { background: var(--accent-secondary); }
+    .marker-cyan { background: var(--accent-cyan); }
+    .marker-ready { background: var(--ws-agent-ready); }
+    .marker-enabled { background: var(--ws-agent-enabled); }
+    .marker-rmn { background: var(--ws-rmn); }
+    .marker-content { background: var(--ws-content); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+    th {
+      text-align: left;
+      padding: 1rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--accent-primary-bright);
+      border-radius: 4px;
+      color: var(--accent-primary-bright);
+    }
+    .badge-secondary {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+    }
+    .badge-ready {
+      border-color: var(--ws-agent-ready);
+      color: var(--ws-agent-ready);
+    }
+    .badge-enabled {
+      border-color: var(--ws-agent-enabled);
+      color: var(--ws-agent-enabled);
+    }
+    .badge-rmn {
+      border-color: var(--ws-rmn);
+      color: var(--ws-rmn);
+    }
+    .badge-content {
+      border-color: var(--ws-content);
+      color: var(--ws-content);
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--accent-primary-muted);
+      border-left: 4px solid var(--accent-primary-bright);
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 2rem;
+    }
+    .callout-secondary {
+      background: var(--accent-secondary-muted);
+      border-left-color: var(--accent-secondary);
+    }
+    .callout-cyan {
+      background: var(--accent-cyan-muted);
+      border-left-color: var(--accent-cyan);
+    }
+    .callout p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* Text colors */
+    .text-muted { color: var(--text-muted); }
+    .text-accent { color: var(--accent-secondary); }
+    .text-blue { color: var(--accent-primary-bright); }
+    .text-cyan { color: var(--accent-cyan); }
+    .text-green { color: var(--positive); }
+    .text-red { color: var(--negative); }
+    .text-yellow { color: var(--warning); }
+    .text-ready { color: var(--ws-agent-ready); }
+    .text-enabled { color: var(--ws-agent-enabled); }
+    .text-rmn { color: var(--ws-rmn); }
+
+    /* Timeline cards */
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-top: 3px solid var(--accent-primary-bright);
+    }
+    .timeline-card-now { border-top-color: var(--positive); }
+    .timeline-card-next { border-top-color: var(--accent-cyan); }
+    .timeline-card-future { border-top-color: var(--ws-agent-enabled); }
+
+    .timeline-card .phase {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-card-now .phase { color: var(--positive); }
+    .timeline-card-next .phase { color: var(--accent-cyan); }
+    .timeline-card-future .phase { color: var(--ws-agent-enabled); }
+
+    .timeline-card .title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .timeline-card .time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .timeline-card .items {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Hero slide */
+    .hero-slide {
+      background: linear-gradient(135deg, #0f172a 0%, #1a365d 50%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    /* Slide title */
+    .slide-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .slide-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Pillar cards */
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .pillar-card .icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent-primary-bright);
+    }
+    .pillar-card .title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .pillar-card .desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Quote block */
+    .quote-block {
+      border-left: 3px solid var(--accent-primary-bright);
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+    .quote-block .text {
+      font-size: 1.125rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .quote-block .attribution {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Architecture diagram */
+    .arch-box {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+    }
+    .arch-box-primary {
+      border-color: var(--accent-primary-bright);
+      background: var(--accent-primary-muted);
+    }
+    .arch-box-secondary {
+      border-color: var(--accent-secondary);
+      background: var(--accent-secondary-muted);
+    }
+    .arch-box-cyan {
+      border-color: var(--accent-cyan);
+      background: var(--accent-cyan-muted);
+    }
+    .arch-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 1.5rem;
+    }
+
+    /* Print styles */
+    @media print {
+      @page {
+        size: 13.33in 7.5in;
+        margin: 0;
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html { scroll-snap-type: none; }
+      .no-print, .nav-dots { display: none !important; }
+      body {
+        background: var(--bg) !important;
+        color: var(--text) !important;
+      }
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        padding: 1.25rem 2rem;
+        page-break-after: always;
+        page-break-inside: avoid;
+        break-after: page;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+      .slide:last-child { page-break-after: auto; }
+      .slide-divider { background: var(--bg-divider) !important; }
+      .hero-slide { background: linear-gradient(135deg, #0f172a 0%, #1a365d 50%, #0f172a 100%) !important; }
+      .card, .panel, .stat-card, .card-highlight, .card-elevated, .pillar-card, .timeline-card {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+      .callout { background: var(--accent-primary-muted) !important; }
+      .callout-secondary { background: var(--accent-secondary-muted) !important; }
+      .callout-cyan { background: var(--accent-cyan-muted) !important; }
+      table th { background: var(--bg-card) !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Dots -->
+  <nav class="nav-dots no-print">
+    <a href="#hero" class="nav-dot section-start active" title="Cover"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-context" class="nav-dot section-start" title="Section: Strategic Context"></a>
+    <a href="#exec-summary" class="nav-dot" title="Executive Summary"></a>
+    <a href="#sparky-position" class="nav-dot" title="Sparky Positioning"></a>
+    <a href="#success-pillars" class="nav-dot" title="Success Pillars"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-framework" class="nav-dot section-start" title="Section: GEO Framework"></a>
+    <a href="#agent-ready" class="nav-dot" title="Agent Ready"></a>
+    <a href="#agent-enabled" class="nav-dot" title="Agent Enabled"></a>
+    <a href="#content-enrichment" class="nav-dot" title="Content Enrichment"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-rmn" class="nav-dot section-start" title="Section: Walmart Connect"></a>
+    <a href="#rmn-disruption" class="nav-dot" title="RMN Disruption"></a>
+    <a href="#rmn-response" class="nav-dot" title="RMN Response"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-architecture" class="nav-dot section-start" title="Section: Architecture"></a>
+    <a href="#sparky-architecture" class="nav-dot" title="Sparky Architecture"></a>
+    <a href="#protocol-landscape" class="nav-dot" title="Protocol Landscape"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-roadmap" class="nav-dot section-start" title="Section: Roadmap"></a>
+    <a href="#roadmap" class="nav-dot" title="Roadmap"></a>
+    <a href="#value-cases" class="nav-dot" title="Value Cases"></a>
+    <a href="#next-steps" class="nav-dot" title="Next Steps"></a>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Slide 1: Hero/Cover -->
+  <!-- ============================================ -->
+  <section id="hero" class="slide hero-slide">
+    <div class="slide-header" style="position: absolute; top: 2rem; left: 3rem; right: 3rem;">
+      <span class="brand">Walmart</span>
+      <span class="subhead">Strategic POV</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="subhead mb-4">Generative Engine Optimization</p>
+      <h1 class="display mb-4">Agentic Enablement<br><span class="display-spark">Retail &amp; E-commerce</span></h1>
+      <p class="body-lg" style="max-width: 700px; margin: 0 auto;">
+        How Walmart shows up when AI answers shopping questions — and how Sparky becomes the orchestration layer for agentic commerce.
+      </p>
+    </div>
+
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">1 / 20</span>
+      <span class="caption">December 2025</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: STRATEGIC CONTEXT -->
+  <!-- ============================================ -->
+  <section id="divider-context" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">01</div>
+      <h2 class="divider-title">Strategic Context</h2>
+      <p class="divider-subtitle">GEO as the next frontier, Sparky as the centerpiece, and the four pillars of agentic success</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">2 / 20</span>
+      <span class="caption">Section 01</span>
+    </div>
+  </section>
+
+  <!-- Slide 3: Executive Summary -->
+  <section id="exec-summary" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Executive Summary</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+        <div class="card-elevated">
+          <p class="subhead text-cyan mb-3">The Parallel Path Imperative</p>
+          <p class="headline mb-3">Agent Ready + Agent Enabled</p>
+          <p class="text-muted mb-4">Walmart must pursue two tracks simultaneously. Waiting for one to mature before starting the other cedes ground to competitors.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span><strong>Agent Ready (NOW)</strong> — Make your data consumable by external AI</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-enabled"></span><span><strong>Agent Enabled (FUTURE)</strong> — Build agentic experiences on Sparky</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Core Thesis</p>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>GEO is the new SEO</strong> — LLMs are the new search interface. Visibility requires new optimization.</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Sparky is the moat</strong> — Your internal AI investment becomes the orchestration layer.</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>RMN must evolve</strong> — Walmart Connect's inventory shifts as traffic moves to AI surfaces.</span></div>
+        </div>
+      </div>
+
+      <div class="callout-secondary">
+        <p><strong>The Question:</strong> When a customer asks ChatGPT "What's the best TV for watching sports under $800?", does Walmart appear as a confident recommendation — or just another option in a comparison table? <span style="color: var(--accent-secondary); font-weight: 600;">GEO determines the answer.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">3 / 20</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- Slide 4: Sparky Positioning -->
+  <section id="sparky-position" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Sparky as the Center</span>
+    </div>
+    <p class="slide-subtitle">Sparky's role expands from internal assistant to the orchestration layer for agentic commerce</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="card-highlight">
+          <p class="subhead mb-3 text-blue">Today</p>
+          <p class="headline mb-2">Internal AI Assistant</p>
+          <p class="text-muted">Sparky handles internal queries, associates, and operational tasks. A capable but bounded assistant.</p>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--accent-cyan);">
+          <p class="subhead mb-3 text-cyan">Tomorrow</p>
+          <p class="headline mb-2">Data Orchestrator</p>
+          <p class="text-muted">Sparky structures data, manages content services, and controls how AI systems consume Walmart's catalog.</p>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--ws-agent-enabled);">
+          <p class="subhead mb-3 text-enabled">Future</p>
+          <p class="headline mb-2">Agentic Hub</p>
+          <p class="text-muted">Sparky orchestrates agent-to-agent workflows via A2A/MCP, enabling commerce actions across any AI surface.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Why Sparky as Center?</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Existing Investment</strong> — Foundation is built; extend, don't rebuild</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Unified Identity</strong> — Single point of control for brand voice, policies, guardrails</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Data Sovereignty</strong> — Keeps decision logic internal; only exposes what you choose</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Sparky's Expanding Scope</p>
+          <div class="list-item"><span class="marker marker-content"></span><span>Structuring data for LLM legibility</span></div>
+          <div class="list-item"><span class="marker marker-content"></span><span>Content services orchestration</span></div>
+          <div class="list-item"><span class="marker marker-content"></span><span>AI consumption governance (LLMs.txt)</span></div>
+          <div class="list-item"><span class="marker marker-content"></span><span>Agent-to-agent protocol mediation</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">4 / 20</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- Slide 5: Success Pillars -->
+  <section id="success-pillars" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Success Pillars</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4" style="gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <p class="title">Brand Sentiment</p>
+          <p class="desc">How is Walmart described in AI responses? Protect and enhance brand perception across all LLM surfaces.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <p class="title">Topical Visibility</p>
+          <p class="desc">Are you appearing in AI conversations about your categories? GEO optimization for generative surfaces.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <p class="title">Quality &amp; Value</p>
+          <p class="desc">What is your brand's reputation in LLMs? Surface price leadership, Everyday Low Price, quality scores.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
+          <p class="title">Product Discovery</p>
+          <p class="desc">Are your products surfaced in AI recommendations? Machine-readable data enables confident suggestions.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>The Measurement Gap:</strong> Today, there are no IAB/MRC standards for AI/LLM attribution. We're building forward-compatible measurement hooks now — API impression tokens, inclusion tracking — to capture signals as standards emerge. <span style="color: var(--accent-primary-bright); font-weight: 600;">Instrument first, attribute later.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">5 / 20</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: GEO FRAMEWORK -->
+  <!-- ============================================ -->
+  <section id="divider-framework" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">02</div>
+      <h2 class="divider-title">GEO Framework</h2>
+      <p class="divider-subtitle">Agent Ready (now) vs. Agent Enabled (future) — the parallel paths to agentic commerce</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">6 / 20</span>
+      <span class="caption">Section 02</span>
+    </div>
+  </section>
+
+  <!-- Slide 7: Agent Ready -->
+  <section id="agent-ready" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 GEO Framework</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Agent Ready (NOW)</span>
+    </div>
+    <p class="slide-subtitle">Make your data consumable by external AI — this is table stakes for visibility</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header text-cyan">LLM Discoverability</p>
+          <p class="text-muted mb-3">Optimize data for LLM legibility. Structure content so AI can confidently interpret and recommend.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Schema.org compliance for all product data</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Structured FAQs, guides, how-to content</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Machine-readable specs, comparisons, reviews</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header text-cyan">Agent-Exclusive Feeds</p>
+          <p class="text-muted mb-3">APIs designed specifically for agentic crawlers. The "machine lane" parallel to human web experience.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Real-time inventory, pricing, availability</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Product attributes optimized for LLM extraction</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Reduced cloud strain vs. web scraping</span></div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header text-cyan">LLMs.txt Governance</p>
+          <p class="text-muted mb-3">Like robots.txt, but for AI. Control what LLMs can access, how often, and under what terms.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Define permitted use cases per crawler</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Attribute requirements for citation</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Rate limiting and access tiers</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header text-cyan">Standardized Feeds</p>
+          <p class="text-muted mb-3">Consistency across all channels. Same data, same format, less operational complexity.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Unified product catalog API</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Single source of truth for all AI consumers</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-ready"></span><span>Reduce duplicate/conflicting data issues</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">7 / 20</span>
+      <span class="caption">Section 02: GEO Framework</span>
+    </div>
+  </section>
+
+  <!-- Slide 8: Agent Enabled -->
+  <section id="agent-enabled" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 GEO Framework</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Agent Enabled (FUTURE)</span>
+    </div>
+    <p class="slide-subtitle">Build agentic experiences that can operate across any AI surface</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="card-elevated" style="border-left-color: var(--ws-agent-enabled);">
+          <p class="subhead text-enabled mb-3">Foundational Architecture</p>
+          <p class="headline mb-3">AI Workflow Infrastructure</p>
+          <p class="text-muted mb-4">The plumbing that enables agents to take action — not just retrieve information.</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-enabled"></span><span><strong>A2A Protocol</strong> — Agent-to-Agent communication standard</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-enabled"></span><span><strong>MCP Integration</strong> — Model Context Protocol for tool access</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-enabled"></span><span><strong>Sparky Orchestration</strong> — Central coordination of all agent workflows</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header text-enabled">Agentic Experiences</p>
+          <p class="text-muted mb-3">Channel-agnostic workflows that work wherever the customer is.</p>
+          <table style="font-size: 0.875rem;">
+            <tbody>
+              <tr>
+                <td style="font-weight: 500; width: 30%;">Sparky</td>
+                <td class="text-muted">Primary orchestration agent, customer-facing assistant</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Marty</td>
+                <td class="text-muted">In-store robotics, inventory operations</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Content Agent</td>
+                <td class="text-muted">Dynamic content generation, personalization</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">External Agents</td>
+                <td class="text-muted">ChatGPT, Copilot, Perplexity via A2A/MCP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout" style="background: rgba(167, 139, 250, 0.15); border-left-color: var(--ws-agent-enabled);">
+        <p><strong>The Commerce Action Layer:</strong> Agent Enabled means external AI can complete transactions — add to cart, check availability, apply coupons, checkout — all without leaving the conversation. This is where OpenAI's ACP (Agent Commerce Protocol) becomes critical. <span style="color: var(--ws-agent-enabled); font-weight: 600;">Walmart must be a launch partner, not a late adopter.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">8 / 20</span>
+      <span class="caption">Section 02: GEO Framework</span>
+    </div>
+  </section>
+
+  <!-- Slide 9: Content Enrichment -->
+  <section id="content-enrichment" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 GEO Framework</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Content Enrichment Strategy</span>
+    </div>
+    <p class="slide-subtitle">The content that makes AI confident in recommending Walmart</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header">The Helpful Content Triangle</p>
+          <div style="text-align: center; padding: 1rem; margin-bottom: 1rem;">
+            <svg viewBox="0 0 200 180" width="200" height="180">
+              <!-- Triangle -->
+              <polygon points="100,20 180,160 20,160" fill="none" stroke="#334155" stroke-width="2"/>
+              <!-- Labels -->
+              <text x="100" y="15" text-anchor="middle" fill="#94a3b8" font-size="10">AUTHORITY</text>
+              <text x="15" y="175" text-anchor="start" fill="#94a3b8" font-size="10">USER-CENTRIC</text>
+              <text x="185" y="175" text-anchor="end" fill="#94a3b8" font-size="10">RELEVANCE</text>
+              <!-- Center -->
+              <circle cx="100" cy="115" r="25" fill="rgba(255, 194, 32, 0.2)" stroke="#ffc220" stroke-width="2"/>
+              <text x="100" y="112" text-anchor="middle" fill="#ffc220" font-size="9" font-weight="600">HELPFUL</text>
+              <text x="100" y="123" text-anchor="middle" fill="#ffc220" font-size="9" font-weight="600">CONTENT</text>
+            </svg>
+          </div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Authority</strong> — Credible, trustworthy source</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>User-Centric</strong> — Well-organized, addresses needs</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Relevance</strong> — Up-to-date, query-matched</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Content Types to Optimize</p>
+          <table style="font-size: 0.8125rem;">
+            <tbody>
+              <tr>
+                <td style="font-weight: 500; width: 35%;">PDP Content</td>
+                <td class="text-muted">Specs, features, compatibility, use cases</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Category Pages</td>
+                <td class="text-muted">Buying guides, comparison matrices</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Merchant Content</td>
+                <td class="text-muted">Seller info, ratings, fulfillment data</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Product Guides</td>
+                <td class="text-muted">How-to, setup, troubleshooting</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Reviews/UGC</td>
+                <td class="text-muted">Structured sentiment, verified purchases</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">FAQs</td>
+                <td class="text-muted">Schema.org marked, conversational format</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 500;">Localized Content</td>
+                <td class="text-muted">Store-specific availability, local deals</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout-cyan">
+        <p><strong>Offsite vs. Web/Content:</strong> Offsite optimization (brand sentiment, topical visibility) is done through external PR, partnerships, and citation building. Web/Content optimization is what you control directly — and it's where GEO investment has immediate impact.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">9 / 20</span>
+      <span class="caption">Section 02: GEO Framework</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: WALMART CONNECT -->
+  <!-- ============================================ -->
+  <section id="divider-rmn" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">03</div>
+      <h2 class="divider-title">Walmart Connect</h2>
+      <p class="divider-subtitle">The RMN disruption risk and how to build forward-compatible advertising in agentic surfaces</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">10 / 20</span>
+      <span class="caption">Section 03</span>
+    </div>
+  </section>
+
+  <!-- Slide 11: RMN Disruption -->
+  <section id="rmn-disruption" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Walmart Connect</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">The Disruption Risk</span>
+    </div>
+    <p class="slide-subtitle">As traffic shifts to AI surfaces, traditional ad inventory loses visibility</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header text-rmn">The Problem</p>
+          <div class="list-item"><span class="marker marker-rmn"></span><span><strong>Traffic Displacement</strong> — Users get answers in AI, never visit Walmart.com</span></div>
+          <div class="list-item"><span class="marker marker-rmn"></span><span><strong>Inventory Erosion</strong> — Fewer page views = fewer ad impressions</span></div>
+          <div class="list-item"><span class="marker marker-rmn"></span><span><strong>Attribution Blindness</strong> — No standards for AI-driven conversions</span></div>
+          <div class="list-item"><span class="marker marker-rmn"></span><span><strong>Sponsor Confusion</strong> — How do "sponsored" units work in chat?</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">The Scale</p>
+          <div class="grid-2" style="gap: 1rem; margin-bottom: 1rem;">
+            <div class="stat-card" style="padding: 1rem;">
+              <p class="stat-label" style="font-size: 0.75rem;">Walmart Connect Revenue</p>
+              <p class="stat-value" style="font-size: 2rem;">$3.4B</p>
+              <p class="text-muted" style="font-size: 0.75rem;">FY2024</p>
+            </div>
+            <div class="stat-card" style="padding: 1rem;">
+              <p class="stat-label" style="font-size: 0.75rem;">YoY Growth</p>
+              <p class="stat-value" style="font-size: 2rem;">28%</p>
+              <p class="text-muted" style="font-size: 0.75rem;">Fastest growing segment</p>
+            </div>
+          </div>
+          <p class="text-muted" style="font-size: 0.875rem;">This revenue stream is directly threatened by traffic that never reaches Walmart-controlled surfaces. The question isn't if disruption happens — it's whether Walmart captures the new surface or cedes it.</p>
+        </div>
+      </div>
+
+      <div class="callout-secondary">
+        <p><strong>The Uncomfortable Truth:</strong> Every customer who gets a product answer from ChatGPT without visiting Walmart.com is a lost impression opportunity. But if Walmart's data powers that ChatGPT answer with attribution, <span style="color: var(--accent-secondary); font-weight: 600;">the impression happens in a new location — not disappears.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">11 / 20</span>
+      <span class="caption">Section 03: Walmart Connect</span>
+    </div>
+  </section>
+
+  <!-- Slide 12: RMN Response -->
+  <section id="rmn-response" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Walmart Connect</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">The Response Strategy</span>
+    </div>
+    <p class="slide-subtitle">Embed sponsored content into agent-ready infrastructure from day one</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="card-highlight" style="border-left-color: var(--ws-rmn);">
+          <p class="subhead mb-2 text-rmn">Agent-Ready Sponsorship</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Embed sponsored units directly in the Agent-Exclusive Feed API</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>Tagged as "sponsored" for transparency</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>Eligible for premium placement in AI responses</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>Maintains FTC compliance in new contexts</span></div>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--ws-rmn);">
+          <p class="subhead mb-2 text-rmn">Forward-Compatible Hooks</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Instrument now, attribute later as standards emerge</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>API impression tokens per request</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>Inclusion tracking (was product in response?)</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>Conversion correlation via customer ID</span></div>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--ws-rmn);">
+          <p class="subhead mb-2 text-rmn">Standards Participation</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Shape the rules rather than follow them</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>IAB working groups on AI attribution</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>MRC verification standards for LLM impressions</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-rmn"></span><span>OpenAI ACP sponsor format definition</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-header">Measurement Framework (Building Now)</p>
+        <table style="font-size: 0.875rem;">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>What It Captures</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 500;">API Request Volume</td>
+              <td class="text-muted">How often is Walmart data requested by AI systems?</td>
+              <td><span class="badge badge-content">Available Now</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Inclusion Rate</td>
+              <td class="text-muted">When requested, is Walmart product included in response?</td>
+              <td><span class="badge">Instrumented</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Sponsored Inclusion</td>
+              <td class="text-muted">Are sponsored products appearing in AI recommendations?</td>
+              <td><span class="badge">Instrumented</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Conversion Attribution</td>
+              <td class="text-muted">Did AI exposure lead to purchase?</td>
+              <td><span class="badge badge-secondary">Pending Standards</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">12 / 20</span>
+      <span class="caption">Section 03: Walmart Connect</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: ARCHITECTURE -->
+  <!-- ============================================ -->
+  <section id="divider-architecture" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">04</div>
+      <h2 class="divider-title">Architecture</h2>
+      <p class="divider-subtitle">Sparky as orchestration hub, protocol landscape, and technical foundation</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">13 / 20</span>
+      <span class="caption">Section 04</span>
+    </div>
+  </section>
+
+  <!-- Slide 14: Sparky Architecture -->
+  <section id="sparky-architecture" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Architecture</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Sparky as Orchestration Hub</span>
+    </div>
+    <p class="slide-subtitle">Sparky mediates between internal systems and external AI consumers</p>
+
+    <div class="slide-content">
+      <!-- Architecture Diagram -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <!-- External Layer -->
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+          <div class="arch-box" style="flex: 1; max-width: 150px;">
+            <p style="font-size: 0.75rem; color: var(--text-muted);">ChatGPT</p>
+          </div>
+          <div class="arch-box" style="flex: 1; max-width: 150px;">
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Copilot</p>
+          </div>
+          <div class="arch-box" style="flex: 1; max-width: 150px;">
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Google SGE</p>
+          </div>
+          <div class="arch-box" style="flex: 1; max-width: 150px;">
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Perplexity</p>
+          </div>
+        </div>
+        <div class="arch-connector">&darr; A2A / MCP / ACP &darr;</div>
+        <!-- Sparky Layer -->
+        <div style="display: flex; justify-content: center;">
+          <div class="arch-box arch-box-secondary" style="flex: 1; max-width: 600px; padding: 1.5rem;">
+            <p style="font-weight: 600; color: var(--accent-secondary); margin-bottom: 0.5rem;">SPARKY</p>
+            <p style="font-size: 0.875rem; color: var(--text);">Orchestration Layer</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Policy Enforcement | Rate Limiting | Sponsorship Injection | Response Assembly</p>
+          </div>
+        </div>
+        <div class="arch-connector">&darr;</div>
+        <!-- Internal Layer -->
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+          <div class="arch-box arch-box-primary" style="flex: 1; max-width: 140px;">
+            <p style="font-size: 0.75rem; color: var(--accent-primary-bright);">Catalog API</p>
+          </div>
+          <div class="arch-box arch-box-primary" style="flex: 1; max-width: 140px;">
+            <p style="font-size: 0.75rem; color: var(--accent-primary-bright);">Inventory</p>
+          </div>
+          <div class="arch-box arch-box-primary" style="flex: 1; max-width: 140px;">
+            <p style="font-size: 0.75rem; color: var(--accent-primary-bright);">Pricing</p>
+          </div>
+          <div class="arch-box arch-box-primary" style="flex: 1; max-width: 140px;">
+            <p style="font-size: 0.75rem; color: var(--accent-primary-bright);">Content</p>
+          </div>
+          <div class="arch-box arch-box-primary" style="flex: 1; max-width: 140px;">
+            <p style="font-size: 0.75rem; color: var(--accent-primary-bright);">Walmart Connect</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Sparky Responsibilities</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Request Routing</strong> — Direct queries to appropriate internal services</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Policy Enforcement</strong> — Apply LLMs.txt rules per requester</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Sponsor Injection</strong> — Insert Walmart Connect placements</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span><strong>Response Assembly</strong> — Compose multi-source answers</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Why This Architecture?</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span><strong>Single Control Point</strong> — One place to manage all AI access</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span><strong>Brand Consistency</strong> — Same voice across all AI surfaces</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span><strong>Monetization Ready</strong> — Sponsorship built in, not bolted on</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span><strong>Future Proof</strong> — Add new protocols without system redesign</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">14 / 20</span>
+      <span class="caption">Section 04: Architecture</span>
+    </div>
+  </section>
+
+  <!-- Slide 15: Protocol Landscape -->
+  <section id="protocol-landscape" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Architecture</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Protocol Landscape</span>
+    </div>
+    <p class="slide-subtitle">The emerging standards Sparky must speak fluently</p>
+
+    <div class="slide-content">
+      <div class="panel" style="margin-bottom: 1.5rem;">
+        <table style="font-size: 0.9375rem;">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Protocol</th>
+              <th style="width: 20%;">Owner</th>
+              <th style="width: 35%;">Purpose</th>
+              <th style="width: 30%;">Walmart Relevance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 600; color: var(--accent-cyan);">MCP</td>
+              <td class="text-muted">Anthropic</td>
+              <td class="text-muted">Model Context Protocol — standardized tool access for LLMs</td>
+              <td>Expose Sparky capabilities as MCP tools</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 600; color: var(--ws-agent-enabled);">A2A</td>
+              <td class="text-muted">Google</td>
+              <td class="text-muted">Agent-to-Agent — inter-agent communication standard</td>
+              <td>Enable Sparky to delegate to external agents</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 600; color: var(--positive);">ACP</td>
+              <td class="text-muted">OpenAI (Shopify)</td>
+              <td class="text-muted">Agent Commerce Protocol — commerce actions in chat</td>
+              <td>Critical for ChatGPT checkout integration</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 600; color: var(--accent-secondary);">LLMs.txt</td>
+              <td class="text-muted">Emerging</td>
+              <td class="text-muted">Governance file for AI crawler access control</td>
+              <td>Define what AI can access and how</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="callout-cyan">
+          <p><strong>MCP + A2A:</strong> These protocols enable Sparky to both expose tools (MCP) and communicate with other agents (A2A). Together, they make Walmart's commerce capabilities accessible to any compliant AI system.</p>
+        </div>
+        <div class="callout-secondary">
+          <p><strong>ACP Priority:</strong> OpenAI's Agent Commerce Protocol is the most commercially urgent. Shopify is already integrated. <span style="color: var(--accent-secondary); font-weight: 600;">Walmart should be in the launch cohort, not playing catch-up.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">15 / 20</span>
+      <span class="caption">Section 04: Architecture</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: ROADMAP -->
+  <!-- ============================================ -->
+  <section id="divider-roadmap" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">05</div>
+      <h2 class="divider-title">Roadmap &amp; Next Steps</h2>
+      <p class="divider-subtitle">Phased implementation, value cases, and immediate actions</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">16 / 20</span>
+      <span class="caption">Section 05</span>
+    </div>
+  </section>
+
+  <!-- Slide 17: Roadmap -->
+  <section id="roadmap" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">05 Roadmap</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Implementation Phases</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="timeline-card timeline-card-now">
+          <p class="phase">Now</p>
+          <p class="title">LLM Enrichment</p>
+          <div class="items">
+            <p>Schema.org compliance audit</p>
+            <p>Agent-exclusive feed API design</p>
+            <p>LLMs.txt governance framework</p>
+            <p>Measurement hook instrumentation</p>
+            <p>Walmart Connect sponsorship schema</p>
+          </div>
+        </div>
+        <div class="timeline-card timeline-card-next">
+          <p class="phase">Next</p>
+          <p class="title">Agent Orchestration</p>
+          <div class="items">
+            <p>Sparky MCP tool exposure</p>
+            <p>A2A protocol implementation</p>
+            <p>ACP commerce action layer</p>
+            <p>Multi-agent workflow testing</p>
+            <p>Sponsored content in feeds</p>
+          </div>
+        </div>
+        <div class="timeline-card timeline-card-future">
+          <p class="phase">Future</p>
+          <p class="title">LLM Connected Feeds</p>
+          <div class="items">
+            <p>Real-time inventory in AI responses</p>
+            <p>Dynamic pricing surface</p>
+            <p>Personalized recommendations via Sparky</p>
+            <p>Full attribution measurement</p>
+            <p>Agent-native shopping experiences</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-header">Parallel Work Streams</p>
+        <table style="font-size: 0.875rem;">
+          <thead>
+            <tr>
+              <th>Stream</th>
+              <th>Now Focus</th>
+              <th>Next Focus</th>
+              <th>Future Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 500;"><span class="marker-ready" style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 0.5rem;"></span>Agent Ready</td>
+              <td class="text-muted">Data structure, feeds, governance</td>
+              <td class="text-muted">Protocol compliance, testing</td>
+              <td class="text-muted">Optimization, expansion</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;"><span class="marker-enabled" style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 0.5rem;"></span>Agent Enabled</td>
+              <td class="text-muted">Architecture design, Sparky scope</td>
+              <td class="text-muted">MCP/A2A/ACP implementation</td>
+              <td class="text-muted">Connected experiences</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;"><span class="marker-rmn" style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 0.5rem;"></span>Walmart Connect</td>
+              <td class="text-muted">Sponsor schema, measurement hooks</td>
+              <td class="text-muted">Feed integration, attribution</td>
+              <td class="text-muted">Standards participation</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;"><span class="marker-content" style="display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 0.5rem;"></span>Content</td>
+              <td class="text-muted">Gap analysis, prioritization</td>
+              <td class="text-muted">Enrichment, helpful content</td>
+              <td class="text-muted">Dynamic generation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">17 / 20</span>
+      <span class="caption">Section 05: Roadmap</span>
+    </div>
+  </section>
+
+  <!-- Slide 18: Value Cases -->
+  <section id="value-cases" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">05 Roadmap</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Value Cases</span>
+    </div>
+    <p class="slide-subtitle">Concrete examples of agentic commerce in action</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="card-elevated">
+          <p class="subhead text-cyan mb-3">Value Case 1</p>
+          <p class="headline mb-2">AI-Assisted Product Discovery</p>
+          <p class="text-muted mb-3">Customer asks ChatGPT: "What's the best 65-inch TV for a bright living room under $700?"</p>
+          <div class="quote-block">
+            <p class="text" style="font-size: 0.9375rem;">"Based on your needs, I recommend the TCL 65" QM8 from Walmart. It has 2,400 nits brightness for bright rooms, is currently $649, and available for pickup at your local store in 2 hours. Would you like me to add it to your cart?"</p>
+          </div>
+          <p class="text-muted" style="font-size: 0.8125rem; margin-top: 1rem;"><strong>What's happening:</strong> Sparky provides real-time inventory, pricing, and fulfillment data via ACP. Walmart Connect sponsors influence ranking. Attribution tracked.</p>
+        </div>
+        <div class="card-elevated">
+          <p class="subhead text-cyan mb-3">Value Case 2</p>
+          <p class="headline mb-2">Reorder + Substitution Flow</p>
+          <p class="text-muted mb-3">Customer asks Sparky: "Reorder my usual groceries but the kids are allergic to the new cereal brand."</p>
+          <div class="quote-block">
+            <p class="text" style="font-size: 0.9375rem;">"I found three allergy-friendly alternatives to the Great Value cereal. Based on your family's preferences, I recommend Cheerios Honey Nut at $4.48. I've substituted it in your cart. Your total is $127.42 for pickup tomorrow at 9am."</p>
+          </div>
+          <p class="text-muted" style="font-size: 0.8125rem; margin-top: 1rem;"><strong>What's happening:</strong> Sparky accesses purchase history, allergy data, inventory, and fulfillment slots. Seamless agent-native shopping.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Value Case 3: Brand Monitoring</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Automated tracking of how Walmart appears in AI responses across platforms</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Sentiment analysis of AI-generated descriptions</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Competitive positioning vs. Amazon, Target</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Category-level visibility scoring</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Value Case 4: Associate Augmentation</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Sparky + Marty enable smarter in-store experiences</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Real-time inventory lookup via voice</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Product comparison at point of decision</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span>Automated restock alerts to Marty</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">18 / 20</span>
+      <span class="caption">Section 05: Roadmap</span>
+    </div>
+  </section>
+
+  <!-- Slide 19: Next Steps -->
+  <section id="next-steps" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">05 Roadmap</span>
+      <span class="breadcrumb-divider">&rarr;</span>
+      <span class="breadcrumb-page">Next Steps</span>
+    </div>
+    <p class="slide-subtitle">Immediate actions to accelerate Walmart's agentic readiness</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header text-secondary">January Session Objectives</p>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>GEO POV Alignment</strong> — Validate this framework with broader stakeholders</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Sparky Scope Definition</strong> — Agree on orchestration layer responsibilities</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Value Case Prioritization</strong> — Select 2-3 cases for initial implementation</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Measurement Framework</strong> — Align on what we'll track and how</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Immediate Actions</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Schema.org Audit</strong> — Baseline current compliance across PDP/category</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Feed API Design</strong> — Draft agent-exclusive API specification</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>LLMs.txt Draft</strong> — Create governance file framework</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>ACP Engagement</strong> — Initiate OpenAI partnership discussion</span></div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="stat-card">
+          <p class="stat-label">Assessment</p>
+          <p class="stat-value-alt">2 wks</p>
+          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.5rem;">Schema audit + gap analysis</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Design</p>
+          <p class="stat-value-alt">4 wks</p>
+          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.5rem;">API spec + Sparky scope</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Pilot</p>
+          <p class="stat-value-alt">8 wks</p>
+          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.5rem;">Single category vertical</p>
+        </div>
+      </div>
+
+      <div class="callout-secondary">
+        <p><strong>The Window:</strong> Amazon is already ACP-integrated. Target is moving fast. Google SGE is live. Every week of delay is a week competitors establish presence in AI surfaces. <span style="color: var(--accent-secondary); font-weight: 600;">The goal isn't to be first — it's to not be late.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">19 / 20</span>
+      <span class="caption">Section 05: Roadmap</span>
+    </div>
+  </section>
+
+  <!-- Slide 20: Close -->
+  <section id="close" class="slide hero-slide">
+    <div class="slide-header" style="position: absolute; top: 2rem; left: 3rem; right: 3rem;">
+      <span class="brand">Walmart</span>
+      <span class="subhead">Strategic POV</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="subhead mb-4">Summary</p>
+      <h1 class="display mb-6" style="font-size: 2.5rem;">Sparky becomes the orchestration layer.<br>GEO becomes the new SEO.<br><span class="display-spark">Walmart Connect evolves.</span></h1>
+      <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+        <div class="list-item" style="justify-content: center;"><span class="marker marker-ready"></span><span><strong>Agent Ready</strong> — Make data consumable now</span></div>
+        <div class="list-item" style="justify-content: center;"><span class="marker marker-enabled"></span><span><strong>Agent Enabled</strong> — Build agentic experiences on Sparky</span></div>
+        <div class="list-item" style="justify-content: center;"><span class="marker marker-rmn"></span><span><strong>Walmart Connect</strong> — Embed sponsorship in new surfaces</span></div>
+      </div>
+    </div>
+
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">20 / 20</span>
+      <span class="caption">December 2025</span>
+    </div>
+  </section>
+
+</body>
+</html>

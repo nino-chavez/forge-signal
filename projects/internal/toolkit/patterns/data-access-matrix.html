@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Access Matrix - Agentic Commerce</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    /* Document Layout */
+    body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px;
+      background: var(--bg-card);
+    }
+
+    /* Typography */
+    h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem; }
+    p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+
+    /* Header */
+    .doc-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .doc-subtitle { color: var(--primary); font-weight: 600; font-size: 0.875rem; }
+    .doc-meta { display: flex; gap: 1rem; margin-top: 1rem; }
+    .doc-badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0 2rem; font-size: 0.875rem; }
+    th { background: var(--bg-surface); color: var(--text-primary); font-weight: 600; text-align: left; padding: 0.75rem 1rem; border: 1px solid var(--border); }
+    td { padding: 0.75rem 1rem; border: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    tr:hover td { background: var(--bg-surface); }
+
+    /* Access indicators */
+    .access-read { color: var(--color-success); }
+    .access-write { color: var(--color-success); }
+    .access-conditional { color: var(--color-warning); }
+    .access-denied { color: var(--color-trust); }
+
+    /* Code blocks */
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'SF Mono', Monaco, monospace; font-size: 0.8125rem; line-height: 1.5; margin: 1rem 0; }
+    code { font-family: 'SF Mono', Monaco, monospace; font-size: 0.875em; }
+
+    /* Lists */
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; color: var(--text-secondary); }
+    li { margin-bottom: 0.5rem; line-height: 1.5; }
+
+    /* Legend box */
+    .legend-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+    .legend-item { display: flex; align-items: center; gap: 0.75rem; margin: 0.5rem 0; }
+
+    /* Section cards */
+    .info-card { background: var(--primary-light); border: 1px solid var(--primary); border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+    .warning-card { background: var(--color-warning-light); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+
+    /* Checklist */
+    .checklist { list-style: none; margin-left: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .checklist li::before { content: ""; display: inline-block; width: 1rem; height: 1rem; border: 2px solid var(--border-strong); border-radius: 3px; margin-top: 0.25rem; flex-shrink: 0; }
+
+    /* Print styles */
+    @media print {
+      body { padding: 24px; max-width: 100%; }
+      h2 { page-break-after: avoid; }
+      table { page-break-inside: avoid; }
+      .doc-header { border-bottom: 2px solid #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="background: #fef3c7; border-bottom: 2px solid #f59e0b; padding: 0.75rem 1.5rem; margin: -48px -48px 2rem -48px; font-size: 0.875rem;">
+    <strong style="color: #92400e;">Reference Pattern</strong> — <span style="color: #78350f;">Compliance-ready framework. Validate against client's specific data classification.</span>
+    <a href="../index.html" style="float: right; color: #92400e;">← Back to Toolkit</a>
+  </div>
+
+  <header class="doc-header">
+    <div class="doc-subtitle">Agentic Commerce Toolkit</div>
+    <h1>Data Access Matrix</h1>
+    <p>Agent permissions and data classification for secure commerce interactions</p>
+    <div class="doc-meta">
+      <span class="doc-badge">Reference Pattern</span>
+      <span class="doc-badge" style="background: var(--color-trust);">Security Critical</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Agent Type Definitions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Agent Type</th>
+          <th>Description</th>
+          <th>Trust Level</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>External LLM</strong></td>
+          <td>Third-party LLM platform (ChatGPT, Claude, Gemini)</td>
+          <td><span style="color: var(--color-trust);">Low</span></td>
+          <td>ChatGPT Operator browsing for products</td>
+        </tr>
+        <tr>
+          <td><strong>External Partner</strong></td>
+          <td>Authorized partner agent with API key</td>
+          <td><span style="color: var(--color-warning);">Medium</span></td>
+          <td>Affiliate comparison agent</td>
+        </tr>
+        <tr>
+          <td><strong>Authenticated Customer</strong></td>
+          <td>Customer-authorized personal agent</td>
+          <td><span style="color: var(--color-platform);">High</span></td>
+          <td>Customer's own AI assistant</td>
+        </tr>
+        <tr>
+          <td><strong>Owned Agent</strong></td>
+          <td>Brand's own AI shopping assistant</td>
+          <td><span style="color: var(--color-success);">Highest</span></td>
+          <td>Website embedded assistant</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Data Classification</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Classification</th>
+          <th>Description</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Public</strong></td>
+          <td>Available without authentication</td>
+          <td>Product catalog, public pricing, store locations</td>
+        </tr>
+        <tr>
+          <td><strong>Owned</strong></td>
+          <td>First-party data, brand controlled</td>
+          <td>Inventory levels, margin data, internal promotions</td>
+        </tr>
+        <tr>
+          <td><strong>Consented</strong></td>
+          <td>Customer data with explicit consent</td>
+          <td>Purchase history, preferences, saved addresses</td>
+        </tr>
+        <tr>
+          <td><strong>PII</strong></td>
+          <td>Personally identifiable information</td>
+          <td>Full name, email, phone, SSN</td>
+        </tr>
+        <tr>
+          <td><strong>Financial</strong></td>
+          <td>Payment and financial data</td>
+          <td>Credit card, bank account, payment tokens</td>
+        </tr>
+        <tr>
+          <td><strong>Protected</strong></td>
+          <td>Regulatory-protected data</td>
+          <td>Health data, children's data (COPPA)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Access Matrix by Agent Type</h2>
+
+    <h3>Product & Catalog Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Element</th>
+          <th>External LLM</th>
+          <th>External Partner</th>
+          <th>Auth Customer</th>
+          <th>Owned Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Product name & description</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Public pricing</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Product images (public)</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Inventory availability</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Exact inventory count</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Product cost/margin</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+        </tr>
+        <tr>
+          <td>Competitor pricing</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Personalized pricing</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Product reviews (public)</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Structured data (Schema.org)</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Customer Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Element</th>
+          <th>External LLM</th>
+          <th>External Partner</th>
+          <th>Auth Customer</th>
+          <th>Owned Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Anonymous session</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-write">Read/Write</td>
+        </tr>
+        <tr>
+          <td>Customer preferences</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-write">Read/Write</td>
+        </tr>
+        <tr>
+          <td>Purchase history</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Browsing history</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-write">Read/Write</td>
+        </tr>
+        <tr>
+          <td>Saved addresses</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Email address</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">Masked</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Phone number</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">Masked</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Full name</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Date of birth</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">Age-gated</td>
+        </tr>
+        <tr>
+          <td>Loyalty points/tier</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-write">Read/Write</td>
+        </tr>
+        <tr>
+          <td>Customer segment</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Lifetime value</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Order & Transaction Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Element</th>
+          <th>External LLM</th>
+          <th>External Partner</th>
+          <th>Auth Customer</th>
+          <th>Owned Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Create cart</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>View cart</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Modify cart</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>Apply promo code</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>View order status</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>View order history</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Order details (items)</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Order total/pricing</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Shipping tracking</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Initiate return</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">w/ Approval</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>Cancel order</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">w/ Approval</td>
+          <td class="access-conditional">w/ Approval</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Payment Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Element</th>
+          <th>External LLM</th>
+          <th>External Partner</th>
+          <th>Auth Customer</th>
+          <th>Owned Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>View saved payment methods</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">Last 4 only</td>
+          <td class="access-conditional">Last 4 only</td>
+        </tr>
+        <tr>
+          <td>Use saved payment (SPT)</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">w/ Mandate</td>
+          <td class="access-conditional">w/ Mandate</td>
+        </tr>
+        <tr>
+          <td>Full card number</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+        </tr>
+        <tr>
+          <td>CVV</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+        </tr>
+        <tr>
+          <td>Bank account details</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+        </tr>
+        <tr>
+          <td>Process payment</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">w/ Mandate</td>
+          <td class="access-conditional">w/ Mandate</td>
+        </tr>
+        <tr>
+          <td>Refund initiation</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-conditional">w/ Approval</td>
+        </tr>
+        <tr>
+          <td>View transaction history</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Support & Service Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Element</th>
+          <th>External LLM</th>
+          <th>External Partner</th>
+          <th>Auth Customer</th>
+          <th>Owned Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>FAQ / Knowledge Base</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Policy documents</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Create support ticket</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>View ticket history</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Escalate to human</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-write">Write</td>
+          <td class="access-write">Write</td>
+        </tr>
+        <tr>
+          <td>View chat transcripts</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+        <tr>
+          <td>Warranty status</td>
+          <td class="access-denied">No</td>
+          <td class="access-denied">No</td>
+          <td class="access-read">Read</td>
+          <td class="access-read">Read</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Legend</h2>
+    <div class="legend-box">
+      <div class="legend-item"><span class="access-read" style="font-weight: 600;">Read</span> <span style="color: var(--text-muted);">Can read/view this data</span></div>
+      <div class="legend-item"><span class="access-write" style="font-weight: 600;">Write</span> <span style="color: var(--text-muted);">Can create/modify this data</span></div>
+      <div class="legend-item"><span class="access-write" style="font-weight: 600;">Read/Write</span> <span style="color: var(--text-muted);">Can both read and write</span></div>
+      <div class="legend-item"><span class="access-conditional" style="font-weight: 600;">Conditional</span> <span style="color: var(--text-muted);">Access with conditions (see below)</span></div>
+      <div class="legend-item"><span class="access-denied" style="font-weight: 600;">No</span> <span style="color: var(--text-muted);">No access</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Conditional Access Rules</h2>
+
+    <h3>Masked Data</h3>
+    <div class="info-card">
+      <ul style="margin: 0;">
+        <li>Email: <code>j***@example.com</code></li>
+        <li>Phone: <code>***-***-1234</code></li>
+        <li>Card: <code>****-****-****-1234</code></li>
+      </ul>
+    </div>
+
+    <h3>w/ Mandate</h3>
+    <p>Payment mandate requirements:</p>
+    <ol>
+      <li>Customer has pre-authorized agent for payments</li>
+      <li>Transaction amount within mandate limit (e.g., $500/transaction, $2000/month)</li>
+      <li>Merchant category matches mandate scope</li>
+      <li>Valid SPT (Secure Payment Token) exists</li>
+      <li>Mandate not expired or revoked</li>
+    </ol>
+
+    <h3>w/ Approval</h3>
+    <p>Requires additional confirmation:</p>
+    <ol>
+      <li>Agent must request explicit customer approval</li>
+      <li>Approval via trusted channel (SMS, email, app push)</li>
+      <li>Time-limited approval window (e.g., 5 minutes)</li>
+      <li>Audit log entry created</li>
+    </ol>
+
+    <h3>Age-gated only</h3>
+    <ul>
+      <li>Only returns boolean (over 18, over 21)</li>
+      <li>Never returns actual date of birth</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Consent Propagation</h2>
+
+    <h3>GDPR Requirements</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Lawful Basis</th>
+          <th>Required For</th>
+          <th>Agent Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Consent</td>
+          <td>Marketing personalization</td>
+          <td>Explicit opt-in captured in CDP</td>
+        </tr>
+        <tr>
+          <td>Contract</td>
+          <td>Order fulfillment</td>
+          <td>Implied by purchase intent</td>
+        </tr>
+        <tr>
+          <td>Legitimate Interest</td>
+          <td>Fraud prevention</td>
+          <td>Document in privacy policy</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>CCPA Requirements</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Right</th>
+          <th>Agent Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Right to Know</td>
+          <td>Agent can explain what data is used</td>
+        </tr>
+        <tr>
+          <td>Right to Delete</td>
+          <td>Agent can trigger deletion workflow</td>
+        </tr>
+        <tr>
+          <td>Right to Opt-Out</td>
+          <td>Agent respects "Do Not Sell" flag</td>
+        </tr>
+        <tr>
+          <td>Right to Non-Discrimination</td>
+          <td>Same service regardless of opt-out</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Audit Requirements</h2>
+    <p>All data access must be logged with:</p>
+    <pre><code>{
+  "timestamp": "2024-12-12T10:30:00Z",
+  "agent_type": "external_llm",
+  "agent_id": "chatgpt-operator-abc123",
+  "customer_id": "cust_xyz789",
+  "data_element": "product_catalog",
+  "access_type": "read",
+  "data_classification": "public",
+  "consent_basis": "none_required",
+  "request_context": "product_search",
+  "ip_address": "masked",
+  "result": "success"
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Implementation Checklist</h2>
+    <ul class="checklist">
+      <li>Agent identity verification at API Gateway</li>
+      <li>Data classification tags on all API responses</li>
+      <li>Consent check before accessing consented/PII data</li>
+      <li>Mandate validation before payment operations</li>
+      <li>Audit log for all data access events</li>
+      <li>Rate limiting by agent type</li>
+      <li>Anomaly detection for access patterns</li>
+      <li>Quarterly access matrix review</li>
+      <li>Annual compliance audit</li>
+    </ul>
+  </section>
+
+  <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+    <p><em>Data Access Matrix v1.0 | Agentic Commerce Reference Architecture</em></p>
+  </footer>
+
+</body>
+</html>

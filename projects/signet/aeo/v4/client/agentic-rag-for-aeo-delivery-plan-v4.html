@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEO Optimization Service: Delivery Plan v4</title>
+
+  <style>
+    :root {
+      --color-brand-violet: #7c3aed;
+      --color-brand-navy: #1a365d;
+      --color-text-primary: #171717;
+      --color-text-secondary: #404040;
+      --color-text-body: #525252;
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f5f5f5;
+      --color-bg-dark: #111827;
+      --color-success: #059669;
+      --color-warning: #d97706;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--color-bg-secondary);
+      color: var(--color-text-body);
+      line-height: 1.6;
+    }
+
+    /* Sticky Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--color-bg-primary);
+      border-right: 1px solid #e5e5e5;
+      padding: 24px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .nav-title {
+      font-weight: 700;
+      color: var(--color-brand-violet);
+      font-size: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--color-brand-violet);
+    }
+
+    .toc {
+      list-style: none;
+    }
+
+    .toc-item {
+      margin-bottom: 8px;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .toc-item a:hover {
+      background: var(--color-bg-secondary);
+      color: var(--color-brand-violet);
+    }
+
+    .toc-item.toc-title a {
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .toc-item.active a {
+      background: var(--color-brand-violet);
+      color: white;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 280px;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    .section {
+      background: var(--color-bg-primary);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+      scroll-margin-top: 20px;
+    }
+
+    .section-inner {
+      padding: 48px;
+    }
+
+    /* Title Section */
+    .section-title .section-inner {
+      background: linear-gradient(135deg, var(--color-brand-violet) 0%, var(--color-brand-navy) 100%);
+      color: white;
+      text-align: center;
+      padding: 80px 48px;
+      border-radius: 12px;
+    }
+
+    .section-title .section-heading {
+      font-size: 2.5rem;
+      font-weight: 800;
+      border: none;
+      color: white;
+    }
+
+    .section-title .section-body {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.25rem;
+      margin-top: 16px;
+    }
+
+    .section-title .meta-info {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .section-title .meta-item {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .section-title .meta-item strong {
+      color: white;
+    }
+
+    /* Section Heading */
+    .section-heading {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-brand-violet);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--color-brand-violet);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .toc-back-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+    }
+
+    .toc-back-link:hover {
+      opacity: 1;
+      color: var(--color-brand-violet);
+    }
+
+    /* Content */
+    .section-body {
+      font-size: 0.95rem;
+    }
+
+    .section-body h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    .section-body h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    .section-body h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .section-body p {
+      margin-bottom: 12px;
+    }
+
+    .section-body ul, .section-body ol {
+      margin: 12px 0;
+      padding-left: 24px;
+    }
+
+    .section-body li {
+      margin-bottom: 6px;
+    }
+
+    .section-body strong {
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    /* Highlight boxes */
+    .highlight-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box.savings {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: var(--color-success);
+    }
+
+    .highlight-box h4 {
+      color: var(--color-success);
+      margin-top: 0;
+    }
+
+    .highlight-box.warning {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: var(--color-warning);
+    }
+
+    .highlight-box.warning h4 {
+      color: var(--color-warning);
+    }
+
+    /* Tables */
+    .section-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.85rem;
+    }
+
+    .section-body th {
+      background: var(--color-bg-secondary);
+      padding: 10px 12px;
+      font-weight: 600;
+      border-bottom: 2px solid var(--color-brand-violet);
+      color: var(--color-text-primary);
+    }
+
+    .section-body td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .section-body th:not([style]),
+    .section-body td:not([style]) {
+      text-align: left;
+    }
+
+    .section-body tr:hover {
+      background: #fafafa;
+    }
+
+    /* Special table rows */
+    .section-body tr.total-row {
+      background: var(--color-bg-secondary);
+      font-weight: 600;
+    }
+
+    .section-body tr.total-row td {
+      border-top: 2px solid var(--color-brand-violet);
+    }
+
+    .section-body td.accenture {
+      background: #f0f9ff;
+    }
+
+    .section-body td.signet {
+      background: #fef3c7;
+    }
+
+    /* Code blocks */
+    .code-block {
+      background: var(--color-bg-dark);
+      color: #e5e5e5;
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      margin: 16px 0;
+      font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    }
+
+    .code-block code {
+      background: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    .section-body code {
+      background: var(--color-bg-secondary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+      color: var(--color-brand-violet);
+    }
+
+    /* Blockquotes */
+    .section-body blockquote {
+      border-left: 4px solid var(--color-brand-violet);
+      padding-left: 16px;
+      margin: 16px 0;
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    /* Ownership indicator */
+    .owner-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .owner-badge.accenture {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .owner-badge.signet {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* Mobile toggle */
+    .nav-toggle {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-brand-violet);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 200;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .section-inner {
+        padding: 24px;
+      }
+
+      .section-heading {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .nav, .nav-toggle {
+        display: none !important;
+      }
+
+      html, body {
+        background: white !important;
+        font-size: 11pt;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      @page {
+        size: letter;
+        margin: 0.75in 0.75in 1in 0.75in;
+      }
+
+      .section {
+        box-shadow: none;
+        border-radius: 0;
+        margin-bottom: 0;
+        border: none;
+        background: white !important;
+      }
+
+      .section-inner {
+        padding: 0 0 24pt 0;
+      }
+
+      .section:not(:first-child) {
+        page-break-before: always;
+      }
+
+      .section-title .section-inner {
+        background: white !important;
+        color: var(--color-text-primary) !important;
+        padding: 48pt 0;
+        text-align: center;
+        border-bottom: 3pt solid var(--color-brand-violet);
+      }
+
+      .section-title .section-heading {
+        color: var(--color-brand-violet) !important;
+        font-size: 24pt;
+      }
+
+      .section-heading {
+        font-size: 16pt;
+        page-break-after: avoid;
+      }
+
+      .section-body table {
+        font-size: 9pt;
+      }
+
+      .section-body th {
+        background: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .code-block {
+        background: #f5f5f5 !important;
+        color: #1e1e1e !important;
+        border: 1pt solid #d4d4d4;
+        font-size: 8pt;
+      }
+
+      a[href^="#"]:after {
+        content: none;
+      }
+
+      a[href="#toc"] {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="toc">
+    <div class="nav-title">AEO Delivery Plan v4<br><small style="font-weight: 400; color: #666;">Option C - Amended</small></div>
+    <ul class="toc">
+      <li class="toc-item toc-title">
+        <a href="#section-0-title">AEO Delivery Plan v4</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-1-executive-summary">1. Executive Summary</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-2-solution-overview">2. Solution Overview</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-3-staffing-plan">3. Staffing Plan</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-4-delivery-timeline">4. Delivery Timeline</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-5-deliverables">5. Deliverables</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-6-success-metrics">6. Success Metrics</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-7-cost-summary">7. Cost Summary</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-8-risk-management">8. Risk Management</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-9-assumptions">9. Assumptions &amp; Dependencies</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-10-next-steps">10. Next Steps</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-11-appendix-roles">Appendix A: Role Details</a>
+      </li>
+      <li class="toc-item">
+        <a href="#section-12-appendix-llm">Appendix B: LLM Tuning Scope</a>
+      </li>
+    </ul>
+  </nav>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation"></button>
+
+  <main class="main">
+
+    <!-- Title Section -->
+    <section class="section section-title" id="section-0-title">
+      <div class="section-inner">
+        <h1 class="section-heading">AEO Optimization Service<br>Delivery Plan v4</h1>
+        <div class="section-body">
+          <p>Option C: Full Automation - Amended Staffing Model</p>
+          <div class="meta-info">
+            <div class="meta-item"><strong>Version:</strong> 4.0</div>
+            <div class="meta-item"><strong>Start Date:</strong> January 5, 2025</div>
+            <div class="meta-item"><strong>Duration:</strong> 12 Weeks</div>
+            <div class="meta-item"><strong>Investment:</strong> $255,336</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Executive Summary -->
+    <section class="section section-content" id="section-1-executive-summary">
+      <div class="section-inner">
+        <h1 class="section-heading">Executive Summary<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <p>Signet has selected <strong>Option C: Full Automation</strong> with an amended staffing model. Signet will assume the AEO Strategist and Content Strategist roles internally, with Accenture retaining responsibility for technical implementation, LLM tuning, and delivery leadership.</p>
+
+          <h3>Key Changes from v3.5</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Change</th>
+                <th>Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Option C selected</strong></td>
+                <td>Full automation pipeline with Bedrock Agent</td>
+              </tr>
+              <tr>
+                <td><strong>AEO Strategist &rarr; Signet</strong></td>
+                <td>Client provides prompt taxonomy, data analysis expertise</td>
+              </tr>
+              <tr>
+                <td><strong>Content Strategist &rarr; Signet</strong></td>
+                <td>Client provides content optimization expertise</td>
+              </tr>
+              <tr>
+                <td><strong>LLM tuning retained by Accenture</strong></td>
+                <td>+40 hours to AI Engineer for agent prompt engineering</td>
+              </tr>
+              <tr>
+                <td><strong>Start date: January 5, 2025</strong></td>
+                <td>12-week delivery through March 28, 2025</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Investment Summary</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Party</th>
+                <th style="text-align: right;">Hours</th>
+                <th style="text-align: right;">Investment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="owner-badge accenture">Accenture</span></td>
+                <td style="text-align: right;">648</td>
+                <td style="text-align: right;"><strong>$255,336</strong></td>
+              </tr>
+              <tr>
+                <td><span class="owner-badge signet">Signet</span> (internal)</td>
+                <td style="text-align: right;">~280</td>
+                <td style="text-align: right;">Internal allocation</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total Effort</strong></td>
+                <td style="text-align: right;"><strong>~928</strong></td>
+                <td style="text-align: right;"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box savings">
+            <h4>Cost Reduction</h4>
+            <p><strong>Accenture investment reduced by $79,910</strong> from original Option C ($335,246) due to Signet taking on strategist roles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution Overview -->
+    <section class="section section-content" id="section-2-solution-overview">
+      <div class="section-inner">
+        <h1 class="section-heading">Solution Overview<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Architecture</h3>
+          <p>A fully automated pipeline that ingests Profound data via API, stores it in a vector database, and uses a Bedrock Agent with RAG capabilities to generate context-aware recommendations.</p>
+
+          <pre class="code-block"><code>Profound API &rarr; S3 &rarr; Lambda &rarr; OpenSearch &rarr; Bedrock Agent &rarr; Auto-Recommendations &rarr; Human Approval &rarr; PIM API</code></pre>
+
+          <h3>Technology Stack</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Technology</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Data Ingestion</td>
+                <td>Lambda + EventBridge</td>
+                <td>Pull from Profound API weekly</td>
+              </tr>
+              <tr>
+                <td>Data Lake</td>
+                <td>S3</td>
+                <td>Raw and processed data storage</td>
+              </tr>
+              <tr>
+                <td>Vector Store</td>
+                <td>OpenSearch</td>
+                <td>Semantic search for RAG</td>
+              </tr>
+              <tr>
+                <td>Embeddings</td>
+                <td>Bedrock Titan</td>
+                <td>Convert text to vectors</td>
+              </tr>
+              <tr>
+                <td>AI Agent</td>
+                <td>Bedrock Agent (Claude)</td>
+                <td>Multi-tool recommendation engine</td>
+              </tr>
+              <tr>
+                <td>Measurement</td>
+                <td>Lambda + QuickSight</td>
+                <td>SOV deltas, custom dashboards</td>
+              </tr>
+              <tr>
+                <td>Integration</td>
+                <td>API Gateway</td>
+                <td>Optional PIM API integration</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Ownership Model</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th style="text-align: center;">Accenture</th>
+                <th style="text-align: center;">Signet</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AWS infrastructure design &amp; build</td>
+                <td style="text-align: center;">&bull;</td>
+                <td style="text-align: center;"></td>
+              </tr>
+              <tr>
+                <td>Data pipeline implementation</td>
+                <td style="text-align: center;">&bull;</td>
+                <td style="text-align: center;"></td>
+              </tr>
+              <tr>
+                <td>Bedrock Agent development</td>
+                <td style="text-align: center;">&bull;</td>
+                <td style="text-align: center;"></td>
+              </tr>
+              <tr>
+                <td>LLM/Agent prompt tuning</td>
+                <td style="text-align: center;">&bull;</td>
+                <td style="text-align: center;"></td>
+              </tr>
+              <tr>
+                <td>Measurement system</td>
+                <td style="text-align: center;">&bull;</td>
+                <td style="text-align: center;"></td>
+              </tr>
+              <tr>
+                <td>Profound prompt taxonomy (400)</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">&bull;</td>
+              </tr>
+              <tr>
+                <td>Content gap analysis</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">&bull;</td>
+              </tr>
+              <tr>
+                <td>Optimization recommendations review</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">&bull;</td>
+              </tr>
+              <tr>
+                <td>PIM updates</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">&bull;</td>
+              </tr>
+              <tr>
+                <td>Profound licensing</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">&bull;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Staffing Plan -->
+    <section class="section section-content" id="section-3-staffing-plan">
+      <div class="section-inner">
+        <h1 class="section-heading">Staffing Plan<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Accenture Team</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th style="text-align: right;">Hours</th>
+                <th style="text-align: right;">Rate</th>
+                <th style="text-align: right;">Total</th>
+                <th style="text-align: center;">Weeks Active</th>
+                <th style="text-align: center;">Peak Hrs/Wk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lead Architect</td>
+                <td style="text-align: right;">264</td>
+                <td style="text-align: right;">$382</td>
+                <td style="text-align: right;">$100,848</td>
+                <td style="text-align: center;">1-12</td>
+                <td style="text-align: center;">40</td>
+              </tr>
+              <tr>
+                <td>AI Engineer</td>
+                <td style="text-align: right;">184</td>
+                <td style="text-align: right;">$382</td>
+                <td style="text-align: right;">$70,288</td>
+                <td style="text-align: center;">3-12</td>
+                <td style="text-align: center;">28</td>
+              </tr>
+              <tr>
+                <td>DL/PM</td>
+                <td style="text-align: right;">200</td>
+                <td style="text-align: right;">$421</td>
+                <td style="text-align: right;">$84,200</td>
+                <td style="text-align: center;">1-12</td>
+                <td style="text-align: center;">18</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td style="text-align: right;"><strong>648</strong></td>
+                <td style="text-align: right;"></td>
+                <td style="text-align: right;"><strong>$255,336</strong></td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box warning">
+            <h4>Note: LLM Tuning Absorbed</h4>
+            <p>AI Engineer hours increased by 40 (from 144 to 184) to absorb LLM tuning responsibilities previously shared with strategist roles.</p>
+          </div>
+
+          <h3>Signet Team (Internal)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th style="text-align: right;">Est. Hours</th>
+                <th style="text-align: center;">Weeks Active</th>
+                <th>Responsibilities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AEO/Data Strategist</td>
+                <td style="text-align: right;">~156</td>
+                <td style="text-align: center;">3-12</td>
+                <td>Prompt taxonomy, Profound configuration, SOV analysis, data interpretation</td>
+              </tr>
+              <tr>
+                <td>Content Strategist</td>
+                <td style="text-align: right;">~126</td>
+                <td style="text-align: center;">2-12</td>
+                <td>Content gap identification, recommendation review, PIM coordination</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td style="text-align: right;"><strong>~282</strong></td>
+                <td style="text-align: center;"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Collaboration Model</h3>
+          <pre class="code-block"><code>Week 1-2:   Accenture-led architecture, Signet provides business context
+Week 3-9:   Parallel workstreams - Accenture builds, Signet configures Profound
+Week 10-12: Joint pilot execution, Signet reviews AI recommendations</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delivery Timeline -->
+    <section class="section section-content" id="section-4-delivery-timeline">
+      <div class="section-inner">
+        <h1 class="section-heading">Delivery Timeline<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <p><strong>Start Date:</strong> January 5, 2025<br>
+          <strong>End Date:</strong> March 28, 2025<br>
+          <strong>Duration:</strong> 12 weeks</p>
+
+          <h3>Phase Overview</h3>
+          <pre class="code-block"><code>Week:  1    2    3    4    5    6    7    8    9   10   11   12
+       |    |    |    |    |    |    |    |    |    |    |    |
+       Jan 5     Jan 19    Feb 2     Feb 16    Mar 2     Mar 16   Mar 28
+       |    |    |    |    |    |    |    |    |    |    |    |
+Design ========                                                 Architecture
+Build       ====================================                Pipeline + Agent
+Profound         ====================                           Signet configures
+Pilot                                        ==================== Real data (3 weeks)
+       |    |    |    |    |    |    |    |    |    |    |    |</code></pre>
+
+          <h3>Phase 1: Foundation (Weeks 1-2)</h3>
+          <p><strong>Jan 5 - Jan 17</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Owner</th>
+                <th style="text-align: right;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Solution architecture finalization</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+              <tr>
+                <td>Profound API integration design</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+              <tr>
+                <td>AWS environment setup</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">16</td>
+              </tr>
+              <tr>
+                <td>Project kickoff &amp; governance</td>
+                <td><span class="owner-badge accenture">DL/PM</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+              <tr>
+                <td>Business context workshops</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td style="text-align: right;">-</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Phase 2: Data Pipeline (Weeks 3-5)</h3>
+          <p><strong>Jan 20 - Feb 7</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Owner</th>
+                <th style="text-align: right;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lambda ingestion functions</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+              <tr>
+                <td>S3 data lake structure</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">16</td>
+              </tr>
+              <tr>
+                <td>OpenSearch vector store setup</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">32</td>
+              </tr>
+              <tr>
+                <td>Titan embeddings integration</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+              <tr>
+                <td>Profound prompt taxonomy (400)</td>
+                <td><span class="owner-badge signet">AEO Strategist</span></td>
+                <td style="text-align: right;">-</td>
+              </tr>
+              <tr>
+                <td>Project coordination</td>
+                <td><span class="owner-badge accenture">DL/PM</span></td>
+                <td style="text-align: right;">30</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Phase 3: AI Agent Development (Weeks 6-9)</h3>
+          <p><strong>Feb 10 - Mar 7</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Owner</th>
+                <th style="text-align: right;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bedrock Agent implementation</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">48</td>
+              </tr>
+              <tr>
+                <td>RAG retrieval chain</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+              <tr>
+                <td><strong>LLM prompt tuning &amp; optimization</strong></td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">32</td>
+              </tr>
+              <tr>
+                <td>Tool definitions (query, analyze, recommend)</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">32</td>
+              </tr>
+              <tr>
+                <td>API Gateway setup</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">16</td>
+              </tr>
+              <tr>
+                <td>Content strategy alignment</td>
+                <td><span class="owner-badge signet">Content Strategist</span></td>
+                <td style="text-align: right;">-</td>
+              </tr>
+              <tr>
+                <td>Project coordination</td>
+                <td><span class="owner-badge accenture">DL/PM</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Phase 4: Measurement &amp; Integration (Weeks 8-10)</h3>
+          <p><strong>Feb 24 - Mar 14</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Owner</th>
+                <th style="text-align: right;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>QuickSight dashboards</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">32</td>
+              </tr>
+              <tr>
+                <td>SOV delta calculations</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+              <tr>
+                <td>End-to-end testing</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+              <tr>
+                <td>Integration validation</td>
+                <td><span class="owner-badge accenture">DL/PM</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Phase 5: Pilot Execution (Weeks 10-12)</h3>
+          <p><strong>Mar 3 - Mar 28</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Owner</th>
+                <th style="text-align: right;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pilot monitoring &amp; tuning</td>
+                <td><span class="owner-badge accenture">Lead Architect</span></td>
+                <td style="text-align: right;">24</td>
+              </tr>
+              <tr>
+                <td>Agent refinement</td>
+                <td><span class="owner-badge accenture">AI Engineer</span></td>
+                <td style="text-align: right;">16</td>
+              </tr>
+              <tr>
+                <td>Pilot readout preparation</td>
+                <td><span class="owner-badge accenture">DL/PM</span></td>
+                <td style="text-align: right;">40</td>
+              </tr>
+              <tr>
+                <td>Recommendation review</td>
+                <td><span class="owner-badge signet">Content Strategist</span></td>
+                <td style="text-align: right;">-</td>
+              </tr>
+              <tr>
+                <td>PIM updates</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td style="text-align: right;">-</td>
+              </tr>
+              <tr>
+                <td>Knowledge transfer</td>
+                <td><span class="owner-badge accenture">All</span></td>
+                <td style="text-align: right;">16</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section class="section section-content" id="section-5-deliverables">
+      <div class="section-inner">
+        <h1 class="section-heading">Deliverables<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Accenture Deliverables</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Description</th>
+                <th>Delivery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Solution Architecture Document</td>
+                <td>Detailed technical design, ADRs</td>
+                <td>Week 2</td>
+              </tr>
+              <tr>
+                <td>Data Pipeline</td>
+                <td>Automated Profound &rarr; S3 &rarr; OpenSearch</td>
+                <td>Week 5</td>
+              </tr>
+              <tr>
+                <td>Bedrock Agent</td>
+                <td>RAG-enabled recommendation engine</td>
+                <td>Week 9</td>
+              </tr>
+              <tr>
+                <td><strong>Tuned Agent Prompts</strong></td>
+                <td>Optimized system prompts for recommendation quality</td>
+                <td>Week 9</td>
+              </tr>
+              <tr>
+                <td>Measurement Dashboards</td>
+                <td>QuickSight visibility metrics</td>
+                <td>Week 10</td>
+              </tr>
+              <tr>
+                <td>Pilot Readout</td>
+                <td>ROI analysis, visibility lift measurement</td>
+                <td>Week 12</td>
+              </tr>
+              <tr>
+                <td>Knowledge Transfer</td>
+                <td>Technical documentation, runbooks</td>
+                <td>Week 12</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Signet Deliverables</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Deliverable</th>
+                <th>Description</th>
+                <th>Delivery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Profound Configuration</td>
+                <td>400 prompts, taxonomy, competitor list</td>
+                <td>Week 5</td>
+              </tr>
+              <tr>
+                <td>Content Strategy Input</td>
+                <td>Optimization priorities, brand guidelines</td>
+                <td>Week 4</td>
+              </tr>
+              <tr>
+                <td>PIM Access/Credentials</td>
+                <td>Integration requirements</td>
+                <td>Week 1</td>
+              </tr>
+              <tr>
+                <td>Recommendation Reviews</td>
+                <td>Weekly review of AI-generated content</td>
+                <td>Weeks 10-12</td>
+              </tr>
+              <tr>
+                <td>PIM Updates</td>
+                <td>Execute approved recommendations</td>
+                <td>Weeks 10-12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Metrics -->
+    <section class="section section-content" id="section-6-success-metrics">
+      <div class="section-inner">
+        <h1 class="section-heading">Success Metrics<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Target</th>
+                <th>Measurement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Visibility Gap Closure</td>
+                <td>60% reduction in "I don't know" responses</td>
+                <td>90-day post-pilot</td>
+              </tr>
+              <tr>
+                <td>Content Optimizations</td>
+                <td>100+ optimizations per month</td>
+                <td>Ongoing</td>
+              </tr>
+              <tr>
+                <td>System Availability</td>
+                <td>99.5% uptime</td>
+                <td>Continuous</td>
+              </tr>
+              <tr>
+                <td>Query Performance</td>
+                <td>&lt;2 second response (P95)</td>
+                <td>Continuous</td>
+              </tr>
+              <tr>
+                <td>Recommendation Acceptance</td>
+                <td>&gt;70% of AI recommendations approved</td>
+                <td>Pilot period</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cost Summary -->
+    <section class="section section-content" id="section-7-cost-summary">
+      <div class="section-inner">
+        <h1 class="section-heading">Cost Summary<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Accenture Professional Services</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th style="text-align: right;">Hours</th>
+                <th style="text-align: right;">Rate</th>
+                <th style="text-align: right;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lead Architect</td>
+                <td style="text-align: right;">264</td>
+                <td style="text-align: right;">$382</td>
+                <td style="text-align: right;">$100,848</td>
+              </tr>
+              <tr>
+                <td>AI Engineer</td>
+                <td style="text-align: right;">184</td>
+                <td style="text-align: right;">$382</td>
+                <td style="text-align: right;">$70,288</td>
+              </tr>
+              <tr>
+                <td>DL/PM</td>
+                <td style="text-align: right;">200</td>
+                <td style="text-align: right;">$421</td>
+                <td style="text-align: right;">$84,200</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td style="text-align: right;"><strong>648</strong></td>
+                <td style="text-align: right;"></td>
+                <td style="text-align: right;"><strong>$255,336</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>AWS Infrastructure (Estimated Monthly)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th style="text-align: right;">Est. Monthly Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenSearch</td>
+                <td style="text-align: right;">$800</td>
+              </tr>
+              <tr>
+                <td>Bedrock (Claude + Titan)</td>
+                <td style="text-align: right;">$400</td>
+              </tr>
+              <tr>
+                <td>Lambda</td>
+                <td style="text-align: right;">$100</td>
+              </tr>
+              <tr>
+                <td>S3</td>
+                <td style="text-align: right;">$50</td>
+              </tr>
+              <tr>
+                <td>QuickSight</td>
+                <td style="text-align: right;">$100</td>
+              </tr>
+              <tr>
+                <td>API Gateway</td>
+                <td style="text-align: right;">$50</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td style="text-align: right;"><strong>~$1,500/mo</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Comparison to Original Option C</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align: right;">Original (v3.5)</th>
+                <th style="text-align: right;">Amended (v4)</th>
+                <th style="text-align: right;">Savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Accenture Services</td>
+                <td style="text-align: right;">$335,246</td>
+                <td style="text-align: right;">$255,336</td>
+                <td style="text-align: right; color: #059669;"><strong>$79,910</strong></td>
+              </tr>
+              <tr>
+                <td>AWS Setup</td>
+                <td style="text-align: right;">~$2,000</td>
+                <td style="text-align: right;">~$2,000</td>
+                <td style="text-align: right;">$0</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total Investment</strong></td>
+                <td style="text-align: right;"><strong>$337,246</strong></td>
+                <td style="text-align: right;"><strong>$257,336</strong></td>
+                <td style="text-align: right; color: #059669;"><strong>$79,910</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Risk Management -->
+    <section class="section section-content" id="section-8-risk-management">
+      <div class="section-inner">
+        <h1 class="section-heading">Risk Management<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Technical Risks</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th style="text-align: center;">Likelihood</th>
+                <th style="text-align: center;">Impact</th>
+                <th>Mitigation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Profound API instability</td>
+                <td style="text-align: center;">Medium</td>
+                <td style="text-align: center;">High</td>
+                <td>Design phase validation, fallback to exports</td>
+              </tr>
+              <tr>
+                <td>Bedrock performance issues</td>
+                <td style="text-align: center;">Low</td>
+                <td style="text-align: center;">Medium</td>
+                <td>Load testing in Phase 3</td>
+              </tr>
+              <tr>
+                <td>OpenSearch scaling</td>
+                <td style="text-align: center;">Low</td>
+                <td style="text-align: center;">Medium</td>
+                <td>Right-size during pilot</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Operational Risks</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th style="text-align: center;">Likelihood</th>
+                <th style="text-align: center;">Impact</th>
+                <th>Mitigation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Signet strategist availability</td>
+                <td style="text-align: center;">Medium</td>
+                <td style="text-align: center;">High</td>
+                <td>Early identification, backup resources</td>
+              </tr>
+              <tr>
+                <td>Coordination gaps (Accenture/Signet)</td>
+                <td style="text-align: center;">Medium</td>
+                <td style="text-align: center;">Medium</td>
+                <td>Weekly syncs, clear RACI</td>
+              </tr>
+              <tr>
+                <td>Knowledge transfer incomplete</td>
+                <td style="text-align: center;">Low</td>
+                <td style="text-align: center;">Medium</td>
+                <td>Documentation-first approach</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Mitigation: Strategist Coordination</h3>
+          <p>With AEO and Content Strategist roles moving to Signet, clear coordination protocols are critical:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Touchpoint</th>
+                <th>Frequency</th>
+                <th>Participants</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Technical sync</td>
+                <td>2x/week</td>
+                <td>Lead Architect + Signet Strategists</td>
+              </tr>
+              <tr>
+                <td>Agent tuning review</td>
+                <td>Weekly</td>
+                <td>AI Engineer + Signet Content Strategist</td>
+              </tr>
+              <tr>
+                <td>Prompt taxonomy review</td>
+                <td>Weekly (Phase 2-5)</td>
+                <td>AI Engineer + Signet AEO Strategist</td>
+              </tr>
+              <tr>
+                <td>Executive status</td>
+                <td>Weekly</td>
+                <td>DL/PM + Signet Leadership</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Assumptions & Dependencies -->
+    <section class="section section-content" id="section-9-assumptions">
+      <div class="section-inner">
+        <h1 class="section-heading">Assumptions &amp; Dependencies<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Assumptions</h3>
+          <ol>
+            <li>Signet provides AEO Strategist and Content Strategist resources by Week 2</li>
+            <li>Profound API access confirmed and stable</li>
+            <li>AWS account and permissions available Week 1</li>
+            <li>PIM integration scope limited to API specifications (no custom build)</li>
+          </ol>
+
+          <h3>Dependencies</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Dependency</th>
+                <th>Owner</th>
+                <th>Required By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Profound API credentials</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>Week 1</td>
+              </tr>
+              <tr>
+                <td>AWS account access</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>Week 1</td>
+              </tr>
+              <tr>
+                <td>PIM API documentation</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>Week 3</td>
+              </tr>
+              <tr>
+                <td>Signet strategist onboarding</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>Week 2</td>
+              </tr>
+              <tr>
+                <td>Brand/content guidelines</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>Week 4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Steps -->
+    <section class="section section-content" id="section-10-next-steps">
+      <div class="section-inner">
+        <h1 class="section-heading">Next Steps<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Owner</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SOW draft completion</strong></td>
+                <td><span class="owner-badge accenture">Accenture DL</span></td>
+                <td><strong>December 16, 2025</strong></td>
+              </tr>
+              <tr>
+                <td>Signet strategist identification</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>December 20, 2025</td>
+              </tr>
+              <tr>
+                <td>Contract execution</td>
+                <td>Both</td>
+                <td>December 27, 2025</td>
+              </tr>
+              <tr>
+                <td>AWS account provisioning</td>
+                <td><span class="owner-badge signet">Signet</span></td>
+                <td>January 3, 2025</td>
+              </tr>
+              <tr>
+                <td>Kickoff meeting</td>
+                <td>Both</td>
+                <td>January 5, 2025</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appendix A: Role Details -->
+    <section class="section section-content" id="section-11-appendix-roles">
+      <div class="section-inner">
+        <h1 class="section-heading">Appendix A: Role Responsibilities<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <h3>Lead Architect <span class="owner-badge accenture">Accenture</span></h3>
+          <ul>
+            <li>Solution architecture design and documentation</li>
+            <li>OpenSearch vector store design and implementation</li>
+            <li>RAG retrieval chain architecture</li>
+            <li>Tool definitions for Bedrock Agent</li>
+            <li>QuickSight dashboard design</li>
+            <li>Technical quality assurance</li>
+            <li>Knowledge transfer leadership</li>
+          </ul>
+
+          <h3>AI Engineer <span class="owner-badge accenture">Accenture</span></h3>
+          <ul>
+            <li>AWS infrastructure implementation (Lambda, S3, API Gateway)</li>
+            <li>Bedrock Agent development and deployment</li>
+            <li>Titan embeddings integration</li>
+            <li><strong>LLM/Agent prompt engineering and tuning</strong></li>
+            <li><strong>Recommendation quality optimization</strong></li>
+            <li>Data pipeline development</li>
+            <li>Performance optimization</li>
+          </ul>
+
+          <h3>DL/PM <span class="owner-badge accenture">Accenture</span></h3>
+          <ul>
+            <li>Project governance and status reporting</li>
+            <li>Risk and issue management</li>
+            <li>Stakeholder coordination</li>
+            <li>SOW and contract management</li>
+            <li>Resource coordination</li>
+            <li>Pilot readout preparation</li>
+          </ul>
+
+          <h3>AEO/Data Strategist <span class="owner-badge signet">Signet</span></h3>
+          <ul>
+            <li>Profound prompt taxonomy design (400 prompts)</li>
+            <li>Competitor identification and tracking</li>
+            <li>SOV analysis and interpretation</li>
+            <li>Data quality validation</li>
+            <li>Business context for AI recommendations</li>
+          </ul>
+
+          <h3>Content Strategist <span class="owner-badge signet">Signet</span></h3>
+          <ul>
+            <li>Content gap prioritization</li>
+            <li>Brand voice and guidelines</li>
+            <li>Recommendation review and approval</li>
+            <li>PIM update coordination</li>
+            <li>Optimization effectiveness assessment</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appendix B: LLM Tuning Scope -->
+    <section class="section section-content" id="section-12-appendix-llm">
+      <div class="section-inner">
+        <h1 class="section-heading">Appendix B: LLM Tuning Scope<a href="#toc" class="toc-back-link">TOC</a></h1>
+        <div class="section-body">
+          <p>With strategist roles moving to Signet, the following LLM tuning responsibilities remain with Accenture (AI Engineer):</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Tuning Activity</th>
+                <th style="text-align: right;">Hours</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>System prompt design</td>
+                <td style="text-align: right;">12</td>
+                <td>Core agent persona and behavior definition</td>
+              </tr>
+              <tr>
+                <td>Recommendation prompt templates</td>
+                <td style="text-align: right;">12</td>
+                <td>Templates for content optimization suggestions</td>
+              </tr>
+              <tr>
+                <td>RAG retrieval tuning</td>
+                <td style="text-align: right;">8</td>
+                <td>Optimize context retrieval for relevance</td>
+              </tr>
+              <tr>
+                <td>Output format standardization</td>
+                <td style="text-align: right;">4</td>
+                <td>Consistent recommendation structure</td>
+              </tr>
+              <tr>
+                <td>Quality evaluation loops</td>
+                <td style="text-align: right;">4</td>
+                <td>Iterative improvement based on strategist feedback</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td style="text-align: right;"><strong>40</strong></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Signet Strategist Contributions to LLM Tuning</h3>
+          <ul>
+            <li>Domain expertise for prompt refinement</li>
+            <li>Feedback on recommendation quality</li>
+            <li>Acceptance criteria for AI outputs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Mobile nav toggle
+    const nav = document.getElementById('toc');
+    const toggle = document.getElementById('navToggle');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      toggle.textContent = nav.classList.contains('open') ? '\u2715' : '\u2630';
+    });
+
+    // Close nav when clicking a link on mobile
+    document.querySelectorAll('.toc-item a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          nav.classList.remove('open');
+          toggle.textContent = '\u2630';
+        }
+      });
+    });
+
+    // Highlight active TOC item on scroll
+    const sections = document.querySelectorAll('.section');
+    const tocItems = document.querySelectorAll('.toc-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          tocItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link.getAttribute('href') === '#' + id) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

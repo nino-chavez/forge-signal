@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REI Co-op | Agentic Commerce Architecture</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rei-green': '#4A7C59',
+                        'rei-dark': '#2D4A3E',
+                        'rei-forest': '#1E3A2F',
+                        'rei-sage': '#8FBC8F',
+                        'rei-earth': '#8B7355',
+                        'rei-stone': '#A69182',
+                        'rei-sky': '#87CEEB',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-border {
+            background: linear-gradient(135deg, #4A7C59, #2D4A3E);
+            padding: 2px;
+            border-radius: 16px;
+        }
+        .gradient-border-inner {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 14px;
+            height: 100%;
+        }
+        .glow-green {
+            box-shadow: 0 0 30px rgba(74, 124, 89, 0.3);
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(74, 124, 89, 0.2);
+        }
+        .tab-active {
+            background: linear-gradient(135deg, #4A7C59, #2D4A3E);
+            color: white;
+        }
+        .sustainability-glow {
+            box-shadow: 0 0 40px rgba(74, 124, 89, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Icon Components
+        const Icons = {
+            Mountain: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+                </svg>
+            ),
+            Leaf: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+            ),
+            Users: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            ),
+            Bot: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M12 8V4H8"/>
+                    <rect width="16" height="12" x="4" y="8" rx="2"/>
+                    <path d="M2 14h2"/>
+                    <path d="M20 14h2"/>
+                    <path d="M15 13v2"/>
+                    <path d="M9 13v2"/>
+                </svg>
+            ),
+            ShoppingCart: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="8" cy="21" r="1"/>
+                    <circle cx="19" cy="21" r="1"/>
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                </svg>
+            ),
+            Search: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            ),
+            Sparkles: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                    <path d="M5 3v4"/>
+                    <path d="M19 17v4"/>
+                    <path d="M3 5h4"/>
+                    <path d="M17 19h4"/>
+                </svg>
+            ),
+            Globe: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                    <path d="M2 12h20"/>
+                </svg>
+            ),
+            Headphones: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>
+                </svg>
+            ),
+            Cloud: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                </svg>
+            ),
+            Server: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/>
+                    <rect width="20" height="8" x="2" y="14" rx="2" ry="2"/>
+                    <line x1="6" x2="6.01" y1="6" y2="6"/>
+                    <line x1="6" x2="6.01" y1="18" y2="18"/>
+                </svg>
+            ),
+            Database: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M3 5V19A9 3 0 0 0 21 19V5"/>
+                    <path d="M3 12A9 3 0 0 0 21 12"/>
+                </svg>
+            ),
+            Shield: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                </svg>
+            ),
+            Zap: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+                </svg>
+            ),
+            ArrowRight: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                </svg>
+            ),
+            Check: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            ),
+            Target: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="6"/>
+                    <circle cx="12" cy="12" r="2"/>
+                </svg>
+            ),
+            TreeDeciduous: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M8 19h8a4 4 0 0 0 3.8-2.8 4 4 0 0 0-1.6-4.5c1-1.1 1-2.7.4-4-.7-1.2-2.2-2-3.6-1.7a3 3 0 0 0-3-3 3 3 0 0 0-3 3c-1.4-.2-2.9.5-3.6 1.7-.7 1.3-.5 2.9.4 4a4 4 0 0 0-1.6 4.5A4 4 0 0 0 8 19Z"/>
+                    <path d="M12 19v3"/>
+                </svg>
+            ),
+            Recycle: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/>
+                    <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/>
+                    <path d="m14 16-3 3 3 3"/>
+                    <path d="M8.293 13.596 4.453 6.752a1.784 1.784 0 0 1 .007-1.78 1.83 1.83 0 0 1 1.555-.88h1.99"/>
+                    <path d="m9.5 5 3-3 3 3"/>
+                    <path d="M12 5v10"/>
+                </svg>
+            ),
+            Droplet: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>
+                </svg>
+            ),
+            Wind: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                </svg>
+            ),
+            Award: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="8" r="6"/>
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+            ),
+            Cpu: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <path d="M15 2v2"/>
+                    <path d="M15 20v2"/>
+                    <path d="M2 15h2"/>
+                    <path d="M2 9h2"/>
+                    <path d="M20 15h2"/>
+                    <path d="M20 9h2"/>
+                    <path d="M9 2v2"/>
+                    <path d="M9 20v2"/>
+                </svg>
+            ),
+            Lock: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            ),
+            CreditCard: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <rect width="20" height="14" x="2" y="5" rx="2"/>
+                    <line x1="2" x2="22" y1="10" y2="10"/>
+                </svg>
+            ),
+            BarChart: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <line x1="12" x2="12" y1="20" y2="10"/>
+                    <line x1="18" x2="18" y1="20" y2="4"/>
+                    <line x1="6" x2="6" y1="20" y2="16"/>
+                </svg>
+            ),
+            MessageSquare: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            ),
+            Compass: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                </svg>
+            ),
+            Tent: ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M3.5 21 14 3"/>
+                    <path d="M20.5 21 10 3"/>
+                    <path d="M15.5 21 12 15l-3.5 6"/>
+                    <path d="M2 21h20"/>
+                </svg>
+            ),
+        };
+
+        // Header Component
+        const Header = () => (
+            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 sticky top-0 z-50 backdrop-blur-xl">
+                <div className="max-w-7xl mx-auto px-6 py-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-rei-green to-rei-dark flex items-center justify-center glow-green">
+                                <Icons.Mountain size={28} className="text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-2xl font-bold text-white tracking-tight">REI Co-op</h1>
+                                <p className="text-rei-sage text-sm">Agentic Commerce Architecture</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="px-4 py-2 rounded-full bg-rei-green/20 border border-rei-green/30">
+                                <span className="text-rei-sage text-sm font-medium">25M+ Members</span>
+                            </div>
+                            <div className="px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+                                <span className="text-emerald-400 text-sm font-medium flex items-center gap-2">
+                                    <Icons.Leaf size={14} />
+                                    Zero Waste Certified
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Executive Summary Component
+        const ExecutiveSummary = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-rei-green flex items-center justify-center">
+                        <Icons.Compass size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">The Co-op Advantage in the AI Era</h2>
+                        <p className="text-slate-400 text-sm">Member-centric AI for the outdoor community</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-rei-sage font-semibold mb-2">The Opportunity</div>
+                        <p className="text-slate-300 text-sm">REI's 25M members and trusted brand create a unique foundation for AI-powered outdoor expertise that competitors can't replicate.</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-rei-sage font-semibold mb-2">The Imperative</div>
+                        <p className="text-slate-300 text-sm">As AI becomes the discovery layer, REI Co-op private label products must surface when members ask AI for gear recommendations.</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-rei-sage font-semibold mb-2">The Differentiator</div>
+                        <p className="text-slate-300 text-sm">Sustainable AI practices aligned with REI's stewardship values—green computing as a competitive advantage, not just responsibility.</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Use Case Card Component
+        const UseCaseCard = ({ icon: Icon, title, subtitle, description, features, priority, color = "rei-green" }) => (
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700/50 card-hover">
+                <div className="flex items-start justify-between mb-4">
+                    <div className={`w-14 h-14 rounded-2xl bg-${color}/20 flex items-center justify-center`}>
+                        <Icon size={28} className={`text-${color === 'rei-green' ? 'rei-sage' : color}`} />
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                        priority === 'Primary' ? 'bg-rei-green/20 text-rei-sage' :
+                        priority === 'Strategic' ? 'bg-blue-500/20 text-blue-400' :
+                        'bg-slate-600/20 text-slate-400'
+                    }`}>
+                        {priority}
+                    </span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
+                <p className="text-rei-sage text-sm mb-3">{subtitle}</p>
+                <p className="text-slate-400 text-sm mb-4">{description}</p>
+                <div className="space-y-2">
+                    {features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm text-slate-300">
+                            <Icons.Check size={14} className="text-rei-green" />
+                            <span>{feature}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        // Platform Comparison Component
+        const PlatformComparison = () => {
+            const platforms = [
+                {
+                    name: "AWS Bedrock",
+                    logo: "☁️",
+                    color: "from-orange-500 to-orange-700",
+                    fit: "Current Infrastructure",
+                    pros: [
+                        "100% aligned with existing AWS stack",
+                        "Terraform/Jenkins integration ready",
+                        "Claude & Titan model access",
+                        "Native S3/DynamoDB integration"
+                    ],
+                    cons: [
+                        "Less advanced reasoning models",
+                        "Limited MCP ecosystem"
+                    ],
+                    recommendation: "Best for rapid deployment"
+                },
+                {
+                    name: "Google Vertex AI",
+                    logo: "🔷",
+                    color: "from-blue-500 to-blue-700",
+                    fit: "Search & Discovery",
+                    pros: [
+                        "Gemini 2.0 multimodal excellence",
+                        "Superior search integration",
+                        "Strong grounding capabilities",
+                        "Retail-specific AI solutions"
+                    ],
+                    cons: [
+                        "Requires GCP adoption",
+                        "Cross-cloud complexity"
+                    ],
+                    recommendation: "Best for GEO strategy"
+                },
+                {
+                    name: "Azure OpenAI",
+                    logo: "🔵",
+                    color: "from-cyan-500 to-blue-600",
+                    fit: "Enterprise AI",
+                    pros: [
+                        "GPT-4 & o1 access",
+                        "Enterprise compliance features",
+                        "Strong partner ecosystem",
+                        "Copilot integration path"
+                    ],
+                    cons: [
+                        "Microsoft dependency",
+                        "Premium pricing"
+                    ],
+                    recommendation: "Best for enterprise features"
+                }
+            ];
+
+            return (
+                <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 rounded-xl bg-rei-green flex items-center justify-center">
+                            <Icons.Cloud size={22} className="text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-white">Platform Decision Framework</h2>
+                            <p className="text-slate-400 text-sm">Picking Your Lane: AWS vs Google vs Microsoft</p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                        {platforms.map((platform, idx) => (
+                            <div key={idx} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${platform.color} flex items-center justify-center text-xl`}>
+                                        {platform.logo}
+                                    </div>
+                                    <div>
+                                        <div className="text-white font-semibold">{platform.name}</div>
+                                        <div className="text-xs text-slate-400">{platform.fit}</div>
+                                    </div>
+                                </div>
+
+                                <div className="mb-3">
+                                    <div className="text-xs text-rei-sage font-semibold mb-2">ADVANTAGES</div>
+                                    {platform.pros.map((pro, i) => (
+                                        <div key={i} className="flex items-start gap-2 text-xs text-slate-300 mb-1">
+                                            <Icons.Check size={12} className="text-green-400 mt-0.5 flex-shrink-0" />
+                                            <span>{pro}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mb-3">
+                                    <div className="text-xs text-slate-500 font-semibold mb-2">CONSIDERATIONS</div>
+                                    {platform.cons.map((con, i) => (
+                                        <div key={i} className="flex items-start gap-2 text-xs text-slate-400 mb-1">
+                                            <span className="text-amber-400">•</span>
+                                            <span>{con}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-3 pt-3 border-t border-slate-700">
+                                    <div className="text-xs text-cyan-400 font-medium">{platform.recommendation}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-rei-green/10 rounded-xl p-4 border border-rei-green/30">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Icons.Target size={18} className="text-rei-sage" />
+                            <span className="text-rei-sage font-semibold">Strategic Recommendation</span>
+                        </div>
+                        <p className="text-slate-300 text-sm">
+                            <strong className="text-white">Hybrid Approach:</strong> Leverage AWS Bedrock for core infrastructure (Shopper Assist, Contact Center)
+                            while strategically engaging Google Vertex AI for GEO optimization. This preserves existing AWS investments while ensuring
+                            optimal positioning in Google's AI-powered search ecosystem.
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
+        // Sustainability & Green AI Component
+        const SustainabilitySection = () => (
+            <div className="bg-gradient-to-br from-emerald-900/30 via-slate-800 to-slate-900 rounded-2xl p-6 border border-emerald-500/30 shadow-xl sustainability-glow mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center animate-float">
+                        <Icons.Leaf size={26} className="text-emerald-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Sustainable AI Architecture</h2>
+                        <p className="text-emerald-400 text-sm">Green AI aligned with REI's stewardship values</p>
+                    </div>
+                    <div className="ml-auto px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+                        <span className="text-emerald-400 text-sm font-medium">First National Retailer: Zero Waste</span>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <Icons.Award size={18} className="text-emerald-400" />
+                            REI's Sustainability Leadership
+                        </h3>
+                        <div className="space-y-3">
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-slate-300 text-sm">Carbon Emissions Reduction</span>
+                                    <span className="text-emerald-400 font-bold">47% by 2030</span>
+                                </div>
+                                <div className="w-full bg-slate-700 rounded-full h-2">
+                                    <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-2 rounded-full" style={{width: '47%'}}></div>
+                                </div>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-slate-300 text-sm">Renewable Energy (Scope 2)</span>
+                                    <span className="text-emerald-400 font-bold">100%</span>
+                                </div>
+                                <div className="w-full bg-slate-700 rounded-full h-2">
+                                    <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-2 rounded-full" style={{width: '100%'}}></div>
+                                </div>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-slate-300 text-sm">Recycled Polyester in Products</span>
+                                    <span className="text-emerald-400 font-bold">52%</span>
+                                </div>
+                                <div className="w-full bg-slate-700 rounded-full h-2">
+                                    <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-2 rounded-full" style={{width: '52%'}}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <Icons.Cpu size={18} className="text-cyan-400" />
+                            Green AI Practices
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <Icons.Wind size={20} className="text-cyan-400 mb-2" />
+                                <div className="text-white text-sm font-semibold">Carbon-Aware Computing</div>
+                                <p className="text-slate-400 text-xs mt-1">Schedule batch AI jobs during renewable energy peaks</p>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <Icons.Zap size={20} className="text-yellow-400 mb-2" />
+                                <div className="text-white text-sm font-semibold">Efficient Models</div>
+                                <p className="text-slate-400 text-xs mt-1">Model distillation & quantization to reduce compute</p>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <Icons.Droplet size={20} className="text-blue-400 mb-2" />
+                                <div className="text-white text-sm font-semibold">Smart Siting</div>
+                                <p className="text-slate-400 text-xs mt-1">Prioritize regions with clean energy & efficient cooling</p>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <Icons.Recycle size={20} className="text-emerald-400 mb-2" />
+                                <div className="text-white text-sm font-semibold">Response Caching</div>
+                                <p className="text-slate-400 text-xs mt-1">Intelligent caching to minimize redundant AI calls</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Icons.TreeDeciduous size={18} className="text-emerald-400" />
+                        <span className="text-emerald-400 font-semibold">The REI Advantage</span>
+                    </div>
+                    <p className="text-slate-300 text-sm">
+                        REI's established sustainability credentials create a unique opportunity: position sustainable AI as a brand differentiator.
+                        While competitors race to deploy AI, REI can lead with <strong className="text-white">responsible AI deployment</strong>—reducing
+                        carbon footprint by up to 73% through smart practices. This aligns with member values and strengthens the co-op's
+                        environmental leadership position.
+                    </p>
+                </div>
+            </div>
+        );
+
+        // Shopper Assist Deep Dive
+        const ShopperAssistSection = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-rei-green flex items-center justify-center">
+                        <Icons.Bot size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Shopper Assist Architecture</h2>
+                        <p className="text-slate-400 text-sm">AI-powered outdoor expertise on REI.com</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center mb-3">
+                            <Icons.Search size={20} className="text-blue-400" />
+                        </div>
+                        <h4 className="text-white font-semibold mb-2">Discovery Agent</h4>
+                        <p className="text-slate-400 text-xs mb-3">Natural language product search with outdoor expertise context</p>
+                        <div className="space-y-1">
+                            <div className="text-xs text-slate-500">"Best tent for backpacking in the Cascades"</div>
+                            <div className="text-xs text-slate-500">"Waterproof jacket for PNW winter hiking"</div>
+                        </div>
+                    </div>
+
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="w-10 h-10 rounded-lg bg-rei-green/20 flex items-center justify-center mb-3">
+                            <Icons.Tent size={20} className="text-rei-sage" />
+                        </div>
+                        <h4 className="text-white font-semibold mb-2">Gear Expert Agent</h4>
+                        <p className="text-slate-400 text-xs mb-3">Deep product knowledge with comparison and fit guidance</p>
+                        <div className="space-y-1">
+                            <div className="text-xs text-slate-500">Size/fit recommendations</div>
+                            <div className="text-xs text-slate-500">Gear comparison tables</div>
+                        </div>
+                    </div>
+
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center mb-3">
+                            <Icons.ShoppingCart size={20} className="text-purple-400" />
+                        </div>
+                        <h4 className="text-white font-semibold mb-2">Cart & Checkout Agent</h4>
+                        <p className="text-slate-400 text-xs mb-3">Seamless purchase flow with member benefits integration</p>
+                        <div className="space-y-1">
+                            <div className="text-xs text-slate-500">10% member dividend applied</div>
+                            <div className="text-xs text-slate-500">Re/Supply trade-in suggestions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                    <h4 className="text-white font-semibold mb-3">Member Context Integration</h4>
+                    <div className="grid grid-cols-4 gap-3">
+                        <div className="text-center p-3 bg-slate-800/50 rounded-lg">
+                            <div className="text-2xl font-bold text-rei-sage">25M+</div>
+                            <div className="text-xs text-slate-400">Active Members</div>
+                        </div>
+                        <div className="text-center p-3 bg-slate-800/50 rounded-lg">
+                            <div className="text-2xl font-bold text-rei-sage">10%</div>
+                            <div className="text-xs text-slate-400">Annual Dividend</div>
+                        </div>
+                        <div className="text-center p-3 bg-slate-800/50 rounded-lg">
+                            <div className="text-2xl font-bold text-rei-sage">1 Year</div>
+                            <div className="text-xs text-slate-400">Return Window</div>
+                        </div>
+                        <div className="text-center p-3 bg-slate-800/50 rounded-lg">
+                            <div className="text-2xl font-bold text-rei-sage">$30</div>
+                            <div className="text-xs text-slate-400">Lifetime Membership</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // GEO Optimization Section
+        const GEOSection = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500 flex items-center justify-center">
+                        <Icons.Globe size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">GEO: Generative Engine Optimization</h2>
+                        <p className="text-slate-400 text-sm">Ensuring REI Co-op products surface in AI-powered discovery</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                            <Icons.Target size={16} className="text-cyan-400" />
+                            Private Label Focus: REI Co-op Brand
+                        </h4>
+                        <div className="space-y-3">
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="text-rei-sage font-semibold text-sm mb-1">Product Schema Optimization</div>
+                                <p className="text-slate-400 text-xs">Rich structured data for all REI Co-op products with outdoor-specific attributes</p>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="text-rei-sage font-semibold text-sm mb-1">Expert Content Layer</div>
+                                <p className="text-slate-400 text-xs">Gear guides, comparison charts, and expert reviews as AI training signals</p>
+                            </div>
+                            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                <div className="text-rei-sage font-semibold text-sm mb-1">Sustainability Signals</div>
+                                <p className="text-slate-400 text-xs">Climate Label certifications and recycled material percentages in product data</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                            <Icons.Sparkles size={16} className="text-purple-400" />
+                            AI Platform Integration Points
+                        </h4>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
+                                <div className="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-sm">🔷</div>
+                                <div>
+                                    <div className="text-white text-sm font-medium">Google AI Overviews</div>
+                                    <div className="text-slate-400 text-xs">Structured data for shopping queries</div>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
+                                <div className="w-8 h-8 rounded bg-emerald-500/20 flex items-center justify-center text-sm">🤖</div>
+                                <div>
+                                    <div className="text-white text-sm font-medium">ChatGPT Shopping</div>
+                                    <div className="text-slate-400 text-xs">Product feed integration</div>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
+                                <div className="w-8 h-8 rounded bg-purple-500/20 flex items-center justify-center text-sm">🔮</div>
+                                <div>
+                                    <div className="text-white text-sm font-medium">Perplexity Shopping</div>
+                                    <div className="text-slate-400 text-xs">API merchant integration</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Icons.Zap size={18} className="text-cyan-400" />
+                        <span className="text-cyan-400 font-semibold">GEO Strategic Imperative</span>
+                    </div>
+                    <p className="text-slate-300 text-sm">
+                        When a member asks ChatGPT "What's the best ultralight tent under $400?", REI Co-op's Flash Air 2 should surface prominently.
+                        GEO ensures REI's private label products are discoverable across all AI-powered shopping experiences—protecting margin
+                        and reinforcing the value of membership.
+                    </p>
+                </div>
+            </div>
+        );
+
+        // Contact Center Section
+        const ContactCenterSection = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
+                        <Icons.Headphones size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Contact Center AI</h2>
+                        <p className="text-slate-400 text-sm">Below-the-line opportunity with strong ROI potential</p>
+                    </div>
+                    <div className="ml-auto px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30">
+                        <span className="text-amber-400 text-sm font-medium">Phase 2 Opportunity</span>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-amber-400 font-semibold mb-2">Tier 1 Deflection</div>
+                        <p className="text-slate-400 text-xs mb-3">AI handles common queries: order status, return policy, store hours</p>
+                        <div className="text-2xl font-bold text-white">40-60%</div>
+                        <div className="text-xs text-slate-500">Expected deflection rate</div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-amber-400 font-semibold mb-2">Expert Escalation</div>
+                        <p className="text-slate-400 text-xs mb-3">Complex gear questions routed to outdoor experts with full context</p>
+                        <div className="text-2xl font-bold text-white">30%</div>
+                        <div className="text-xs text-slate-500">Reduced handle time</div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="text-amber-400 font-semibold mb-2">Member Recognition</div>
+                        <p className="text-slate-400 text-xs mb-3">Instant member identification with purchase history & preferences</p>
+                        <div className="text-2xl font-bold text-white">25M</div>
+                        <div className="text-xs text-slate-500">Member profiles accessible</div>
+                    </div>
+                </div>
+
+                <div className="bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Icons.BarChart size={18} className="text-amber-400" />
+                        <span className="text-amber-400 font-semibold">Business Case Drivers</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div>
+                            <div className="text-white font-medium">Cost Reduction</div>
+                            <div className="text-slate-400 text-xs">$2-4M annual savings potential from Tier 1 deflection</div>
+                        </div>
+                        <div>
+                            <div className="text-white font-medium">Member Satisfaction</div>
+                            <div className="text-slate-400 text-xs">24/7 availability with consistent expert-level responses</div>
+                        </div>
+                        <div>
+                            <div className="text-white font-medium">Upsell Opportunity</div>
+                            <div className="text-slate-400 text-xs">AI-suggested gear additions during support interactions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Architecture Overview
+        const ArchitectureOverview = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center">
+                        <Icons.Server size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Technical Architecture</h2>
+                        <p className="text-slate-400 text-sm">AWS-native with strategic Google integration</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-4 gap-4 mb-6">
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <Icons.Cloud size={24} className="text-orange-400 mb-2" />
+                        <div className="text-white font-semibold text-sm">Infrastructure</div>
+                        <p className="text-slate-400 text-xs mt-1">AWS (existing), Terraform, Jenkins CI/CD</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <Icons.Cpu size={24} className="text-cyan-400 mb-2" />
+                        <div className="text-white font-semibold text-sm">AI/ML Platform</div>
+                        <p className="text-slate-400 text-xs mt-1">AWS Bedrock (Claude) + Google Vertex AI (GEO)</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <Icons.Database size={24} className="text-emerald-400 mb-2" />
+                        <div className="text-white font-semibold text-sm">Data Layer</div>
+                        <p className="text-slate-400 text-xs mt-1">DynamoDB, S3, Vector Store (Pinecone/OpenSearch)</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                        <Icons.Shield size={24} className="text-red-400 mb-2" />
+                        <div className="text-white font-semibold text-sm">Security</div>
+                        <p className="text-slate-400 text-xs mt-1">Splunk SIEM, DevSecOps, Member data governance</p>
+                    </div>
+                </div>
+
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                    <h4 className="text-white font-semibold mb-3">REI Co-op Data Assets</h4>
+                    <div className="grid grid-cols-5 gap-2">
+                        <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div className="text-xs text-slate-400">Products</div>
+                            <div className="text-sm font-bold text-white">50K+</div>
+                        </div>
+                        <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div className="text-xs text-slate-400">Reviews</div>
+                            <div className="text-sm font-bold text-white">2M+</div>
+                        </div>
+                        <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div className="text-xs text-slate-400">Expert Guides</div>
+                            <div className="text-sm font-bold text-white">500+</div>
+                        </div>
+                        <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div className="text-xs text-slate-400">Member Profiles</div>
+                            <div className="text-sm font-bold text-white">25M</div>
+                        </div>
+                        <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div className="text-xs text-slate-400">Store Locations</div>
+                            <div className="text-sm font-bold text-white">180+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Implementation Roadmap
+        const RoadmapSection = () => (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center">
+                        <Icons.ArrowRight size={22} className="text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Implementation Roadmap</h2>
+                        <p className="text-slate-400 text-sm">Phased approach aligned with REI's priorities</p>
+                    </div>
+                </div>
+
+                <div className="relative">
+                    <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-rei-green via-cyan-500 to-amber-500"></div>
+
+                    <div className="space-y-6">
+                        <div className="flex gap-4">
+                            <div className="w-16 h-16 rounded-full bg-rei-green flex items-center justify-center text-white font-bold z-10">P1</div>
+                            <div className="flex-1 bg-slate-800/50 rounded-xl p-4 border border-rei-green/30">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h4 className="text-white font-semibold">Shopper Assist MVP</h4>
+                                    <span className="text-rei-sage text-sm">Priority: High</span>
+                                </div>
+                                <p className="text-slate-400 text-sm mb-3">Deploy AI shopping assistant on REI.com with product discovery and gear expertise</p>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">AWS Bedrock</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Product RAG</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Member Context</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <div className="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center text-white font-bold z-10">P2</div>
+                            <div className="flex-1 bg-slate-800/50 rounded-xl p-4 border border-cyan-500/30">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h4 className="text-white font-semibold">GEO Optimization</h4>
+                                    <span className="text-cyan-400 text-sm">Priority: Strategic</span>
+                                </div>
+                                <p className="text-slate-400 text-sm mb-3">Optimize REI Co-op products for AI-powered discovery across search and shopping agents</p>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Google Vertex AI</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Product Schema</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Private Label Focus</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold z-10">P3</div>
+                            <div className="flex-1 bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h4 className="text-white font-semibold">Contact Center AI</h4>
+                                    <span className="text-amber-400 text-sm">Priority: ROI-Dependent</span>
+                                </div>
+                                <p className="text-slate-400 text-sm mb-3">Deploy AI-powered customer support with Tier 1 deflection and expert routing</p>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">AWS Connect</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Voice AI</span>
+                                    <span className="px-2 py-1 rounded bg-slate-700 text-xs text-slate-300">Member Integration</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Main App Component
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('overview');
+
+            const tabs = [
+                { id: 'overview', label: 'Overview' },
+                { id: 'shopper', label: 'Shopper Assist' },
+                { id: 'geo', label: 'GEO Strategy' },
+                { id: 'contact', label: 'Contact Center' },
+                { id: 'sustainability', label: 'Green AI' },
+            ];
+
+            return (
+                <div className="min-h-screen bg-slate-950">
+                    <Header />
+
+                    <div className="max-w-7xl mx-auto px-6 py-8">
+                        {/* Tab Navigation */}
+                        <div className="flex gap-2 mb-6 bg-slate-900/50 p-2 rounded-xl w-fit">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        activeTab === tab.id
+                                            ? 'tab-active'
+                                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Tab Content */}
+                        {activeTab === 'overview' && (
+                            <>
+                                <ExecutiveSummary />
+
+                                {/* Use Cases Grid */}
+                                <div className="grid grid-cols-3 gap-6 mb-6">
+                                    <UseCaseCard
+                                        icon={Icons.Bot}
+                                        title="Shopper Assist"
+                                        subtitle="Digital Shopping Companion"
+                                        description="AI-powered assistant on REI.com providing personalized gear recommendations, size guidance, and outdoor expertise."
+                                        features={[
+                                            "Natural language product discovery",
+                                            "Member-aware personalization",
+                                            "Expert gear comparisons",
+                                            "Cart & checkout assistance"
+                                        ]}
+                                        priority="Primary"
+                                    />
+                                    <UseCaseCard
+                                        icon={Icons.Globe}
+                                        title="GEO Optimization"
+                                        subtitle="AI Discovery Layer"
+                                        description="Ensure REI Co-op products surface prominently when consumers use AI-powered search and shopping tools."
+                                        features={[
+                                            "Private label product focus",
+                                            "Structured data optimization",
+                                            "Multi-platform integration",
+                                            "Sustainability signal amplification"
+                                        ]}
+                                        priority="Strategic"
+                                        color="cyan-500"
+                                    />
+                                    <UseCaseCard
+                                        icon={Icons.Headphones}
+                                        title="Contact Center"
+                                        subtitle="Support Excellence"
+                                        description="AI-enhanced customer support with intelligent routing, member recognition, and expert escalation."
+                                        features={[
+                                            "Tier 1 query deflection",
+                                            "Member context integration",
+                                            "Expert agent routing",
+                                            "Upsell opportunity detection"
+                                        ]}
+                                        priority="Phase 2"
+                                        color="amber-500"
+                                    />
+                                </div>
+
+                                <PlatformComparison />
+                                <ArchitectureOverview />
+                                <RoadmapSection />
+                            </>
+                        )}
+
+                        {activeTab === 'shopper' && (
+                            <>
+                                <ShopperAssistSection />
+                                <ArchitectureOverview />
+                            </>
+                        )}
+
+                        {activeTab === 'geo' && (
+                            <>
+                                <GEOSection />
+                                <PlatformComparison />
+                            </>
+                        )}
+
+                        {activeTab === 'contact' && (
+                            <>
+                                <ContactCenterSection />
+                                <ArchitectureOverview />
+                            </>
+                        )}
+
+                        {activeTab === 'sustainability' && (
+                            <>
+                                <SustainabilitySection />
+                                <ArchitectureOverview />
+                            </>
+                        )}
+
+                        {/* Footer */}
+                        <div className="mt-8 text-center text-slate-500 text-sm">
+                            <p>REI Co-op Agentic Commerce Architecture | Strategic Technology Assessment</p>
+                            <p className="mt-1">Confidential | For Internal Discussion Only</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

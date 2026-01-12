@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walmart Agentic Commerce Architecture Stack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'wmt-blue': '#0071ce',
+            'wmt-dark': '#004c91',
+            'wmt-yellow': '#ffc220',
+            'wmt-spark': '#ffc220',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-page: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-alt: #263548;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-color: #334155;
+      --accent-blue: #0071ce;
+      --accent-yellow: #ffc220;
+      --accent-cyan: #22d3ee;
+      --accent-purple: #a78bfa;
+      --accent-green: #34d399;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+    }
+
+    @keyframes flowDown {
+      0%, 100% { opacity: 0.4; transform: translateY(-2px); }
+      50% { opacity: 1; transform: translateY(2px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(0, 113, 206, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(0, 113, 206, 0.6); }
+    }
+    .animate-flow-down { animation: flowDown 2s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .flow-line {
+      stroke-dasharray: 8 4;
+      animation: dash 1s linear infinite;
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: -12; }
+    }
+
+    .view-content {
+      animation: fadeSlideIn 0.35s ease-out;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .impact-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+    .impact-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tech-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    .protocol-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px;
+      transition: all 0.2s ease;
+    }
+    .protocol-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .data-flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      color: var(--accent-cyan);
+    }
+
+    @media print {
+      @page { size: A3 landscape; margin: 0.5in; }
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .animate-flow-down, .flow-line, .animate-pulse-glow { animation: none !important; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Icons
+    const Icons = {
+      Globe: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>,
+      Cloud: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>,
+      Bot: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>,
+      Database: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>,
+      Brain: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z"/><path d="M16 8V5c0-1.1.9-2 2-2"/><path d="M12 13h4"/><path d="M12 18h6a2 2 0 0 1 2 2v1"/><path d="M12 8h8"/></svg>,
+      Server: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>,
+      Layers: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
+      Network: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>,
+      Link: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>,
+      Shield: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>,
+      Zap: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+      ShoppingCart: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>,
+      Store: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>,
+      Package: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>,
+      ArrowDown: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>,
+      Users: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+      BarChart: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>,
+      Activity: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
+      Target: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+      Cpu: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>,
+      Truck: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>,
+      Code: ({ size = 24, className = "" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+    };
+
+    const TechTag = ({ children }) => <span className="tech-tag">{children}</span>;
+
+    // Main App
+    const App = () => {
+      const [activeView, setActiveView] = React.useState('stack');
+
+      return (
+        <div className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
+          {/* Header */}
+          <header className="bg-gradient-to-r from-wmt-dark to-wmt-blue text-white py-4 px-6">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-wmt-yellow flex items-center justify-center">
+                  <Icons.Zap size={24} className="text-wmt-dark" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold">Walmart Agentic Commerce Architecture</h1>
+                  <p className="text-blue-200 text-sm">Technology Stack Reference</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1 bg-white/10 rounded-lg p-1">
+                  <button
+                    onClick={() => setActiveView('stack')}
+                    className={`px-3 py-1.5 text-xs font-medium rounded transition-colors ${activeView === 'stack' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}`}
+                  >
+                    Stack
+                  </button>
+                  <button
+                    onClick={() => setActiveView('agents')}
+                    className={`px-3 py-1.5 text-xs font-medium rounded transition-colors ${activeView === 'agents' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}`}
+                  >
+                    Agent Ecosystem
+                  </button>
+                  <button
+                    onClick={() => setActiveView('protocols')}
+                    className={`px-3 py-1.5 text-xs font-medium rounded transition-colors ${activeView === 'protocols' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}`}
+                  >
+                    Protocols
+                  </button>
+                </div>
+                <a href="geo-agentic-enablement.html" className="flex items-center gap-2 px-4 py-2 bg-wmt-yellow hover:bg-yellow-300 rounded-lg transition-colors text-wmt-dark font-semibold text-sm">
+                  <Icons.Layers size={16} />
+                  <span>GEO Strategy</span>
+                </a>
+              </div>
+            </div>
+          </header>
+
+          <main className="max-w-7xl mx-auto p-6">
+            {/* Executive Summary */}
+            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-wmt-yellow flex items-center justify-center">
+                  <Icons.Brain size={22} className="text-wmt-dark" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-white">Sparky: The Orchestration Layer</h2>
+                  <p className="text-slate-400 text-sm">From internal assistant to agentic commerce hub</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-4 gap-4">
+                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                      <Icons.Cloud size={14} className="text-cyan-400" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm">Hybrid Cloud</h3>
+                  </div>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    <span className="text-cyan-400 font-semibold">Triplet Model</span>: WCNP + Azure + GCP across West, Central, East regions with 10K edge nodes.
+                  </p>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                      <Icons.Brain size={14} className="text-purple-400" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm">Element ML</h3>
+                  </div>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    End-to-end ML platform with retail-specific <span className="text-purple-400 font-semibold">LLMs trained on Walmart data</span>.
+                  </p>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-green-500/20 flex items-center justify-center">
+                      <Icons.Database size={14} className="text-green-400" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm">Lakehouse</h3>
+                  </div>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    <span className="text-green-400 font-semibold">Apache Hudi</span> for streaming + batch. Queried via Hive, Spark, Presto, BigQuery, Flink.
+                  </p>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                      <Icons.Activity size={14} className="text-amber-400" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm">Event Streaming</h3>
+                  </div>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    <span className="text-amber-400 font-semibold">8,500 Kafka nodes</span> processing 11B+ events/day for real-time microservices.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {activeView === 'stack' && <StackView />}
+            {activeView === 'agents' && <AgentsView />}
+            {activeView === 'protocols' && <ProtocolsView />}
+          </main>
+
+          <footer className="bg-slate-800 text-white py-3 px-6">
+            <div className="max-w-7xl mx-auto flex justify-between items-center text-xs text-slate-400">
+              <span>Walmart GEO Architecture Reference | December 2025</span>
+              <span>Sources: Walmart Global Tech Blog, Confluent, Medium, Corporate News</span>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    // Stack View
+    const StackView = () => (
+      <div className="space-y-6 view-content">
+        {/* Layer 1: External AI Surfaces */}
+        <section className="bg-gradient-to-r from-purple-900 to-indigo-900 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <Icons.Globe size={24} className="text-purple-300" />
+            <h2 className="text-xl font-bold">External AI Surfaces</h2>
+            <span className="section-badge bg-purple-500/30 text-purple-200">Off-Platform Discovery</span>
+          </div>
+          <p className="text-purple-200 text-sm mb-4">
+            Third-party AI platforms where consumers discover and transact. Walmart must surface here via agent-ready data and protocols.
+          </p>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Bot size={18} className="text-purple-300" />
+                <span className="font-semibold text-sm">LLM Platforms</span>
+              </div>
+              <p className="text-xs text-purple-200 mb-3">AI assistants with commerce capabilities</p>
+              <div className="flex flex-wrap">
+                <TechTag>ChatGPT + ACP</TechTag>
+                <TechTag>Claude</TechTag>
+                <TechTag>Gemini</TechTag>
+                <TechTag>Copilot</TechTag>
+                <TechTag>Perplexity</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Target size={18} className="text-purple-300" />
+                <span className="font-semibold text-sm">Search AI</span>
+              </div>
+              <p className="text-xs text-purple-200 mb-3">Generative search interfaces</p>
+              <div className="flex flex-wrap">
+                <TechTag>Google SGE</TechTag>
+                <TechTag>Bing Chat</TechTag>
+                <TechTag>You.com</TechTag>
+                <TechTag>Brave Leo</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Store size={18} className="text-purple-300" />
+                <span className="font-semibold text-sm">Competitors</span>
+              </div>
+              <p className="text-xs text-purple-200 mb-3">Rival commerce platforms with AI</p>
+              <div className="flex flex-wrap">
+                <TechTag>Amazon Rufus</TechTag>
+                <TechTag>Target Circle</TechTag>
+                <TechTag>Instacart AI</TechTag>
+                <TechTag>Shopify Sidekick</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Users size={18} className="text-purple-300" />
+                <span className="font-semibold text-sm">Social Commerce</span>
+              </div>
+              <p className="text-xs text-purple-200 mb-3">Social platforms with shopping</p>
+              <div className="flex flex-wrap">
+                <TechTag>TikTok Shop</TechTag>
+                <TechTag>Instagram</TechTag>
+                <TechTag>Pinterest</TechTag>
+                <TechTag>YouTube</TechTag>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Data Flow Arrow */}
+        <div className="flex justify-center">
+          <div className="data-flow-arrow animate-flow-down">
+            <Icons.ArrowDown size={32} />
+            <span className="text-xs ml-2">A2A / MCP / ACP / LLMs.txt</span>
+          </div>
+        </div>
+
+        {/* Layer 2: Sparky Orchestration */}
+        <section className="bg-gradient-to-r from-amber-900 to-orange-900 rounded-xl p-6 text-white border-2 border-wmt-yellow/50 animate-pulse-glow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-wmt-yellow flex items-center justify-center">
+              <Icons.Zap size={24} className="text-wmt-dark" />
+            </div>
+            <h2 className="text-xl font-bold">Sparky Orchestration Layer</h2>
+            <span className="section-badge bg-amber-500/30 text-amber-200">Central Intelligence</span>
+          </div>
+          <p className="text-amber-200 text-sm mb-4">
+            Sparky mediates between external AI consumers and internal Walmart systems. Policy enforcement, rate limiting, sponsorship injection, response assembly.
+          </p>
+          <div className="grid grid-cols-5 gap-4">
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Shield size={18} className="text-amber-300" />
+                <span className="font-semibold text-sm">Governance</span>
+              </div>
+              <p className="text-xs text-amber-200 mb-2">Access control and policy</p>
+              <div className="flex flex-wrap">
+                <TechTag>LLMs.txt</TechTag>
+                <TechTag>Rate Limits</TechTag>
+                <TechTag>Auth</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Link size={18} className="text-amber-300" />
+                <span className="font-semibold text-sm">Protocol Mediation</span>
+              </div>
+              <p className="text-xs text-amber-200 mb-2">Agent communication</p>
+              <div className="flex flex-wrap">
+                <TechTag>MCP Server</TechTag>
+                <TechTag>A2A Handler</TechTag>
+                <TechTag>ACP Integration</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.BarChart size={18} className="text-amber-300" />
+                <span className="font-semibold text-sm">Walmart Connect</span>
+              </div>
+              <p className="text-xs text-amber-200 mb-2">Sponsorship injection</p>
+              <div className="flex flex-wrap">
+                <TechTag>Sponsored Units</TechTag>
+                <TechTag>Attribution</TechTag>
+                <TechTag>Impression Tokens</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Brain size={18} className="text-amber-300" />
+                <span className="font-semibold text-sm">Response Assembly</span>
+              </div>
+              <p className="text-xs text-amber-200 mb-2">Multi-source composition</p>
+              <div className="flex flex-wrap">
+                <TechTag>Context Builder</TechTag>
+                <TechTag>Ranking</TechTag>
+                <TechTag>Personalization</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Activity size={18} className="text-amber-300" />
+                <span className="font-semibold text-sm">Observability</span>
+              </div>
+              <p className="text-xs text-amber-200 mb-2">Monitoring and analytics</p>
+              <div className="flex flex-wrap">
+                <TechTag>Request Logs</TechTag>
+                <TechTag>GEO Metrics</TechTag>
+                <TechTag>Brand Sentiment</TechTag>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Data Flow Arrow */}
+        <div className="flex justify-center">
+          <div className="data-flow-arrow animate-flow-down">
+            <Icons.ArrowDown size={32} />
+            <span className="text-xs ml-2">Internal APIs</span>
+          </div>
+        </div>
+
+        {/* Layer 3: ML/AI Platform */}
+        <section className="bg-gradient-to-r from-violet-900 to-purple-900 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <Icons.Brain size={24} className="text-violet-300" />
+            <h2 className="text-xl font-bold">Element ML Platform</h2>
+            <span className="section-badge bg-violet-500/30 text-violet-200">AI/ML Foundation</span>
+          </div>
+          <p className="text-violet-200 text-sm mb-4">
+            Walmart's proprietary ML platform for data scientists, engineers, and application developers. Retail-specific LLMs trained on Walmart's unique data.
+          </p>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Cpu size={18} className="text-violet-300" />
+                <span className="font-semibold text-sm">ML Infrastructure</span>
+              </div>
+              <p className="text-xs text-violet-200 mb-2">Core platform components</p>
+              <div className="flex flex-wrap">
+                <TechTag>Kubernetes</TechTag>
+                <TechTag>MLOps</TechTag>
+                <TechTag>Feature Store</TechTag>
+                <TechTag>Model Registry</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Brain size={18} className="text-violet-300" />
+                <span className="font-semibold text-sm">Retail LLMs</span>
+              </div>
+              <p className="text-xs text-violet-200 mb-2">Walmart-trained models</p>
+              <div className="flex flex-wrap">
+                <TechTag>Product Understanding</TechTag>
+                <TechTag>Review Synthesis</TechTag>
+                <TechTag>Intent Recognition</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Target size={18} className="text-violet-300" />
+                <span className="font-semibold text-sm">Personalization</span>
+              </div>
+              <p className="text-xs text-violet-200 mb-2">Customer experience</p>
+              <div className="flex flex-wrap">
+                <TechTag>Recommendations</TechTag>
+                <TechTag>Search Ranking</TechTag>
+                <TechTag>Dynamic Pricing</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Shield size={18} className="text-violet-300" />
+                <span className="font-semibold text-sm">Governance</span>
+              </div>
+              <p className="text-xs text-violet-200 mb-2">Safety and compliance</p>
+              <div className="flex flex-wrap">
+                <TechTag>Guardrails</TechTag>
+                <TechTag>Bias Detection</TechTag>
+                <TechTag>Audit Logging</TechTag>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Layer 4: Data Infrastructure */}
+        <section className="bg-gradient-to-r from-emerald-900 to-teal-900 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <Icons.Database size={24} className="text-emerald-300" />
+            <h2 className="text-xl font-bold">Data Infrastructure</h2>
+            <span className="section-badge bg-emerald-500/30 text-emerald-200">Lakehouse + Streaming</span>
+          </div>
+          <p className="text-emerald-200 text-sm mb-4">
+            Fortune 1 scale data platform. Apache Hudi lakehouse for streaming + batch. Kafka event streaming with 8,500 nodes processing 11B+ events/day.
+          </p>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Database size={18} className="text-emerald-300" />
+                <span className="font-semibold text-sm">Lakehouse</span>
+              </div>
+              <p className="text-xs text-emerald-200 mb-2">Apache Hudi table format</p>
+              <div className="flex flex-wrap">
+                <TechTag>Apache Hudi</TechTag>
+                <TechTag>ACID Transactions</TechTag>
+                <TechTag>Time Travel</TechTag>
+                <TechTag>Schema Evolution</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Activity size={18} className="text-emerald-300" />
+                <span className="font-semibold text-sm">Event Streaming</span>
+              </div>
+              <p className="text-xs text-emerald-200 mb-2">Real-time data movement</p>
+              <div className="flex flex-wrap">
+                <TechTag>Apache Kafka</TechTag>
+                <TechTag>Kafka Streams</TechTag>
+                <TechTag>MPS Proxy</TechTag>
+                <TechTag>85GB/min throughput</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Cpu size={18} className="text-emerald-300" />
+                <span className="font-semibold text-sm">Query Engines</span>
+              </div>
+              <p className="text-xs text-emerald-200 mb-2">Multi-engine access</p>
+              <div className="flex flex-wrap">
+                <TechTag>Apache Spark</TechTag>
+                <TechTag>Presto/Trino</TechTag>
+                <TechTag>Apache Hive</TechTag>
+                <TechTag>BigQuery</TechTag>
+                <TechTag>Flink</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Package size={18} className="text-emerald-300" />
+                <span className="font-semibold text-sm">Data Domains</span>
+              </div>
+              <p className="text-xs text-emerald-200 mb-2">Core data products</p>
+              <div className="flex flex-wrap">
+                <TechTag>100M SKUs</TechTag>
+                <TechTag>Customer 360</TechTag>
+                <TechTag>Inventory</TechTag>
+                <TechTag>Transactions</TechTag>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Layer 5: Cloud Infrastructure */}
+        <section className="bg-gradient-to-r from-cyan-900 to-blue-900 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <Icons.Cloud size={24} className="text-cyan-300" />
+            <h2 className="text-xl font-bold">Hybrid Cloud Infrastructure</h2>
+            <span className="section-badge bg-cyan-500/30 text-cyan-200">Triplet Model</span>
+          </div>
+          <p className="text-cyan-200 text-sm mb-4">
+            One of the world's largest hybrid clouds. WCNP + Azure + GCP with regional deployments and 10,000 edge nodes at Walmart facilities.
+          </p>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Server size={18} className="text-cyan-300" />
+                <span className="font-semibold text-sm">WCNP</span>
+              </div>
+              <p className="text-xs text-cyan-200 mb-2">Walmart Cloud Native Platform</p>
+              <div className="flex flex-wrap">
+                <TechTag>Kubernetes</TechTag>
+                <TechTag>545K Pods</TechTag>
+                <TechTag>93K Nodes</TechTag>
+                <TechTag>1M+ CPU Cores</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Cloud size={18} className="text-cyan-300" />
+                <span className="font-semibold text-sm">Azure</span>
+              </div>
+              <p className="text-xs text-cyan-200 mb-2">Primary public cloud partner</p>
+              <div className="flex flex-wrap">
+                <TechTag>Most Services</TechTag>
+                <TechTag>IoT Data</TechTag>
+                <TechTag>Azure AI</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Cloud size={18} className="text-cyan-300" />
+                <span className="font-semibold text-sm">GCP</span>
+              </div>
+              <p className="text-xs text-cyan-200 mb-2">Secondary public cloud</p>
+              <div className="flex flex-wrap">
+                <TechTag>BigQuery</TechTag>
+                <TechTag>Vertex AI</TechTag>
+                <TechTag>Specific Services</TechTag>
+              </div>
+            </div>
+            <div className="impact-card">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.Store size={18} className="text-cyan-300" />
+                <span className="font-semibold text-sm">Edge Cloud</span>
+              </div>
+              <p className="text-xs text-cyan-200 mb-2">Store-level compute</p>
+              <div className="flex flex-wrap">
+                <TechTag>10K Edge Nodes</TechTag>
+                <TechTag>Low Latency</TechTag>
+                <TechTag>Local Inference</TechTag>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-4">
+            <div className="bg-cyan-800/30 rounded-lg p-3 text-center">
+              <p className="text-cyan-300 font-bold text-lg">West</p>
+              <p className="text-cyan-200 text-xs">WCNP + Azure + GCP</p>
+            </div>
+            <div className="bg-cyan-800/30 rounded-lg p-3 text-center">
+              <p className="text-cyan-300 font-bold text-lg">Central</p>
+              <p className="text-cyan-200 text-xs">WCNP + Azure + GCP</p>
+            </div>
+            <div className="bg-cyan-800/30 rounded-lg p-3 text-center">
+              <p className="text-cyan-300 font-bold text-lg">East</p>
+              <p className="text-cyan-200 text-xs">WCNP + Azure + GCP</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Layer 6: Commerce Services */}
+        <section className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <Icons.ShoppingCart size={24} className="text-slate-300" />
+            <h2 className="text-xl font-bold">Commerce Services</h2>
+            <span className="section-badge bg-slate-500/30 text-slate-200">Transactional Core</span>
+          </div>
+          <p className="text-slate-300 text-sm mb-4">
+            Core commerce capabilities that Sparky orchestrates. Catalog, inventory, pricing, checkout, fulfillment.
+          </p>
+          <div className="grid grid-cols-6 gap-3">
+            <div className="impact-card text-center">
+              <Icons.Package size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Catalog</p>
+              <p className="text-slate-400 text-[10px]">100M+ SKUs</p>
+            </div>
+            <div className="impact-card text-center">
+              <Icons.Database size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Inventory</p>
+              <p className="text-slate-400 text-[10px]">Real-time</p>
+            </div>
+            <div className="impact-card text-center">
+              <Icons.BarChart size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Pricing</p>
+              <p className="text-slate-400 text-[10px]">Dynamic</p>
+            </div>
+            <div className="impact-card text-center">
+              <Icons.ShoppingCart size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Cart/Checkout</p>
+              <p className="text-slate-400 text-[10px]">Omnichannel</p>
+            </div>
+            <div className="impact-card text-center">
+              <Icons.Truck size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Fulfillment</p>
+              <p className="text-slate-400 text-[10px]">Same-day</p>
+            </div>
+            <div className="impact-card text-center">
+              <Icons.Users size={24} className="mx-auto mb-2 text-slate-400" />
+              <p className="font-semibold text-xs">Customer</p>
+              <p className="text-slate-400 text-[10px]">Walmart+</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+
+    // Agents View
+    const AgentsView = () => (
+      <div className="space-y-6 view-content">
+        <div className="bg-gradient-to-br from-amber-900/50 to-orange-900/50 rounded-2xl p-6 border border-wmt-yellow/30">
+          <h2 className="text-xl font-bold text-white mb-2">The Four-Part Agentic AI Framework</h2>
+          <p className="text-amber-200 text-sm mb-6">
+            Walmart's comprehensive agent ecosystem: customer-facing, supplier-facing, employee-facing, and developer-facing.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Sparky */}
+            <div className="bg-slate-900/80 rounded-xl p-5 border-2 border-wmt-yellow">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-wmt-yellow flex items-center justify-center">
+                  <Icons.Zap size={28} className="text-wmt-dark" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-wmt-yellow">Sparky</h3>
+                  <p className="text-slate-400 text-sm">Customer Agent</p>
+                </div>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Customer-facing generative AI assistant. Search, review synthesis, occasion planning, product discovery. Expected to replace the traditional search bar.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Product search and recommendations</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Review synthesis and insights</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Occasion planning (events, meals)</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Multimodal interface</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Marty */}
+            <div className="bg-slate-900/80 rounded-xl p-5 border border-slate-600">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center">
+                  <Icons.Store size={28} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-blue-400">Marty</h3>
+                  <p className="text-slate-400 text-sm">Supplier & Advertiser Agent</p>
+                </div>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Supplier and advertiser-facing agent. Campaign management, inventory coordination, Walmart Connect optimization, marketplace operations.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  <span className="text-slate-300">Walmart Connect campaign management</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  <span className="text-slate-300">Supplier inventory coordination</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  <span className="text-slate-300">Ad performance optimization</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  <span className="text-slate-300">Marketplace seller tools</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Associate Agent */}
+            <div className="bg-slate-900/80 rounded-xl p-5 border border-slate-600">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center">
+                  <Icons.Users size={28} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-purple-400">Associate Agent</h3>
+                  <p className="text-slate-400 text-sm">Employee Agent</p>
+                </div>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Employee-facing assistant for store associates and corporate teams. Inventory lookup, customer assistance, operational tasks, training support.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span className="text-slate-300">Real-time inventory lookup</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span className="text-slate-300">Customer question assistance</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span className="text-slate-300">Task and schedule management</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span className="text-slate-300">Policy and procedure guidance</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Developer Agent */}
+            <div className="bg-slate-900/80 rounded-xl p-5 border border-slate-600">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center">
+                  <Icons.Code size={28} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-green-400">Developer Agent</h3>
+                  <p className="text-slate-400 text-sm">Builder Agent</p>
+                </div>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Developer-facing agent for building and maintaining Walmart systems. Code assistance, documentation, debugging, architecture guidance.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Code generation and review</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">API documentation access</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Debugging assistance</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-slate-300">Architecture recommendations</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Agent */}
+          <div className="mt-6 bg-slate-900/80 rounded-xl p-5 border border-cyan-600">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-lg bg-cyan-600 flex items-center justify-center">
+                <Icons.Brain size={28} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-cyan-400">Content Agent</h3>
+                <p className="text-slate-400 text-sm">Background Agent</p>
+              </div>
+              <span className="ml-auto section-badge bg-cyan-500/30 text-cyan-200">Supporting Role</span>
+            </div>
+            <p className="text-slate-300 text-sm mb-4">
+              Backend agent for dynamic content generation and personalization. Powers the content layer that feeds into customer-facing experiences.
+            </p>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="text-center">
+                <p className="text-cyan-400 font-semibold text-sm">Product Descriptions</p>
+                <p className="text-slate-400 text-xs">AI-generated PDP content</p>
+              </div>
+              <div className="text-center">
+                <p className="text-cyan-400 font-semibold text-sm">Personalized Messaging</p>
+                <p className="text-slate-400 text-xs">Tailored recommendations</p>
+              </div>
+              <div className="text-center">
+                <p className="text-cyan-400 font-semibold text-sm">SEO/GEO Content</p>
+                <p className="text-slate-400 text-xs">Optimized for discovery</p>
+              </div>
+              <div className="text-center">
+                <p className="text-cyan-400 font-semibold text-sm">Marketing Copy</p>
+                <p className="text-slate-400 text-xs">Campaign content</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Super Agent Architecture */}
+        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+          <h3 className="text-lg font-bold text-white mb-4">Super Agent Orchestration Model</h3>
+          <p className="text-slate-400 text-sm mb-4">
+            Walmart's standardization on MCP (Model Context Protocol) enables super agents to connect seamlessly with sub-agents, enterprise applications, and data sources.
+          </p>
+          <div className="bg-slate-900 rounded-lg p-4">
+            <div className="grid grid-cols-7 gap-2 items-center text-center text-xs">
+              <div className="bg-purple-600/20 border border-purple-500 rounded p-2">
+                <p className="text-purple-300 font-semibold">External AI</p>
+              </div>
+              <div className="text-slate-500">→</div>
+              <div className="bg-wmt-yellow/20 border-2 border-wmt-yellow rounded p-2">
+                <p className="text-wmt-yellow font-bold">Sparky</p>
+                <p className="text-slate-400 text-[10px]">Super Agent</p>
+              </div>
+              <div className="text-slate-500">→</div>
+              <div className="bg-cyan-600/20 border border-cyan-500 rounded p-2">
+                <p className="text-cyan-300 font-semibold">MCP Layer</p>
+              </div>
+              <div className="text-slate-500">→</div>
+              <div className="bg-green-600/20 border border-green-500 rounded p-2">
+                <p className="text-green-300 font-semibold">Sub-Agents</p>
+                <p className="text-slate-400 text-[10px]">+ Enterprise Apps</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    // Protocols View
+    const ProtocolsView = () => (
+      <div className="space-y-6 view-content">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700">
+          <h2 className="text-xl font-bold text-white mb-2">Agent Communication Protocols</h2>
+          <p className="text-slate-400 text-sm mb-6">
+            The emerging standards that enable agentic commerce. Walmart must implement these to participate in the AI-driven shopping ecosystem.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* MCP */}
+            <div className="protocol-card border-cyan-500/50 border-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-cyan-600 flex items-center justify-center">
+                  <Icons.Link size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-cyan-400">MCP</h3>
+                  <p className="text-slate-500 text-xs">Model Context Protocol</p>
+                </div>
+                <span className="ml-auto text-xs bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded">Anthropic</span>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Standardized way for LLMs to access external tools and data. Walmart uses MCP to expose Sparky capabilities to external AI systems.
+              </p>
+              <div className="bg-slate-800 rounded p-3 mb-3">
+                <p className="text-xs text-slate-400 mb-2">Walmart MCP Tools:</p>
+                <div className="flex flex-wrap gap-1">
+                  <TechTag>product_search</TechTag>
+                  <TechTag>check_inventory</TechTag>
+                  <TechTag>get_price</TechTag>
+                  <TechTag>add_to_cart</TechTag>
+                  <TechTag>get_reviews</TechTag>
+                </div>
+              </div>
+              <p className="text-slate-500 text-xs">
+                Status: <span className="text-cyan-400">Implementing</span> — Super agent model built on MCP
+              </p>
+            </div>
+
+            {/* A2A */}
+            <div className="protocol-card border-purple-500/50 border-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center">
+                  <Icons.Network size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-purple-400">A2A</h3>
+                  <p className="text-slate-500 text-xs">Agent-to-Agent Protocol</p>
+                </div>
+                <span className="ml-auto text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Google</span>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Inter-agent communication standard. Enables Sparky to delegate tasks to external agents and receive delegations from them.
+              </p>
+              <div className="bg-slate-800 rounded p-3 mb-3">
+                <p className="text-xs text-slate-400 mb-2">A2A Capabilities:</p>
+                <div className="flex flex-wrap gap-1">
+                  <TechTag>Task Delegation</TechTag>
+                  <TechTag>Context Sharing</TechTag>
+                  <TechTag>Result Aggregation</TechTag>
+                  <TechTag>Multi-Agent Workflows</TechTag>
+                </div>
+              </div>
+              <p className="text-slate-500 text-xs">
+                Status: <span className="text-purple-400">Planned</span> — Part of agent orchestration roadmap
+              </p>
+            </div>
+
+            {/* ACP */}
+            <div className="protocol-card border-green-500/50 border-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center">
+                  <Icons.ShoppingCart size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-green-400">ACP</h3>
+                  <p className="text-slate-500 text-xs">Agent Commerce Protocol</p>
+                </div>
+                <span className="ml-auto text-xs bg-green-500/20 text-green-300 px-2 py-1 rounded">OpenAI / Shopify</span>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Commerce actions within AI conversations. Add to cart, checkout, payment — all without leaving ChatGPT. Shopify is already integrated.
+              </p>
+              <div className="bg-slate-800 rounded p-3 mb-3">
+                <p className="text-xs text-slate-400 mb-2">ACP Actions:</p>
+                <div className="flex flex-wrap gap-1">
+                  <TechTag>add_to_cart</TechTag>
+                  <TechTag>checkout</TechTag>
+                  <TechTag>apply_coupon</TechTag>
+                  <TechTag>check_availability</TechTag>
+                  <TechTag>track_order</TechTag>
+                </div>
+              </div>
+              <p className="text-slate-500 text-xs">
+                Status: <span className="text-amber-400">Critical Priority</span> — Shopify integrated, Walmart must follow
+              </p>
+            </div>
+
+            {/* LLMs.txt */}
+            <div className="protocol-card border-amber-500/50 border-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-amber-600 flex items-center justify-center">
+                  <Icons.Shield size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-amber-400">LLMs.txt</h3>
+                  <p className="text-slate-500 text-xs">AI Governance File</p>
+                </div>
+                <span className="ml-auto text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded">Emerging</span>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">
+                Like robots.txt but for AI. Define what LLMs can access, how often, under what terms, and attribution requirements.
+              </p>
+              <div className="bg-slate-800 rounded p-3 mb-3">
+                <p className="text-xs text-slate-400 mb-2">Governance Rules:</p>
+                <div className="flex flex-wrap gap-1">
+                  <TechTag>Access Tiers</TechTag>
+                  <TechTag>Rate Limits</TechTag>
+                  <TechTag>Attribution Rules</TechTag>
+                  <TechTag>Use Case Restrictions</TechTag>
+                </div>
+              </div>
+              <p className="text-slate-500 text-xs">
+                Status: <span className="text-green-400">Designing</span> — Framework in development
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Protocol Stack Diagram */}
+        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+          <h3 className="text-lg font-bold text-white mb-4">Integrated Protocol Stack</h3>
+          <div className="bg-slate-900 rounded-lg p-6">
+            <div className="space-y-4">
+              {/* External Layer */}
+              <div className="flex items-center gap-4">
+                <div className="w-32 text-right text-xs text-slate-500">External AI</div>
+                <div className="flex-1 grid grid-cols-4 gap-2">
+                  <div className="bg-purple-600/20 border border-purple-500 rounded p-2 text-center">
+                    <p className="text-purple-300 text-xs font-semibold">ChatGPT</p>
+                  </div>
+                  <div className="bg-purple-600/20 border border-purple-500 rounded p-2 text-center">
+                    <p className="text-purple-300 text-xs font-semibold">Claude</p>
+                  </div>
+                  <div className="bg-purple-600/20 border border-purple-500 rounded p-2 text-center">
+                    <p className="text-purple-300 text-xs font-semibold">Gemini</p>
+                  </div>
+                  <div className="bg-purple-600/20 border border-purple-500 rounded p-2 text-center">
+                    <p className="text-purple-300 text-xs font-semibold">Copilot</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Protocol Layer */}
+              <div className="flex items-center gap-4">
+                <div className="w-32 text-right text-xs text-slate-500">Protocols</div>
+                <div className="flex-1 bg-gradient-to-r from-cyan-900/30 via-purple-900/30 to-green-900/30 border border-slate-600 rounded p-3 text-center">
+                  <div className="flex justify-center gap-6">
+                    <span className="text-cyan-400 font-semibold text-sm">MCP</span>
+                    <span className="text-purple-400 font-semibold text-sm">A2A</span>
+                    <span className="text-green-400 font-semibold text-sm">ACP</span>
+                    <span className="text-amber-400 font-semibold text-sm">LLMs.txt</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sparky Layer */}
+              <div className="flex items-center gap-4">
+                <div className="w-32 text-right text-xs text-slate-500">Orchestration</div>
+                <div className="flex-1 bg-wmt-yellow/20 border-2 border-wmt-yellow rounded p-3 text-center">
+                  <p className="text-wmt-yellow font-bold">SPARKY</p>
+                  <p className="text-slate-400 text-xs">Super Agent Orchestration Layer</p>
+                </div>
+              </div>
+
+              {/* Internal Layer */}
+              <div className="flex items-center gap-4">
+                <div className="w-32 text-right text-xs text-slate-500">Internal</div>
+                <div className="flex-1 grid grid-cols-5 gap-2">
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-300 text-xs">Catalog</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-300 text-xs">Inventory</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-300 text-xs">Pricing</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-300 text-xs">Checkout</p>
+                  </div>
+                  <div className="bg-slate-700 rounded p-2 text-center">
+                    <p className="text-slate-300 text-xs">Connect</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Competitive Positioning */}
+        <div className="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-6 border border-red-500/30">
+          <h3 className="text-lg font-bold text-white mb-4">Competitive Protocol Positioning</h3>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left border-b border-slate-700">
+                <th className="pb-3 text-slate-400">Retailer</th>
+                <th className="pb-3 text-slate-400">ACP Status</th>
+                <th className="pb-3 text-slate-400">MCP Status</th>
+                <th className="pb-3 text-slate-400">Notes</th>
+              </tr>
+            </thead>
+            <tbody className="text-slate-300">
+              <tr className="border-b border-slate-800">
+                <td className="py-3 font-semibold">Shopify</td>
+                <td className="py-3"><span className="text-green-400">Integrated</span></td>
+                <td className="py-3"><span className="text-green-400">Integrated</span></td>
+                <td className="py-3 text-slate-500">Launch partner with OpenAI</td>
+              </tr>
+              <tr className="border-b border-slate-800">
+                <td className="py-3 font-semibold">Amazon</td>
+                <td className="py-3"><span className="text-amber-400">In Progress</span></td>
+                <td className="py-3"><span className="text-slate-500">Unknown</span></td>
+                <td className="py-3 text-slate-500">Rufus focuses on owned experience</td>
+              </tr>
+              <tr className="border-b border-slate-800">
+                <td className="py-3 font-semibold text-wmt-yellow">Walmart</td>
+                <td className="py-3"><span className="text-red-400">Not Started</span></td>
+                <td className="py-3"><span className="text-amber-400">Implementing</span></td>
+                <td className="py-3 text-slate-500">Sparky-centric approach</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-semibold">Target</td>
+                <td className="py-3"><span className="text-slate-500">Unknown</span></td>
+                <td className="py-3"><span className="text-slate-500">Unknown</span></td>
+                <td className="py-3 text-slate-500">Circle 360 focus</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="mt-4 bg-red-900/30 border border-red-500/30 rounded-lg p-3">
+            <p className="text-red-200 text-sm">
+              <span className="font-bold">Gap Alert:</span> Shopify's ACP integration means ChatGPT users can already checkout with Shopify merchants. Walmart is not in this flow. Every day of delay is market share risk.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

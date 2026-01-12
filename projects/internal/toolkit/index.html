@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Commerce Toolkit - Reference Patterns for Discovery</title>
+  <link rel="stylesheet" href="shared-theme.css">
+  <style>
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 3px solid var(--color-platform);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-platform);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .purpose-box {
+      background: var(--color-platform-light);
+      border: 2px solid var(--color-platform);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .purpose-box h2 {
+      color: var(--color-platform-dark);
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .purpose-box p {
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    .warning-box {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .warning-box strong {
+      color: #92400e;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 2.5rem 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .toolkit-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .toolkit-card:hover {
+      border-color: var(--color-platform);
+    }
+
+    .toolkit-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toolkit-card h3 a {
+      color: var(--color-platform);
+      text-decoration: none;
+    }
+
+    .toolkit-card h3 a:hover {
+      text-decoration: underline;
+    }
+
+    .card-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-pattern { background: var(--color-data-light); color: var(--color-data-dark); }
+    .badge-diagram { background: var(--color-agent-light); color: var(--color-agent-dark); }
+
+    .toolkit-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .use-for {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .use-for strong {
+      color: var(--text-primary);
+    }
+
+    .questions-section {
+      background: var(--bg-surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .questions-section h3 {
+      margin: 0 0 1rem 0;
+      color: var(--color-platform);
+    }
+
+    .question-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .question-category h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .question-category ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .question-category li {
+      margin-bottom: 0.25rem;
+    }
+
+    .conversation-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .flow-step {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .flow-step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--color-platform);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .flow-step h4 {
+      font-size: 0.9rem;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .flow-step p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .flow-arrow {
+      display: none;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media print {
+      body { padding: 0; }
+      .container { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <h1>Agentic Commerce Toolkit</h1>
+      <p class="subtitle">Reference Patterns for Enterprise & Solution Architects</p>
+
+      <div class="purpose-box">
+        <h2>What This Is</h2>
+        <p>A collection of reference patterns to support <strong>initial discovery conversations</strong> with clients exploring agentic commerce. Use these materials to speak intelligently about the problem space, identify key decisions, and scope engagement complexity — <em>before</em> knowing client-specific architecture.</p>
+      </div>
+
+      <div class="warning-box">
+        <strong>Not for direct client delivery.</strong> These are conversation starters and scoping tools. All patterns require client-specific adaptation before becoming deliverables.
+      </div>
+    </header>
+
+    <h2>How to Use This Toolkit</h2>
+
+    <div class="conversation-flow">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <h4>First Meeting</h4>
+        <p>Use diagrams to establish shared vocabulary</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <h4>Discovery</h4>
+        <p>Use decision frameworks to identify client constraints</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <h4>Scoping</h4>
+        <p>Use component catalog to estimate complexity</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <h4>Proposal</h4>
+        <p>Use migration paths to frame approach</p>
+      </div>
+    </div>
+
+    <h2>Toolkit Contents</h2>
+
+    <!-- Featured Deck -->
+    <div class="toolkit-card" style="grid-column: span 2; background: linear-gradient(135deg, #1e3a5f, #2d4a6f); border: 2px solid #3b82f6; margin-bottom: 1rem;">
+      <h3 style="color: white;">
+        <a href="decks/agentic-commerce-architecture.html" style="color: #93c5fd;">Agentic Commerce Architecture</a>
+        <span class="card-badge" style="background: #f59e0b; color: #1e3a5f;">Interactive Deck</span>
+      </h3>
+      <p style="color: #cbd5e1;">Comprehensive interactive presentation covering the full strategic architecture for conversational and agentic commerce. Includes Architecture view, Design Patterns, and Glossary tabs.</p>
+      <div class="use-for" style="color: #94a3b8;">
+        <strong style="color: #e2e8f0;">Use for:</strong> Executive conversations, architecture workshops, team education, establishing the big picture before diving into details
+      </div>
+    </div>
+
+    <div class="toolkit-grid">
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="patterns/component-catalog.html">Component Catalog</a>
+          <span class="card-badge badge-pattern">Pattern</span>
+        </h3>
+        <p>Comprehensive list of components in an agentic commerce architecture with complexity ratings, maturity levels, and vendor landscape.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Scoping conversations, complexity estimation, build vs. buy discussions
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="patterns/decision-frameworks.html">Decision Frameworks</a>
+          <span class="card-badge badge-pattern">Pattern</span>
+        </h3>
+        <p>10 architecture decisions every agentic commerce implementation faces, framed as ADRs with context, options, and trade-offs.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Identifying client constraints, surfacing hidden requirements, architecture workshops
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="patterns/data-access-matrix.html">Data Access Matrix</a>
+          <span class="card-badge badge-pattern">Pattern</span>
+        </h3>
+        <p>Reference model for agent permissions across data categories. Compliance-ready pattern for consent and access control.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Security reviews, compliance discussions, data governance conversations
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="patterns/migration-paths.html">Migration Paths</a>
+          <span class="card-badge badge-pattern">Pattern</span>
+        </h3>
+        <p>Four archetypal migration patterns based on client starting point: Strangler Fig, Additive, API-First, and Greenfield.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Approach framing, client situation assessment, roadmap discussions
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="diagrams/container-reference.html">Container Diagram</a>
+          <span class="card-badge badge-diagram">Diagram</span>
+        </h3>
+        <p>C4 Level 2 reference showing major system containers and their relationships in an agentic commerce architecture.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> First meeting visual, establishing shared vocabulary, system boundary discussions
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="diagrams/component-reference.html">Component Diagram</a>
+          <span class="card-badge badge-diagram">Diagram</span>
+        </h3>
+        <p>C4 Level 3 reference with phased implementation view showing component dependencies and build sequence.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Detailed scoping, phase planning, dependency mapping
+        </div>
+      </div>
+
+      <div class="toolkit-card">
+        <h3>
+          <a href="diagrams/data-flow-reference.html">Data Flow Diagram</a>
+          <span class="card-badge badge-diagram">Diagram</span>
+        </h3>
+        <p>End-to-end data flow showing how an agent-initiated commerce transaction moves through the architecture.</p>
+        <div class="use-for">
+          <strong>Use for:</strong> Integration discussions, latency analysis, understanding the mechanics
+        </div>
+      </div>
+
+    </div>
+
+    <h2>Discovery Questions</h2>
+
+    <div class="questions-section">
+      <h3>Questions to Ask in First Conversations</h3>
+
+      <div class="question-category">
+        <h4>Current State</h4>
+        <ul>
+          <li>What commerce platform are you on today? (Salesforce, Adobe, SAP, custom)</li>
+          <li>Is your commerce architecture headless or monolithic?</li>
+          <li>Do you have existing APIs that external systems consume?</li>
+          <li>What's your current chatbot/virtual assistant situation?</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Strategic Intent</h4>
+        <ul>
+          <li>What's driving interest in agentic commerce now?</li>
+          <li>Are you seeing traffic from AI search engines (Perplexity, ChatGPT)?</li>
+          <li>Is this defensive (don't lose share) or offensive (new channel)?</li>
+          <li>Who owns this initiative? (Digital, IT, Innovation, Strategy)</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Technical Readiness</h4>
+        <ul>
+          <li>Do you have Schema.org structured data on your PDPs?</li>
+          <li>What's your latency tolerance for commerce APIs? (sub-second?)</li>
+          <li>How do you handle customer consent today?</li>
+          <li>What's your cloud platform? (AWS, GCP, Azure)</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Constraints</h4>
+        <ul>
+          <li>Are there specific LLM platforms you need to support? (GPT, Claude, Gemini)</li>
+          <li>What are the compliance requirements? (PCI, GDPR, CCPA)</li>
+          <li>Is there a timeline driver? (competitor move, board mandate)</li>
+          <li>What's the budget envelope for this initiative?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Migration Path Selection Guide</h2>
+
+    <div class="questions-section">
+      <h3>Which Path Fits the Client?</h3>
+
+      <div class="question-category">
+        <h4>Path A: Strangler Fig</h4>
+        <ul>
+          <li>Legacy monolithic commerce (SAP Hybris, Oracle ATG, custom)</li>
+          <li>Limited or no APIs; data locked in legacy DB</li>
+          <li>Can't replatform; need incremental migration</li>
+          <li><strong>Timeline:</strong> 12-18 months</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Path B: Additive</h4>
+        <ul>
+          <li>Already headless (Commercetools, BigCommerce, Shopify Plus)</li>
+          <li>APIs exist; just need agent layer on top</li>
+          <li>MACH architecture in place</li>
+          <li><strong>Timeline:</strong> 3-6 months</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Path C: API-First</h4>
+        <ul>
+          <li>Hybrid situation (monolith + some modern services)</li>
+          <li>Need to extract APIs before adding agents</li>
+          <li>API gateway exists or planned</li>
+          <li><strong>Timeline:</strong> 6-12 months</li>
+        </ul>
+      </div>
+
+      <div class="question-category">
+        <h4>Path D: Greenfield</h4>
+        <ul>
+          <li>No commerce platform today (new business line)</li>
+          <li>Building from scratch with modern stack</li>
+          <li>Can make agent-native architecture choices</li>
+          <li><strong>Timeline:</strong> 6-9 months</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <div>Agentic Commerce Toolkit v1.0 | Internal Reference Only</div>
+      <div>For Enterprise & Solution Architects</div>
+    </footer>
+
+  </div>
+</body>
+</html>

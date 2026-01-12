@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 0: Foundation - Project Plan</title>
+    <style>
+        :root {
+            --color-brand-primary: #7c3aed;
+            --color-brand-secondary: #5b21b6;
+            --color-brand-light: #ede9fe;
+            --color-navy: #1e1b4b;
+            --color-text-primary: #171717;
+            --color-text-secondary: #525252;
+            --color-text-muted: #737373;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #fafafa;
+            --color-bg-tertiary: #f5f5f5;
+            --color-border: #e5e5e5;
+            --color-border-light: #f0f0f0;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-error: #dc2626;
+            --color-info: #0284c7;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text-primary);
+            background: var(--color-bg-secondary);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--color-navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-left: 16px;
+            padding-left: 16px;
+            border-left: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .header-meta {
+            font-size: 12px;
+            opacity: 0.7;
+            display: flex;
+            gap: 24px;
+        }
+
+        .header-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            background: var(--color-bg-primary);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: 24px 0;
+            z-index: 100;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-muted);
+            padding: 0 24px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 24px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--color-brand-light);
+            color: var(--color-brand-primary);
+            border-left-color: var(--color-brand-primary);
+            font-weight: 500;
+        }
+
+        .sidebar-nav .sub-item a {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 40px 60px;
+            max-width: 1000px;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-navy);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-brand-primary);
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-light);
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text-secondary);
+        }
+
+        .lead {
+            font-size: 17px;
+            color: var(--color-text-primary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        /* Document Meta */
+        .doc-meta {
+            background: var(--color-bg-tertiary);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .doc-meta-item {
+            text-align: center;
+        }
+
+        .doc-meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-muted);
+            margin-bottom: 4px;
+        }
+
+        .doc-meta-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--color-navy);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: var(--color-bg-tertiary);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--color-text-secondary);
+        }
+
+        li strong {
+            color: var(--color-text-primary);
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+        }
+
+        .checklist li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            background: white;
+        }
+
+        .checklist li.completed::before {
+            background: var(--color-success);
+            border-color: var(--color-success);
+        }
+
+        .checklist li.completed::after {
+            content: '✓';
+            position: absolute;
+            left: 4px;
+            top: 2px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Task ID */
+        .task-id {
+            display: inline-block;
+            background: var(--color-brand-light);
+            color: var(--color-brand-primary);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        /* Callouts */
+        .callout {
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border-left: 4px solid;
+        }
+
+        .callout-info {
+            background: #eff6ff;
+            border-left-color: var(--color-info);
+        }
+
+        .callout-warning {
+            background: #fffbeb;
+            border-left-color: var(--color-warning);
+        }
+
+        .callout-success {
+            background: #ecfdf5;
+            border-left-color: var(--color-success);
+        }
+
+        .callout-error {
+            background: #fef2f2;
+            border-left-color: var(--color-error);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .card-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .card {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-brand-primary);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        .card-metric {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-brand-primary);
+            margin-bottom: 4px;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            margin: 24px 0;
+        }
+
+        .process-step {
+            display: flex;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--color-brand-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 6px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        /* RACI Matrix */
+        .raci-matrix td:nth-child(2),
+        .raci-matrix td:nth-child(3),
+        .raci-matrix td:nth-child(4),
+        .raci-matrix td:nth-child(5),
+        .raci-matrix td:nth-child(6) {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .raci-r { color: var(--color-brand-primary); }
+        .raci-a { color: var(--color-error); }
+        .raci-c { color: var(--color-warning); }
+        .raci-i { color: var(--color-text-muted); }
+
+        /* Gantt-style Timeline */
+        .gantt {
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+
+        .gantt-row {
+            display: grid;
+            grid-template-columns: 200px repeat(12, 1fr);
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .gantt-header {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 4px;
+            background: var(--color-navy);
+            color: white;
+        }
+
+        .gantt-label {
+            font-size: 13px;
+            padding: 8px 12px;
+            background: var(--color-bg-tertiary);
+            font-weight: 500;
+        }
+
+        .gantt-cell {
+            padding: 8px 4px;
+            min-height: 36px;
+        }
+
+        .gantt-bar {
+            height: 100%;
+            min-height: 20px;
+            border-radius: 4px;
+        }
+
+        .gantt-bar-ws1 { background: #8b5cf6; }
+        .gantt-bar-ws2 { background: #06b6d4; }
+        .gantt-bar-ws3 { background: #f59e0b; }
+        .gantt-bar-ws4 { background: #10b981; }
+        .gantt-bar-ws5 { background: #ec4899; }
+        .gantt-bar-ws6 { background: #6366f1; }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-primary { background: var(--color-brand-light); color: var(--color-brand-primary); }
+        .badge-success { background: #d1fae5; color: var(--color-success); }
+        .badge-warning { background: #fef3c7; color: var(--color-warning); }
+        .badge-error { background: #fee2e2; color: var(--color-error); }
+        .badge-info { background: #dbeafe; color: var(--color-info); }
+
+        /* Workstream Section */
+        .workstream-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .workstream-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .ws1 { background: #8b5cf6; }
+        .ws2 { background: #06b6d4; }
+        .ws3 { background: #f59e0b; }
+        .ws4 { background: #10b981; }
+        .ws5 { background: #ec4899; }
+        .ws6 { background: #6366f1; }
+
+        /* Deliverable Box */
+        .deliverable {
+            background: linear-gradient(135deg, var(--color-brand-light) 0%, #f0e7ff 100%);
+            border: 1px solid var(--color-brand-primary);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .deliverable-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--color-brand-primary);
+            margin-bottom: 4px;
+        }
+
+        .deliverable-title {
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        /* Milestone */
+        .milestone {
+            background: var(--color-navy);
+            color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .milestone-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .milestone-title::before {
+            content: '🎯';
+        }
+
+        .milestone-due {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+
+        .milestone ul {
+            margin: 0;
+        }
+
+        .milestone li {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Exit Decision Box */
+        .exit-decisions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .exit-decision {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .exit-go {
+            background: #d1fae5;
+            border: 2px solid var(--color-success);
+        }
+
+        .exit-adjust {
+            background: #fef3c7;
+            border: 2px solid var(--color-warning);
+        }
+
+        .exit-nogo {
+            background: #fee2e2;
+            border: 2px solid var(--color-error);
+        }
+
+        .exit-decision-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .exit-go .exit-decision-title { color: var(--color-success); }
+        .exit-adjust .exit-decision-title { color: var(--color-warning); }
+        .exit-nogo .exit-decision-title { color: var(--color-error); }
+
+        .exit-decision-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Print */
+        @media print {
+            .sidebar, .header { display: none; }
+            .main { margin: 0; padding: 20px; max-width: 100%; }
+            .callout { page-break-inside: avoid; }
+            h2, h3 { page-break-after: avoid; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar { width: 240px; }
+            .main { margin-left: 240px; }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 24px; }
+            .doc-meta { grid-template-columns: repeat(2, 1fr); }
+            .card-grid { grid-template-columns: 1fr; }
+            .exit-decisions { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="header-title">Phase 0: Foundation</div>
+                <div class="header-subtitle">AI-Native Transformation Project Plan</div>
+            </div>
+            <div class="header-meta">
+                <div class="header-meta-item">
+                    <span>Duration:</span>
+                    <strong>12 Weeks</strong>
+                </div>
+                <div class="header-meta-item">
+                    <span>Investment:</span>
+                    <strong>$500K-$1M</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#workstream-overview">Workstream Overview</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Workstreams</div>
+            <ul class="sidebar-nav">
+                <li><a href="#ws1">WS1: AI Maturity Assessment</a></li>
+                <li><a href="#ws2">WS2: Target Operating Model</a></li>
+                <li><a href="#ws3">WS3: Leadership Alignment</a></li>
+                <li><a href="#ws4">WS4: Technology Foundation</a></li>
+                <li><a href="#ws5">WS5: Change Management</a></li>
+                <li><a href="#ws6">WS6: Pilot Selection</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Governance</div>
+            <ul class="sidebar-nav">
+                <li><a href="#exit-criteria">Exit Criteria</a></li>
+                <li><a href="#raci">RACI Matrix</a></li>
+                <li><a href="#communication">Communication Plan</a></li>
+                <li><a href="#budget">Budget</a></li>
+                <li><a href="#risks">Risk Register</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Appendix</div>
+            <ul class="sidebar-nav">
+                <li><a href="#templates">Templates</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <section id="executive-summary">
+            <h1>Phase 0: Foundation - Project Plan</h1>
+
+            <div class="doc-meta">
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Duration</div>
+                    <div class="doc-meta-value">12 Weeks (Months 1-3)</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Investment</div>
+                    <div class="doc-meta-value">$500K - $1M</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Purpose</div>
+                    <div class="doc-meta-value">Validation Gate</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Version</div>
+                    <div class="doc-meta-value">1.0 - Dec 2025</div>
+                </div>
+            </div>
+
+            <p class="lead">
+                Phase 0 is a <strong>validation gate</strong>, not a commitment to full transformation. The goal is to establish baseline understanding, design the target state, and determine if the organization has the leadership alignment and cultural readiness to proceed.
+            </p>
+
+            <h3>Exit Decisions</h3>
+            <div class="exit-decisions">
+                <div class="exit-decision exit-go">
+                    <div class="exit-decision-title">GO</div>
+                    <div class="exit-decision-desc">Leadership aligned, culture ready &rarr; Proceed to Phase 1</div>
+                </div>
+                <div class="exit-decision exit-adjust">
+                    <div class="exit-decision-title">ADJUST</div>
+                    <div class="exit-decision-desc">Technology gaps identified &rarr; Extend Phase 0, address gaps</div>
+                </div>
+                <div class="exit-decision exit-nogo">
+                    <div class="exit-decision-title">NO-GO</div>
+                    <div class="exit-decision-desc">Cultural resistance insurmountable &rarr; Revert to incremental AI</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="workstream-overview">
+            <h2>Workstream Overview</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Workstream</th>
+                        <th>Owner</th>
+                        <th>Duration</th>
+                        <th>Key Deliverable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge ws1" style="color:white">WS1</span> AI Maturity Assessment</td>
+                        <td>CTO</td>
+                        <td>Weeks 1-4</td>
+                        <td>Baseline Assessment Report</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge ws2" style="color:white">WS2</span> Target Operating Model</td>
+                        <td>CTO + CHRO</td>
+                        <td>Weeks 3-8</td>
+                        <td>Operating Model Design</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge ws3" style="color:white">WS3</span> Leadership Alignment</td>
+                        <td>CEO</td>
+                        <td>Weeks 1-6</td>
+                        <td>Executive Commitment</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge ws4" style="color:white">WS4</span> Technology Foundation</td>
+                        <td>CTO</td>
+                        <td>Weeks 4-10</td>
+                        <td>Technology Roadmap</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge ws5" style="color:white">WS5</span> Change Management</td>
+                        <td>CHRO</td>
+                        <td>Weeks 6-12</td>
+                        <td>Change Strategy</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge ws6" style="color:white">WS6</span> Pilot Selection</td>
+                        <td>CTO + Func. Leads</td>
+                        <td>Weeks 8-12</td>
+                        <td>Pilot Candidates</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="timeline">
+            <h2>Timeline</h2>
+
+            <div class="gantt">
+                <div class="gantt-row">
+                    <div class="gantt-header" style="background: transparent;"></div>
+                    <div class="gantt-header">W1</div>
+                    <div class="gantt-header">W2</div>
+                    <div class="gantt-header">W3</div>
+                    <div class="gantt-header">W4</div>
+                    <div class="gantt-header">W5</div>
+                    <div class="gantt-header">W6</div>
+                    <div class="gantt-header">W7</div>
+                    <div class="gantt-header">W8</div>
+                    <div class="gantt-header">W9</div>
+                    <div class="gantt-header">W10</div>
+                    <div class="gantt-header">W11</div>
+                    <div class="gantt-header">W12</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS1: AI Maturity</div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws1"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws1"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws1"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws1"></div></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS2: Operating Model</div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws2"></div></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS3: Leadership</div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws3"></div></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS4: Technology</div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws4"></div></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS5: Change Mgmt</div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws5"></div></div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">WS6: Pilot Selection</div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws6"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws6"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws6"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws6"></div></div>
+                    <div class="gantt-cell"><div class="gantt-bar gantt-bar-ws6"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workstream 1 -->
+        <section id="ws1">
+            <h2>Workstream 1: AI Maturity Assessment</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws1">WS1</span>
+                <span><strong>Owner:</strong> CTO</span>
+                <span><strong>Duration:</strong> Weeks 1-4</span>
+                <span><strong>Budget:</strong> $75K-100K</span>
+            </div>
+
+            <h3>Week 1-2: Current State Inventory</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T1.1</span> Document all AI tools currently in use across functions
+                    <ul>
+                        <li>GitHub Copilot licenses and usage</li>
+                        <li>ChatGPT/Claude usage (enterprise and shadow IT)</li>
+                        <li>Function-specific AI tools (marketing, sales, support)</li>
+                        <li>Automation platforms (Zapier, n8n, etc.)</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.2</span> Survey employees on AI tool usage patterns
+                    <ul>
+                        <li>Daily/weekly usage frequency</li>
+                        <li>Use cases and perceived value</li>
+                        <li>Frustrations and limitations</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.3</span> Inventory shadow AI usage
+                    <ul>
+                        <li>Personal AI account usage on work tasks</li>
+                        <li>Data being shared with external AI systems</li>
+                        <li>Compliance/security implications</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">AI Tool Inventory Spreadsheet</div>
+            </div>
+
+            <h3>Week 2-3: Workflow Analysis</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T1.4</span> Map key workflows in each function (use RACI template)
+                    <ul>
+                        <li>Engineering: Code review → Deploy pipeline</li>
+                        <li>Product: Research → Spec → Build → Launch</li>
+                        <li>Sales: Lead → Qualify → Demo → Close</li>
+                        <li>Support: Ticket → Triage → Resolve → Follow-up</li>
+                        <li>Marketing: Plan → Create → Publish → Measure</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.5</span> Classify each workflow step:
+                    <ul>
+                        <li><strong>Volume work</strong> (high-volume, pattern-based) → AI candidate</li>
+                        <li><strong>Pattern work</strong> (moderate judgment, learnable) → AI-assisted</li>
+                        <li><strong>Judgment work</strong> (context-dependent, ambiguous) → Human focus</li>
+                        <li><strong>Creative work</strong> (novel, breakthrough) → Human only</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.6</span> Quantify time spent on each work type by role</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Workflow Analysis by Function (with AI opportunity scores)</div>
+            </div>
+
+            <h3>Week 3-4: Data & Infrastructure Assessment</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T1.7</span> Assess data infrastructure readiness
+                    <ul>
+                        <li>Data quality (completeness, accuracy, consistency)</li>
+                        <li>Data accessibility (APIs, data warehouse, governance)</li>
+                        <li>Data silos and integration gaps</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.8</span> Evaluate security and compliance posture for AI
+                    <ul>
+                        <li>Data classification (what can be sent to AI systems?)</li>
+                        <li>PII/PHI handling requirements</li>
+                        <li>Industry-specific regulations (SOC2, HIPAA, etc.)</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.9</span> Assess technical infrastructure
+                    <ul>
+                        <li>Cloud platform maturity</li>
+                        <li>API integration capabilities</li>
+                        <li>Compute resources for AI workloads</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Data & Infrastructure Readiness Report</div>
+            </div>
+
+            <h3>Week 4: Cultural Readiness Survey</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T1.10</span> Deploy cultural readiness survey (all employees)
+                    <ul>
+                        <li>AI sentiment (enthusiasm, fear, skepticism scale)</li>
+                        <li>Job security concerns</li>
+                        <li>Willingness to learn new skills</li>
+                        <li>Trust in AI systems</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T1.11</span> Conduct focus groups by function (2-3 per function)</li>
+                <li><span class="task-id">T1.12</span> Identify AI champions and resistors by name</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Cultural Readiness Assessment Report</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS1 Milestone: AI Maturity Baseline Report</div>
+                <div class="milestone-due">Due: End of Week 4</div>
+                <ul>
+                    <li>Current AI tool landscape</li>
+                    <li>Workflow analysis with AI opportunity scores</li>
+                    <li>Data/infrastructure readiness scores (1-4 scale)</li>
+                    <li>Cultural readiness scores by function</li>
+                    <li>Key risks and blockers identified</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Workstream 2 -->
+        <section id="ws2">
+            <h2>Workstream 2: Target Operating Model</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws2">WS2</span>
+                <span><strong>Owner:</strong> CTO + CHRO</span>
+                <span><strong>Duration:</strong> Weeks 3-8</span>
+            </div>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Dependencies</div>
+                <p>WS1 workflow analysis (T1.4-T1.6) must be complete before starting WS2.</p>
+            </div>
+
+            <h3>Week 3-4: Future State Org Design</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T2.1</span> Design capability pod structure
+                    <ul>
+                        <li>Define pod types (Product, Growth, Platform, Customer)</li>
+                        <li>Define capabilities each pod delivers</li>
+                        <li>Map current teams to future pods</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T2.2</span> Define pod composition model
+                    <ul>
+                        <li>Human roles per pod type</li>
+                        <li>AI agent roles per pod type</li>
+                        <li>Pod size guidelines (min/max)</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T2.3</span> Design cross-pod coordination model</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Future State Org Chart (Draft)</div>
+            </div>
+
+            <h3>Week 5-6: Role Evolution Mapping</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T2.4</span> Map every current role to AI-native evolution</li>
+                <li><span class="task-id">T2.5</span> Define competency requirements for each evolved role</li>
+                <li><span class="task-id">T2.6</span> Identify skill gaps for each employee</li>
+                <li><span class="task-id">T2.7</span> Create role transition paths (current → future)</li>
+            </ul>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Current Role</th>
+                        <th>AI-Native Evolution</th>
+                        <th>Key Shift</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Software Engineer</td>
+                        <td>AI-Augmented Engineer</td>
+                        <td>Specs + prompts, review AI output</td>
+                    </tr>
+                    <tr>
+                        <td>Product Manager</td>
+                        <td>Product Architect</td>
+                        <td>Outcomes, train AI on patterns</td>
+                    </tr>
+                    <tr>
+                        <td>SDR/BDR</td>
+                        <td>Growth Engineer</td>
+                        <td>Build outreach systems</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Support</td>
+                        <td>Support Architect</td>
+                        <td>Design AI response systems</td>
+                    </tr>
+                    <tr>
+                        <td>Data Analyst</td>
+                        <td>Analytics Architect</td>
+                        <td>Define questions, validate AI</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Role Evolution Map with Skill Gap Analysis</div>
+            </div>
+
+            <h3>Week 6-7: Metrics Framework Design</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T2.8</span> Define new productivity metrics
+                    <ul>
+                        <li>Output per capability unit (not per headcount)</li>
+                        <li>AI leverage ratio (AI output / human input)</li>
+                        <li>Time-to-value (not cycle time)</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T2.9</span> Define new quality metrics</li>
+                <li><span class="task-id">T2.10</span> Define PLG metrics (if applicable)</li>
+                <li><span class="task-id">T2.11</span> Design measurement systems and dashboards</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">AI-Native Metrics Framework</div>
+            </div>
+
+            <h3>Week 7-8: Technology Stack Definition</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T2.12</span> Evaluate AI platforms (build vs. buy decision)</li>
+                <li><span class="task-id">T2.13</span> Define integration architecture</li>
+                <li><span class="task-id">T2.14</span> Create technology roadmap for Phase 1-3</li>
+                <li><span class="task-id">T2.15</span> Estimate technology investment by phase</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Technology Strategy & Roadmap</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS2 Milestone: Target Operating Model</div>
+                <div class="milestone-due">Due: End of Week 8</div>
+                <ul>
+                    <li>Future state org design (pods, reporting, coordination)</li>
+                    <li>Role evolution map with competency requirements</li>
+                    <li>Metrics framework with measurement approach</li>
+                    <li>Technology stack decisions and roadmap</li>
+                    <li>Investment estimates by phase</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Workstream 3 -->
+        <section id="ws3">
+            <h2>Workstream 3: Leadership Alignment</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws3">WS3</span>
+                <span><strong>Owner:</strong> CEO</span>
+                <span><strong>Duration:</strong> Weeks 1-6</span>
+                <span><strong>Budget:</strong> $50K-100K</span>
+            </div>
+
+            <h3>Week 1: Executive Workshop</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T3.1</span> Schedule 2-day executive offsite</li>
+                <li><span class="task-id">T3.2</span> Prepare pre-read materials (POV deck, industry research)</li>
+                <li><span class="task-id">T3.3</span> Facilitate executive workshop
+                    <ul>
+                        <li>Day 1: Strategic context and industry examples</li>
+                        <li>Day 2: Implications for our organization, commitment discussion</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T3.4</span> Document executive team decisions and concerns</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Executive Workshop Summary & Decisions</div>
+            </div>
+
+            <h3>Week 2-3: Board Education</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T3.5</span> Prepare board presentation (strategic rationale + investment ask)</li>
+                <li><span class="task-id">T3.6</span> Conduct board education session</li>
+                <li><span class="task-id">T3.7</span> Address board questions and concerns</li>
+                <li><span class="task-id">T3.8</span> Secure board approval for Phase 0 investment</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Board Approval for Transformation Investment</div>
+            </div>
+
+            <h3>Week 4-5: Executive Capability Assessment</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T3.9</span> Assess each executive's AI literacy</li>
+                <li><span class="task-id">T3.10</span> Identify executive development needs</li>
+                <li><span class="task-id">T3.11</span> Assign executive sponsors to each workstream</li>
+                <li><span class="task-id">T3.12</span> Define executive accountability model for transformation</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Executive Readiness Assessment</div>
+            </div>
+
+            <h3>Week 5-6: Alignment Validation</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T3.13</span> Conduct individual exec conversations (CEO + each C-level)</li>
+                <li><span class="task-id">T3.14</span> Identify and address misalignments</li>
+                <li><span class="task-id">T3.15</span> Document final commitment from each executive</li>
+                <li><span class="task-id">T3.16</span> Create escalation protocol for transformation blockers</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Executive Commitment Document (signed)</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS3 Milestone: Leadership Aligned</div>
+                <div class="milestone-due">Due: End of Week 6</div>
+                <ul>
+                    <li>CEO publicly committed to transformation</li>
+                    <li>All C-level executives signed commitment document</li>
+                    <li>Board approved investment</li>
+                    <li>Executive sponsors assigned to all workstreams</li>
+                    <li>Escalation protocol in place</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Workstream 4 -->
+        <section id="ws4">
+            <h2>Workstream 4: Technology Foundation</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws4">WS4</span>
+                <span><strong>Owner:</strong> CTO</span>
+                <span><strong>Duration:</strong> Weeks 4-10</span>
+            </div>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Dependencies</div>
+                <p>WS1 infrastructure assessment (T1.7-T1.9) and WS2 tech stack (T2.12-T2.15) must inform this workstream.</p>
+            </div>
+
+            <h3>Week 4-6: Platform Evaluation</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T4.1</span> Issue RFP for AI platform vendors (if buying)</li>
+                <li><span class="task-id">T4.2</span> Conduct vendor demos and technical evaluations</li>
+                <li><span class="task-id">T4.3</span> Build proof-of-concept with top 2 vendors</li>
+                <li><span class="task-id">T4.4</span> Make platform selection decision</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">AI Platform Selection (with rationale)</div>
+            </div>
+
+            <h3>Week 6-8: Security & Compliance Framework</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T4.5</span> Define AI data classification policy</li>
+                <li><span class="task-id">T4.6</span> Create AI usage guidelines (what can/cannot be shared)</li>
+                <li><span class="task-id">T4.7</span> Establish AI audit trail requirements</li>
+                <li><span class="task-id">T4.8</span> Update security policies for AI systems</li>
+                <li><span class="task-id">T4.9</span> Conduct legal review of AI vendor contracts</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">AI Security & Compliance Framework</div>
+            </div>
+
+            <h3>Week 8-10: Infrastructure Preparation</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T4.10</span> Provision AI platform infrastructure</li>
+                <li><span class="task-id">T4.11</span> Set up development/staging/production environments</li>
+                <li><span class="task-id">T4.12</span> Configure SSO and access controls</li>
+                <li><span class="task-id">T4.13</span> Establish monitoring and observability</li>
+                <li><span class="task-id">T4.14</span> Create initial data pipelines for pilot use cases</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">AI Platform Ready for Pilot</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS4 Milestone: Technology Foundation Complete</div>
+                <div class="milestone-due">Due: End of Week 10</div>
+                <ul>
+                    <li>AI platform selected and provisioned</li>
+                    <li>Security/compliance framework approved by Legal/Security</li>
+                    <li>Infrastructure ready for Phase 1 pilots</li>
+                    <li>Data pipelines operational for pilot use cases</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Workstream 5 -->
+        <section id="ws5">
+            <h2>Workstream 5: Change Management</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws5">WS5</span>
+                <span><strong>Owner:</strong> CHRO</span>
+                <span><strong>Duration:</strong> Weeks 6-12</span>
+            </div>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Dependencies</div>
+                <p>WS1 cultural readiness (T1.10-T1.12) and WS3 leadership alignment must inform this workstream.</p>
+            </div>
+
+            <h3>Week 6-7: Change Strategy Design</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T5.1</span> Define change vision and narrative
+                    <ul>
+                        <li>"AI-native is about augmenting humans, not replacing them"</li>
+                        <li>"Architects, not executors"</li>
+                        <li>"Higher-leverage, higher-value work"</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T5.2</span> Identify stakeholder groups and concerns</li>
+                <li><span class="task-id">T5.3</span> Design resistance mitigation strategies</li>
+                <li><span class="task-id">T5.4</span> Create change champion network (recruit from T1.12)</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Change Management Strategy Document</div>
+            </div>
+
+            <h3>Week 7-9: Communication Plan</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T5.5</span> Create communication calendar for Phase 0-3</li>
+                <li><span class="task-id">T5.6</span> Draft key messages by audience
+                    <ul>
+                        <li>Executives: Strategic rationale, accountability</li>
+                        <li>Managers: How to support teams, what to say</li>
+                        <li>ICs: What changes, what doesn't, development opportunities</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T5.7</span> Create FAQ document (anticipate hard questions)</li>
+                <li><span class="task-id">T5.8</span> Prepare all-hands presentation materials</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Communication Plan & Materials</div>
+            </div>
+
+            <h3>Week 9-11: Upskilling Program Design</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T5.9</span> Define skill development tracks by role type
+                    <ul>
+                        <li>Track 1: AI fundamentals (all employees)</li>
+                        <li>Track 2: Prompt engineering (makers)</li>
+                        <li>Track 3: AI system design (architects)</li>
+                        <li>Track 4: AI governance (leaders)</li>
+                    </ul>
+                </li>
+                <li><span class="task-id">T5.10</span> Evaluate training delivery options (internal, vendor, hybrid)</li>
+                <li><span class="task-id">T5.11</span> Create learning paths with milestones</li>
+                <li><span class="task-id">T5.12</span> Establish certification/credentialing approach</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Upskilling Program Design</div>
+            </div>
+
+            <h3>Week 11-12: Change Readiness Validation</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T5.13</span> Conduct change readiness assessment</li>
+                <li><span class="task-id">T5.14</span> Identify remaining resistance pockets</li>
+                <li><span class="task-id">T5.15</span> Finalize Phase 1 communication plan</li>
+                <li><span class="task-id">T5.16</span> Train managers on change conversations</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Change Readiness Report</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS5 Milestone: Change Strategy Complete</div>
+                <div class="milestone-due">Due: End of Week 12</div>
+                <ul>
+                    <li>Change strategy documented and approved</li>
+                    <li>Communication plan ready for Phase 1 kickoff</li>
+                    <li>Upskilling program designed</li>
+                    <li>Change champion network activated</li>
+                    <li>Manager training complete</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Workstream 6 -->
+        <section id="ws6">
+            <h2>Workstream 6: Pilot Selection</h2>
+
+            <div class="workstream-header">
+                <span class="workstream-badge ws6">WS6</span>
+                <span><strong>Owner:</strong> CTO + Function Leaders</span>
+                <span><strong>Duration:</strong> Weeks 8-12</span>
+            </div>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Dependencies</div>
+                <p>WS1 workflow analysis, WS2 operating model, and WS4 technology must be substantially complete.</p>
+            </div>
+
+            <h3>Week 8-9: Pilot Candidate Identification</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T6.1</span> Identify 5-7 potential pilot candidates from workflow analysis</li>
+                <li><span class="task-id">T6.2</span> Score each candidate on selection criteria</li>
+            </ul>
+
+            <h4>Pilot Selection Criteria</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Weight</th>
+                        <th>Why It Matters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>High Volume</strong></td>
+                        <td>20%</td>
+                        <td>AI provides leverage on volume work</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pattern-Based</strong></td>
+                        <td>20%</td>
+                        <td>Current AI works best on patterns</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Measurable</strong></td>
+                        <td>15%</td>
+                        <td>Must measure before/after clearly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contained Risk</strong></td>
+                        <td>15%</td>
+                        <td>Failure shouldn't damage customers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Champion Available</strong></td>
+                        <td>15%</td>
+                        <td>Need a leader who will advocate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Ready</strong></td>
+                        <td>15%</td>
+                        <td>Required data accessible and clean</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Pilot Candidate Scorecard</div>
+            </div>
+
+            <h3>Week 9-10: Pilot Scoping</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T6.3</span> Deep-dive on top 3 candidates</li>
+                <li><span class="task-id">T6.4</span> Define scope, success metrics, and timeline for each</li>
+                <li><span class="task-id">T6.5</span> Identify resource requirements (people, technology, data)</li>
+                <li><span class="task-id">T6.6</span> Assess dependencies and risks</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Pilot Scope Documents (3)</div>
+            </div>
+
+            <h3>Week 11-12: Pilot Selection & Planning</h3>
+
+            <h4>Tasks</h4>
+            <ul class="checklist">
+                <li><span class="task-id">T6.7</span> Present pilot options to executive team</li>
+                <li><span class="task-id">T6.8</span> Select 2-3 pilots for Phase 1</li>
+                <li><span class="task-id">T6.9</span> Assign pilot leads and teams</li>
+                <li><span class="task-id">T6.10</span> Create detailed Phase 1 pilot plans</li>
+            </ul>
+
+            <div class="deliverable">
+                <div class="deliverable-label">Deliverable</div>
+                <div class="deliverable-title">Phase 1 Pilot Plan</div>
+            </div>
+
+            <div class="milestone">
+                <div class="milestone-title">WS6 Milestone: Pilots Selected</div>
+                <div class="milestone-due">Due: End of Week 12</div>
+                <ul>
+                    <li>2-3 pilots selected with executive approval</li>
+                    <li>Pilot leads assigned and committed</li>
+                    <li>Success metrics defined for each pilot</li>
+                    <li>Detailed pilot plans ready for Phase 1 kickoff</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exit Criteria -->
+        <section id="exit-criteria">
+            <h2>Phase 0 Exit Criteria</h2>
+
+            <p class="lead">The GO/NO-GO decision is made at the end of Week 12 based on the following criteria:</p>
+
+            <h3>Required for GO Decision</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Evidence Required</th>
+                        <th>Owner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI maturity baseline documented</td>
+                        <td>Baseline report complete</td>
+                        <td>CTO</td>
+                    </tr>
+                    <tr>
+                        <td>Target operating model approved</td>
+                        <td>Exec team sign-off</td>
+                        <td>CEO</td>
+                    </tr>
+                    <tr>
+                        <td>Board investment approved</td>
+                        <td>Board resolution</td>
+                        <td>CEO</td>
+                    </tr>
+                    <tr>
+                        <td>2-3 pilots identified and scoped</td>
+                        <td>Pilot plans complete</td>
+                        <td>CTO</td>
+                    </tr>
+                    <tr>
+                        <td>Change strategy documented</td>
+                        <td>Strategy doc approved</td>
+                        <td>CHRO</td>
+                    </tr>
+                    <tr>
+                        <td>Communication plan ready</td>
+                        <td>Materials ready for launch</td>
+                        <td>CHRO</td>
+                    </tr>
+                    <tr>
+                        <td>Technology platform ready</td>
+                        <td>Infrastructure operational</td>
+                        <td>CTO</td>
+                    </tr>
+                    <tr>
+                        <td>Executive alignment confirmed</td>
+                        <td>Commitment documents signed</td>
+                        <td>CEO</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>GO/NO-GO Decision Meeting</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">When</div>
+                    <div class="card-description">Week 12 (or Week 13 if extension needed)</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Attendees</div>
+                    <div class="card-description">CEO, C-suite, Board representative</div>
+                </div>
+            </div>
+
+            <h4>Agenda</h4>
+            <ol>
+                <li>Phase 0 deliverables review (30 min)</li>
+                <li>GO/NO-GO criteria assessment (30 min)</li>
+                <li>Risk discussion (30 min)</li>
+                <li>Decision and next steps (30 min)</li>
+            </ol>
+
+            <h4>Possible Outcomes</h4>
+
+            <div class="card-grid">
+                <div class="card" style="border-left: 4px solid var(--color-success);">
+                    <div class="card-title" style="color: var(--color-success);">GO</div>
+                    <div class="card-description">All criteria met → Proceed to Phase 1</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--color-info);">
+                    <div class="card-title" style="color: var(--color-info);">CONDITIONAL GO</div>
+                    <div class="card-description">Minor gaps → Address in first 2 weeks of Phase 1</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--color-warning);">
+                    <div class="card-title" style="color: var(--color-warning);">EXTEND</div>
+                    <div class="card-description">Significant gaps in technology or alignment → Extend Phase 0 by 4-6 weeks</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--color-error);">
+                    <div class="card-title" style="color: var(--color-error);">NO-GO</div>
+                    <div class="card-description">Fundamental readiness issues → Revert to incremental AI adoption</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RACI Matrix -->
+        <section id="raci">
+            <h2>RACI Matrix</h2>
+
+            <table class="raci-matrix">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>CEO</th>
+                        <th>CTO</th>
+                        <th>CHRO</th>
+                        <th>CFO</th>
+                        <th>Func. Leaders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Maturity Assessment</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-r">R</td>
+                    </tr>
+                    <tr>
+                        <td>Target Operating Model</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-c">C</td>
+                    </tr>
+                    <tr>
+                        <td>Leadership Alignment</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-i">I</td>
+                    </tr>
+                    <tr>
+                        <td>Technology Foundation</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-a">A/R</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-i">I</td>
+                    </tr>
+                    <tr>
+                        <td>Change Management</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-c">C</td>
+                    </tr>
+                    <tr>
+                        <td>Pilot Selection</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-r">R</td>
+                    </tr>
+                    <tr>
+                        <td>GO/NO-GO Decision</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-i">I</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Legend:</strong> <span class="raci-r">R</span> = Responsible, <span class="raci-a">A</span> = Accountable, <span class="raci-c">C</span> = Consulted, <span class="raci-i">I</span> = Informed</p>
+        </section>
+
+        <!-- Communication Plan -->
+        <section id="communication">
+            <h2>Communication Plan</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Audience</th>
+                        <th>Message</th>
+                        <th>Channel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Executive team</td>
+                        <td>Transformation vision, Phase 0 kickoff</td>
+                        <td>Executive offsite</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Board</td>
+                        <td>Strategic rationale, investment ask</td>
+                        <td>Board meeting</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>All managers</td>
+                        <td>What's coming, how to talk to teams</td>
+                        <td>Manager all-hands</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>All employees</td>
+                        <td>Vision, timeline, commitment to people</td>
+                        <td>Company all-hands</td>
+                    </tr>
+                    <tr>
+                        <td>5-11</td>
+                        <td>All employees</td>
+                        <td>Weekly progress updates</td>
+                        <td>Email/Slack</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>All employees</td>
+                        <td>Phase 0 outcomes, Phase 1 preview</td>
+                        <td>Company all-hands</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Key Message for Phase 0</div>
+                <p>"We're exploring how AI can help us compete. We're designing thoughtfully. Your input matters."</p>
+            </div>
+        </section>
+
+        <!-- Budget -->
+        <section id="budget">
+            <h2>Budget Breakdown</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Low Estimate</th>
+                        <th>High Estimate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>External assessment/consulting</td>
+                        <td>$100K</td>
+                        <td>$250K</td>
+                    </tr>
+                    <tr>
+                        <td>Executive workshop/offsite</td>
+                        <td>$50K</td>
+                        <td>$100K</td>
+                    </tr>
+                    <tr>
+                        <td>AI platform evaluation/POC</td>
+                        <td>$75K</td>
+                        <td>$150K</td>
+                    </tr>
+                    <tr>
+                        <td>Initial platform licensing</td>
+                        <td>$100K</td>
+                        <td>$200K</td>
+                    </tr>
+                    <tr>
+                        <td>Infrastructure provisioning</td>
+                        <td>$50K</td>
+                        <td>$100K</td>
+                    </tr>
+                    <tr>
+                        <td>Training/upskilling design</td>
+                        <td>$50K</td>
+                        <td>$100K</td>
+                    </tr>
+                    <tr>
+                        <td>Contingency (15%)</td>
+                        <td>$75K</td>
+                        <td>$150K</td>
+                    </tr>
+                    <tr style="background: var(--color-bg-tertiary); font-weight: 600;">
+                        <td>Total</td>
+                        <td>$500K</td>
+                        <td>$1,050K</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Risk Register -->
+        <section id="risks">
+            <h2>Risk Register</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Risk</th>
+                        <th>Likelihood</th>
+                        <th>Impact</th>
+                        <th>Mitigation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Executive misalignment emerges late</td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td><span class="badge badge-error">High</span></td>
+                        <td>Weekly exec check-ins, individual conversations</td>
+                    </tr>
+                    <tr>
+                        <td>Cultural resistance stronger than expected</td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td><span class="badge badge-error">High</span></td>
+                        <td>Anonymous surveys, focus groups, champion network</td>
+                    </tr>
+                    <tr>
+                        <td>Technology platform doesn't meet needs</td>
+                        <td><span class="badge badge-success">Low</span></td>
+                        <td><span class="badge badge-error">High</span></td>
+                        <td>POC with multiple vendors before selection</td>
+                    </tr>
+                    <tr>
+                        <td>Data infrastructure gaps block pilots</td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td>Assess early, plan remediation in parallel</td>
+                    </tr>
+                    <tr>
+                        <td>Key talent leaves during uncertainty</td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td><span class="badge badge-error">High</span></td>
+                        <td>Transparent communication, upskilling investment</td>
+                    </tr>
+                    <tr>
+                        <td>Scope creep extends Phase 0</td>
+                        <td><span class="badge badge-warning">Medium</span></td>
+                        <td><span class="badge badge-success">Low</span></td>
+                        <td>Clear exit criteria, weekly governance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Templates -->
+        <section id="templates">
+            <h2>Appendix: Templates</h2>
+
+            <h3>A1: AI Tool Inventory Template</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Function</th>
+                        <th>Users</th>
+                        <th>Use Cases</th>
+                        <th>Frequency</th>
+                        <th>Value (1-5)</th>
+                        <th>Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GitHub Copilot</td>
+                        <td>Engineering</td>
+                        <td>45</td>
+                        <td>Code completion</td>
+                        <td>Daily</td>
+                        <td>4</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>ChatGPT Team</td>
+                        <td>Multiple</td>
+                        <td>120</td>
+                        <td>Research, drafting</td>
+                        <td>Daily</td>
+                        <td>3</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>A2: Workflow Analysis Template</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Workflow Step</th>
+                        <th>Function</th>
+                        <th>Time Spent</th>
+                        <th>Work Type</th>
+                        <th>AI Opportunity</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Code review</td>
+                        <td>Engineering</td>
+                        <td>8 hrs/week</td>
+                        <td>Pattern</td>
+                        <td>High</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                        <td style="color: var(--color-text-muted);">...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>A3: Pilot Scoring Template</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Weight</th>
+                        <th>Candidate 1</th>
+                        <th>Candidate 2</th>
+                        <th>Candidate 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>High Volume</td>
+                        <td>20%</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Pattern-Based</td>
+                        <td>20%</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Measurable</td>
+                        <td>15%</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Contained Risk</td>
+                        <td>15%</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Champion Available</td>
+                        <td>15%</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Data Ready</td>
+                        <td>15%</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>5</td>
+                    </tr>
+                    <tr style="background: var(--color-bg-tertiary); font-weight: 600;">
+                        <td>Weighted Score</td>
+                        <td>100%</td>
+                        <td>4.15</td>
+                        <td>4.20</td>
+                        <td>3.95</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer style="margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 13px;">
+            <p><em>Document Version: 1.0 | Created: December 2025 | Next Review: Week 4 of Phase 0</em></p>
+        </footer>
+    </main>
+
+    <script>
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                // Update active state
+                document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="font-family: Inter, system-ui, sans-serif;">
+  <defs>
+    <style>
+      .title { font-size: 22px; font-weight: 600; fill: #1e1e1e; }
+      .box-title { font-size: 13px; font-weight: 500; }
+      .box-text { font-size: 11px; fill: #1e1e1e; }
+      .box-note { font-size: 10px; fill: #666666; }
+      .box-stat { font-size: 12px; font-weight: 600; fill: #1e1e1e; }
+      .box-source { font-size: 9px; fill: #666666; }
+      .label { font-size: 11px; fill: #666666; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" class="title" text-anchor="middle">The WPEngine Bleeding Pattern</text>
+
+  <!-- Merchant Box -->
+  <rect x="250" y="55" width="300" height="50" rx="8" fill="#22d3ee15" stroke="#22d3ee" stroke-width="2"/>
+  <text x="400" y="85" class="box-title" fill="#1e1e1e" text-anchor="middle">High-GMV WooCommerce Merchant</text>
+
+  <!-- Arrow down to pain -->
+  <path d="M400 105 L400 135" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Pain Points Box -->
+  <rect x="200" y="145" width="400" height="80" rx="8" fill="#ef444415" stroke="#ef4444" stroke-width="2"/>
+  <text x="400" y="168" class="box-title" fill="#ef4444" text-anchor="middle">Experiences Pain Points:</text>
+  <text x="400" y="190" class="box-text" text-anchor="middle">Performance issues  |  Plugin conflicts</text>
+  <text x="400" y="208" class="box-text" text-anchor="middle">Security anxiety  |  Checkout problems</text>
+
+  <!-- Arrow down to options -->
+  <path d="M400 225 L400 255" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Options Label -->
+  <text x="400" y="280" class="label" text-anchor="middle">Considers Options</text>
+
+  <!-- Branch arrows -->
+  <path d="M300 290 L150 320" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M400 290 L400 320" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead-red)"/>
+  <path d="M500 290 L650 320" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowhead-green)"/>
+
+  <!-- Option A: Upgrade Hosting -->
+  <rect x="50" y="330" width="200" height="110" rx="8" fill="#f1f5f915" stroke="#94a3b8" stroke-width="2"/>
+  <text x="150" y="355" class="box-title" fill="#1e1e1e" text-anchor="middle">Option A: Upgrade Hosting</text>
+  <text x="150" y="378" class="box-note" text-anchor="middle">(WPEngine's hope)</text>
+  <text x="150" y="405" class="box-note" text-anchor="middle">Often insufficient for</text>
+  <text x="150" y="420" class="box-note" text-anchor="middle">WooCommerce issues</text>
+
+  <!-- Option B: Shopify -->
+  <rect x="300" y="330" width="200" height="110" rx="8" fill="#ef444415" stroke="#ef4444" stroke-width="2"/>
+  <text x="400" y="355" class="box-title" fill="#ef4444" text-anchor="middle">Option B: Shopify Migration</text>
+  <text x="400" y="380" class="box-stat" text-anchor="middle">48% of migrations</text>
+  <text x="400" y="398" class="box-source" text-anchor="middle">(Cart2Cart 2024)</text>
+  <text x="400" y="422" class="box-note" fill="#ef4444" text-anchor="middle">Complete customer loss</text>
+
+  <!-- Option C: Commerce.com -->
+  <rect x="550" y="330" width="200" height="110" rx="8" fill="#22c55e15" stroke="#22c55e" stroke-width="3"/>
+  <text x="650" y="350" class="box-source" fill="#22c55e" text-anchor="middle">[MISSING OPTION]</text>
+  <text x="650" y="375" class="box-title" fill="#22c55e" text-anchor="middle">Option C: Commerce.com</text>
+  <text x="650" y="405" class="box-text" text-anchor="middle">WPEngine RETAINS</text>
+  <text x="650" y="422" class="box-text" text-anchor="middle">hosting revenue</text>
+</svg>

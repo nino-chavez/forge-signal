@@ -14,6 +14,7 @@ import type { AIProvider } from '../providers/ai-provider.js';
 import { GhostWriter } from '../roles/ghost-writer.js';
 import { Copywriter } from '../roles/copywriter.js';
 import { Editor } from '../roles/editor.js';
+import { DocumentationWriter, type DocumentationType } from '../roles/documentation-writer.js';
 import { exportToWord } from '../exporters/word-exporter.js';
 import { exportToPDF } from '../exporters/pdf-exporter.js';
 import { exportToPPTX } from '../exporters/pptx-exporter.js';
@@ -21,6 +22,7 @@ import { exportToGoogleSlides } from '../exporters/slides-exporter.js';
 import { exportToHTML } from '../exporters/html-exporter.js';
 import { generateSlug } from '../utils/slug.js';
 import { ensureDir } from '../utils/file-utils.js';
+import { registerAgenticCommands } from './agentic-commands.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -37,20 +39,28 @@ program
   .description('Signal Forge - Strategic content generation system')
   .version('1.0.0');
 
+// Register agentic commands (forge agent ...)
+registerAgenticCommands(program);
+
+// Valid content types
+const VALID_TYPES = ['deck', 'pov', 'paper', 'guide', 'reference', 'tutorial'];
+const DOCUMENTATION_TYPES = ['guide', 'reference', 'tutorial'];
+
 program
   .command('generate')
   .description('Generate strategic content')
-  .argument('<type>', 'Content type: deck, pov, or paper')
+  .argument('<type>', 'Content type: deck, pov, paper, guide, reference, or tutorial')
   .option('-i, --input <file>', 'Input file (meeting notes, recap, etc.)')
   .option('-o, --output <file>', 'Output file path')
   .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
-  .option('-f, --format <formats>', 'Output formats (comma-separated): word,pdf,pptx,slides')
+  .option('-f, --format <formats>', 'Output formats (comma-separated): word,pdf,pptx,slides,html')
   .option('--audience <audience>', 'Target audience')
+  .option('--product <product>', 'Product name (for documentation)')
   .option('--no-edit', 'Skip editor review (use ghost writer + copywriter only)')
   .action(async (type: string, options) => {
     try {
-      if (!['deck', 'pov', 'paper'].includes(type)) {
-        console.error(`❌ Invalid content type: ${type}. Must be deck, pov, or paper.`);
+      if (!VALID_TYPES.includes(type)) {
+        console.error(`❌ Invalid content type: ${type}. Must be one of: ${VALID_TYPES.join(', ')}`);
         process.exit(1);
       }
 
@@ -100,58 +110,85 @@ program
       // Generate content
       console.log(`\n🔨 Generating ${type} content using ${providerName}...\n`);
 
-      // Ghost Writer
-      console.log('👻 Ghost Writer: Generating initial draft...');
-      const ghostWriter = new GhostWriter(provider);
-      const ghostOutput = await ghostWriter.generate({
-        rawContent: inputContent,
-        contentType: type as 'deck' | 'pov' | 'paper',
-        audience: options.audience,
-      });
-      console.log('✅ Ghost Writer complete\n');
+      let finalContent = '';
 
-      // Copywriter
-      console.log('✍️  Copywriter: Refining content...');
-      const copywriter = new Copywriter(provider);
-      const copywriterOutput = await copywriter.refine({
-        draft: ghostOutput.draft,
-        contentType: type as 'deck' | 'pov' | 'paper',
-        audience: options.audience,
-      });
-      console.log('✅ Copywriter complete\n');
-
-      // Editor
-      let finalContent = copywriterOutput.refined;
-      if (!options.noEdit) {
-        console.log('📝 Editor: Reviewing content...');
-        const editor = new Editor(provider);
-        const editorOutput = await editor.review({
-          content: copywriterOutput.refined,
-          contentType: type as 'deck' | 'pov' | 'paper',
+      // Use different workflow for documentation types
+      if (DOCUMENTATION_TYPES.includes(type)) {
+        // Documentation workflow
+        console.log('📚 Documentation Writer: Generating documentation...');
+        const docWriter = new DocumentationWriter(provider);
+        const docOutput = await docWriter.generate({
+          rawContent: inputContent,
+          documentationType: type as DocumentationType,
+          audience: options.audience,
+          productName: options.product,
         });
+        finalContent = docOutput.draft;
+        console.log('✅ Documentation Writer complete\n');
+      } else {
+        // Standard thought-leadership/advisory workflow
+        // Ghost Writer
+        console.log('👻 Ghost Writer: Generating initial draft...');
+        const ghostWriter = new GhostWriter(provider);
+        const ghostOutput = await ghostWriter.generate({
+          rawContent: inputContent,
+          contentType: type as 'deck' | 'pov' | 'paper',
+          audience: options.audience,
+        });
+        console.log('✅ Ghost Writer complete\n');
 
-        if (editorOutput.approved) {
-          console.log(`✅ Editor approved (Voice score: ${editorOutput.voiceCheck.score}/10)\n`);
-          finalContent = editorOutput.finalContent || finalContent;
-        } else {
-          console.warn(`⚠️  Editor found issues (Voice score: ${editorOutput.voiceCheck.score}/10)`);
-          if (editorOutput.feedback) {
-            console.log('\nFeedback:');
-            console.log(editorOutput.feedback);
-          }
-          if (editorOutput.finalContent) {
-            finalContent = editorOutput.finalContent;
-            console.log('\n✅ Using auto-fixed version\n');
+        // Copywriter
+        console.log('✍️  Copywriter: Refining content...');
+        const copywriter = new Copywriter(provider);
+        const copywriterOutput = await copywriter.refine({
+          draft: ghostOutput.draft,
+          contentType: type as 'deck' | 'pov' | 'paper',
+          audience: options.audience,
+        });
+        console.log('✅ Copywriter complete\n');
+
+        // Editor
+        finalContent = copywriterOutput.refined;
+        if (!options.noEdit) {
+          console.log('📝 Editor: Reviewing content...');
+          const editor = new Editor(provider);
+          const editorOutput = await editor.review({
+            content: copywriterOutput.refined,
+            contentType: type as 'deck' | 'pov' | 'paper',
+          });
+
+          if (editorOutput.approved) {
+            console.log(`✅ Editor approved (Voice score: ${editorOutput.voiceCheck.score}/10)\n`);
+            finalContent = editorOutput.finalContent || finalContent;
           } else {
-            console.log('\n⚠️  Using content as-is (manual review recommended)\n');
+            console.warn(`⚠️  Editor found issues (Voice score: ${editorOutput.voiceCheck.score}/10)`);
+            if (editorOutput.feedback) {
+              console.log('\nFeedback:');
+              console.log(editorOutput.feedback);
+            }
+            if (editorOutput.finalContent) {
+              finalContent = editorOutput.finalContent;
+              console.log('\n✅ Using auto-fixed version\n');
+            } else {
+              console.log('\n⚠️  Using content as-is (manual review recommended)\n');
+            }
           }
         }
       }
 
-      // Determine output formats
-      const formats = options.format 
+      // Determine output formats based on content type
+      let defaultFormats: string[];
+      if (type === 'deck') {
+        defaultFormats = ['pptx', 'html'];
+      } else if (DOCUMENTATION_TYPES.includes(type)) {
+        defaultFormats = ['html']; // Documentation defaults to HTML
+      } else {
+        defaultFormats = ['word', 'pdf', 'html'];
+      }
+
+      const formats = options.format
         ? options.format.split(',').map((f: string) => f.trim())
-        : type === 'deck' ? ['pptx', 'html'] : ['word', 'pdf', 'html'];
+        : defaultFormats;
 
       // Determine output path
       const outputDir = options.output 
@@ -162,7 +199,7 @@ program
 
       const baseName = options.output
         ? path.basename(options.output, path.extname(options.output))
-        : generateSlug(ghostOutput.draft.split('\n')[0] || 'content');
+        : generateSlug(finalContent.split('\n')[0] || 'content');
 
       // Export to requested formats
       console.log('📤 Exporting content...\n');
@@ -219,7 +256,7 @@ program
                 title: baseName,
                 content: finalContent,
                 outputPath: htmlPath,
-                contentType: type as 'deck' | 'pov' | 'paper',
+                contentType: type as 'deck' | 'pov' | 'paper' | 'guide' | 'reference' | 'tutorial',
               });
               console.log(`✅ Web page: ${htmlPath}`);
               break;

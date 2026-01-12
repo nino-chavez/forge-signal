@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Catalog - Agentic Commerce</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body { max-width: 1200px; margin: 0 auto; padding: 48px; background: var(--bg-card); }
+    h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem; }
+    h4 { font-size: 1rem; font-weight: 600; color: var(--primary); margin: 1.25rem 0 0.5rem; }
+    p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+    .doc-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .doc-subtitle { color: var(--primary); font-weight: 600; font-size: 0.875rem; }
+    .doc-meta { display: flex; gap: 1rem; margin-top: 1rem; }
+    .doc-badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.875rem; }
+    th { background: var(--bg-surface); color: var(--text-primary); font-weight: 600; text-align: left; padding: 0.75rem 1rem; border: 1px solid var(--border); }
+    td { padding: 0.75rem 1rem; border: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    tr:hover td { background: var(--bg-surface); }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; color: var(--text-secondary); }
+    li { margin-bottom: 0.5rem; line-height: 1.5; }
+
+    /* Component card */
+    .component-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0 2rem; }
+    .component-card h4 { margin-top: 0; color: var(--text-primary); font-size: 1.125rem; }
+    .component-card table { margin-bottom: 0; }
+
+    /* Phase badges */
+    .phase-day1 { background: var(--phase-1); color: white; padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .phase-2 { background: var(--phase-2); color: white; padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .phase-3 { background: var(--phase-3); color: white; padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Complexity badges */
+    .complexity-s { background: var(--color-success-light); color: var(--color-success-dark); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .complexity-m { background: var(--color-platform-light); color: var(--color-platform-dark); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .complexity-l { background: var(--color-warning-light); color: var(--color-warning-dark); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .complexity-xl { background: var(--color-trust-light); color: var(--color-trust-dark); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Maturity */
+    .maturity-prod { color: var(--color-success); font-weight: 600; }
+    .maturity-beta { color: var(--color-warning); font-weight: 600; }
+    .maturity-emerging { color: var(--color-data); font-weight: 600; }
+
+    /* Info box */
+    .info-box { background: var(--primary-light); border: 1px solid var(--primary); border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+    .info-box p { margin: 0; color: var(--primary-dark); }
+
+    @media print {
+      body { padding: 24px; max-width: 100%; }
+      .component-card { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="background: #fef3c7; border-bottom: 2px solid #f59e0b; padding: 0.75rem 1.5rem; margin: -48px -48px 2rem -48px; font-size: 0.875rem;">
+    <strong style="color: #92400e;">Reference Pattern</strong> — <span style="color: #78350f;">For discovery conversations. Adapt to client context before delivery.</span>
+    <a href="../index.html" style="float: right; color: #92400e;">← Back to Toolkit</a>
+  </div>
+
+  <header class="doc-header">
+    <div class="doc-subtitle">Agentic Commerce Toolkit</div>
+    <h1>Component Catalog</h1>
+    <p>Reference specifications for scoping and complexity estimation</p>
+    <div class="doc-meta">
+      <span class="doc-badge">Reference Pattern</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Catalog Structure</h2>
+    <p>Each component includes:</p>
+    <ul>
+      <li><strong>Description:</strong> What it does</li>
+      <li><strong>Responsibilities:</strong> Key functions</li>
+      <li><strong>Interfaces:</strong> APIs and integrations</li>
+      <li><strong>Vendor Options:</strong> Market alternatives (AI vendors named, others generic)</li>
+      <li><strong>Complexity:</strong> Integration effort (S/M/L/XL)</li>
+      <li><strong>Maturity:</strong> Production / Beta / Emerging</li>
+      <li><strong>Phase:</strong> Day 1 / Phase 2 / Phase 3</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1. External Agent Touchpoints</h2>
+
+    <div class="component-card">
+      <h4>1.1 LLM Platforms</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Third-party LLM platforms that initiate commerce interactions</td></tr>
+        <tr><th>Responsibilities</th><td>Natural language understanding, intent extraction, response generation</td></tr>
+        <tr><th>Interfaces</th><td>ACP (OpenAI), MCP (Anthropic), AP2 (Google)</td></tr>
+        <tr><th>Vendor Options</th><td>GPT-4/ChatGPT, Claude, Gemini, Llama (Meta)</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span> (per protocol)</td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Each platform has different integration patterns; prioritize based on customer usage</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>1.2 AI Search Engines</h4>
+      <table>
+        <tr><th width="180">Description</th><td>AI-powered search engines that surface commerce content</td></tr>
+        <tr><th>Responsibilities</th><td>Content discovery, citation, product recommendations</td></tr>
+        <tr><th>Interfaces</th><td>Structured data (Schema.org), GEO-optimized content</td></tr>
+        <tr><th>Vendor Options</th><td>Perplexity, Google AI Overviews, Bing Copilot</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-s">S</span> (content optimization)</td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-beta">Beta</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>Passive channel; focus on content optimization rather than API integration</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>1.3 Personal Agents</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Consumer-owned AI assistants with delegated authority</td></tr>
+        <tr><th>Responsibilities</th><td>Act on customer behalf across multiple services</td></tr>
+        <tr><th>Interfaces</th><td>To be defined (emerging standards)</td></tr>
+        <tr><th>Vendor Options</th><td>Emerging (Apple Intelligence, Google Assistant, custom)</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-xl">XL</span> (when available)</td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-emerging">Emerging (2026+)</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-3">Phase 3</span></td></tr>
+        <tr><th>Notes</th><td>Monitor standards development; prepare agent registry for future integration</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Protocol Layer</h2>
+
+    <div class="component-card">
+      <h4>2.1 ACP (Agentic Commerce Protocol)</h4>
+      <table>
+        <tr><th width="180">Description</th><td>OpenAI's protocol for agent-initiated commerce</td></tr>
+        <tr><th>Responsibilities</th><td>Product search, cart operations, payment authorization, order management</td></tr>
+        <tr><th>Interfaces</th><td>REST API with OpenAI authentication</td></tr>
+        <tr><th>Vendor Options</th><td>OpenAI (proprietary)</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span> (limited availability)</td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Currently in partner beta; apply for early access</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>2.2 MCP (Model Context Protocol)</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Anthropic's open protocol for tool/context sharing</td></tr>
+        <tr><th>Responsibilities</th><td>Expose commerce capabilities as tools, share product context</td></tr>
+        <tr><th>Interfaces</th><td>JSON-RPC over stdio/HTTP</td></tr>
+        <tr><th>Vendor Options</th><td>Anthropic (open standard)</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-s">S</span>-<span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Open protocol; recommend as primary integration path</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>2.3 AP2 (Agent Payments Protocol)</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Google's protocol for agent-initiated payments</td></tr>
+        <tr><th>Responsibilities</th><td>Payment mandates, secure token handling, transaction authorization</td></tr>
+        <tr><th>Interfaces</th><td>Google Pay integration</td></tr>
+        <tr><th>Vendor Options</th><td>Google (proprietary)</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-beta">Beta</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>Complex mandate system; requires Google Pay merchant account</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>2.4 Agent Registry</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Capability manifest for agent discovery</td></tr>
+        <tr><th>Responsibilities</th><td>Publish available commerce capabilities, versioning, deprecation</td></tr>
+        <tr><th>Interfaces</th><td>OpenAPI/AsyncAPI specification</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Essential for multi-protocol support; enables graceful capability negotiation</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>2.5 Webhook Infrastructure</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Async notification system for agent platforms</td></tr>
+        <tr><th>Responsibilities</th><td>Order status updates, shipping notifications, refund confirmations</td></tr>
+        <tr><th>Interfaces</th><td>Webhook endpoints per platform</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build or iPaaS</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>Critical for post-purchase agent experiences</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Security & Compliance Layer</h2>
+
+    <div class="component-card">
+      <h4>3.1 Consent & Data Access Control</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Central consent management for agent data access</td></tr>
+        <tr><th>Responsibilities</th><td>Agent identity verification, consent validation, data classification enforcement</td></tr>
+        <tr><th>Interfaces</th><td>Consent API, Data Access Policy Engine</td></tr>
+        <tr><th>Vendor Options</th><td>Consent Management Platform (OneTrust, TrustArc) + custom logic</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td><strong>CRITICAL</strong> - Must be in place before any agent integration</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>3.2 API Gateway</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Entry point for all agent traffic</td></tr>
+        <tr><th>Responsibilities</th><td>Authentication, rate limiting, protocol routing, abuse prevention</td></tr>
+        <tr><th>Interfaces</th><td>REST/GraphQL ingress</td></tr>
+        <tr><th>Vendor Options</th><td>Kong, Apigee, AWS API Gateway, Azure API Management</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Add protocol adapter layer to normalize ACP/MCP/AP2</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>3.3 Resilience Layer</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Fault tolerance and graceful degradation</td></tr>
+        <tr><th>Responsibilities</th><td>Circuit breakers, LLM fallback chain, cache-first responses</td></tr>
+        <tr><th>Interfaces</th><td>Service mesh sidecar or library</td></tr>
+        <tr><th>Vendor Options</th><td>Istio, Linkerd, Resilience4j, or custom</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>LLM fallback chain: GPT-4 &rarr; Claude &rarr; Gemini &rarr; Local model &rarr; Cached response</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. AI/ML Domain</h2>
+
+    <div class="component-card">
+      <h4>4.1 LLM Gateway</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Unified interface to multiple LLM providers</td></tr>
+        <tr><th>Responsibilities</th><td>Provider routing, load balancing, cost optimization, fallback</td></tr>
+        <tr><th>Interfaces</th><td>Internal API abstracting LLM providers</td></tr>
+        <tr><th>Vendor Options</th><td>LiteLLM, Portkey, or custom</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Essential for resilience and cost management</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>4.2 Vector Store / RAG</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Semantic search over product and content data</td></tr>
+        <tr><th>Responsibilities</th><td>Embedding storage, similarity search, context retrieval</td></tr>
+        <tr><th>Interfaces</th><td>Vector search API</td></tr>
+        <tr><th>Vendor Options</th><td>Pinecone, Weaviate, Qdrant, Milvus, pgvector</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Index products, FAQs, policies, reviews for agent context</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>4.3 Memory Store</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Session and long-term context persistence</td></tr>
+        <tr><th>Responsibilities</th><td>Conversation history, customer context, cross-session memory</td></tr>
+        <tr><th>Interfaces</th><td>Memory API</td></tr>
+        <tr><th>Vendor Options</th><td>Zep, MemGPT, Redis + custom, LangChain memory</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Critical for "remember my last order" type interactions</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>4.4 Observability</h4>
+      <table>
+        <tr><th width="180">Description</th><td>LLM-specific monitoring, tracing, and evaluation</td></tr>
+        <tr><th>Responsibilities</th><td>Request tracing, cost tracking, quality evaluation, latency monitoring</td></tr>
+        <tr><th>Interfaces</th><td>Tracing SDK, dashboard</td></tr>
+        <tr><th>Vendor Options</th><td>LangSmith, Phoenix (Arize), Langfuse, Helicone</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Non-negotiable for production LLM systems</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>4.5 Prompt Registry</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Centralized prompt management and versioning</td></tr>
+        <tr><th>Responsibilities</th><td>Prompt storage, A/B testing, rollback, access control</td></tr>
+        <tr><th>Interfaces</th><td>Prompt API</td></tr>
+        <tr><th>Vendor Options</th><td>PromptLayer, Humanloop, or custom</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-s">S</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-beta">Beta</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>Enables safe prompt iteration without code deployment</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Domain Agents</h2>
+
+    <div class="component-card">
+      <h4>5.1 Shopping Agent</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Handles product discovery and purchase intent</td></tr>
+        <tr><th>Responsibilities</th><td>Intent classification, product search, comparison, recommendations, cart management</td></tr>
+        <tr><th>Interfaces</th><td>Commerce API, Search API, CDP</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build with LangChain/LangGraph</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Core agent; start simple, iterate based on conversation patterns</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>5.2 Service Agent</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Handles post-purchase support inquiries</td></tr>
+        <tr><th>Responsibilities</th><td>Order status, FAQ, warranty, escalation</td></tr>
+        <tr><th>Interfaces</th><td>OMS, CRM, Knowledge Base</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build or extend Service Cloud Einstein</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>High-volume, high-value; measure containment rate</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>5.3 Returns Agent</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Handles return and exchange workflows</td></tr>
+        <tr><th>Responsibilities</th><td>Return eligibility, RMA creation, label generation, refund status</td></tr>
+        <tr><th>Interfaces</th><td>OMS, Returns platform, Payment</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build or extend Loop, Narvar</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>High-friction journey; excellent automation candidate</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>5.4 Fulfillment Agent</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Handles inventory and delivery inquiries</td></tr>
+        <tr><th>Responsibilities</th><td>ATP check, delivery estimates, order tracking, delivery issues</td></tr>
+        <tr><th>Interfaces</th><td>OMS, WMS, 3PL APIs</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-2">Phase 2</span></td></tr>
+        <tr><th>Notes</th><td>Requires real-time inventory integration</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>5.5 Pricing Agent</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Handles dynamic pricing and promotion logic</td></tr>
+        <tr><th>Responsibilities</th><td>Price calculation, promo application, competitive pricing</td></tr>
+        <tr><th>Interfaces</th><td>Pricing engine, Competitive intel</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-beta">Beta</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-3">Phase 3</span></td></tr>
+        <tr><th>Notes</th><td>Requires guardrails to prevent margin erosion</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Commerce Domain</h2>
+
+    <div class="component-card">
+      <h4>6.1 Headless Commerce Platform</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Core commerce engine (cart, checkout, orders)</td></tr>
+        <tr><th>Responsibilities</th><td>Cart management, checkout flow, order creation, promotions</td></tr>
+        <tr><th>Interfaces</th><td>Commerce API (REST/GraphQL)</td></tr>
+        <tr><th>Vendor Options</th><td>commercetools, Shopify Hydrogen, BigCommerce, Salesforce Commerce, Adobe Commerce</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-xl">XL</span> (platform selection/implementation)</td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span> (assuming existing platform)</td></tr>
+        <tr><th>Notes</th><td>Agent integration layer on top of existing platform</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>6.2 AI Search Engine</h4>
+      <table>
+        <tr><th width="180">Description</th><td>AI-native product search with semantic understanding</td></tr>
+        <tr><th>Responsibilities</th><td>Query understanding, semantic search, faceting, ranking</td></tr>
+        <tr><th>Interfaces</th><td>Search API</td></tr>
+        <tr><th>Vendor Options</th><td>Algolia, Constructor.io, Bloomreach, Coveo</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>AI-native search significantly improves agent product finding</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. Payments & Trust</h2>
+
+    <div class="component-card">
+      <h4>7.1 Mandate Manager</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Manages customer payment authorizations for agents</td></tr>
+        <tr><th>Responsibilities</th><td>Mandate creation, scope enforcement, limit tracking, revocation</td></tr>
+        <tr><th>Interfaces</th><td>Mandate API</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build on top of payment processor</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-l">L</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td><strong>CRITICAL</strong> for agent-initiated payments</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>7.2 Token Lifecycle</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Secure payment token management</td></tr>
+        <tr><th>Responsibilities</th><td>SPT issuance, usage tracking, expiration, secure storage</td></tr>
+        <tr><th>Interfaces</th><td>Token API</td></tr>
+        <tr><th>Vendor Options</th><td>Stripe (built-in), Adyen, custom vault</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Never expose full payment credentials to agents</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>8. Trust & Escalation</h2>
+
+    <div class="component-card">
+      <h4>8.1 Confidence Scoring</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Determines when agent should escalate to human</td></tr>
+        <tr><th>Responsibilities</th><td>Score calculation, threshold management, escalation triggers</td></tr>
+        <tr><th>Interfaces</th><td>Scoring API</td></tr>
+        <tr><th>Vendor Options</th><td>Custom build with ML model</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Start with rule-based, evolve to ML</td></tr>
+      </table>
+    </div>
+
+    <div class="component-card">
+      <h4>8.2 Guardrails</h4>
+      <table>
+        <tr><th width="180">Description</th><td>Policy enforcement for agent responses</td></tr>
+        <tr><th>Responsibilities</th><td>Content filtering, PII detection, brand compliance, safety checks</td></tr>
+        <tr><th>Interfaces</th><td>Guardrails API</td></tr>
+        <tr><th>Vendor Options</th><td>NVIDIA NeMo Guardrails, Guardrails AI, custom</td></tr>
+        <tr><th>Complexity</th><td><span class="complexity-m">M</span></td></tr>
+        <tr><th>Maturity</th><td><span class="maturity-prod">Production</span></td></tr>
+        <tr><th>Phase</th><td><span class="phase-day1">Day 1</span></td></tr>
+        <tr><th>Notes</th><td>Essential for brand safety and compliance</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Complexity Legend</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rating</th>
+          <th>Description</th>
+          <th>Typical Effort</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="complexity-s">S</span></td>
+          <td>Simple integration, well-documented APIs</td>
+          <td>1-2 weeks</td>
+        </tr>
+        <tr>
+          <td><span class="complexity-m">M</span></td>
+          <td>Moderate complexity, some customization</td>
+          <td>2-4 weeks</td>
+        </tr>
+        <tr>
+          <td><span class="complexity-l">L</span></td>
+          <td>Significant effort, custom development</td>
+          <td>1-2 months</td>
+        </tr>
+        <tr>
+          <td><span class="complexity-xl">XL</span></td>
+          <td>Major initiative, platform selection</td>
+          <td>3-6 months</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem;">
+    <p><em>Component Catalog v1.0 | Agentic Commerce Reference Architecture</em></p>
+  </footer>
+
+</body>
+</html>

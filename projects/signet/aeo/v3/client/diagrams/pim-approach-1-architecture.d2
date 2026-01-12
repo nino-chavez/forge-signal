@@ -1,0 +1,207 @@
+direction: right
+
+title: |md
+  # Approach 1: Pre-Indexed SKU Catalog
+  Daily Sync to OpenSearch
+| {
+  near: top-center
+  shape: text
+  style.font-size: 18
+}
+
+# External Systems Zone
+external: EXTERNAL SYSTEMS {
+  style.fill: "#f9fafb"
+  style.stroke: "#6b7280"
+  style.stroke-dash: 5
+
+  profound: {
+    label: "Profound\nVisibility API"
+    shape: rectangle
+    style.fill: "#f5f3ff"
+    style.stroke: "#7c3aed"
+    style.stroke-width: 2
+    style.font-color: "#5b21b6"
+  }
+
+  pim: {
+    label: "Infoverity PIM\n(Export)"
+    shape: rectangle
+    style.fill: "#eff6ff"
+    style.stroke: "#2563eb"
+    style.stroke-width: 2
+    style.font-color: "#1d4ed8"
+  }
+}
+
+# AWS Cloud Zone
+aws: AWS CLOUD {
+  style.fill: "#fff7ed"
+  style.stroke: "#f97316"
+  style.stroke-width: 2
+
+  # Data Ingestion Layer
+  ingestion: Data Ingestion {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    s3: {
+      label: "S3\nInbound"
+      shape: cylinder
+      style.fill: "#f0fdf4"
+      style.stroke: "#16a34a"
+      style.stroke-width: 2
+    }
+
+    lambda_ingest: {
+      label: "Ingestion\nLambda"
+      shape: rectangle
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+
+    titan: {
+      label: "Titan\nEmbeddings"
+      shape: rectangle
+      style.fill: "#f5f3ff"
+      style.stroke: "#7c3aed"
+      style.stroke-width: 2
+    }
+  }
+
+  # Vector Store
+  vector: Vector Store {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    opensearch: {
+      label: |md
+        **OpenSearch**
+        Profound Vectors
+        +
+        SKU Vectors
+      |
+      shape: cylinder
+      style.fill: "#7c3aed"
+      style.stroke: "#5b21b6"
+      style.stroke-width: 2
+      style.font-color: white
+    }
+  }
+
+  # Scheduling
+  eventbridge: {
+    label: "EventBridge\n(Daily)"
+    shape: rectangle
+    style.fill: "#fff7ed"
+    style.stroke: "#f97316"
+    style.stroke-width: 2
+  }
+
+  # Content Generation Layer
+  content: Content Generation {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    similarity: {
+      label: "Similarity\nLambda"
+      shape: rectangle
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+
+    bedrock: {
+      label: "Bedrock\nAgent"
+      shape: rectangle
+      style.fill: "#7c3aed"
+      style.stroke: "#5b21b6"
+      style.stroke-width: 2
+      style.font-color: white
+    }
+
+    pim_update: {
+      label: "PIM Update\nLambda"
+      shape: rectangle
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+
+    cloudwatch: {
+      label: "CloudWatch"
+      shape: rectangle
+      style.fill: "#fefce8"
+      style.stroke: "#eab308"
+      style.stroke-width: 2
+    }
+  }
+}
+
+# Key Differentiator Box
+key: |md
+  **Key Differentiator**
+  - SKU vectors in OpenSearch
+  - Daily catalog sync
+  - Fastest query time
+  - Requires export
+| {
+  near: bottom-right
+  style.fill: "#fef2f2"
+  style.stroke: "#dc2626"
+  style.stroke-width: 2
+  style.font-size: 11
+}
+
+# Connections
+external.profound -> aws.ingestion.s3: "Visibility Data" {
+  style.stroke: "#7c3aed"
+  style.stroke-width: 2
+}
+
+external.pim -> aws.ingestion.s3: "Catalog Export" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}
+
+aws.ingestion.s3 -> aws.ingestion.lambda_ingest: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.ingestion.lambda_ingest -> aws.ingestion.titan: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.ingestion.titan -> aws.vector.opensearch: "Vectors" {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.eventbridge -> aws.ingestion.lambda_ingest: "Daily Trigger" {
+  style.stroke: "#f97316"
+  style.stroke-width: 2
+  style.stroke-dash: 3
+}
+
+aws.content.similarity -> aws.vector.opensearch: "kNN Search" {
+  style.stroke: "#7c3aed"
+  style.stroke-width: 2
+}
+
+aws.content.similarity -> aws.content.bedrock: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.content.bedrock -> aws.content.pim_update: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.content.pim_update -> external.pim: "REST API" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}

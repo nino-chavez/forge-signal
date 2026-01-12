@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEO Optimization Service: Delivery Plan v4.1</title>
+
+  <style>
+    :root {
+      --color-brand-violet: #7c3aed;
+      --color-brand-navy: #1a365d;
+      --color-text-primary: #171717;
+      --color-text-secondary: #404040;
+      --color-text-body: #525252;
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f5f5f5;
+      --color-bg-dark: #111827;
+      --color-success: #059669;
+      --color-warning: #d97706;
+      --color-info: #0284c7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--color-bg-secondary);
+      color: var(--color-text-body);
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--color-bg-primary);
+      border-right: 1px solid #e5e5e5;
+      padding: 24px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .nav-title {
+      font-weight: 700;
+      color: var(--color-brand-violet);
+      font-size: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--color-brand-violet);
+    }
+
+    .toc {
+      list-style: none;
+    }
+
+    .toc-item {
+      margin-bottom: 8px;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .toc-item a:hover {
+      background: var(--color-bg-secondary);
+      color: var(--color-brand-violet);
+    }
+
+    .main {
+      margin-left: 280px;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    .section {
+      background: var(--color-bg-primary);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: var(--color-brand-violet);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--color-brand-violet);
+    }
+
+    h3 {
+      font-size: 16px;
+      color: var(--color-text-primary);
+      margin: 24px 0 12px;
+    }
+
+    h4 {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      margin: 16px 0 8px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    th {
+      background: var(--color-bg-secondary);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .highlight-row {
+      background: #f0fdf4;
+      font-weight: 600;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--color-brand-violet), #6d28d9);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+    }
+
+    .stat-card.secondary {
+      background: linear-gradient(135deg, var(--color-brand-navy), #1e40af);
+    }
+
+    .stat-card.success {
+      background: linear-gradient(135deg, var(--color-success), #047857);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .code-block {
+      background: var(--color-bg-dark);
+      color: #e5e5e5;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 16px 0;
+      white-space: pre;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-primary {
+      background: #ede9fe;
+      color: var(--color-brand-violet);
+    }
+
+    .badge-success {
+      background: #d1fae5;
+      color: var(--color-success);
+    }
+
+    .badge-warning {
+      background: #fef3c7;
+      color: var(--color-warning);
+    }
+
+    .badge-info {
+      background: #e0f2fe;
+      color: var(--color-info);
+    }
+
+    ul, ol {
+      margin: 12px 0;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .note {
+      background: #fef3c7;
+      border-left: 4px solid var(--color-warning);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+
+    .info-box {
+      background: #e0f2fe;
+      border-left: 4px solid var(--color-info);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+
+    blockquote {
+      background: #f5f5f5;
+      border-left: 4px solid var(--color-brand-violet);
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0.5in;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 0;
+      }
+
+      .section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #e5e5e5;
+        margin-bottom: 16px;
+        padding: 24px;
+      }
+
+      .page-break {
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        font-size: 11px;
+      }
+
+      h1 { font-size: 22px; }
+      h2 { font-size: 16px; }
+      h3 { font-size: 13px; }
+      h4 { font-size: 11px; }
+
+      table { font-size: 10px; }
+      th, td { padding: 6px 8px; }
+
+      .stat-grid {
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 16px;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .stat-value { font-size: 24px; }
+      .stat-label { font-size: 11px; }
+
+      .code-block {
+        font-size: 9px;
+        padding: 12px;
+        background: #1a1a1a !important;
+        color: #e5e5e5 !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .badge {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .highlight-row {
+        background: #f0fdf4 !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-title">AEO DELIVERY PLAN v4.1</div>
+    <ul class="toc">
+      <li class="toc-item"><a href="#executive-summary">Executive Summary</a></li>
+      <li class="toc-item"><a href="#solution-overview">Solution Overview</a></li>
+      <li class="toc-item"><a href="#raci-matrix">RACI Matrix</a></li>
+      <li class="toc-item"><a href="#staffing-plan">Staffing Plan</a></li>
+      <li class="toc-item"><a href="#delivery-timeline">Delivery Timeline</a></li>
+      <li class="toc-item"><a href="#deliverables">Deliverables</a></li>
+      <li class="toc-item"><a href="#coordination-model">Coordination Model</a></li>
+      <li class="toc-item"><a href="#cost-summary">Cost Summary</a></li>
+      <li class="toc-item"><a href="#assumptions">Assumptions & Dependencies</a></li>
+      <li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+      <li class="toc-item"><a href="#appendix-a">Appendix A: Role Details</a></li>
+      <li class="toc-item"><a href="#appendix-b">Appendix B: LLM Tuning</a></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+    <!-- Executive Summary -->
+    <div class="section" id="executive-summary">
+      <h1>AEO Optimization Service: Delivery Plan</h1>
+      <div class="meta" style="margin-bottom: 24px;">Version 4.1 | Executive Advisory | December 16, 2025</div>
+      <h2>Executive Summary</h2>
+      <p>Signet has selected <strong>Option C: Full Automation</strong> with an amended staffing model. Signet will assume the AEO Strategist and Content Strategist roles internally, with Accenture retaining responsibility for technical implementation, LLM tuning, and delivery leadership.</p>
+
+      <h3>Key Decisions</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Decision</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Option C selected</td>
+            <td>Full automation pipeline with Bedrock Agent</td>
+          </tr>
+          <tr>
+            <td>AEO Strategist → Signet</td>
+            <td>Client provides prompt taxonomy, data analysis expertise</td>
+          </tr>
+          <tr>
+            <td>Content Strategist → Signet</td>
+            <td>Client provides content optimization expertise</td>
+          </tr>
+          <tr>
+            <td>LLM tuning retained by Accenture</td>
+            <td>AI Engineer handles agent prompt engineering</td>
+          </tr>
+          <tr>
+            <td>Start date: January 5, 2025</td>
+            <td>12-week delivery through March 28, 2025</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Investment Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Party</th>
+            <th style="text-align: right;">Hours</th>
+            <th>Investment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Accenture</strong></td>
+            <td style="text-align: right;">608</td>
+            <td>$237,716</td>
+          </tr>
+          <tr>
+            <td><strong>Signet</strong> (internal)</td>
+            <td style="text-align: right;">~372</td>
+            <td>Internal allocation</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Total Effort</strong></td>
+            <td style="text-align: right;"><strong>~980</strong></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Solution Overview -->
+    <div class="section page-break" id="solution-overview">
+      <h2>Solution Overview</h2>
+
+      <h3>Architecture</h3>
+      <p>A fully automated pipeline that ingests Profound data via API, stores it in a vector database, and uses a Bedrock Agent with RAG capabilities to generate context-aware recommendations.</p>
+
+      <div class="code-block">Profound → ESI Team → AWS Environment → Bedrock Agent → Infoverity → PIM
+           (ingest)   (process/RAG)    (recommend)      (execute)</div>
+
+      <h4>Integration Boundaries</h4>
+      <ul>
+        <li><strong>Inbound</strong>: ESI Team delivers Profound data to AWS S3</li>
+        <li><strong>Outbound</strong>: Recommendations exported via API to Infoverity for PIM updates</li>
+      </ul>
+
+      <h3>Technology Stack</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Technology</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data Ingestion</td>
+            <td>Lambda + EventBridge</td>
+            <td>Pull from Profound API weekly</td>
+          </tr>
+          <tr>
+            <td>Data Lake</td>
+            <td>S3</td>
+            <td>Raw and processed data storage</td>
+          </tr>
+          <tr>
+            <td>Vector Store</td>
+            <td>OpenSearch</td>
+            <td>Semantic search for RAG</td>
+          </tr>
+          <tr>
+            <td>Embeddings</td>
+            <td>Bedrock Titan</td>
+            <td>Convert text to vectors</td>
+          </tr>
+          <tr>
+            <td>AI Agent</td>
+            <td>Bedrock Agent (Claude)</td>
+            <td>Multi-tool recommendation engine</td>
+          </tr>
+          <tr>
+            <td>Measurement</td>
+            <td>Lambda</td>
+            <td>SOV delta calculations</td>
+          </tr>
+          <tr>
+            <td>Integration</td>
+            <td>API Gateway</td>
+            <td>PIM API integration</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RACI Matrix -->
+    <div class="section page-break" id="raci-matrix">
+      <h2>RACI Matrix</h2>
+
+      <div class="info-box">
+        <strong>Legend:</strong> R = Responsible (does the work) | A = Accountable (owns the outcome) | C = Consulted (provides input) | I = Informed (kept in loop)
+      </div>
+
+      <h3>Accenture Responsibilities</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Accenture</th>
+            <th>Signet IT</th>
+            <th>ESI</th>
+            <th>Infoverity</th>
+            <th>Profound</th>
+            <th>ecom merch/SEO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>E2E Infrastructure Design</td>
+            <td>C</td>
+            <td>R</td>
+            <td></td>
+            <td>C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Infrastructure Procurement</td>
+            <td>C</td>
+            <td>R/A</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>OpenSearch Setup</td>
+            <td>R</td>
+            <td>A</td>
+            <td></td>
+            <td>C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>S3 Data Buckets Setup</td>
+            <td>R</td>
+            <td>A</td>
+            <td></td>
+            <td>C</td>
+            <td>C</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>API Router Development</td>
+            <td>R</td>
+            <td>A</td>
+            <td></td>
+            <td>C</td>
+            <td>C</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Bedrock Agent Build</td>
+            <td>R</td>
+            <td>A</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>LLM Prompt Tuning</td>
+            <td>R</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>C</td>
+            <td>C</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Signet Team Responsibilities</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Accenture</th>
+            <th>Signet IT</th>
+            <th>ESI</th>
+            <th>Infoverity</th>
+            <th>Profound</th>
+            <th>ecom merch/SEO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Outbound API Schema Definition</td>
+            <td>C</td>
+            <td>A</td>
+            <td></td>
+            <td>R</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Profound Integration Design/Build</td>
+            <td>C</td>
+            <td>A</td>
+            <td>R</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Connection to Signet Systems</td>
+            <td>C</td>
+            <td>R/A</td>
+            <td></td>
+            <td>C</td>
+            <td>C</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>LLM Visibility Content Strategy</td>
+            <td>C</td>
+            <td></td>
+            <td></td>
+            <td>C</td>
+            <td>C</td>
+            <td>R/A</td>
+          </tr>
+          <tr>
+            <td>Profound Analytics Dashboard</td>
+            <td>C</td>
+            <td>I</td>
+            <td></td>
+            <td></td>
+            <td>R</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td>Integration with PIM Workflow</td>
+            <td>C</td>
+            <td>C</td>
+            <td></td>
+            <td>R</td>
+            <td></td>
+            <td>I</td>
+          </tr>
+          <tr>
+            <td>Compliance & Human QA</td>
+            <td>I</td>
+            <td>I</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>R/A</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Infoverity PIM Activities (Signet Internal)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Accenture</th>
+            <th>Signet IT</th>
+            <th>ESI</th>
+            <th>Infoverity</th>
+            <th>ecom merch/SEO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Update P360</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Add AEO Variant Status</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Update ActiveVOS Workflow</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Look for products in AEO status</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Call Prodevix with AEO flag</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Update Prodevix (AEO flag true)</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Call AEO Service</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+          <tr><td>Use results in description gen</td><td>I</td><td>C</td><td></td><td>R/A</td><td>I</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Project Governance</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Lead Arch</th>
+            <th>AI Eng</th>
+            <th>DL/PM</th>
+            <th>Signet PM</th>
+            <th>ecom merch/SEO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Technical Coordination</td>
+            <td>A/R</td>
+            <td>C</td>
+            <td>I</td>
+            <td>I</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Client Coordination</td>
+            <td>C</td>
+            <td>I</td>
+            <td>C</td>
+            <td>A/R</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Risk Management</td>
+            <td>C</td>
+            <td>I</td>
+            <td>A/R</td>
+            <td>C</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Status Reporting</td>
+            <td>C</td>
+            <td>I</td>
+            <td>R</td>
+            <td>A</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Pilot Readout</td>
+            <td>C</td>
+            <td>C</td>
+            <td>A/R</td>
+            <td>C</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td>Post Go-Live Success Criteria</td>
+            <td>C</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>A</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Ownership Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Owner</th>
+            <th>Responsibilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Accenture</strong></td>
+            <td>OpenSearch, S3, API Router, Bedrock Agent, LLM Tuning, Project Governance</td>
+          </tr>
+          <tr>
+            <td><strong>Signet IT</strong></td>
+            <td>Infrastructure procurement, E2E design accountability, system connections</td>
+          </tr>
+          <tr>
+            <td><strong>ESI</strong></td>
+            <td>Profound integration design and build</td>
+          </tr>
+          <tr>
+            <td><strong>Infoverity</strong></td>
+            <td>API schema definition, PIM workflow, P360 updates, Prodevix integration</td>
+          </tr>
+          <tr>
+            <td><strong>Profound</strong></td>
+            <td>Analytics dashboard, visibility data</td>
+          </tr>
+          <tr>
+            <td><strong>ecom merch/SEO</strong></td>
+            <td>Content strategy, compliance QA, success criteria</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Staffing Plan -->
+    <div class="section page-break" id="staffing-plan">
+      <h2>Staffing Plan</h2>
+
+      <h3>Accenture Team</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th style="text-align: right;">Hours</th>
+            <th style="text-align: right;">Rate</th>
+            <th style="text-align: right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lead Architect</td>
+            <td style="text-align: right;">284</td>
+            <td style="text-align: right;">$382</td>
+            <td style="text-align: right;">$108,488</td>
+          </tr>
+          <tr>
+            <td>AI Engineer</td>
+            <td style="text-align: right;">184</td>
+            <td style="text-align: right;">$382</td>
+            <td style="text-align: right;">$70,288</td>
+          </tr>
+          <tr>
+            <td>DL/PM</td>
+            <td style="text-align: right;">140</td>
+            <td style="text-align: right;">$421</td>
+            <td style="text-align: right;">$58,940</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Total</strong></td>
+            <td style="text-align: right;"><strong>608</strong></td>
+            <td style="text-align: right;"></td>
+            <td style="text-align: right;"><strong>$237,716</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Signet Team (Internal)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th style="text-align: right;">Est. Hours</th>
+            <th>Weeks Active</th>
+            <th>Responsibilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AEO/Data Strategist</td>
+            <td style="text-align: right;">~156</td>
+            <td>3-12</td>
+            <td>Prompt taxonomy, Profound config, SOV analysis</td>
+          </tr>
+          <tr>
+            <td>Content Strategist</td>
+            <td style="text-align: right;">~126</td>
+            <td>2-12</td>
+            <td>Content gap ID, recommendation review, PIM coord</td>
+          </tr>
+          <tr>
+            <td>Signet PM</td>
+            <td style="text-align: right;">~90</td>
+            <td>1-12</td>
+            <td>Coordinate strategists, joint governance</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Total</strong></td>
+            <td style="text-align: right;"><strong>~372</strong></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Weekly Staffing Allocation</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Dates</th>
+            <th style="text-align: right;">Lead Arch</th>
+            <th style="text-align: right;">AI Eng</th>
+            <th style="text-align: right;">DL/PM</th>
+            <th style="text-align: right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Jan 5-10</td><td style="text-align: right;">32</td><td style="text-align: right;">-</td><td style="text-align: right;">14</td><td style="text-align: right;">46</td></tr>
+          <tr><td>2</td><td>Jan 13-17</td><td style="text-align: right;">32</td><td style="text-align: right;">-</td><td style="text-align: right;">10</td><td style="text-align: right;">42</td></tr>
+          <tr><td>3</td><td>Jan 20-24</td><td style="text-align: right;">24</td><td style="text-align: right;">16</td><td style="text-align: right;">10</td><td style="text-align: right;">50</td></tr>
+          <tr><td>4</td><td>Jan 27-31</td><td style="text-align: right;">24</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">58</td></tr>
+          <tr><td>5</td><td>Feb 3-7</td><td style="text-align: right;">24</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">58</td></tr>
+          <tr><td>6</td><td>Feb 10-14</td><td style="text-align: right;">24</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">58</td></tr>
+          <tr><td>7</td><td>Feb 17-21</td><td style="text-align: right;">24</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">58</td></tr>
+          <tr><td>8</td><td>Feb 24-28</td><td style="text-align: right;">24</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">58</td></tr>
+          <tr><td>9</td><td>Mar 3-7</td><td style="text-align: right;">20</td><td style="text-align: right;">24</td><td style="text-align: right;">10</td><td style="text-align: right;">54</td></tr>
+          <tr><td>10</td><td>Mar 10-14</td><td style="text-align: right;">20</td><td style="text-align: right;">16</td><td style="text-align: right;">14</td><td style="text-align: right;">50</td></tr>
+          <tr><td>11</td><td>Mar 17-21</td><td style="text-align: right;">18</td><td style="text-align: right;">8</td><td style="text-align: right;">16</td><td style="text-align: right;">42</td></tr>
+          <tr><td>12</td><td>Mar 24-28</td><td style="text-align: right;">18</td><td style="text-align: right;">-</td><td style="text-align: right;">16</td><td style="text-align: right;">34</td></tr>
+          <tr class="highlight-row">
+            <td><strong>Total</strong></td>
+            <td></td>
+            <td style="text-align: right;"><strong>284</strong></td>
+            <td style="text-align: right;"><strong>184</strong></td>
+            <td style="text-align: right;"><strong>140</strong></td>
+            <td style="text-align: right;"><strong>608</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Staffing Visualization</h3>
+      <div class="code-block">Week:     1    2    3    4    5    6    7    8    9   10   11   12
+          |    |    |    |    |    |    |    |    |    |    |    |
+Lead Arch ████████████████████████████████████████████████████████  284 hrs (full)
+          32   32   24   24   24   24   24   24   20   20   18   18
+
+AI Eng              ████████████████████████████████████████       184 hrs (Wk 3-11)
+                    16   24   24   24   24   24   24   16    8
+
+DL/PM     ████████████████████████████████████████████████████████  140 hrs (governance)
+          14   10   10   10   10   10   10   10   10   14   16   16
+
+Total     46   42   50   58   58   58   58   58   54   50   42   34  = 608 hrs</div>
+    </div>
+
+    <!-- Delivery Timeline -->
+    <div class="section page-break" id="delivery-timeline">
+      <h2>Delivery Timeline</h2>
+
+      <div class="stat-grid">
+        <div class="stat-card secondary">
+          <div class="stat-value">Jan 5</div>
+          <div class="stat-label">Start Date</div>
+        </div>
+        <div class="stat-card secondary">
+          <div class="stat-value">Mar 28</div>
+          <div class="stat-label">End Date</div>
+        </div>
+        <div class="stat-card secondary">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Weeks Duration</div>
+        </div>
+      </div>
+
+      <h3>Phase Overview</h3>
+      <div class="code-block">Week:  1    2    3    4    5    6    7    8    9   10   11   12
+       |    |    |    |    |    |    |    |    |    |    |    |
+       Jan 5     Jan 19    Feb 2     Feb 16    Mar 2     Mar 16   Mar 28
+       |    |    |    |    |    |    |    |    |    |    |    |
+Design ========                                                 Lead Arch (64 hrs)
+Build       ====================================                AI Eng + Arch (344 hrs)
+Coord  ==================================================       Lead Arch ongoing
+Govern ====  ====  ====  ====  ====  ====  ====  ====  ====     DL/PM checkpoints
+Pilot                                        ==================== Joint (3 weeks)
+       |    |    |    |    |    |    |    |    |    |    |    |</div>
+
+      <h3>Phase 1: Foundation (Weeks 1-2)</h3>
+      <p><span class="badge badge-info">Jan 5 - Jan 17</span></p>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Owner</th><th style="text-align: right;">Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solution architecture finalization</td><td>Lead Architect</td><td style="text-align: right;">40</td></tr>
+          <tr><td>Inbound data pipeline design (S3 → OpenSearch)</td><td>Lead Architect</td><td style="text-align: right;">24</td></tr>
+          <tr><td>Project kickoff & governance</td><td>DL/PM</td><td style="text-align: right;">24</td></tr>
+          <tr><td>Business context workshops</td><td>Signet</td><td style="text-align: right;">-</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 2: Data Pipeline (Weeks 3-5)</h3>
+      <p><span class="badge badge-info">Jan 20 - Feb 7</span></p>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Owner</th><th style="text-align: right;">Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lambda ingestion functions</td><td>AI Engineer</td><td style="text-align: right;">40</td></tr>
+          <tr><td>S3 data lake structure</td><td>AI Engineer</td><td style="text-align: right;">16</td></tr>
+          <tr><td>OpenSearch vector store setup</td><td>Lead Architect</td><td style="text-align: right;">32</td></tr>
+          <tr><td>Titan embeddings integration</td><td>AI Engineer</td><td style="text-align: right;">24</td></tr>
+          <tr><td>Profound prompt taxonomy (400)</td><td>Signet AEO Strategist</td><td style="text-align: right;">-</td></tr>
+          <tr><td>Project coordination</td><td>DL/PM</td><td style="text-align: right;">30</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 3: AI Agent Development (Weeks 6-9)</h3>
+      <p><span class="badge badge-info">Feb 10 - Mar 7</span></p>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Owner</th><th style="text-align: right;">Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bedrock Agent implementation</td><td>AI Engineer</td><td style="text-align: right;">48</td></tr>
+          <tr><td>RAG retrieval chain</td><td>Lead Architect</td><td style="text-align: right;">40</td></tr>
+          <tr><td>LLM prompt tuning & optimization</td><td>AI Engineer</td><td style="text-align: right;">32</td></tr>
+          <tr><td>Tool definitions (query, analyze, recommend)</td><td>Lead Architect</td><td style="text-align: right;">32</td></tr>
+          <tr><td>API Gateway setup</td><td>AI Engineer</td><td style="text-align: right;">16</td></tr>
+          <tr><td>Content strategy alignment</td><td>Signet Content Strategist</td><td style="text-align: right;">-</td></tr>
+          <tr><td>Project coordination</td><td>DL/PM</td><td style="text-align: right;">40</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 4: Integration & Testing (Weeks 8-10)</h3>
+      <p><span class="badge badge-info">Feb 24 - Mar 14</span></p>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Owner</th><th style="text-align: right;">Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SOV delta calculations</td><td>AI Engineer</td><td style="text-align: right;">24</td></tr>
+          <tr><td>End-to-end testing</td><td>Lead Architect</td><td style="text-align: right;">40</td></tr>
+          <tr><td>Integration validation</td><td>DL/PM</td><td style="text-align: right;">12</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 5: Pilot Execution (Weeks 10-12)</h3>
+      <p><span class="badge badge-info">Mar 3 - Mar 28</span></p>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Owner</th><th style="text-align: right;">Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pilot monitoring & tuning</td><td>Lead Architect</td><td style="text-align: right;">32</td></tr>
+          <tr><td>Agent refinement</td><td>AI Engineer</td><td style="text-align: right;">8</td></tr>
+          <tr><td>Pilot support & coordination</td><td>DL/PM</td><td style="text-align: right;">40</td></tr>
+          <tr><td>Recommendation review</td><td>Signet Content Strategist</td><td style="text-align: right;">-</td></tr>
+          <tr><td>PIM updates</td><td>Signet</td><td style="text-align: right;">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Deliverables -->
+    <div class="section page-break" id="deliverables">
+      <h2>Deliverables</h2>
+
+      <h3>Accenture Deliverables</h3>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Description</th><th>Delivery</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solution Architecture</td><td>High-level design, key decisions</td><td><span class="badge badge-primary">Week 2</span></td></tr>
+          <tr><td>Data Pipeline</td><td>Automated Profound → S3 → OpenSearch</td><td><span class="badge badge-primary">Week 5</span></td></tr>
+          <tr><td>Bedrock Agent</td><td>RAG-enabled recommendation engine</td><td><span class="badge badge-primary">Week 9</span></td></tr>
+          <tr><td>Tuned Agent Prompts</td><td>Optimized system prompts for recommendation quality</td><td><span class="badge badge-primary">Week 9</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Signet Deliverables</h3>
+      <table>
+        <thead>
+          <tr><th>Deliverable</th><th>Description</th><th>Delivery</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Profound Configuration</td><td>400 prompts, taxonomy, competitor list</td><td><span class="badge badge-warning">Week 5</span></td></tr>
+          <tr><td>Content Strategy Input</td><td>Optimization priorities, brand guidelines</td><td><span class="badge badge-warning">Week 4</span></td></tr>
+          <tr><td>PIM Access/Credentials</td><td>Integration requirements</td><td><span class="badge badge-warning">Week 1</span></td></tr>
+          <tr><td>Recommendation Reviews</td><td>Weekly review of AI-generated content</td><td><span class="badge badge-warning">Weeks 10-12</span></td></tr>
+          <tr><td>PIM Updates</td><td>Execute approved recommendations</td><td><span class="badge badge-warning">Weeks 10-12</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Coordination Model -->
+    <div class="section" id="coordination-model">
+      <h2>Coordination Model</h2>
+      <table>
+        <thead>
+          <tr><th>Touchpoint</th><th>Frequency</th><th>Owner</th><th>Participants</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Technical standup</td><td>Daily (15 min)</td><td>Lead Architect</td><td>AI Engineer</td></tr>
+          <tr><td>Cross-team sync</td><td>2x/week</td><td>Lead Architect</td><td>Signet Strategists</td></tr>
+          <tr><td>Governance checkpoint</td><td>Weekly</td><td>DL/PM</td><td>All + Signet PM</td></tr>
+          <tr><td>Executive status</td><td>Bi-weekly</td><td>Signet PM + DL/PM</td><td>Leadership</td></tr>
+          <tr><td>Risk review</td><td>Weekly</td><td>DL/PM</td><td>Lead Architect</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cost Summary -->
+    <div class="section" id="cost-summary">
+      <h2>Cost Summary</h2>
+
+      <h3>Accenture Professional Services</h3>
+      <table>
+        <thead>
+          <tr><th>Role</th><th style="text-align: right;">Hours</th><th style="text-align: right;">Rate</th><th style="text-align: right;">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lead Architect</td><td style="text-align: right;">284</td><td style="text-align: right;">$382</td><td style="text-align: right;">$108,488</td></tr>
+          <tr><td>AI Engineer</td><td style="text-align: right;">184</td><td style="text-align: right;">$382</td><td style="text-align: right;">$70,288</td></tr>
+          <tr><td>DL/PM</td><td style="text-align: right;">140</td><td style="text-align: right;">$421</td><td style="text-align: right;">$58,940</td></tr>
+          <tr class="highlight-row"><td><strong>Total</strong></td><td style="text-align: right;"><strong>608</strong></td><td style="text-align: right;"></td><td style="text-align: right;"><strong>$237,716</strong></td></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- Assumptions & Dependencies -->
+    <div class="section" id="assumptions">
+      <h2>Assumptions & Dependencies</h2>
+
+      <h3>Assumptions</h3>
+      <ol>
+        <li>Signet provides AEO Strategist and Content Strategist resources by Week 2</li>
+        <li>Signet provides a PM or Project Lead (~0.5 FTE) to coordinate their resources by Week 1</li>
+        <li>Profound API access confirmed and stable</li>
+        <li>AWS account and permissions available Week 1</li>
+        <li>PIM integration scope limited to API specifications (no custom build)</li>
+      </ol>
+
+      <h3>Dependencies</h3>
+      <table>
+        <thead>
+          <tr><th>Dependency</th><th>Owner</th><th>Required By</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Profound API credentials</td><td>Signet</td><td>Week 1</td></tr>
+          <tr><td>AWS account access</td><td>Signet</td><td>Week 1</td></tr>
+          <tr><td>Signet PM assignment</td><td>Signet</td><td>Week 1</td></tr>
+          <tr><td>PIM API documentation</td><td>Signet</td><td>Week 3</td></tr>
+          <tr><td>Signet strategist onboarding</td><td>Signet</td><td>Week 2</td></tr>
+          <tr><td>Brand/content guidelines</td><td>Signet</td><td>Week 4</td></tr>
+          <tr><td>ESI Team data delivery process</td><td>Signet (ESI)</td><td>Week 3</td></tr>
+          <tr><td>Infoverity API schema/access (for integration build)</td><td>Signet (Infoverity)</td><td>Week 6</td></tr>
+        </tbody>
+      </table>
+
+      <h3>External Team Dependencies</h3>
+      <table>
+        <thead>
+          <tr><th>Team</th><th>Responsibility</th><th>Integration Point</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ESI Team</strong></td><td>Deliver Profound data to AWS S3</td><td>Inbound data pipeline</td></tr>
+          <tr><td><strong>Infoverity</strong></td><td>Consume recommendation output for PIM updates</td><td>Outbound API integration</td></tr>
+        </tbody>
+      </table>
+
+      <blockquote>
+        <strong>Note:</strong> ESI and Infoverity are Signet internal teams. Accenture will design integration specifications; Signet teams execute their respective integrations.
+      </blockquote>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="section" id="next-steps">
+      <h2>Next Steps</h2>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>Owner</th><th>Due Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SOW draft completion</td><td>Accenture DL</td><td>December 16, 2025</td></tr>
+          <tr><td>Confirm Signet PM availability</td><td>Signet</td><td>December 18, 2025</td></tr>
+          <tr><td>Signet strategist identification</td><td>Signet</td><td>December 20, 2025</td></tr>
+          <tr><td>Contract execution</td><td>Both</td><td>December 27, 2025</td></tr>
+          <tr><td>AWS account provisioning</td><td>Signet</td><td>January 3, 2025</td></tr>
+          <tr><td>Kickoff meeting</td><td>Both</td><td>January 5, 2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Appendix A: Role Responsibilities -->
+    <div class="section page-break" id="appendix-a">
+      <h2>Appendix A: Role Responsibilities Detail</h2>
+
+      <h3>Lead Architect (Accenture)</h3>
+      <ul>
+        <li>High-level solution architecture and key decisions</li>
+        <li>OpenSearch vector store design and implementation</li>
+        <li>RAG retrieval chain architecture</li>
+        <li>Tool definitions for Bedrock Agent</li>
+        <li>Technical coordination (standups, cross-team sync)</li>
+        <li>End-to-end testing and pilot monitoring</li>
+      </ul>
+
+      <h3>AI Engineer (Accenture)</h3>
+      <ul>
+        <li>AWS infrastructure implementation (Lambda, S3, API Gateway)</li>
+        <li>Bedrock Agent development and deployment</li>
+        <li>Titan embeddings integration</li>
+        <li>LLM/Agent prompt engineering and tuning</li>
+        <li>Data pipeline development</li>
+        <li>Agent refinement during pilot</li>
+      </ul>
+
+      <h3>DL/PM (Accenture)</h3>
+      <ul>
+        <li>Project governance and status reporting</li>
+        <li>Risk and issue management</li>
+        <li>Executive stakeholder coordination</li>
+        <li>SOW and contract management</li>
+        <li>Resource coordination</li>
+        <li>Pilot support and coordination</li>
+      </ul>
+
+      <h3>Signet PM (Signet)</h3>
+      <ul>
+        <li>Coordinate AEO and Content Strategist resources</li>
+        <li>Client-side status reporting</li>
+        <li>Interface with Accenture DL/PM on governance</li>
+        <li>Escalate Signet-side risks and issues</li>
+      </ul>
+
+      <h3>AEO/Data Strategist (Signet)</h3>
+      <ul>
+        <li>Profound prompt taxonomy design (400 prompts)</li>
+        <li>Competitor identification and tracking</li>
+        <li>SOV analysis and interpretation</li>
+        <li>Data quality validation</li>
+        <li>Business context for AI recommendations</li>
+      </ul>
+
+      <h3>Content Strategist (Signet)</h3>
+      <ul>
+        <li>Content gap prioritization</li>
+        <li>Brand voice and guidelines</li>
+        <li>Recommendation review and approval</li>
+        <li>PIM update coordination</li>
+        <li>Optimization effectiveness assessment</li>
+      </ul>
+    </div>
+
+    <!-- Appendix B: LLM Tuning Scope -->
+    <div class="section page-break" id="appendix-b">
+      <h2>Appendix B: LLM Tuning Scope</h2>
+
+      <p>With strategist roles moving to Signet, the following LLM tuning responsibilities remain with Accenture (AI Engineer):</p>
+
+      <table>
+        <thead>
+          <tr><th>Tuning Activity</th><th style="text-align: right;">Hours</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>System prompt design</td><td style="text-align: right;">12</td><td>Core agent persona and behavior definition</td></tr>
+          <tr><td>Recommendation prompt templates</td><td style="text-align: right;">12</td><td>Templates for content optimization suggestions</td></tr>
+          <tr><td>RAG retrieval tuning</td><td style="text-align: right;">8</td><td>Optimize context retrieval for relevance</td></tr>
+          <tr><td>Output format standardization</td><td style="text-align: right;">4</td><td>Consistent recommendation structure</td></tr>
+          <tr><td>Quality evaluation loops</td><td style="text-align: right;">4</td><td>Iterative improvement based on strategist feedback</td></tr>
+          <tr class="highlight-row"><td><strong>Total</strong></td><td style="text-align: right;"><strong>40</strong></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Signet Strategists Will Provide</h3>
+      <ul>
+        <li>Domain expertise for prompt refinement</li>
+        <li>Feedback on recommendation quality</li>
+        <li>Acceptance criteria for AI outputs</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="section" style="text-align: center; color: var(--color-text-secondary);">
+      <p><strong>Document Version</strong>: 4.1 | <strong>Prepared By</strong>: Accenture Delivery Team | <strong>Status</strong>: Final</p>
+    </div>
+  </main>
+</body>
+</html>

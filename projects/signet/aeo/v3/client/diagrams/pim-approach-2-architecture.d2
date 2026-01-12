@@ -1,0 +1,196 @@
+direction: right
+
+title: |md
+  # Approach 2: Tag-Based Mapping
+  Deterministic Lookup via DynamoDB
+| {
+  near: top-center
+  shape: text
+  style.font-size: 18
+}
+
+# External Systems Zone
+external: EXTERNAL SYSTEMS {
+  style.fill: "#f9fafb"
+  style.stroke: "#6b7280"
+  style.stroke-dash: 5
+
+  profound: {
+    label: "Profound\nVisibility API"
+    style.fill: "#f5f3ff"
+    style.stroke: "#7c3aed"
+    style.stroke-width: 2
+    style.font-color: "#5b21b6"
+  }
+
+  client: {
+    label: "Client\nMapping Admin"
+    style.fill: "#ecfdf5"
+    style.stroke: "#10b981"
+    style.stroke-width: 2
+    style.font-color: "#059669"
+  }
+
+  pim: {
+    label: "Infoverity PIM\n(Read/Write)"
+    style.fill: "#eff6ff"
+    style.stroke: "#2563eb"
+    style.stroke-width: 2
+    style.font-color: "#1d4ed8"
+  }
+}
+
+# AWS Cloud Zone
+aws: AWS CLOUD {
+  style.fill: "#fff7ed"
+  style.stroke: "#f97316"
+  style.stroke-width: 2
+
+  # Data Ingestion Layer
+  ingestion: Data Ingestion {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    s3: {
+      label: "S3"
+      style.fill: "#f0fdf4"
+      style.stroke: "#16a34a"
+      style.stroke-width: 2
+    }
+
+    lambda_ingest: {
+      label: "Ingestion\nLambda"
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+
+    opensearch: {
+      label: "OpenSearch\n(Profound Only)"
+      style.fill: "#f5f3ff"
+      style.stroke: "#7c3aed"
+      style.stroke-width: 2
+    }
+  }
+
+  # Mapping Layer
+  mapping: Tag Mapping Layer {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    dynamodb: {
+      label: "DynamoDB\nMapping Table"
+      style.fill: "#eff6ff"
+      style.stroke: "#2563eb"
+      style.stroke-width: 2
+    }
+
+    lookup: {
+      label: "Lookup\nLambda"
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+
+    pim_query: {
+      label: "PIM Query\nLambda"
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+  }
+
+  # Content Generation Layer
+  content: Content Generation {
+    style.fill: "#ffffff"
+    style.stroke: "#d1d5db"
+
+    bedrock: {
+      label: "Bedrock\nAgent"
+      style.fill: "#7c3aed"
+      style.stroke: "#5b21b6"
+      style.stroke-width: 2
+      style.font-color: white
+    }
+
+    pim_update: {
+      label: "PIM Update\nLambda"
+      style.fill: "#fff7ed"
+      style.stroke: "#f97316"
+      style.stroke-width: 2
+    }
+  }
+}
+
+# Key Feature Box
+key: |md
+  **Key Features**
+  - Deterministic matching
+  - No SKU data in AWS
+  - Simple & debuggable
+  - Client-controlled
+  - Lowest cost
+| {
+  near: bottom-right
+  style.fill: "#ecfdf5"
+  style.stroke: "#10b981"
+  style.stroke-width: 2
+  style.font-size: 11
+}
+
+# Connections
+external.profound -> aws.ingestion.s3: "Visibility Data" {
+  style.stroke: "#7c3aed"
+  style.stroke-width: 2
+}
+
+external.client -> aws.mapping.dynamodb: "Mapping Updates" {
+  style.stroke: "#10b981"
+  style.stroke-width: 2
+  style.stroke-dash: 3
+}
+
+aws.ingestion.s3 -> aws.ingestion.lambda_ingest: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.ingestion.lambda_ingest -> aws.ingestion.opensearch: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.mapping.lookup -> aws.mapping.dynamodb: "Tag Lookup" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}
+
+aws.mapping.dynamodb -> aws.mapping.pim_query: "Category ID" {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.mapping.pim_query -> external.pim: "Query by Category" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}
+
+external.pim -> aws.mapping.pim_query: "SKU List" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}
+
+aws.mapping.pim_query -> aws.content.bedrock: "Matched SKUs" {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.content.bedrock -> aws.content.pim_update: {
+  style.stroke: "#6b7280"
+  style.stroke-width: 2
+}
+
+aws.content.pim_update -> external.pim: "REST API" {
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+}

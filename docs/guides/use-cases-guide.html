@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>use-cases-guide</title>
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #2a2a2a;
+            --success: #22c55e;
+            --warning: #eab308;
+            --code-bg: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .doc-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .version {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        main {
+            padding: 48px 0;
+        }
+
+        .content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        .content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .content ul, .content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .content li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .content code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+            font-size: 0.875em;
+        }
+
+        .content pre {
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            background: transparent;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9375rem;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 24px 16px;
+            }
+
+            .content h1 {
+                font-size: 1.75rem;
+            }
+
+            .content h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div>
+                <div class="doc-type">User Guide</div>
+                <h1 class="title">use-cases-guide</h1>
+            </div>
+            <span class="version">v1.0.0</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content">
+            <h1>Signal Forge Use Cases Guide</h1>
+<p>Learn how to transform rough notes, meeting recaps, and research into polished executive presentations, technical documentation, and thought leadership content using Signal Forge.</p>
+<h2>Quick Start</h2>
+<p>Generate your first document in 60 seconds:</p>
+<pre><code class="language-bash"># 1. Create a simple input file
+echo &quot;# Meeting Notes
+- Discussed cloud migration strategy
+- Budget approved: $2M
+- Timeline: 6 months
+- Key risk: team capacity&quot; &gt; notes.md
+
+# 2. Generate an executive brief
+forge generate brief --input notes.md --format pdf
+
+# 3. Find your output
+ls output/brief_*.pdf
+</code></pre>
+<hr>
+<h2>Core Concepts</h2>
+<h3>Input Files</h3>
+<p>Signal Forge works with markdown files containing your raw content—meeting notes, observations, technical decisions, or research findings.</p>
+<h3>Document Types</h3>
+<p>Signal Forge generates five document types:</p>
+<ul>
+<li><strong>Brief</strong>: Executive summaries and strategic documents</li>
+<li><strong>Deck</strong>: Presentation slide decks</li>
+<li><strong>Architecture</strong>: Technical architecture documentation</li>
+<li><strong>ADR</strong>: Architecture Decision Records</li>
+<li><strong>POV</strong>: Thought leadership and opinion pieces</li>
+</ul>
+<h3>Agentic Workflows</h3>
+<p>Add intelligence to generation with:</p>
+<ul>
+<li><code>--research</code>: Pull current web context</li>
+<li><code>--iterate</code>: Automatically refine until quality thresholds met</li>
+<li><code>--memory</code>: Maintain context across sessions</li>
+</ul>
+<hr>
+<h2>Executive Presentations</h2>
+<h3>Use Case 1: Client Strategy Deck from Meeting Notes</h3>
+<p><strong>What You&#39;ll Create</strong>: A polished 10-15 slide presentation from rough meeting notes.</p>
+<p><strong>Scenario</strong>: You&#39;ve completed a strategy session and need a follow-up deck for stakeholders.</p>
+<h4>Step 1: Prepare Your Input</h4>
+<p>Create <code>meeting-recap.md</code>:</p>
+<pre><code class="language-markdown"># Client Strategy Session - TechCorp
+Date: November 25, 2024
+Attendees: Sarah (CEO), Mike (CTO), Jennifer (Product)
+
+## Key Discussion Points
+- Current platform is aging, 7 years old
+- Migration to cloud discussed but concerns about cost
+- Customer complaints about slow performance increasing
+- Competition launching new features quarterly
+- Budget approved for Q1 modernization
+
+## Decisions Made
+- Phased migration approach preferred
+- Start with customer-facing systems
+- Need ROI analysis before full commitment
+
+## Open Questions
+- Build vs buy for new commerce engine?
+- Timeline expectations from board?
+- Staffing for parallel operations?
+</code></pre>
+<h4>Step 2: Generate the Deck</h4>
+<pre><code class="language-bash">forge generate deck --input meeting-recap.md --format pptx,html
+</code></pre>
+<h4>Step 3: Review Output</h4>
+<p>Expected output structure:</p>
+<table>
+<thead>
+<tr>
+<th>Slide</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Executive Summary</td>
+</tr>
+<tr>
+<td>2-3</td>
+<td>Current State Assessment</td>
+</tr>
+<tr>
+<td>4-6</td>
+<td>Proposed Migration Approach</td>
+</tr>
+<tr>
+<td>7-9</td>
+<td>Phased Timeline &amp; Milestones</td>
+</tr>
+<tr>
+<td>10-11</td>
+<td>Investment Framework &amp; ROI</td>
+</tr>
+<tr>
+<td>12-13</td>
+<td>Risk Considerations</td>
+</tr>
+<tr>
+<td>14-15</td>
+<td>Recommended Next Steps</td>
+</tr>
+</tbody></table>
+<p><strong>Output Location</strong>:</p>
+<pre><code>output/
+├── deck_meeting-recap_20241125_143022.pptx
+└── deck_meeting-recap_20241125_143022.html
+</code></pre>
+<hr>
+<h3>Use Case 2: Board-Ready Executive Brief</h3>
+<p><strong>What You&#39;ll Create</strong>: A 2-page executive summary for board review.</p>
+<p><strong>Scenario</strong>: The CEO needs a concise brief summarizing a major initiative for the board.</p>
+<h4>Step 1: Create Context File</h4>
+<p>Create <code>transformation-context.md</code>:</p>
+<pre><code class="language-markdown"># Digital Transformation Initiative Summary
+
+## Initiative Overview
+18-month program to modernize core systems
+
+## Investment
+$12M total - $4M in FY24, $8M in FY25
+
+## Business Case
+- 40% reduction in operational costs
+- 3x faster time-to-market
+- Improved customer satisfaction (NPS +20)
+
+## Key Milestones
+- Phase 1 (Q1-Q2): Foundation
+- Phase 2 (Q3-Q4): Core systems
+- Phase 3 (Q1-Q2 Y2): Integration
+
+## Risks
+- Resource constraints
+- Change management
+- Technical debt
+
+## Current Status
+On track - 2 of 6 milestones complete
+</code></pre>
+<h4>Step 2: Generate Brief</h4>
+<pre><code class="language-bash">forge generate brief --input transformation-context.md --format word,pdf
+</code></pre>
+<h4>Expected Output Structure</h4>
+<p><strong>Page 1</strong>:</p>
+<ul>
+<li>Executive Summary (outcome-focused)</li>
+<li>Investment &amp; ROI snapshot</li>
+<li>Progress dashboard</li>
+</ul>
+<p><strong>Page 2</strong>:</p>
+<ul>
+<li>Key risks and mitigations</li>
+<li>Critical dependencies</li>
+<li>Board decision request</li>
+</ul>
+<p><strong>Files Created</strong>:</p>
+<pre><code>output/
+├── brief_transformation-context_20241125_144530.docx
+└── brief_transformation-context_20241125_144530.pdf
+</code></pre>
+<hr>
+<h2>Technical Documentation</h2>
+<h3>Use Case 3: Architecture Document from Design Session</h3>
+<p><strong>What You&#39;ll Create</strong>: Comprehensive architecture documentation with diagrams and decision rationale.</p>
+<p><strong>Scenario</strong>: Document a new microservices architecture after a design session.</p>
+<h4>Step 1: Capture Design Session Notes</h4>
+<p>Create <code>design-session-notes.md</code>:</p>
+<pre><code class="language-markdown"># Commerce Platform Redesign - Design Session
+
+## Current Architecture
+- Monolithic Java application
+- PostgreSQL database
+- Basic caching with Redis
+
+## Proposed Architecture
+- API Gateway for routing
+- Separate services: Catalog, Cart, Checkout, Orders
+- Event-driven communication via Kafka
+- Each service owns its data
+
+## Key Decisions
+- Go with Kubernetes for orchestration
+- Use GraphQL for frontend API
+- PostgreSQL for transactional, MongoDB for catalog
+- Auth via OAuth 2.0 + OIDC
+
+## Non-functional Requirements
+- 99.9% availability
+- &lt;200ms p95 latency
+- Handle 10k concurrent users
+- GDPR compliant
+
+## Open Items
+- Observability stack selection
+- CI/CD pipeline design
+- Data migration strategy
+</code></pre>
+<h4>Step 2: Generate Architecture Documentation</h4>
+<pre><code class="language-bash">forge generate architecture --input design-session-notes.md --mode architecture --format html,pdf
+</code></pre>
+<h4>Expected Output Structure</h4>
+<p>The generated document includes:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Executive Summary</td>
+<td>High-level overview and key decisions</td>
+</tr>
+<tr>
+<td>Context &amp; Scope</td>
+<td>Business drivers and system boundaries (C4 Level 1)</td>
+</tr>
+<tr>
+<td>Container Architecture</td>
+<td>Service descriptions and interactions (C4 Level 2)</td>
+</tr>
+<tr>
+<td>Component Details</td>
+<td>Internal structure of each service</td>
+</tr>
+<tr>
+<td>Data Architecture</td>
+<td>Data flow and storage patterns</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Infrastructure and orchestration</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Authentication, authorization, data protection</td>
+</tr>
+<tr>
+<td>ADRs</td>
+<td>Rationale for key technical decisions</td>
+</tr>
+</tbody></table>
+<p><strong>Output Files</strong>:</p>
+<pre><code>output/
+├── architecture_design-session-notes_20241125_150122.html
+└── architecture_design-session-notes_20241125_150122.pdf
+</code></pre>
+<hr>
+<h3>Use Case 4: Architecture Decision Record</h3>
+<p><strong>What You&#39;ll Create</strong>: A structured ADR documenting a key technical decision.</p>
+<p><strong>Scenario</strong>: Document why you chose Kafka over alternatives for event streaming.</p>
+<h4>Step 1: Document Decision Context</h4>
+<p>Create <code>kafka-decision.md</code>:</p>
+<pre><code class="language-markdown"># Event Streaming Decision Context
+
+## The Decision
+Need to choose event streaming platform for new architecture
+
+## Options Considered
+1. Apache Kafka
+2. RabbitMQ
+3. AWS SQS + SNS
+
+## Evaluation Criteria
+- Throughput: Need 100k msgs/sec
+- Durability: Events must persist for replay
+- Ordering: Strict ordering required per partition
+- Team expertise: Some Kafka experience
+- Cost: Self-hosted preferred (already have K8s)
+
+## Analysis
+Kafka wins on throughput and durability
+RabbitMQ easier but lower throughput
+AWS SQS simpler but vendor lock-in
+
+## Recommendation
+Apache Kafka with Strimzi operator on K8s
+</code></pre>
+<h4>Step 2: Generate ADR</h4>
+<pre><code class="language-bash">forge generate adr --input kafka-decision.md --format markdown,html
+</code></pre>
+<h4>Expected ADR Structure</h4>
+<pre><code class="language-markdown"># ADR-001: Use Apache Kafka for Event Streaming
+
+**Status**: Accepted
+**Date**: 2024-11-25
+**Decision Makers**: Platform Architecture Team
+
+## Context
+[Business and technical context]
+
+## Decision
+We will use Apache Kafka with the Strimzi operator on Kubernetes...
+
+## Consequences
+
+### Positive
+- High throughput (100k+ msgs/sec)
+- Event replay capability
+- Strong ordering guarantees
+
+### Negative
+- Operational complexity
+- Steeper learning curve
+- Resource overhead
+
+## Alternatives Considered
+[Detailed comparison table]
+
+## References
+- Kafka documentation
+- Strimzi operator guide
+</code></pre>
+<p><strong>Output Files</strong>:</p>
+<pre><code>output/
+├── adr_kafka-decision_20241125_151045.md
+└── adr_kafka-decision_20241125_151045.html
+</code></pre>
+<hr>
+<h2>Thought Leadership Content</h2>
+<h3>Use Case 5: Industry Trend Point of View</h3>
+<p><strong>What You&#39;ll Create</strong>: An 800-1200 word thought leadership piece exploring an industry trend.</p>
+<p><strong>Scenario</strong>: Write about the gap between AI hype and enterprise reality.</p>
+<h4>Step 1: Capture Your Observations</h4>
+<p>Create <code>ai-observations.md</code>:</p>
+<pre><code class="language-markdown"># Observations on Enterprise AI Adoption
+
+## What I&#39;m Seeing
+- Lots of POCs, few production deployments
+- Executives excited, middle management skeptical
+- Data teams overwhelmed with requests
+- Governance lagging behind experimentation
+- Vendors overselling, customers disappointed
+
+## Questions I&#39;m Wrestling With
+- Is the current AI hype cycle different from previous ones?
+- Why do enterprises struggle to move from POC to production?
+- What separates successful AI adopters from the rest?
+
+## Patterns I&#39;ve Noticed
+- Companies with strong data foundations do better
+- Executive sponsorship necessary but not sufficient
+- Starting with internal use cases reduces risk
+- Change management often overlooked
+
+## What I Used to Think
+AI adoption is primarily a technology problem
+
+## What I&#39;m Starting to Think
+It&#39;s fundamentally an organizational change problem
+</code></pre>
+<h4>Step 2: Generate POV</h4>
+<pre><code class="language-bash">forge generate pov --input ai-observations.md --mode thought-leadership --format html,word
+</code></pre>
+<h4>Expected Output Characteristics</h4>
+<p>The generated POV includes:</p>
+<ul>
+<li><strong>Opening</strong>: Question-led hook (not thesis statement)</li>
+<li><strong>Body</strong>: Personal observations grounded in specific examples</li>
+<li><strong>Evolution</strong>: &quot;I used to think... now I think...&quot; progression</li>
+<li><strong>Tension</strong>: Self-interrogation without self-doubt</li>
+<li><strong>Conclusion</strong>: Provisional insights (&quot;Here&#39;s where I&#39;ve landed—for now&quot;)</li>
+</ul>
+<p><strong>Word Count</strong>: 800-1200 words</p>
+<p><strong>Output Files</strong>:</p>
+<pre><code>output/
+├── pov_ai-observations_20241125_152330.html
+└── pov_ai-observations_20241125_152330.docx
+</code></pre>
+<hr>
+<h3>Use Case 6: Long-Form Strategy Paper with Research</h3>
+<p><strong>What You&#39;ll Create</strong>: A comprehensive 3000-8000 word strategy paper with web research integration.</p>
+<p><strong>Scenario</strong>: Write an in-depth analysis of retail technology evolution.</p>
+<h4>Step 1: Gather Research Context</h4>
+<pre><code class="language-bash">forge agent research &quot;retail technology trends 2024 unified commerce&quot; --output research.json
+</code></pre>
+<p><strong>Expected Console Output</strong>:</p>
+<pre><code>🔍 Researching: retail technology trends 2024 unified commerce
+🌐 Found 12 relevant sources
+📊 Extracted 8 key facts
+💾 Saved to research.json
+</code></pre>
+<p><strong>Research Output</strong> (<code>research.json</code>):</p>
+<pre><code class="language-json">{
+  &quot;query&quot;: &quot;retail technology trends 2024 unified commerce&quot;,
+  &quot;webResults&quot;: [
+    {
+      &quot;title&quot;: &quot;The State of Unified Commerce 2024&quot;,
+      &quot;snippet&quot;: &quot;78% of retailers report unified commerce as top priority...&quot;,
+      &quot;url&quot;: &quot;https://example.com/report&quot;
+    }
+  ],
+  &quot;facts&quot;: [
+    {
+      &quot;claim&quot;: &quot;78% of retailers prioritize unified commerce&quot;,
+      &quot;source&quot;: &quot;Industry Report 2024&quot;,
+      &quot;url&quot;: &quot;https://example.com/report&quot;
+    }
+  ]
+}
+</code></pre>
+<h4>Step 2: Create Your Analysis</h4>
+<p>Create <code>retail-research.md</code>:</p>
+<pre><code class="language-markdown"># Retail Technology Evolution - Research Notes
+
+## Key Trends
+- Unified commerce replacing omnichannel
+- AI-powered personalization at scale
+- Sustainability as competitive advantage
+- Composable architecture adoption
+- Real-time inventory visibility
+
+## Interviews and Conversations
+- CTO at major retailer: &quot;We&#39;re 3 years from AI-first experiences&quot;
+- Analyst: &quot;Most retailers can&#39;t execute their digital vision&quot;
+- Startup founder: &quot;The winners will be platforms, not products&quot;
+
+## Tensions and Contradictions
+- Personalization vs privacy
+- Speed of innovation vs stability
+- Customer experience vs operational efficiency
+- Physical retail decline vs experience economy rise
+
+## My Evolving Thesis
+The retail technology winners will be those who solve the last-mile 
+data problem—not just getting data, but activating it in real-time 
+at the point of decision.
+
+## Questions to Explore
+- Is composable architecture overhyped?
+- How will generative AI change the shopping experience?
+- What role will physical stores play in 10 years?
+</code></pre>
+<h4>Step 3: Generate with Research and Iteration</h4>
+<pre><code class="language-bash">forge agent generate paper --input retail-research.md --research --iterate --format pdf,html
+</code></pre>
+<p><strong>Expected Console Output</strong>:</p>
+<pre><code>🚀 Starting agentic workflow...
+🔍 Integrating research context (8 facts, 12 sources)
+📝 Initial draft complete (voice score: 6.1/10)
+🔄 Iteration 1: Strengthening evidence integration
+📝 Revision complete (voice score: 7.0/10)
+🔄 Iteration 2: Enhancing narrative flow
+📝 Revision complete (voice score: 7.8/10)
+✅ Voice approved!
+📤 Exporting to pdf, html...
+✨ Complete!
+</code></pre>
+<h4>Expected Paper Structure</h4>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Length</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Opening</td>
+<td>200-300 words</td>
+<td>Compelling tension or question</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>400-600 words</td>
+<td>Industry landscape and forces</td>
+</tr>
+<tr>
+<td>Analysis</td>
+<td>1500-2500 words</td>
+<td>Deep exploration of trends</td>
+</tr>
+<tr>
+<td>Case Studies</td>
+<td>600-1000 words</td>
+<td>Specific examples and evidence</td>
+</tr>
+<tr>
+<td>Implications</td>
+<td>500-800 words</td>
+<td>What this means for practitioners</td>
+</tr>
+<tr>
+<td>Conclusion</td>
+<td>300-500 words</td>
+<td>Evolved thinking and open questions</td>
+</tr>
+</tbody></table>
+<p><strong>Output Files</strong>:</p>
+<pre><code>output/
+├── paper_retail-research_20241125_154520.pdf
+└── paper_retail-research_20241125_154520.html
+</code></pre>
+<hr>
+<h2>Agentic Workflows</h2>
+<h3>Use Case 7: Iterative Quality Refinement</h3>
+<p><strong>What You&#39;ll Create</strong>: High-quality content that meets voice standards through automated iteration.</p>
+<p><strong>Scenario</strong>: Generate critical content that must meet quality thresholds.</p>
+<h4>Run with Iteration</h4>
+<pre><code class="language-bash">forge agent generate brief --input critical-brief.md --iterate --max-iterations 5 --format word
+</code></pre>
+<h4>Expected Console Output</h4>
+<pre><code>🚀 Starting agentic workflow...
+📝 Initial draft complete
+📊 Voice score: 5.5/10
+   Issues: Passive voice, weak structure
+
+🔄 Iteration 1: Targeted fixes
+   - Converting to active voice
+   - Strengthening section headers
+📝 Revision complete
+📊 Voice score: 6.2/10
+   Issues: Needs more specific examples
+
+🔄 Iteration 2: Strategic revision
+   - Adding concrete examples
+   - Improving flow
+📝 Revision complete
+📊 Voice score: 7.3/10
+✅ Voice approved!
+
+📤 Exporting to word...
+✨ Complete: output/brief_critical-brief_20241125_160145.docx
+</code></pre>
+<h4>Iteration Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--max-iterations</code></td>
+<td>3</td>
+<td>Maximum refinement cycles</td>
+</tr>
+<tr>
+<td><code>--voice-threshold</code></td>
+<td>7.0</td>
+<td>Minimum acceptable voice score</td>
+</tr>
+<tr>
+<td><code>--iterate</code></td>
+<td>Off</td>
+<td>Enable iterative refinement</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Use Case 8: Research-Enhanced Generation</h3>
+<p><strong>What You&#39;ll Create</strong>: Content enriched with current web research.</p>
+<p><strong>Scenario</strong>: Write about a topic requiring current market context.</p>
+<h4>Two-Step Workflow</h4>
+<p><strong>Step 1: Research Phase</strong></p>
+<pre><code class="language-bash">forge agent research &quot;enterprise AI governance frameworks 2024&quot; \
+  --max-results 15 \
+  --output research.json
+</code></pre>
+<p><strong>Step 2: Generation Phase</strong></p>
+<pre><code class="language-bash">forge agent generate pov \
+  --input observations.md \
+  --research research.json \
+  --format html
+</code></pre>
+<h4>Single-Step Workflow</h4>
+<pre><code class="language-bash">forge agent generate pov \
+  --input observations.md \
+  --research \
+  --format html
+</code></pre>
+<p><strong>Note</strong>: Single-step workflow automatically performs research based on input content.</p>
+<h4>Research Integration</h4>
+<p>The generated content will:</p>
+<ul>
+<li>Cite specific sources inline</li>
+<li>Include a references section</li>
+<li>Ground claims in current data</li>
+<li>Link to source materials</li>
+</ul>
+<p><strong>Example Citation</strong>:</p>
+<pre><code>According to the 2024 NIST AI Risk Framework, 80% of enterprises 
+lack formal AI governance structures[1].
+
+[1] NIST AI Risk Management Framework, 2024
+    https://www.nist.gov/ai-framework
+</code></pre>
+<hr>
+<h2>Multi-Format Publishing</h2>
+<h3>Use Case 9: One Source, Multiple Outputs</h3>
+<p><strong>What You&#39;ll Create</strong>: The same content in multiple formats for different audiences.</p>
+<p><strong>Scenario</strong>: Distribute a strategy document to stakeholders who need different formats.</p>
+<h4>Generate All Formats</h4>
+<pre><code class="language-bash">forge agent publish strategy.md --format markdown,html,docx,pdf,pptx
+</code></pre>
+<h4>Expected Console Output</h4>
+<pre><code>📤 Publishing strategy.md to 5 formats...
+
+✅ markdown: strategy.md
+✅ html: strategy.html
+✅ docx: strategy.docx
+✅ pdf: strategy.pdf
+✅ pptx: strategy.pptx
+
+📁 All outputs in: output/
+</code></pre>
+<h4>Output Files</h4>
+<pre><code>output/
+├── strategy.md          # Version control
+├── strategy.html        # Web viewing
+├── strategy.docx        # Editing in Word
+├── strategy.pdf         # Distribution
+└── strategy.pptx        # Presentation
+</code></pre>
+<h4>Format Selection Table</h4>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Use Case</th>
+<th>Editable</th>
+<th>Portable</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>markdown</code></td>
+<td>Version control, source</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>html</code></td>
+<td>Web publishing, preview</td>
+<td>⚠️</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>docx</code></td>
+<td>Editing, collaboration</td>
+<td>✅</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><code>pdf</code></td>
+<td>Distribution, printing</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>pptx</code></td>
+<td>Presentations</td>
+<td>✅</td>
+<td>⚠️</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Workflow Patterns</h2>
+<h3>Pattern 1: Meeting Notes to Deliverable</h3>
+<p>Transform meeting notes into polished deliverables.</p>
+<h4>Steps</h4>
+<ol>
+<li><p><strong>Capture notes during meeting</strong></p>
+<pre><code class="language-bash"># Create notes.md with key points
+</code></pre>
+</li>
+<li><p><strong>Structure into markdown</strong></p>
+<pre><code class="language-markdown"># Meeting Title
+## Key Points
+## Decisions
+## Action Items
+</code></pre>
+</li>
+<li><p><strong>Generate deliverable</strong></p>
+<pre><code class="language-bash">forge generate brief --input notes.md --format pdf
+</code></pre>
+</li>
+<li><p><strong>Review and iterate if needed</strong></p>
+<pre><code class="language-bash">forge agent generate brief --input notes.md --iterate --format pdf
+</code></pre>
+</li>
+</ol>
+<h4>Time Savings</h4>
+<ul>
+<li>Manual creation: 2-3 hours</li>
+<li>With Signal Forge: 15-30 minutes</li>
+</ul>
+<hr>
+<h3>Pattern 2: Research to Publication</h3>
+<p>Create research-backed content.</p>
+<h4>Steps</h4>
+<ol>
+<li><p><strong>Gather research</strong></p>
+<pre><code class="language-bash">forge agent research &quot;your topic&quot; --output research.json
+</code></pre>
+</li>
+<li><p><strong>Add your observations</strong></p>
+<pre><code class="language-markdown"># Your Analysis
+## What I&#39;m Seeing
+## Questions I Have
+## My Thesis
+</code></pre>
+</li>
+<li><p><strong>Generate with research</strong></p>
+<pre><code class="language-bash">forge agent generate pov \
+  --input analysis.md \
+  --research research.json \
+  --iterate \
+  --format html,pdf
+</code></pre>
+</li>
+<li><p><strong>Publish to multiple formats</strong></p>
+<pre><code class="language-bash">forge agent publish output/pov_*.md --format markdown,html,pdf
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3>Pattern 3: Draft to Final</h3>
+<p>Polish existing drafts through Signal Forge.</p>
+<h4>Steps</h4>
+<ol>
+<li><p><strong>Create initial draft</strong></p>
+<pre><code class="language-bash"># Write rough draft in draft.md
+</code></pre>
+</li>
+<li><p><strong>Generate polished version</strong></p>
+<pre><code class="language-bash">forge generate brief --input draft.md --format docx
+</code></pre>
+</li>
+<li><p><strong>Make manual adjustments</strong></p>
+<pre><code class="language-bash"># Edit the generated .docx file
+</code></pre>
+</li>
+<li><p><strong>Re-polish if needed</strong></p>
+<pre><code class="language-bash">forge generate brief --input revised-draft.md --format pdf
+</code></pre>
+</li>
+</ol>
+<hr>
+<h2>Tips by Use Case Category</h2>
+<h3>Executive Content Best Practices</h3>
+<p><strong>Input Preparation</strong>:</p>
+<ul>
+<li>Include stakeholder names and roles</li>
+<li>Specify budget and timeline constraints</li>
+<li>Note political considerations</li>
+<li>Clarify decision authority</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown"># Context
+Audience: Board of Directors (risk-averse)
+Budget: $5M approved, $8M requested
+Timeline: Must decide by Q1
+Key concern: Regulatory compliance
+</code></pre>
+<p><strong>Generation Tips</strong>:</p>
+<pre><code class="language-bash"># Specify advisory mode if auto-detect fails
+forge generate brief --input exec-notes.md --mode advisory
+
+# Include multiple formats for different uses
+forge generate deck --input strategy.md --format pptx,pdf,html
+</code></pre>
+<p><strong>Review Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Recommendations are specific and actionable</li>
+<li><input disabled="" type="checkbox"> Budget and timeline are accurate</li>
+<li><input disabled="" type="checkbox"> Risks are balanced (not overstated)</li>
+<li><input disabled="" type="checkbox"> Decision request is clear</li>
+</ul>
+<hr>
+<h3>Technical Documentation Best Practices</h3>
+<p><strong>Input Preparation</strong>:</p>
+<ul>
+<li>Document specific technical decisions made</li>
+<li>Include non-functional requirements</li>
+<li>Note constraints (budget, timeline, skills)</li>
+<li>Capture alternatives considered</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown"># Technical Context
+Current: Monolithic PHP app
+Constraint: Must maintain uptime during migration
+Team: 5 developers, limited Kubernetes experience
+Timeline: 6 months to first production service
+
+## Non-Functional Requirements
+- 99.9% availability
+- &lt;200ms p95 latency
+- GDPR compliant
+</code></pre>
+<p><strong>Generation Tips</strong>:</p>
+<pre><code class="language-bash"># Use architecture mode for system docs
+forge generate architecture --input design.md --mode architecture
+
+# Generate ADRs for key decisions
+forge generate adr --input decision.md --format markdown,html
+</code></pre>
+<p><strong>Review Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Architecture diagrams are accurate</li>
+<li><input disabled="" type="checkbox"> Technical decisions have rationale</li>
+<li><input disabled="" type="checkbox"> Non-functional requirements documented</li>
+<li><input disabled="" type="checkbox"> Security considerations included</li>
+<li><input disabled="" type="checkbox"> Deployment approach specified</li>
+</ul>
+<hr>
+<h3>Thought Leadership Best Practices</h3>
+<p><strong>Input Preparation</strong>:</p>
+<ul>
+<li>Include your evolving thinking</li>
+<li>Note questions you&#39;re wrestling with</li>
+<li>Share what changed your mind</li>
+<li>Ground observations in specific experiences</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown"># My Evolving Thinking
+
+## What I Used to Think
+AI adoption is primarily about technology choices
+
+## What Changed My Mind
+- Worked with 5 enterprises on AI initiatives
+- 4 of 5 failed due to organizational issues
+- The one success had strong change management
+
+## What I&#39;m Starting to Think
+The bottleneck is organizational, not technical
+
+## Questions I&#39;m Still Wrestling With
+- How do you measure readiness?
+- What&#39;s the right pace of adoption?
+</code></pre>
+<p><strong>Generation Tips</strong>:</p>
+<pre><code class="language-bash"># Use thought-leadership mode
+forge generate pov --input thinking.md --mode thought-leadership
+
+# Add research for current context
+forge agent generate pov --input thinking.md --research --format html
+
+# Iterate for quality
+forge agent generate pov --input thinking.md --iterate --format pdf
+</code></pre>
+<p><strong>Review Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Opens with a question or tension</li>
+<li><input disabled="" type="checkbox"> Shows evolution of thinking</li>
+<li><input disabled="" type="checkbox"> Grounded in specific examples</li>
+<li><input disabled="" type="checkbox"> Avoids prescriptive mandates</li>
+<li><input disabled="" type="checkbox"> Includes provisional conclusions</li>
+</ul>
+<hr>
+<h3>Agentic Workflow Best Practices</h3>
+<p><strong>When to Use Research</strong>:</p>
+<pre><code class="language-bash"># Use for topics requiring current data
+forge agent generate pov --input analysis.md --research
+
+# Use when you need citations
+forge agent research &quot;topic&quot; --output research.json
+forge agent generate paper --input paper.md --research research.json
+</code></pre>
+<p><strong>When to Use Iteration</strong>:</p>
+<pre><code class="language-bash"># Use for critical content
+forge agent generate brief --input critical.md --iterate
+
+# Use when quality threshold is high
+forge agent generate deck --input important.md --iterate --voice-threshold 8.0
+
+# Use with custom iteration limits
+forge agent generate pov --input article.md --iterate --max-iterations 5
+</code></pre>
+<p><strong>When to Use Memory</strong> (Future Feature):</p>
+<pre><code class="language-bash"># Use for ongoing projects
+forge agent generate brief --input update.md --memory project-alpha
+
+# Use for consistent voice across documents
+forge agent generate deck --input q2-review.md --memory quarterly-reviews
+</code></pre>
+<hr>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Generated by Signal Forge</p>
+        </div>
+    </footer>
+</body>
+</html>

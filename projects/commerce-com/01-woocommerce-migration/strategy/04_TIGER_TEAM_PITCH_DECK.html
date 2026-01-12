@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiger Team Pitch | Commerce.com + WordPress</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-cyan: #22d3ee;
+            --accent-orange: #f97316;
+            --accent-green: #22c55e;
+            --accent-purple: #a855f7;
+            --accent-red: #ef4444;
+            --accent-yellow: #eab308;
+            --border-color: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 64px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
+        h2 { font-size: 44px; font-weight: 700; line-height: 1.1; margin-bottom: 32px; }
+        h3 { font-size: 22px; font-weight: 600; margin-bottom: 20px; }
+
+        .subtitle { font-size: 24px; color: var(--text-secondary); margin-bottom: 48px; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .card-green { background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); }
+        .card-red { background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); }
+        .card-cyan { background: rgba(34, 211, 238, 0.1); border-color: rgba(34, 211, 238, 0.3); }
+        .card-purple { background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); }
+        .card-orange { background: rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.3); }
+
+        .stat { text-align: center; }
+        .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label { font-size: 16px; color: var(--text-secondary); }
+
+        .source-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent-cyan);
+            background: rgba(34, 211, 238, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .assumption-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent-orange);
+            background: rgba(249, 115, 22, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .feature-list { list-style: none; }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 17px;
+        }
+        .feature-list .icon { font-size: 18px; flex-shrink: 0; }
+
+        .callout {
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-top: 32px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .nav-dots { display: flex; gap: 8px; }
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 100px;
+            background: var(--bg-tertiary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .nav-dot:hover { background: var(--text-muted); }
+        .nav-dot.active { width: 24px; background: var(--accent-cyan); }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.2s ease;
+        }
+        .nav-btn:hover { background: var(--text-muted); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .nav-counter {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            z-index: 100;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--accent-cyan); }
+
+        .component-card {
+            background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        .component-card .icon { font-size: 36px; margin-bottom: 12px; }
+        .component-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .component-card .desc { color: var(--text-muted); font-size: 13px; margin-bottom: 6px; }
+        .component-card .highlight { font-size: 11px; font-weight: 600; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 15px;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .comparison-table th { background: var(--bg-secondary); font-weight: 600; }
+        .comparison-table td:not(:first-child) { text-align: center; }
+        .comparison-table tbody tr:hover { background: rgba(34, 211, 238, 0.02); }
+
+        .sensitivity-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .sensitivity-table th, .sensitivity-table td {
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .sensitivity-table th { background: var(--bg-secondary); font-weight: 600; }
+        .sensitivity-table .highlight-cell { background: rgba(34, 211, 238, 0.15); font-weight: 700; }
+
+        .budget-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .budget-item.total {
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+        .budget-item .value { font-family: 'IBM Plex Mono', monospace; font-size: 16px; }
+
+        .timeline-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 14px;
+        }
+        .timeline-item .week {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            margin-bottom: 4px;
+        }
+        .timeline-item h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .timeline-item p { font-size: 13px; color: var(--text-muted); }
+
+        .step-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+        }
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(34, 211, 238, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 14px;
+        }
+        .step-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .step-card p { font-size: 13px; color: var(--text-muted); }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 16px;
+            padding: 28px 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cta-box h3 { font-size: 22px; margin-bottom: 8px; }
+        .cta-box p { color: var(--text-secondary); font-size: 15px; }
+
+        .roi-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin-top: 28px;
+        }
+        .roi-box .label { font-size: 16px; font-weight: 600; }
+        .roi-box .sub { font-size: 13px; color: var(--text-muted); }
+        .roi-box .value {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--accent-green);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .sources-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 64px;
+            right: 64px;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .sources-footer a { color: var(--text-muted); text-decoration: none; }
+        .sources-footer a:hover { color: var(--accent-cyan); }
+
+        .assumption-box {
+            background: rgba(249, 115, 22, 0.05);
+            border: 1px dashed rgba(249, 115, 22, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 24px;
+            font-size: 13px;
+        }
+        .assumption-box strong { color: var(--accent-orange); }
+    </style>
+</head>
+<body>
+    <a href="../INDEX.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Index
+    </a>
+
+    <!-- Slide 1: Title -->
+    <section class="slide" id="slide-1" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);">
+        <div class="slide-content" style="text-align: center;">
+            <div class="tag" style="color: var(--accent-cyan);">Tiger Team Strategic Initiative</div>
+            <h1>
+                Keep WordPress.<br>
+                <span class="gradient-text">Upgrade Commerce.</span>
+            </h1>
+            <p class="subtitle">A strategic partnership to capture WooCommerce migration demand</p>
+            <div style="display: flex; justify-content: center; gap: 32px; align-items: center; color: var(--text-muted);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 48px; height: 48px; background: rgba(168, 85, 247, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+                    <span>Commerce.com</span>
+                </div>
+                <span style="font-size: 32px;">+</span>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></div>
+                    <span>WordPress / WPEngine</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Market Reality (VERIFIED DATA) -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-cyan);">Market Reality</div>
+            <h2>The WooCommerce Landscape</h2>
+            <div class="grid-2">
+                <div>
+                    <div class="stat" style="text-align: left; margin-bottom: 32px;">
+                        <div class="stat-value" style="color: var(--text-primary);">4.5M</div>
+                        <div class="stat-label">Active WooCommerce stores globally <span class="source-badge">StoreLeads 2024</span></div>
+                    </div>
+                    <div class="stat" style="text-align: left; margin-bottom: 32px;">
+                        <div class="stat-value" style="color: var(--text-primary);">20%</div>
+                        <div class="stat-label">Global ecommerce market share <span class="source-badge">BuiltWith 2024</span></div>
+                    </div>
+                    <div class="stat" style="text-align: left;">
+                        <div class="stat-value" style="color: var(--accent-orange);">74%</div>
+                        <div class="stat-label">Of companies have, are, or will replatform <span class="source-badge">Econsultancy</span></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--text-secondary); margin-bottom: 20px;">Why merchants leave WooCommerce:</h3>
+                    <ul class="feature-list">
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Performance degrades at scale (wp_postmeta architecture)</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> 33+ reported vulnerabilities in 2023 <span class="source-badge">Security research</span></li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> 36% higher TCO vs. Shopify <span class="source-badge">Shopify analysis</span></li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Plugin conflicts and "update anxiety"</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sources-footer">
+                Sources: StoreLeads 2024, BuiltWith 2024, Econsultancy Digital Commerce Report, Shopify Migration Analysis
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Migration Patterns (VERIFIED DATA) -->
+    <section class="slide" id="slide-3">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-red);">Migration Patterns</div>
+            <h2>Where WooCommerce Merchants Go</h2>
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card">
+                    <h3 style="color: var(--accent-cyan);">Migration Destinations (2024)</h3>
+                    <div style="margin: 24px 0;">
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <div style="width: 200px; font-size: 14px;">Shopify</div>
+                            <div style="flex: 1; background: var(--bg-tertiary); height: 24px; border-radius: 4px; overflow: hidden;">
+                                <div style="width: 48%; background: var(--accent-green); height: 100%;"></div>
+                            </div>
+                            <div style="width: 60px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-weight: 700;">48%</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <div style="width: 200px; font-size: 14px;">WooCommerce (inbound)</div>
+                            <div style="flex: 1; background: var(--bg-tertiary); height: 24px; border-radius: 4px; overflow: hidden;">
+                                <div style="width: 30%; background: var(--accent-purple); height: 100%;"></div>
+                            </div>
+                            <div style="width: 60px; text-align: right; font-family: 'IBM Plex Mono', monospace;">30%</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <div style="width: 200px; font-size: 14px;">BigCommerce</div>
+                            <div style="flex: 1; background: var(--bg-tertiary); height: 24px; border-radius: 4px; overflow: hidden;">
+                                <div style="width: 8%; background: var(--accent-cyan); height: 100%;"></div>
+                            </div>
+                            <div style="width: 60px; text-align: right; font-family: 'IBM Plex Mono', monospace;">~8%</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-size: 14px;">Other</div>
+                            <div style="flex: 1; background: var(--bg-tertiary); height: 24px; border-radius: 4px; overflow: hidden;">
+                                <div style="width: 14%; background: var(--text-muted); height: 100%;"></div>
+                            </div>
+                            <div style="width: 60px; text-align: right; font-family: 'IBM Plex Mono', monospace;">14%</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Source: Cart2Cart Migration Statistics 2024</div>
+                </div>
+                <div class="card card-orange">
+                    <h3 style="color: var(--accent-orange);">The Opportunity Gap</h3>
+                    <p style="font-size: 16px; margin-bottom: 20px;">Shopify captures 48% of migrations by default—but many merchants would prefer to <strong>keep WordPress</strong> if they could upgrade just the commerce layer.</p>
+                    <p style="font-size: 16px; margin-bottom: 20px;">Commerce.com currently captures ~8% with <strong>no WordPress-specific positioning</strong>.</p>
+                    <p style="font-size: 15px; color: var(--text-secondary);">Phase 0 validates whether "Keep WordPress, Upgrade Commerce" can shift this share.</p>
+                </div>
+            </div>
+            <div class="sources-footer">
+                Source: Cart2Cart Migration Facts & Statistics 2024 (shopping-cart-migration.com)
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: The Insight -->
+    <section class="slide" id="slide-4">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-yellow);">The Insight</div>
+            <h2>They're not leaving WordPress.<br>They're leaving WooCommerce.</h2>
+            <div class="grid-2" style="margin-bottom: 40px;">
+                <div class="card card-green">
+                    <h3 style="color: var(--accent-green);">What merchants love about WordPress:</h3>
+                    <ul class="feature-list">
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Content management excellence</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> SEO-rich blog content (often 500+ posts)</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Familiar editing experience</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Existing team expertise & investment</li>
+                    </ul>
+                </div>
+                <div class="card card-red">
+                    <h3 style="color: var(--accent-red);">What fails in WooCommerce:</h3>
+                    <ul class="feature-list">
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Database architecture (wp_postmeta EAV model)</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Checkout performance & conversion</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Plugin dependency hell</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> PCI compliance burden (self-hosted)</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div class="callout card-cyan" style="display: inline-block; padding: 24px 48px;">
+                    <span style="font-size: 20px;"><strong>Hypothesis:</strong> A meaningful segment would choose <span style="color: var(--accent-cyan);">WordPress + BigCommerce</span> over Shopify if the option existed.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: The Solution -->
+    <section class="slide" id="slide-5">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-cyan);">The Solution</div>
+            <h2>Commerce.com + WordPress Architecture</h2>
+            <div class="grid-3" style="margin-bottom: 24px;">
+                <div class="component-card" style="border-color: rgba(168, 85, 247, 0.3);">
+                    <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.8-.1 2.7-.3.5-.1.9-.5 1-1 .1-.5-.1-1-.4-1.3l-.6-.6c-.4-.4-.1-1 .4-1h1.5c2.8 0 5.4-2.4 5.4-5.5C22 6.5 17.5 2 12 2z"/><circle cx="7.5" cy="11.5" r="1.5"/><circle cx="12" cy="7.5" r="1.5"/><circle cx="16.5" cy="11.5" r="1.5"/></svg></div>
+                    <h4>Makeswift</h4>
+                    <div class="desc">Visual Page Builder</div>
+                    <div class="highlight" style="color: var(--accent-purple);">Marketing autonomy</div>
+                </div>
+                <div class="component-card" style="border-color: rgba(34, 211, 238, 0.3);">
+                    <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <h4>Catalyst</h4>
+                    <div class="desc">Next.js Storefront</div>
+                    <div class="highlight" style="color: var(--accent-cyan);">Edge performance</div>
+                </div>
+                <div class="component-card" style="border-color: rgba(249, 115, 22, 0.3);">
+                    <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+                    <h4>Feedonomics</h4>
+                    <div class="desc">Data Orchestration</div>
+                    <div class="highlight" style="color: var(--accent-orange);">Clean migration</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 20px 0; color: var(--accent-cyan);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+            <div class="grid-2">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        <div>
+                            <h4 style="font-size: 18px; font-weight: 700; margin: 0;">BigCommerce</h4>
+                            <div style="color: var(--text-muted); font-size: 13px;">Commerce Engine</div>
+                        </div>
+                    </div>
+                    <div style="color: var(--text-secondary); font-size: 13px;">Products • Orders • Checkout • B2B • Multi-channel</div>
+                </div>
+                <div class="card" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                        <div>
+                            <h4 style="font-size: 18px; font-weight: 700; margin: 0;">WordPress</h4>
+                            <div style="color: var(--text-muted); font-size: 13px;">Content Engine (retained)</div>
+                        </div>
+                    </div>
+                    <div style="color: var(--text-secondary); font-size: 13px;">Blog • Landing Pages • SEO Content • Media</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 24px; color: var(--text-muted); font-size: 14px;">
+                Hosted on <strong style="color: var(--text-primary);">Vercel</strong> (storefront) + <strong style="color: var(--text-primary);">WPEngine</strong> (content)
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Competitive Moat (VERIFIED DATA) -->
+    <section class="slide" id="slide-6">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-purple);">Competitive Advantage</div>
+            <h2>Why Shopify Can't Counter</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th style="color: var(--accent-green);">Shopify</th>
+                        <th style="color: var(--accent-cyan);">Commerce.com Stack</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WordPress Compatibility</td>
+                        <td style="color: var(--accent-red);">None (full migration)</td>
+                        <td style="color: var(--accent-green);">Native (headless CMS)</td>
+                    </tr>
+                    <tr>
+                        <td>Content Preservation</td>
+                        <td style="color: var(--accent-red);">Manual migration</td>
+                        <td style="color: var(--accent-green);">Automatic (same WordPress)</td>
+                    </tr>
+                    <tr>
+                        <td>WPEngine Incentive</td>
+                        <td style="color: var(--accent-red);">Customer loss</td>
+                        <td style="color: var(--accent-green);">Customer retention</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Fees <span class="source-badge">Public pricing</span></td>
+                        <td style="color: var(--accent-yellow);">0.5-2% (external gateway)</td>
+                        <td style="color: var(--accent-green);">$0</td>
+                    </tr>
+                    <tr>
+                        <td>B2B Native</td>
+                        <td style="color: var(--accent-yellow);">Limited (Plus tier)</td>
+                        <td style="color: var(--accent-green);">Full native</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout card-purple">
+                Shopify's narrative is <strong>"replace everything"</strong>—they cannot credibly offer "keep your WordPress" without contradicting their core positioning.
+            </div>
+            <div class="sources-footer">
+                Transaction fees: Shopify public pricing (Basic: 2%, Shopify: 1%, Advanced: 0.5%, Plus: 0.15% external gateway)
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Scenario Analysis (TRANSPARENT ASSUMPTIONS) -->
+    <section class="slide" id="slide-7">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-cyan);">Scenario Analysis</div>
+            <h2>Revenue Model: Sensitivity Analysis</h2>
+
+            <div class="assumption-box" style="margin-bottom: 24px;">
+                <strong>Key Assumptions (to be validated in Phase 0):</strong><br>
+                • Annual platform churn: 2-5% of stores consider migration (industry benchmark)<br>
+                • Addressable segment: $500K+ GMV merchants seeking capability, not simplicity<br>
+                • Average platform ARR: ~$4,500/merchant (BigCommerce $3K + Feedonomics $1.5K at 50% attach)
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="sensitivity-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="3">Annual Addressable Migrations (varies with churn assumption)</th>
+                        </tr>
+                        <tr>
+                            <th>Capture Rate</th>
+                            <th>45,000<br><small style="color: var(--text-muted);">(1% of 4.5M)</small></th>
+                            <th>90,000<br><small style="color: var(--text-muted);">(2% of 4.5M)</small></th>
+                            <th>225,000<br><small style="color: var(--text-muted);">(5% of 4.5M)</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2%</strong> <small>(conservative)</small></td>
+                            <td>$4.1M</td>
+                            <td>$8.1M</td>
+                            <td>$20.3M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5%</strong> <small>(base case)</small></td>
+                            <td>$10.1M</td>
+                            <td class="highlight-cell">$20.3M</td>
+                            <td>$50.6M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10%</strong> <small>(aggressive)</small></td>
+                            <td>$20.3M</td>
+                            <td>$40.5M</td>
+                            <td>$101.3M</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div class="card" style="padding: 20px;">
+                    <h4 style="font-size: 14px; color: var(--text-muted); margin-bottom: 8px;">Conservative Scenario</h4>
+                    <div style="font-size: 28px; font-weight: 800; font-family: 'IBM Plex Mono', monospace;">$4.1M - $8.1M</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">1-2% churn × 2% capture</div>
+                </div>
+                <div class="card card-cyan" style="padding: 20px; border-width: 2px;">
+                    <h4 style="font-size: 14px; color: var(--accent-cyan); margin-bottom: 8px;">Target Scenario (Phase 0 validates)</h4>
+                    <div style="font-size: 28px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; color: var(--accent-cyan);">$10M - $20M</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">1-2% churn × 5% capture</div>
+                </div>
+            </div>
+
+            <div class="sources-footer">
+                Base: 4.5M WooCommerce stores (StoreLeads 2024). ARR assumption: BigCommerce Enterprise ~$30K/yr + Feedonomics ~$18K/yr at 50% attach, blended to ~$4,500/merchant.
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: The Ask -->
+    <section class="slide" id="slide-8">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-orange);">The Ask</div>
+            <h2>Phase 0: $190K Investment Breakdown</h2>
+
+            <div style="overflow-x: auto; margin-bottom: 24px;">
+                <table class="comparison-table" style="font-size: 13px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Category</th>
+                            <th style="width: 15%;">Amount</th>
+                            <th style="width: 60%;">Calculation / Rationale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tiger Team Allocation</strong></td>
+                            <td style="text-align: right; font-family: 'IBM Plex Mono', monospace;">$100,000</td>
+                            <td style="text-align: left; font-size: 12px;">
+                                4 contributors × 0.5 FTE × 3 months<br>
+                                <span style="color: var(--text-muted);">@ $200K fully-loaded annual cost = $25K/person/quarter at 50% allocation</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>SI Partner Engagement</strong></td>
+                            <td style="text-align: right; font-family: 'IBM Plex Mono', monospace;">$50,000</td>
+                            <td style="text-align: left; font-size: 12px;">
+                                3-5 pilot implementations × $10-17K each<br>
+                                <span style="color: var(--text-muted);">Subsidized rate; full implementation ~$50-100K market rate</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infrastructure / Tooling</strong></td>
+                            <td style="text-align: right; font-family: 'IBM Plex Mono', monospace;">$10,000</td>
+                            <td style="text-align: left; font-size: 12px;">
+                                Staging environments, testing tools, demo infrastructure<br>
+                                <span style="color: var(--text-muted);">Vercel Pro ($20/mo × 3), BigCommerce sandbox, monitoring</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pilot Merchant Incentives</strong></td>
+                            <td style="text-align: right; font-family: 'IBM Plex Mono', monospace;">$30,000</td>
+                            <td style="text-align: left; font-size: 12px;">
+                                3-5 pilots × $6-10K credit/subsidy each<br>
+                                <span style="color: var(--text-muted);">Platform credits, waived fees, or migration cost offset to de-risk pilot participation</span>
+                            </td>
+                        </tr>
+                        <tr style="background: rgba(249, 115, 22, 0.1);">
+                            <td><strong>Total Phase 0</strong></td>
+                            <td style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--accent-orange); font-weight: 700;">$190,000</td>
+                            <td style="text-align: left; font-size: 12px;">
+                                <strong>12-week validation window</strong><br>
+                                <span style="color: var(--text-muted);">Maximum exposure if all assumptions fail</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2" style="gap: 24px;">
+                <div>
+                    <h3 style="font-size: 16px;">Tiger Team Composition</h3>
+                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-color);">
+                            <span>Product Lead (Catalyst)</span>
+                            <span style="color: var(--text-muted);">0.5 FTE</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-color);">
+                            <span>Senior Engineer (Feedonomics)</span>
+                            <span style="color: var(--text-muted);">0.5 FTE</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-color);">
+                            <span>Product Manager (Makeswift)</span>
+                            <span style="color: var(--text-muted);">0.5 FTE</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+                            <span>Director, Partnerships</span>
+                            <span style="color: var(--text-muted);">0.5 FTE</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-size: 16px;">Timeline (12 Weeks)</h3>
+                    <div class="timeline-item" style="padding: 12px; margin-bottom: 8px;">
+                        <div class="week">Weeks 1-4</div>
+                        <h5 style="font-size: 13px;">Partnership & Architecture</h5>
+                    </div>
+                    <div class="timeline-item" style="padding: 12px; margin-bottom: 8px;">
+                        <div class="week">Weeks 5-8</div>
+                        <h5 style="font-size: 13px;">Tooling & Pilot Recruitment</h5>
+                    </div>
+                    <div class="timeline-item" style="padding: 12px;">
+                        <div class="week">Weeks 9-12</div>
+                        <h5 style="font-size: 13px;">Execute & Validate</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assumption-box" style="margin-top: 20px;">
+                <strong>Cost Assumptions:</strong> Fully-loaded FTE cost @ $200K/year (salary + benefits + overhead). SI rates reflect partner/pilot discount. All figures are internal allocation, not incremental headcount.
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: Success Criteria -->
+    <section class="slide" id="slide-9">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--accent-green);">Validation Gate</div>
+            <h2>Phase 0 Success Criteria</h2>
+            <div class="grid-2">
+                <div class="card card-green">
+                    <h3 style="color: var(--accent-green);">GO to Phase 1 if:</h3>
+                    <ul class="feature-list">
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> WPEngine commits to partnership exploration</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 3+ pilot migrations complete successfully</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Pilot merchant NPS &gt; 40</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> SEO preservation &lt; 10% traffic loss (60-day)</li>
+                        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Migration timeline ≤ 16 weeks</li>
+                    </ul>
+                </div>
+                <div class="card card-red">
+                    <h3 style="color: var(--accent-red);">NO-GO if:</h3>
+                    <ul class="feature-list">
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> WPEngine declines partnership</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Technical integration has fundamental barriers</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Migration timeline exceeds Shopify by &gt; 50%</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> SEO impact exceeds 20% traffic loss</li>
+                        <li><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Pilot merchants report dissatisfaction</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 32px; color: var(--text-muted); font-size: 16px;">
+                Phase 0 is designed to <strong>fail fast</strong> if the strategy is unviable, limiting total downside to $190K.
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: Next Steps -->
+    <section class="slide" id="slide-10" style="background: linear-gradient(135deg, #0f172a 0%, rgba(34, 211, 238, 0.05) 50%, #0f172a 100%);">
+        <div class="slide-content" style="text-align: center;">
+            <div class="tag" style="color: var(--accent-cyan);">Next Steps</div>
+            <h2>Decision Request</h2>
+            <div class="grid-3" style="margin-bottom: 40px;">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Approve Phase 0</h4>
+                    <p>$190K investment to validate hypothesis</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Assemble Tiger Team</h4>
+                    <p>0.5 FTE allocation from key teams</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Initiate Partner Outreach</h4>
+                    <p>WPEngine conversation via SI channel</p>
+                </div>
+            </div>
+
+            <div class="card" style="text-align: left; margin-bottom: 32px;">
+                <h3 style="margin-bottom: 16px;">What We're NOT Asking For:</h3>
+                <ul class="feature-list">
+                    <li><span class="icon" style="color: var(--accent-cyan);">→</span> <strong>No commitment to scale</strong> — Phase 1 requires separate approval based on Phase 0 results</li>
+                    <li><span class="icon" style="color: var(--accent-cyan);">→</span> <strong>No public announcement</strong> — stealth mode until validation complete</li>
+                    <li><span class="icon" style="color: var(--accent-cyan);">→</span> <strong>No assumptions as facts</strong> — revenue projections are scenarios to validate, not forecasts</li>
+                </ul>
+            </div>
+
+            <div class="cta-box">
+                <h3>Request: Approve $190K Phase 0 Validation</h3>
+                <p>12-week validation window • Go/No-Go decision at Week 12 • Maximum exposure: $190K</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Appendix - Sources -->
+    <section class="slide" id="slide-11">
+        <div class="slide-content">
+            <div class="tag" style="color: var(--text-muted);">Appendix</div>
+            <h2>Data Sources & Methodology</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>Verified Market Data</h3>
+                    <div class="card" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">WooCommerce Install Base: 4.5M</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Source: StoreLeads 2024 via Barn2.com</div>
+                    </div>
+                    <div class="card" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">WooCommerce Market Share: 20.1%</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Source: BuiltWith 2024</div>
+                    </div>
+                    <div class="card" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Migration Destination Share: Shopify 48%</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Source: Cart2Cart Migration Statistics 2024</div>
+                    </div>
+                    <div class="card" style="padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Replatforming Intent: 74%</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Source: Econsultancy Digital Commerce Report</div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Assumptions to Validate</h3>
+                    <div class="card card-orange" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Annual migration volume</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Modeled as 1-5% of 4.5M base. Requires validation via WPEngine data access.</div>
+                    </div>
+                    <div class="card card-orange" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Addressable segment size</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">% of migrants who would choose "keep WordPress" option. Pilot feedback required.</div>
+                    </div>
+                    <div class="card card-orange" style="margin-bottom: 16px; padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Capture rate potential</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">2-10% range modeled. Phase 0 pilots inform realistic target.</div>
+                    </div>
+                    <div class="card card-orange" style="padding: 20px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">WPEngine partnership viability</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Critical dependency. Week 2 deliverable to assess.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <button class="nav-btn" id="prev-btn" disabled>←</button>
+        <div class="nav-dots" id="nav-dots"></div>
+        <button class="nav-btn" id="next-btn">→</button>
+        <span class="nav-counter"><span id="current">1</span> / 11</span>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const navDots = document.getElementById('nav-dots');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSpan = document.getElementById('current');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            navDots.appendChild(dot);
+        }
+
+        function getCurrentSlide() {
+            const scrollPos = window.scrollY;
+            const windowHeight = window.innerHeight;
+            return Math.round(scrollPos / windowHeight);
+        }
+
+        function goToSlide(index) {
+            slides[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateNav() {
+            const current = getCurrentSlide();
+            const dots = document.querySelectorAll('.nav-dot');
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+            currentSpan.textContent = current + 1;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === totalSlides - 1;
+        }
+
+        prevBtn.onclick = () => goToSlide(Math.max(0, getCurrentSlide() - 1));
+        nextBtn.onclick = () => goToSlide(Math.min(totalSlides - 1, getCurrentSlide() + 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                goToSlide(Math.min(totalSlides - 1, getCurrentSlide() + 1));
+            }
+            if (e.key === 'ArrowLeft') goToSlide(Math.max(0, getCurrentSlide() - 1));
+            if (e.key >= '1' && e.key <= '9') {
+                const idx = parseInt(e.key) - 1;
+                if (idx < totalSlides) goToSlide(idx);
+            }
+            if (e.key === '0') goToSlide(10);
+        });
+
+        window.addEventListener('scroll', updateNav);
+        updateNav();
+    </script>
+</body>
+</html>

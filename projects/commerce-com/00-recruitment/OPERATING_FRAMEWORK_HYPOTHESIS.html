@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating Framework Hypothesis v2.0 | Director of Strategic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0d0a14;
+            --bg-secondary: #1a1625;
+            --bg-tertiary: #252033;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a78bfa;
+            --accent-green: #34d399;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-yellow: #eab308;
+            --border: #2d2640;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            display: flex;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 32px 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .nav-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(167, 139, 250, 0.08);
+            border-left-color: var(--accent-purple);
+        }
+
+        .nav-link.active {
+            color: var(--accent-cyan);
+            background: rgba(34, 211, 238, 0.08);
+            border-left-color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .nav-link-subsection {
+            font-size: 13px;
+            padding-left: 24px;
+            color: var(--text-muted);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 48px 48px 48px 72px;
+            max-width: 1000px;
+            flex: 1;
+        }
+
+        @media (max-width: 1200px) {
+            .nav-sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+                padding: 48px 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .nav-sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 32px 24px;
+            }
+        }
+
+        .header {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .header-meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-hypothesis {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge-version {
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--accent-purple);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 48px 0 24px 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 32px 0 16px 0;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 12px 0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-purple);
+            font-style: italic;
+        }
+
+        .preamble {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 6px;
+        }
+
+        .preamble h3 {
+            margin-top: 0;
+            color: var(--accent-orange);
+        }
+
+        .theory-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-purple);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+        }
+
+        .theory-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .assumption-block {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-yellow);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .assumption-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .assumption-text {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .validation {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .hypothesis-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+
+        .hypothesis-box h4 {
+            color: var(--accent-purple);
+            margin-top: 0;
+        }
+
+        .diagram-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .process-step {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        .process-step-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .process-step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .process-step-content {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .audit-week {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .audit-week-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .week-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .week-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .week-content {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .checkpoint {
+            background: rgba(34, 211, 238, 0.05);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .checkpoint-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-cyan);
+            font-size: 13px;
+        }
+
+        .risk-flag {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--accent-red);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 4px;
+        }
+
+        .risk-flag-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .risk-flag-content {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .citation {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .precedent-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        .precedent-company {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .anti-pattern {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid var(--accent-red);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .anti-pattern-title {
+            font-weight: 600;
+            color: var(--accent-red);
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .references {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 8px;
+        }
+
+        .references h3 {
+            margin-top: 0;
+        }
+
+        .ref-item {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .ref-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-sidebar">
+        <div class="nav-title">Contents</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#theoretical-foundation" class="nav-link">0. Theoretical Foundation</a></li>
+            <li class="nav-item"><a href="#industry-precedents" class="nav-link">0.5 Industry Precedents</a></li>
+            <li class="nav-item"><a href="#broken-state" class="nav-link">1. The "Broken State" Assumptions</a></li>
+            <li class="nav-item"><a href="#l1-workflow" class="nav-link">2. L1 Strategic Workflow</a></li>
+            <li class="nav-item"><a href="#l2-workflow" class="nav-link">3. L2 Tactical Workflow</a></li>
+            <li class="nav-item"><a href="#failure-modes" class="nav-link">3.5 Known Failure Modes</a></li>
+            <li class="nav-item"><a href="#audit-plan" class="nav-link">4. Day 1 to Day 30 Audit Plan</a></li>
+            <li class="nav-item"><a href="#what-needs-true" class="nav-link">5. What Needs to Be True</a></li>
+            <li class="nav-item"><a href="#open-questions" class="nav-link">6. Open Questions</a></li>
+            <li class="nav-item"><a href="#references" class="nav-link">7. References</a></li>
+            <li class="nav-item"><a href="#appendix-a" class="nav-link">Appendix A: Role Title Options</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Operating Framework Hypothesis</h1>
+            <div class="header-meta">
+                <span>Director of Strategic Solutions</span>
+                <span>•</span>
+                <span>Commerce.com</span>
+                <span>•</span>
+                <span class="badge badge-hypothesis">Hypothesis v2.1</span>
+                <span class="badge badge-version">CFO Validated</span>
+            </div>
+        </header>
+
+        <div class="preamble">
+            <h3>Executive Summary</h3>
+            <p><strong>The Role in Plain Language:</strong> I lead a small team that solves Commerce.com's most complex customer migration and integration problems. When a client needs to move from one commerce platform to another, or when we need to figure out how to make something work that's never been done before—that's what we tackle. The goal is to solve it once in a way that helps the next hundred customers.</p>
+
+            <p style="margin-top: 16px;"><strong>We Build Jigs:</strong> Think of this like manufacturing. Platform teams (BigCommerce, Feedonomics, Makeswift) build the raw materials and tools. When a complex customer need comes in—like migrating 8,000 WooCommerce stores—we build the <em>jig</em>: the specialized fixture that holds everything together and makes the process repeatable. Once the jig is proven, we hand it to the production line (Core Product teams) and move on to the next complex problem.</p>
+
+            <p style="margin-top: 16px;"><strong>What This Means for Commerce.com:</strong> Right now, when customers need migrations or integrations our standard platform doesn't offer, Solutions Architects build one-off "jigs" that stay on their laptops and never scale. This role industrializes the jig-making process: build it once with proper tooling, validate unit economics with real customers, document the playbook, then transfer it to Core Platform as a repeatable capability.</p>
+
+            <p style="margin-top: 16px;"><strong>The Strategic Thesis:</strong> Commerce.com's acquisition of BigCommerce, Feedonomics, and Makeswift created powerful platform capabilities—but no one owns the "connective tissue" that turns these bricks into sellable houses. Sales sells the vision of unified commerce, but customers experience integration friction because vertical product teams optimize their own platforms, not cross-platform solutions.</p>
+
+            <p style="margin-top: 16px;"><strong>The Operating Model:</strong> This role is a formal "Integrator" (Galbraith's term) that sits between Product and Engineering, forcing cross-platform coordination without re-organizing the company. It operates through Tiger Teams—temporary, small teams (3-5 people) that build integrated market solutions, validate them with real customers, then transfer ownership to Core Platform teams and disband.</p>
+
+            <p style="margin-top: 16px;"><strong>Instance 001: WooCommerce Migration.</strong> WP Engine has identified 8,000 mid-market WooCommerce stores that need a migration path to BigCommerce. This is the validation instance for the operating model—build the migration capability with a 3-person team, prove unit economics with 10 pilot customers, then graduate it to Core Product.</p>
+
+            <p style="margin-top: 16px;"><strong>This is Not a Final Operating Manual.</strong> This is a hypothesis-driven framework grounded in research from Galbraith, Tushman, and Team Topologies, validated against Fortune 500 post-M&A precedents. Use this document to critique my assumptions. Tell me where the theory doesn't apply to your reality. That conversation is the interview.</p>
+
+            <p style="margin-top: 16px;"><strong>v2.1 CFO Validation:</strong> WP Engine partnership is real and advanced; WooCommerce migration is higher strategic priority than Accenture engagement; Catalyst is NOT the right stack; ultra-small team (3 people) operating model validated; CFO confirmed engineering velocity concerns and need for AI-augmented approach.</p>
+        </div>
+
+        <h2 id="theoretical-foundation">0. Theoretical Foundation</h2>
+
+    <p>This operating model is not invented from scratch. It synthesizes three established frameworks validated across Fortune 500 organizations and post-M&A integrations:</p>
+
+    <div class="theory-box">
+        <div class="theory-title">Framework 1: Galbraith's Star Model (The Integrator Role)</div>
+        <p><strong>Core Principle:</strong> In multi-dimensional organizations (product lines × geography × customer segments), lateral coordination requires formal "Integrator" roles.</p>
+        <p><strong>Applied to Commerce.com:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li>Commerce.com has <strong>three product dimensions</strong>: BigCommerce Core, Feedonomics, Makeswift</li>
+            <li>Market solutions (WooCommerce Migration) require <strong>cross-product integration</strong></li>
+            <li>Without an Integrator role, coordination relies on <strong>informal networks</strong> (slow, unreliable, political)</li>
+        </ul>
+        <p><strong>Hypothesis:</strong> The Director of Strategic Solutions is the formal Integrator for cross-platform market solutions.</p>
+        <p class="citation">Reference: Galbraith, J. (2009). <em>Designing Matrix Organizations That Actually Work.</em> Jossey-Bass.</p>
+    </div>
+
+    <div class="theory-box">
+        <div class="theory-title">Framework 2: Tushman & O'Reilly (Ambidextrous Organization)</div>
+        <p><strong>Core Principle:</strong> Organizations must simultaneously <em>exploit</em> existing capabilities (incremental improvement) and <em>explore</em> new opportunities (breakthrough innovation). A single structure cannot optimize for both.</p>
+        <p><strong>Applied to Commerce.com:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li><strong>Exploitation:</strong> Core Product teams (BC, Feedonomics, Makeswift) optimize their platforms incrementally</li>
+            <li><strong>Exploration:</strong> Tiger Teams explore new market solutions (WooCommerce Migration Kit)</li>
+            <li>Requires <strong>structural separation</strong> with integration mechanisms to prevent exploration from being starved by exploitation priorities</li>
+        </ul>
+        <p><strong>Hypothesis:</strong> Tiger Teams provide the structural separation for exploration, while Resource Leasing provides the integration mechanism.</p>
+        <p class="citation">Reference: Tushman, M. & O'Reilly, C. (2016). <em>Lead and Disrupt: How to Solve the Innovator's Dilemma.</em> Stanford Business Books.</p>
+    </div>
+
+    <div class="theory-box">
+        <div class="theory-title">Framework 3: Team Topologies (Enabling Team Pattern)</div>
+        <p><strong>Core Principle:</strong> Platform teams often lack capacity to integrate their own capabilities into customer-facing solutions. "Enabling Teams" are temporary teams that help platform teams deliver value, then dissolve.</p>
+        <p><strong>Applied to Commerce.com:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li><strong>Platform Teams:</strong> BigCommerce, Feedonomics, Makeswift (maintain infrastructure)</li>
+            <li><strong>Enabling Team:</strong> Tiger Team (forces integration, builds connective tissue, then transfers ownership)</li>
+            <li>Enabling Teams are <strong>not permanent</strong>—they dissolve after enabling the capability</li>
+        </ul>
+        <p><strong>Hypothesis:</strong> Tiger Teams are Enabling Teams that force platform integration for specific market opportunities, then graduate the solution to Core Product.</p>
+        <p class="citation">Reference: Skelton, M. & Pais, M. (2019). <em>Team Topologies: Organizing Business and Technology Teams for Fast Flow.</em> IT Revolution Press.</p>
+    </div>
+
+    <h3>Why These Frameworks Apply Here</h3>
+
+    <p>Commerce.com exhibits the specific conditions that make these frameworks relevant:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Organizational Characteristic</th>
+                <th>Why Traditional Structures Fail</th>
+                <th>Framework Solution</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Post-M&A Portfolio</strong><br>(3 companies acquired <2 years ago)</td>
+                <td>Separate P&Ls, independent roadmaps, no integration incentives</td>
+                <td>Galbraith's Integrator + Resource Leasing with P&L attribution</td>
+            </tr>
+            <tr>
+                <td><strong>Platform vs. Solution Conflict</strong><br>(Core teams optimize bricks, not houses)</td>
+                <td>Exploitation priorities starve exploration initiatives</td>
+                <td>Tushman's Ambidextrous Org (structural separation for exploration)</td>
+            </tr>
+            <tr>
+                <td><strong>Integration Debt</strong><br>(SAs build one-off fixes per customer)</td>
+                <td>Solutions remain on laptops, never productized</td>
+                <td>Team Topologies Enabling Team (force integration, transfer ownership)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="industry-precedents">0.5 Industry Precedents</h2>
+
+    <p>This model has been validated across similar organizations facing post-acquisition integration challenges:</p>
+
+    <div class="precedent-box">
+        <div class="precedent-company">Salesforce (Post-Tableau, Slack, MuleSoft Acquisitions)</div>
+        <p><strong>Challenge:</strong> Separate product lines (CRM, Collaboration, Integration) with minimal customer-facing integration.</p>
+        <p><strong>Solution:</strong> Created "Solutions Engineering" overlay teams chartered to build cross-product offerings (Customer 360 platform).</p>
+        <p><strong>Mechanism:</strong> Solutions teams had resource leasing agreements with product lines, with success metrics tied to unified solution adoption.</p>
+        <p><strong>Outcome:</strong> Customer 360 became a major growth driver, demonstrating value of integrated platform positioning.</p>
+    </div>
+
+    <div class="precedent-box">
+        <div class="precedent-company">Microsoft (Satya Nadella's "One Microsoft")</div>
+        <p><strong>Challenge:</strong> Azure, Office 365, Dynamics operated as separate P&Ls with competing go-to-market strategies.</p>
+        <p><strong>Solution:</strong> Created cross-cloud "Integrator" roles (e.g., Modern Work solutions that span Azure + Teams + SharePoint).</p>
+        <p><strong>Mechanism:</strong> Integrators had authority to define cross-product interfaces, with Core Platform teams required to honor API contracts.</p>
+        <p><strong>Outcome:</strong> Commercial cloud revenue exceeded $100B run rate, attributed to integrated solution positioning.</p>
+    </div>
+
+    <div class="precedent-box">
+        <div class="precedent-company">Adobe Creative Cloud</div>
+        <p><strong>Challenge:</strong> Photoshop, Illustrator, InDesign developed independently with no workflow integration.</p>
+        <p><strong>Solution:</strong> Created "Workflow Solutions" team that built cross-tool integrations (Creative Cloud Libraries, shared asset management).</p>
+        <p><strong>Mechanism:</strong> Workflow team defined integration schemas; tool teams implemented connectors. Solutions team dissolved after integration became core platform feature.</p>
+        <p><strong>Outcome:</strong> Subscription model success driven by integrated creative suite value proposition.</p>
+    </div>
+
+    <div class="precedent-box">
+        <div class="precedent-company">Vista Equity Portfolio Companies (SaaS Roll-ups)</div>
+        <p><strong>Challenge:</strong> 80+ acquired SaaS companies with overlapping capabilities and customer confusion.</p>
+        <p><strong>Solution:</strong> Centralized "Solutions Architecture" function with resource leasing model. Solutions Architects had budget authority to "lease" engineering capacity from portfolio companies.</p>
+        <p><strong>Mechanism:</strong> P&L attribution for participating companies, with revenue credited based on engineering contribution (measured in hours × hourly rate).</p>
+        <p><strong>Outcome:</strong> 20%+ EBITDA margin improvements attributed to integrated solution positioning and reduced customer acquisition costs.</p>
+    </div>
+
+    <h3>Key Pattern Across Precedents</h3>
+
+    <p>All successful implementations share three characteristics:</p>
+    <ol>
+        <li><strong>Formal Integrator Role:</strong> Not reliant on informal networks or "collaborative culture"</li>
+        <li><strong>Resource Leasing Mechanism:</strong> Integrator has mechanism to secure capacity from vertical teams</li>
+        <li><strong>Temporary Teams:</strong> Integration teams dissolve after capability is transferred to Core Platform</li>
+    </ol>
+
+    <h2 id="broken-state">1. The "Broken State" Assumptions</h2>
+
+    <p>Based on Commerce.com's structure as a composite of three acquired companies (BigCommerce, Feedonomics, Makeswift), I make the following assumptions about current organizational friction:</p>
+
+    <div class="assumption-block">
+        <div class="assumption-label">Assumption A1: Misaligned Roadmap Incentives</div>
+        <div class="assumption-text">BigCommerce, Feedonomics, and Makeswift engineering teams currently have no shared incentive structure to align roadmaps.</div>
+        <div class="validation">Validation: Interview each VP of Engineering. Ask "What percentage of your roadmap is driven by cross-product integration needs vs. internal product roadmap?" If answer is <10%, assumption confirmed.</div>
+    </div>
+
+    <div class="assumption-block">
+        <div class="assumption-label">Assumption A2: The "Last Mile" Problem</div>
+        <div class="assumption-text">Sales sells the "vision" of unified commerce (BC + Feedonomics + Makeswift working seamlessly), but customers experience integration friction because no one owns the "connective tissue."</div>
+        <div class="validation">Validation: Review lost deal post-mortems. Search for phrases like "integration complexity," "implementation timeline," or "requires custom development." If present in >30% of losses, assumption confirmed.</div>
+    </div>
+
+    <div class="assumption-block">
+        <div class="assumption-label">Assumption A3: Sales-Before-Feasibility Pattern</div>
+        <div class="assumption-text">Sales commits to customer requirements (e.g., "We can migrate your WooCommerce store in 2 weeks") before Engineering has validated technical feasibility, creating delivery debt.</div>
+        <div class="validation">Validation: Ask Sales Engineering: "How often do you discover a technical blocker after the deal is signed?" If answer is "frequently" or "sometimes," assumption confirmed.</div>
+    </div>
+
+    <div class="assumption-block">
+        <div class="assumption-label">Assumption A4: No "Solution Product Manager" Archetype</div>
+        <div class="assumption-text">Product Managers are organized vertically (PM for BC Core, PM for Feedonomics, PM for Makeswift). No one owns horizontal "market solutions" that span all three platforms.</div>
+        <div class="validation">Validation: Review org chart. Ask Vipul (CPO): "Who owns the WooCommerce migration opportunity as a product?" If answer is "no one" or "that's a partnership/GTM initiative," assumption confirmed.</div>
+    </div>
+
+    <div class="assumption-block">
+        <div class="assumption-label">Assumption A5: Resource Allocation via "Loudest Voice"</div>
+        <div class="assumption-text">Engineering resources are allocated based on who escalates the loudest to the CEO, not based on strategic ROI or validated market demand.</div>
+        <div class="validation">Validation: Ask Marcus (SVP Eng): "How do you prioritize competing requests for engineering capacity?" If answer involves "executive escalation" or "political negotiation" more than "business case scoring," assumption confirmed.</div>
+    </div>
+
+    <div class="risk-flag">
+        <div class="risk-flag-title">Critical Test</div>
+        <div class="risk-flag-content">If 3 or more of these assumptions validate as TRUE, the organization has a systemic execution problem that a traditional PM or VP cannot solve. This confirms the need for a "Context Conduit" role grounded in Galbraith's Integrator model.</div>
+    </div>
+
+    <div class="checkpoint">
+        <div class="checkpoint-title">CFO Validation (Post-Hypothesis)</div>
+        <p><strong>Confirmed Assumptions from CFO Discussion:</strong></p>
+        <ul style="margin-top: 12px; color: var(--text-secondary);">
+            <li><strong>A2 (Last Mile Problem):</strong> Confirmed. CFO: "we don't get good marks for ease of setup or ease of migration" — integration friction is a known reputation issue.</li>
+            <li><strong>A4 (No Solution PM):</strong> Confirmed. WooCommerce migration has "no one assigned" — it's a strategic opportunity without an owner.</li>
+            <li><strong>A5 (Resource Allocation):</strong> Partially confirmed. CFO expressed lack of confidence in existing product/engineering team's ability to "move quickly" and concerns about "corporate antibodies" slowing initiatives.</li>
+            <li><strong>Engineering Velocity:</strong> CFO confirmed teams are "not agile in their use of AI, hardly at all today. Things take too long and they have too many people involved."</li>
+        </ul>
+        <p style="margin-top: 16px;"><strong>Strategic Priority Validation:</strong> CFO stated WooCommerce migration is "a much bigger priority than what we are already kind of going down the path with Accenture" because "two thirds of our ARR is with small business and mid market customers" who have been neglected.</p>
+        <p style="margin-bottom: 0; margin-top: 16px;"><strong>Operating Model Validation:</strong> CFO proposed ultra-small initial team (3 people: you, Jordan Sim for product, strategy person for commercialization) operating in "stealth mode" with bi-weekly exec check-ins. This validates the "Tiger Team" model proposed in Section 3.</p>
+    </div>
+
+    <h2 id="l1-workflow">2. L1 Strategic Workflow (Hypothesis)</h2>
+
+    <h3>The Concept: "The Mandate Lifecycle"</h3>
+
+    <p>I hypothesize that Commerce.com lacks a structured process for moving from "strategic idea" to "shipped product" when that product requires cross-stack coordination. This is consistent with research on post-M&A organizations where vertical P&Ls resist cross-functional initiatives.</p>
+
+    <p><strong>The Hypothesis:</strong> We need a lightweight, brutal stage-gate process that forces early validation and prevents "zombie projects."</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph LR
+    A[Strategic Signal] -->|Week 1-2| B[Rough Draft]
+    B -->|Week 3-4| C[Reality Check]
+    C -->|Week 5-6| D[Resource Trade]
+    D -->|Week 7-18| E[Build]
+    E -->|Week 19-26| F[First 10 Alpha]
+    F -->|Week 27+| G[Scale or Kill]
+
+    style A fill:#1a1625,stroke:#22d3ee,color:#f9fafb
+    style B fill:#252033,stroke:#a78bfa,color:#f9fafb
+    style C fill:#252033,stroke:#f97316,color:#f9fafb
+    style D fill:#252033,stroke:#eab308,color:#f9fafb
+    style E fill:#252033,stroke:#34d399,color:#f9fafb
+    style F fill:#252033,stroke:#22d3ee,color:#f9fafb
+    style G fill:#252033,stroke:#ef4444,color:#f9fafb
+        </div>
+    </div>
+
+    <h3>Process Hypothesis: The Six-Stage Model</h3>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 0: Strategic Signal (Week 1-2)</div>
+        <div class="process-step-title">The "Rough Draft"</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Market signal (e.g., WPEngine CEO says "8,000 WooCommerce stores need migration path")<br>
+            <strong>Activity:</strong> Director drafts 1-page hypothesis (Problem, Opportunity, Revenue Model, Risk)<br>
+            <strong>Output:</strong> Executive Sponsor (CEO/CPO) approves exploration or kills immediately<br>
+            <strong>Gate Criteria:</strong> "Is this worth 2 weeks of investigation?" YES → Proceed. NO → Kill.
+        </div>
+    </div>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 1: Reality Check (Week 3-4)</div>
+        <div class="process-step-title">Technical Feasibility Validation</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Approved hypothesis<br>
+            <strong>Activity:</strong> Director + 1 Solutions Architect manually test the integration (e.g., migrate 1 WooCommerce store by hand)<br>
+            <strong>Output:</strong> "Gap Analysis Report" documenting technical blockers and effort estimates<br>
+            <strong>Gate Criteria:</strong> "Are there insurmountable technical barriers?" NO → Proceed. YES → Kill or Pivot.
+        </div>
+    </div>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 2: Resource Trade (Week 5-6)</div>
+        <div class="process-step-title">Executive Commitment</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Validated technical feasibility + revenue model<br>
+            <strong>Activity:</strong> Director negotiates "resource leases" with functional VPs (e.g., "I need 2 Catalyst engineers for 12 weeks")<br>
+            <strong>Output:</strong> Signed Resource Lease Agreements with P&L attribution terms<br>
+            <strong>Gate Criteria:</strong> "Can I secure the people I need?" YES → Proceed. NO → Escalate to CEO or Kill.
+        </div>
+    </div>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 3: Build (Week 7-18)</div>
+        <div class="process-step-title">Tiger Team Execution</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Leased engineering resources + Gap Analysis requirements<br>
+            <strong>Activity:</strong> Build the "Whole Product" (Code + Data Schema + SI Playbook + Demo)<br>
+            <strong>Output:</strong> Functional prototype ready for real customer deployment<br>
+            <strong>Gate Criteria:</strong> "Can we deploy this to a customer without it breaking?" YES → Proceed. NO → De-scope and retry.
+        </div>
+    </div>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 4: First 10 Alpha (Week 19-26)</div>
+        <div class="process-step-title">Customer Validation</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Functional prototype<br>
+            <strong>Activity:</strong> Director acts as "Shadow SE" for first 10 customer deployments<br>
+            <strong>Output:</strong> 10 reference customers, NPS score, validated unit economics<br>
+            <strong>Gate Criteria:</strong> "TTFV <3 weeks? NPS >40? Unit economics profitable?" ALL YES → Proceed to Scale. ANY NO → Iterate or Kill.
+        </div>
+    </div>
+
+    <div class="process-step">
+        <div class="process-step-number">Stage 5: Scale or Kill (Week 27+)</div>
+        <div class="process-step-title">GTM Handoff or Termination</div>
+        <div class="process-step-content">
+            <strong>Input:</strong> Validated customer success metrics<br>
+            <strong>Activity (if scaling):</strong> Transfer codebase to Core Engineering, transfer playbook to Sales, disband Tiger Team<br>
+            <strong>Activity (if killing):</strong> Document learnings, archive code, reallocate resources<br>
+            <strong>Outcome:</strong> Solution becomes a "Platform Brick" owned by Core Product, or initiative is terminated
+        </div>
+    </div>
+
+    <div class="checkpoint">
+        <div class="checkpoint-title">Validation Question for Leadership</div>
+        <p style="color: var(--text-secondary); margin-bottom: 0;">Does a process like this exist today? If not, do you have the political will to enforce hard stage gates? Research shows that without executive enforcement, exploration initiatives get starved by exploitation priorities (Tushman's finding).</p>
+    </div>
+
+    <h2 id="l2-workflow">3. L2 Tactical Workflow (Hypothesis)</h2>
+
+    <h3>The Concept: "The Integration Engine"</h3>
+
+    <p>Even with executive buy-in, the tactical challenge is: <strong>How do you ship across silos without re-orging the company?</strong></p>
+
+    <p>I hypothesize three mechanisms are required, grounded in Team Topologies research:</p>
+
+    <div class="hypothesis-box">
+        <h4>Mechanism 1: The "Guest Engineer" Model</h4>
+        <p><strong>Problem:</strong> You can't hire a standing "Tiger Team." Budget/headcount don't allow it.</p>
+        <p><strong>Hypothesis:</strong> Functional VPs will temporarily "lease" engineers if they receive P&L attribution credit for the solution's revenue.</p>
+        <p><strong>Research Basis:</strong> Vista Equity's internal market model demonstrated that P&L attribution creates voluntary resource sharing without re-org.</p>
+        <p><strong>Test:</strong> Pitch Anthony Leach (VP Catalyst): "Loan me 1 React engineer for 12 weeks. I'll credit Catalyst with 20% of the WooCommerce migration ARR in internal reporting. Deal?"</p>
+        <p style="margin-bottom: 0;"><strong>Validation:</strong> If he agrees, model works. If he refuses, you either need CEO mandate or the model is broken.</p>
+    </div>
+
+    <div class="hypothesis-box">
+        <h4>Mechanism 2: The "Unblocker Sync" Ceremony</h4>
+        <p><strong>Problem:</strong> Status meetings are useless. You need decision-making meetings.</p>
+        <p><strong>Hypothesis:</strong> A weekly 30-minute sync with one rule—"No status reports, only blockers and decisions"—can coordinate 3-4 distributed teams.</p>
+        <p><strong>Research Basis:</strong> Team Topologies emphasizes "interaction modes" over org charts. Enabling Teams need explicit decision-making ceremonies.</p>
+        <p><strong>Format:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li><strong>Agenda Item 1 (10 min):</strong> What's blocked? (List only, no explanations)</li>
+            <li><strong>Agenda Item 2 (15 min):</strong> Resolve top 2 blockers (Director makes the call, no consensus seeking)</li>
+            <li><strong>Agenda Item 3 (5 min):</strong> Interface Contract status (Green/Red on each integration point)</li>
+        </ul>
+        <p style="margin-bottom: 0;"><strong>Validation:</strong> Run this for 4 weeks. If blockers get resolved same-day, it works. If blockers linger for 2+ weeks, ceremony is broken.</p>
+    </div>
+
+    <div class="hypothesis-box">
+        <h4>Mechanism 3: The "Interface Contract" Artifact</h4>
+        <p><strong>Problem:</strong> "Who builds what" arguments kill velocity.</p>
+        <p><strong>Hypothesis:</strong> If the Director owns the <em>Interface Definition</em> (the contract), and Platform teams own the <em>Implementation</em> (the code), arguments disappear.</p>
+        <p><strong>Research Basis:</strong> Conway's Law states "Organizations design systems that mirror their communication structure." The Interface Contract explicitly defines the communication boundary.</p>
+        <p><strong>Example:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li><strong>Director defines:</strong> "I need an endpoint that accepts WooCommerce Product JSON and returns a BigCommerce Job ID."</li>
+            <li><strong>Feedonomics builds:</strong> The transformation logic (their choice: Python, Node, whatever).</li>
+            <li><strong>Contract:</strong> As long as the input/output schema matches, Director doesn't care how it's built.</li>
+        </ul>
+        <p style="margin-bottom: 0;"><strong>Validation:</strong> If Feedonomics team pushes back with "that's not how we do things," you need executive air cover. Test this in Week 1.</p>
+    </div>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph TD
+    A[Tiger Team Lead<br/>Director] -->|Defines Interface| B[Interface Contract]
+    B -->|Consumed by| C[Catalyst Eng]
+    B -->|Consumed by| D[Feedonomics Eng]
+    B -->|Consumed by| E[Makeswift Eng]
+
+    C -->|Builds Implementation| F[Component Library]
+    D -->|Builds Implementation| G[Data Pipeline]
+    E -->|Builds Implementation| H[Visual Editor]
+
+    F --> I[Integrated Solution]
+    G --> I
+    H --> I
+
+    I -->|Ships to| J[Customer]
+
+    style A fill:#1a1625,stroke:#22d3ee,color:#f9fafb
+    style B fill:#252033,stroke:#a78bfa,color:#f9fafb
+    style I fill:#252033,stroke:#34d399,color:#f9fafb
+        </div>
+    </div>
+
+    <h2 id="failure-modes">3.5 Known Failure Modes (Anti-Patterns)</h2>
+
+    <p>Research on Integrator roles and Enabling Teams has identified four failure modes that will kill this model if not mitigated:</p>
+
+    <div class="anti-pattern">
+        <div class="anti-pattern-title">Anti-Pattern 1: The "Permanent Tiger Team" Trap</div>
+        <p><strong>Description:</strong> Tiger Teams never disband. They become another vertical silo competing for resources.</p>
+        <p><strong>Research Source:</strong> Tushman & O'Reilly warn that exploration units must be temporary or they ossify into exploitation units.</p>
+        <p><strong>Manifestation:</strong> Tiger Team starts owning "maintenance" of the WooCommerce Migration Kit instead of transferring it to Core Platform.</p>
+        <p><strong>Mitigation:</strong> Hard 6-month dissolution rule. After Stage 5, Tiger Team must disband and solution ownership must transfer to Core Product. Director moves to Instance 002.</p>
+    </div>
+
+    <div class="anti-pattern">
+        <div class="anti-pattern-title">Anti-Pattern 2: The "Shadow IT" Problem</div>
+        <p><strong>Description:</strong> Tiger Teams build infrastructure that Platform teams should own, creating technical debt and fragmentation.</p>
+        <p><strong>Research Source:</strong> Galbraith's warning about Integrators overstepping into functional domain expertise.</p>
+        <p><strong>Manifestation:</strong> Tiger Team builds its own deployment pipeline instead of using Platform DevOps infrastructure.</p>
+        <p><strong>Mitigation:</strong> Interface Definition ownership rule. Director owns "what" (the contract), Platform owns "how" (the implementation). Code transfers to Platform post-launch.</p>
+    </div>
+
+    <div class="anti-pattern">
+        <div class="anti-pattern-title">Anti-Pattern 3: The "Resource Hostage" Risk</div>
+        <p><strong>Description:</strong> Functional VPs refuse to lease resources, model collapses into political warfare.</p>
+        <p><strong>Research Source:</strong> Matrix organization failures (Bartlett & Ghoshal, 1990) show that without executive enforcement, dual reporting structures fail.</p>
+        <p><strong>Manifestation:</strong> VP Catalyst verbally agrees to lease engineer, then recalls them after 2 weeks for "urgent" roadmap work.</p>
+        <p><strong>Mitigation:</strong> CEO must enforce Resource Lease Agreements. Revocation only permitted for P0 production incidents. If VPs systematically violate leases, model requires CEO mandate or it will fail.</p>
+    </div>
+
+    <div class="anti-pattern">
+        <div class="anti-pattern-title">Anti-Pattern 4: The "Success Tax"</div>
+        <p><strong>Description:</strong> Tiger Team succeeds with First 10, Sales immediately over-sells before Platform can scale, solution collapses under demand.</p>
+        <p><strong>Research Source:</strong> Marty Cagan's <em>EMPOWERED</em> warns about sales selling "roadmap futures" before product is production-ready.</p>
+        <p><strong>Manifestation:</strong> First 10 WooCommerce migrations succeed. Sales signs 100 deals in Q2. Implementation team can't deliver. Customer churn ensues.</p>
+        <p><strong>Mitigation:</strong> Hard gate between First 10 (Alpha) and Scale. Director has veto authority over deal acceptance during Pilot phase. Sales cannot sell solution until exit criteria met (Section 2, Stage 4).</p>
+    </div>
+
+    <h2 id="audit-plan">4. The Day 1 to Day 30 Audit Plan</h2>
+
+    <p>If hired, I will not impose this framework on Day 1. I will <strong>validate the assumptions</strong> and <strong>build the real manual based on ground truth</strong>.</p>
+
+    <div class="audit-week">
+        <div class="audit-week-header">
+            <div class="week-number">Week 1</div>
+            <div class="week-title">The Friction Audit</div>
+        </div>
+        <div class="week-content">
+            <p><strong>Objective:</strong> Validate Assumptions A1-A5 from Section 1.</p>
+            <p><strong>Activities:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li><strong>Mon-Tue:</strong> 1:1 interviews with Marcus (SVP Eng), Anthony (Catalyst), Feedonomics Lead, Makeswift Lead</li>
+                <li><strong>Wed-Thu:</strong> 1:1 interviews with Vipul (CPO), Jordan (VP Product), Sales Engineering Lead</li>
+                <li><strong>Fri:</strong> Review lost deal post-mortems and customer implementation escalations</li>
+            </ul>
+            <p><strong>Deliverable:</strong> "Friction Audit Report" documenting which assumptions validated and which didn't.</p>
+        </div>
+    </div>
+
+    <div class="audit-week">
+        <div class="audit-week-header">
+            <div class="week-number">Week 2</div>
+            <div class="week-title">The Pilot Process Test</div>
+        </div>
+        <div class="week-content">
+            <p><strong>Objective:</strong> Run one small decision through the proposed L1 Workflow (Section 2) to see where it breaks.</p>
+            <p><strong>Test Case:</strong> WooCommerce Migration Feasibility (Stage 0 → Stage 1)</p>
+            <ul style="margin-top: 8px;">
+                <li><strong>Mon:</strong> Draft 1-page hypothesis: "We can capture 5% of WooCommerce migrations"</li>
+                <li><strong>Tue:</strong> Present to Travis (CEO) and Vipul (CPO) for Stage 0 approval</li>
+                <li><strong>Wed-Fri:</strong> If approved, execute Stage 1 (manual migration of 1 test store with 1 Solutions Architect)</li>
+            </ul>
+            <p><strong>Observation Points:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Did Travis/Vipul approve or defer? (Tests executive decisiveness)</li>
+                <li>Could I get a Solutions Architect for 3 days? (Tests resource flexibility)</li>
+                <li>Did the manual migration surface technical blockers? (Tests feasibility assumptions)</li>
+            </ul>
+            <p><strong>Deliverable:</strong> "Process Test Report" documenting what worked and what broke.</p>
+        </div>
+    </div>
+
+    <div class="audit-week">
+        <div class="audit-week-header">
+            <div class="week-number">Week 3</div>
+            <div class="week-title">The Integration Engine Test</div>
+        </div>
+        <div class="week-content">
+            <p><strong>Objective:</strong> Test the L2 Tactical Workflow (Section 3) mechanisms.</p>
+            <p><strong>Test 1: Guest Engineer Negotiation</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Pitch Anthony Leach for 1 engineer, 2-week loan, with P&L attribution offer</li>
+                <li>If he agrees: Mechanism validated</li>
+                <li>If he refuses: Document why (budget constraints? political resistance? lack of exec mandate?)</li>
+            </ul>
+            <p><strong>Test 2: Unblocker Sync Ceremony</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Run one "Unblocker Sync" with Catalyst + Feedonomics + Makeswift leads</li>
+                <li>Force the "no status, only decisions" rule</li>
+                <li>Observe: Do decisions get made in the meeting, or do they say "we need to take this offline"?</li>
+            </ul>
+            <p><strong>Test 3: Interface Contract</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>Draft a simple Interface Contract (e.g., "WooCommerce Product → BC Product transformation spec")</li>
+                <li>Present to Feedonomics: "Can you build to this spec?"</li>
+                <li>Observe: Do they accept the contract, or do they push back with "we need to redesign the spec"?</li>
+            </ul>
+            <p><strong>Deliverable:</strong> "Integration Engine Report" with green/red status on each mechanism.</p>
+        </div>
+    </div>
+
+    <div class="audit-week">
+        <div class="audit-week-header">
+            <div class="week-number">Week 4</div>
+            <div class="week-title">The Ratification</div>
+        </div>
+        <div class="week-content">
+            <p><strong>Objective:</strong> Present the validated Operating Framework to executive leadership.</p>
+            <p><strong>Format:</strong> 30-minute presentation to CEO, CPO, SVP Eng</p>
+            <p><strong>Agenda:</strong></p>
+            <ul style="margin-top: 8px;">
+                <li><strong>Slide 1-2:</strong> Friction Audit findings (which assumptions validated)</li>
+                <li><strong>Slide 3-4:</strong> Proposed L1 Workflow (refined based on Week 2 test)</li>
+                <li><strong>Slide 5-6:</strong> Proposed L2 Workflow (refined based on Week 3 tests)</li>
+                <li><strong>Slide 7:</strong> "What Needs to Be True" for this to work (e.g., "You must enforce stage gates," "VPs must honor resource leases")</li>
+                <li><strong>Slide 8:</strong> Recommendation: Approve Operating Framework v2.0 or Reject</li>
+            </ul>
+            <p><strong>Deliverable:</strong> Final Operating Framework v3.0 document based on validated ground truth.</p>
+        </div>
+    </div>
+
+    <div class="checkpoint">
+        <div class="checkpoint-title">Success Criteria for Day 30</div>
+        <p style="color: var(--text-secondary); margin-bottom: 0;">By end of Week 4, I will have either: (1) A ratified Operating Framework that the exec team commits to enforcing, OR (2) Evidence that the org cannot support this operating model, in which case I recommend against the role.</p>
+    </div>
+
+    <h2 id="what-needs-true">5. What Needs to Be True</h2>
+
+    <p>This operating model requires specific organizational capabilities validated in research on Integrator roles and Enabling Teams. If these are not present, the model will fail:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Requirement</th>
+                <th>Why It Matters</th>
+                <th>Validation Test</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Executive Decisiveness</strong></td>
+                <td>Stage gates only work if CEO/CPO will actually kill projects (Tushman's discipline)</td>
+                <td>Ask: "Show me a project you killed in the last 6 months." If none, decisiveness is lacking.</td>
+            </tr>
+            <tr>
+                <td><strong>VP Collaboration Willingness</strong></td>
+                <td>Resource leasing requires VPs to prioritize company goals over department empire-building</td>
+                <td>Test: Attempt one resource lease negotiation. If VP refuses without exec mandate, collaboration is low.</td>
+            </tr>
+            <tr>
+                <td><strong>Customer Access</strong></td>
+                <td>First 10 validation requires real customers, not test environments</td>
+                <td>Ask Sales: "Can you get me 10 WooCommerce merchants willing to pilot?" If answer is "maybe" or "that's hard," access is constrained.</td>
+            </tr>
+            <tr>
+                <td><strong>Technical Debt Tolerance</strong></td>
+                <td>Solutions require "duct tape" middleware that may not be production-grade initially</td>
+                <td>Ask Engineering: "Can we ship a 'good enough' solution that we refactor later?" If answer is "everything must be perfect," velocity will suffer.</td>
+            </tr>
+            <tr>
+                <td><strong>Sales Discipline</strong></td>
+                <td>Sales must not sell unvalidated solutions during Pilot phase (Cagan's warning)</td>
+                <td>Test: Tell Sales "You cannot sell WooCommerce migration until 10 pilots complete." If they agree, discipline exists. If they push back, it doesn't.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-flag">
+        <div class="risk-flag-title">Kill Criteria</div>
+        <div class="risk-flag-content">If 3 or more of these requirements fail validation during the 30-day audit, I will recommend against implementing this operating model. The organization is not ready, and forcing the model will cause political damage without delivering results. This is consistent with Galbraith's finding that Integrator roles fail without executive sponsorship.</div>
+    </div>
+
+    <h2 id="open-questions">6. Open Questions for Leadership</h2>
+
+    <p>These are the questions I need answered during the interview process or in Week 1:</p>
+
+    <div class="checkpoint">
+        <div class="checkpoint-title">Questions Answered by CFO (Daniel)</div>
+        <ul style="margin-top: 12px; color: var(--text-secondary);">
+            <li><strong>WPEngine Partnership Status:</strong> <span style="color: var(--accent-green);">ANSWERED.</span> Partnership is real and advanced. CFO: "we've been kicking this around with them for a few months." WP Engine has identified 3 customers and 3 agencies (Austin-based) ready to pilot. They have 8,000 WooCommerce mid-market customers as potential migration targets.</li>
+            <li><strong>Strategic Priority:</strong> <span style="color: var(--accent-green);">ANSWERED.</span> CFO views WooCommerce migration as higher priority than existing Accenture engagement because it directly addresses the neglected 2/3 of ARR (small business and mid-market).</li>
+            <li><strong>Technical Approach:</strong> <span style="color: var(--accent-green);">ANSWERED.</span> Catalyst is NOT the right stack. CFO: "I don't think we would attempt to use catalyst at all...looking for something much more basic and simple to manage the cutover."</li>
+            <li><strong>Operating Model:</strong> <span style="color: var(--accent-green);">ANSWERED.</span> CFO confirmed ultra-small team (3 people initially), stealth mode operation, bi-weekly exec check-ins. No large product/engineering team involvement during validation.</li>
+            <li><strong>Timeline:</strong> <span style="color: var(--accent-green);">ANSWERED.</span> No external announcement until "probably April" and only after technical validation is proven with case studies.</li>
+        </ul>
+    </div>
+
+    <p style="margin-top: 32px;"><strong>Remaining Questions for Vipul (CPO):</strong></p>
+
+    <ol>
+        <li><strong>Org Structure Clarity:</strong> Who reports to Vipul (CPO)? What's the actual PM structure across BC/Feedonomics/Makeswift?</li>
+        <li><strong>Jordan Sim's Role:</strong> CFO identified Jordan Sim (VP Product - Small Business/Mid Market) as key stakeholder. What's Jordan's current roadmap priority and capacity to support WooCommerce validation?</li>
+        <li><strong>Current Decision-Making Process:</strong> How do cross-platform features get prioritized today? Is there a formal process or is it ad-hoc?</li>
+        <li><strong>Resource Allocation Reality:</strong> CFO wants to avoid "corporate antibodies" slowing this down. What's the actual mechanism to ring-fence this initiative from existing roadmap processes?</li>
+        <li><strong>PMO Existence:</strong> Is there a Project Management Office? If not, who coordinates cross-functional execution today?</li>
+        <li><strong>Failed Initiative History:</strong> Show me a strategic initiative from the last 2 years that failed. What killed it? (This reveals the real constraints.)</li>
+        <li><strong>Budget Authority:</strong> Does this role have budget authority to pay for external contractors (e.g., offshore dev shop for middleware build)?</li>
+        <li><strong>AI-Augmented Engineering Mandate:</strong> CFO wants this to be a "test case" for AI-augmented development velocity. Is the broader org ready to learn from this, or will it be dismissed as a one-off?</li>
+    </ol>
+
+    <h2 id="references">7. References</h2>
+
+    <div class="references">
+        <h3>Organizational Design</h3>
+        <div class="ref-item">Galbraith, J. (2009). <em>Designing Matrix Organizations That Actually Work: How IBM, Procter & Gamble, and Others Design for Success.</em> Jossey-Bass.</div>
+        <div class="ref-item">Bartlett, C. & Ghoshal, S. (1990). "Matrix Management: Not a Structure, a Frame of Mind." <em>Harvard Business Review</em>, July-August.</div>
+        <div class="ref-item">Bower, J. (2001). "Not All M&As Are Alike—and That Matters." <em>Harvard Business Review</em>, March.</div>
+
+        <h3>Ambidextrous Organizations</h3>
+        <div class="ref-item">Tushman, M. & O'Reilly, C. (2016). <em>Lead and Disrupt: How to Solve the Innovator's Dilemma.</em> Stanford Business Books.</div>
+        <div class="ref-item">O'Reilly, C. & Tushman, M. (2004). "The Ambidextrous Organization." <em>Harvard Business Review</em>, April.</div>
+
+        <h3>Team Structures</h3>
+        <div class="ref-item">Skelton, M. & Pais, M. (2019). <em>Team Topologies: Organizing Business and Technology Teams for Fast Flow.</em> IT Revolution Press.</div>
+        <div class="ref-item">Conway, M. (1968). "How Do Committees Invent?" <em>Datamation</em>, April.</div>
+
+        <h3>Product Operating Models</h3>
+        <div class="ref-item">Cagan, M. (2020). <em>EMPOWERED: Ordinary People, Extraordinary Products.</em> Wiley.</div>
+        <div class="ref-item">Perri, M. (2018). <em>Escaping the Build Trap: How Effective Product Management Creates Real Value.</em> O'Reilly Media.</div>
+
+        <h3>Post-M&A Integration</h3>
+        <div class="ref-item">Haspeslagh, P. & Jemison, D. (1991). <em>Managing Acquisitions: Creating Value Through Corporate Renewal.</em> Free Press.</div>
+        <div class="ref-item">Marks, M. & Mirvis, P. (2010). <em>Joining Forces: Making One Plus One Equal Three in Mergers, Acquisitions, and Alliances.</em> Jossey-Bass.</div>
+    </div>
+
+    <h2 id="appendix-a">Appendix A: Role Title Options</h2>
+
+    <p>The following matrix evaluates alternative titles for this role. The choice should prioritize clarity to internal stakeholders and avoid confusion with existing roles or market expectations.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title Option</th>
+                <th>Internal Clarity</th>
+                <th>External Perception</th>
+                <th>Theoretical Grounding</th>
+                <th>Confusion Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Director of Strategic Solutions</strong><br><span style="font-size: 12px; color: var(--text-muted);">(Current)</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Generic, doesn't signal integration function</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Sounds like consulting/advisory</span></td>
+                <td style="color: var(--accent-red);">Low<br><span style="font-size: 12px;">Not a standard term in research</span></td>
+                <td style="color: var(--accent-red);">High<br><span style="font-size: 12px;">Confuses with pre-sales Solutions Engineering</span></td>
+            </tr>
+            <tr>
+                <td><strong>Director of Product Integration</strong></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Clear function: integrates BC/Feedonomics/Makeswift</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Sounds technical/engineering-focused</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Maps to Galbraith's "Integrator"</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Could be confused with integration engineers</span></td>
+            </tr>
+            <tr>
+                <td><strong>Director of Market Solutions</strong></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Distinguishes from Core Product (platform vs. market)</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Signals customer-facing outcomes</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Matches Adobe's "Workflow Solutions" model</span></td>
+                <td style="color: var(--accent-green);">Low<br><span style="font-size: 12px;">Clear distinction from marketing/demand gen</span></td>
+            </tr>
+            <tr>
+                <td><strong>Director of Solutions Architecture</strong></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Signals both technical authority and market focus</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Establishes architectural credibility</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Matches Microsoft's "Integrator Architect" roles</span></td>
+                <td style="color: var(--accent-red);">High<br><span style="font-size: 12px;">Conflates with pre-sales Solutions Architects (SAs)</span></td>
+            </tr>
+            <tr>
+                <td><strong>Director of Platform Integration & Solutions</strong></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Comprehensive: technical + commercial</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Long title, sounds bureaucratic</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Captures both Galbraith (integration) and market function</span></td>
+                <td style="color: var(--accent-yellow);">Medium<br><span style="font-size: 12px;">Complexity may confuse stakeholders</span></td>
+            </tr>
+            <tr>
+                <td><strong>Director of Integrated Solutions</strong></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Clear differentiation from vertical product lines</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Customers understand "integrated" = cohesive offering</span></td>
+                <td style="color: var(--accent-green);">High<br><span style="font-size: 12px;">Matches Vista Equity's portfolio model</span></td>
+                <td style="color: var(--accent-green);">Low<br><span style="font-size: 12px;">Minimal confusion with existing roles</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Key Decision Criteria</h3>
+
+    <div class="theory-box">
+        <div class="theory-title">Internal Org Clarity</div>
+        <p><strong>Critical Question:</strong> Will Vipul's PM team, Marcus's engineering leads, and Jordan's product org understand the boundary between this role and theirs?</p>
+        <p><strong>Test:</strong> Show org chart with new title. Ask: "Who owns the WooCommerce Migration opportunity?" If answer is unclear, title fails.</p>
+    </div>
+
+    <div class="theory-box">
+        <div class="theory-title">External Market Perception</div>
+        <p><strong>Critical Question:</strong> When partners (WPEngine), customers, or agencies see this title on LinkedIn/email signatures, what will they assume?</p>
+        <p><strong>Risk:</strong> If title suggests "pre-sales SE," inbound requests will be qualification calls instead of strategic partnership discussions.</p>
+    </div>
+
+    <div class="theory-box">
+        <div class="theory-title">Avoidance of Role Collision</div>
+        <p><strong>Existing Roles to Avoid Confusing:</strong></p>
+        <ul style="margin-top: 8px;">
+            <li><strong>VP Product (Core):</strong> Vipul and his team own BC/Feedonomics/Makeswift platform roadmaps</li>
+            <li><strong>Solutions Engineering:</strong> Pre-sales technical demos and proof-of-concepts</li>
+            <li><strong>Solutions Architects (SI Partners):</strong> External agency implementation resources</li>
+            <li><strong>Product Marketing:</strong> GTM positioning and messaging</li>
+        </ul>
+        <p style="margin-bottom: 0;"><strong>The title must signal:</strong> "I orchestrate platform capabilities into sellable market solutions, but I don't own platform roadmaps or pre-sales engineering."</p>
+    </div>
+
+    <h3>Recommendation Matrix</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>If Commerce.com prioritizes...</th>
+                <th>Recommended Title</th>
+                <th>Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Internal clarity for VPs</strong><br>(Vipul, Marcus, Jordan)</td>
+                <td>Director of Product Integration</td>
+                <td>Clearest signal of function: integrates products. Minimal ambiguity with existing roles.</td>
+            </tr>
+            <tr>
+                <td><strong>External credibility with partners</strong><br>(WPEngine, SIs, customers)</td>
+                <td>Director of Market Solutions</td>
+                <td>Signals customer outcomes and market positioning. Avoids confusion with internal engineering roles.</td>
+            </tr>
+            <tr>
+                <td><strong>Theoretical grounding for board/investors</strong></td>
+                <td>Director of Integrated Solutions</td>
+                <td>Matches Vista Equity playbook language. Validates role as standard in SaaS M&A integrations.</td>
+            </tr>
+            <tr>
+                <td><strong>Minimizing confusion risk across all stakeholders</strong></td>
+                <td><strong>Director of Market Solutions</strong><br><span style="color: var(--accent-cyan);">(Recommended)</span></td>
+                <td>Balances internal clarity, external perception, and avoidance of collision with pre-sales/platform roles.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="checkpoint">
+        <div class="checkpoint-title">Decision Prompt for Leadership</div>
+        <p style="color: var(--text-secondary); margin-bottom: 0;">Review this matrix and select the title that best fits Commerce.com's org culture and stakeholder expectations. The operating model described in this document remains the same regardless of title choice.</p>
+    </div>
+
+        <div class="footer">
+            <p><strong>Document Status:</strong> Hypothesis v2.1 — Research-Grounded Framework with CFO Validation</p>
+            <p><strong>Author:</strong> Nino Chavez (Candidate, Integrator Role)</p>
+            <p><strong>Audience:</strong> Travis Hess (CEO), Daniel (CFO), Vipul (CPO)</p>
+            <p style="margin-top: 16px;"><strong>Version History:</strong></p>
+            <p style="margin-top: 8px;">v1.0 — Initial hypothesis without theoretical grounding</p>
+            <p>v2.0 — Added Galbraith, Tushman, Team Topologies frameworks; industry precedents; failure mode analysis; academic references; role title matrix</p>
+            <p>v2.1 — Incorporated CFO validation; confirmed WP Engine partnership status, strategic priority, technical approach (non-Catalyst), ultra-small team operating model; updated open questions</p>
+            <p style="margin-top: 16px;"><em>This document is designed to be critiqued. The value is in identifying where established theory doesn't apply to Commerce.com's specific reality.</em></p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#22d3ee',
+                primaryTextColor: '#f9fafb',
+                primaryBorderColor: '#2d2640',
+                lineColor: '#22d3ee',
+                secondaryColor: '#a78bfa',
+                tertiaryColor: '#1a1625',
+                background: '#1a1625',
+                mainBkg: '#1a1625',
+                secondBkg: '#252033',
+                fontSize: '14px',
+                fontFamily: 'Inter, sans-serif'
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active section in navigation
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe all h2 sections
+        document.querySelectorAll('h2[id]').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

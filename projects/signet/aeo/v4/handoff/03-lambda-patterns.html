@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Optimization Service - Technical Handoff</title>
+        <style>
+        :root {
+            --color-brand-violet: #7c3aed;
+            --color-brand-navy: #1a365d;
+            --color-text-primary: #171717;
+            --color-text-secondary: #404040;
+            --color-text-body: #525252;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f5f5f5;
+            --color-bg-dark: #111827;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-info: #0284c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-body);
+            line-height: 1.6;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--color-bg-primary);
+            border-right: 1px solid #e5e5e5;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--color-brand-violet);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-header h1 {
+            font-weight: 700;
+            color: var(--color-brand-violet);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header .doc-type {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-section {
+            margin-bottom: 16px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.15s;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-brand-violet);
+        }
+
+        .nav-link.active {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 28px;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--color-brand-violet);
+            margin: 32px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-violet);
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            margin: 24px 0 12px;
+        }
+
+        h4 {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin: 16px 0 8px;
+        }
+
+        h5 {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin: 12px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--color-brand-violet);
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 12px 0 16px 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        li::marker {
+            color: var(--color-brand-violet);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+            background: var(--color-bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        th {
+            background: var(--color-bg-secondary);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: #f0fdf4;
+            font-weight: 600;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--color-bg-dark);
+            color: #e5e5e5;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        pre code {
+            display: block;
+            line-height: 1.5;
+            color: #e5e5e5;
+        }
+
+        p code, li code, td code {
+            background: #f5f5f5;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--color-brand-violet);
+            border: 1px solid #e5e5e5;
+        }
+
+        /* Blockquotes & Special Boxes */
+        blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid var(--color-brand-violet);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-body);
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid var(--color-warning);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 4px solid var(--color-info);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .text-diagram {
+            background: var(--color-bg-primary);
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .text-diagram h4 {
+            color: var(--color-brand-violet);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--color-success);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: var(--color-warning);
+        }
+
+        .badge-info {
+            background: #e0f2fe;
+            color: var(--color-info);
+        }
+
+        /* Checkboxes */
+        input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: var(--color-brand-violet);
+        }
+
+        /* Links */
+        a {
+            color: var(--color-brand-violet);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        a:hover {
+            color: var(--color-brand-navy);
+            text-decoration: underline;
+        }
+
+        /* Horizontal Rules */
+        hr {
+            border: none;
+            border-top: 1px solid #e5e5e5;
+            margin: 32px 0;
+        }
+
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            margin: 24px 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main-content {
+                margin-left: 240px;
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                margin: 0.5in;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+                font-size: 11px;
+            }
+
+            h1 { font-size: 22px; }
+            h2 { font-size: 16px; page-break-after: avoid; }
+            h3 { font-size: 13px; page-break-after: avoid; }
+            h4 { font-size: 11px; }
+
+            table { font-size: 10px; page-break-inside: avoid; }
+            th, td { padding: 6px 8px; }
+
+            .text-diagram {
+                page-break-inside: avoid;
+                border: 1px solid #e5e5e5;
+            }
+
+            pre {
+                page-break-inside: avoid;
+                background: #1a1a1a !important;
+                color: #e5e5e5 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .badge, .highlight-row {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>AEO Optimization Service: Technical Handoff</h1>
+                <div class="doc-type">AEO Optimization Service</div>
+            </div>
+
+
+    <div class="nav-section">
+      <div class="nav-section-title">Document Navigation</div>
+      <a href="00-executive-summary.html" class="nav-link">Executive Summary</a>
+      <a href="01-architecture-design.html" class="nav-link">Technical Architecture</a>
+      <a href="02-implementation-guide.html" class="nav-link">Implementation Guide</a>
+      <a href="03-lambda-patterns.html" class="nav-link active">Lambda Implementation Patterns</a>
+      <a href="04-operations-testing.html" class="nav-link">Operations & Testing</a>
+      <a href="05-api-specifications.html" class="nav-link">API Specifications</a>
+      <a href="06-appendix-alternative-staffing.html" class="nav-link">Appendix: Alternative Staffing</a>
+    </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+<h2 id="appendix-e-lambda-implementation-patterns">Appendix E: Lambda Implementation Patterns</h2>
+<h3 id="e1-base-lambda-handler-pattern">E.1: Base Lambda Handler Pattern</h3>
+<p>All Lambda functions follow this pattern:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+import json
+import boto3
+from aws_lambda_powertools import Logger, Tracer, Metrics
+from aws_lambda_powertools.metrics import MetricUnit
+
+logger = Logger()
+tracer = Tracer()
+metrics = Metrics()
+
+# Initialize clients outside handler for reuse
+s3 = boto3.client(&#39;s3&#39;)
+opensearch = get_opensearch_client()  # See E.2
+bedrock_runtime = boto3.client(&#39;bedrock-runtime&#39;, region_name=&#39;us-east-1&#39;)
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context
+@metrics.log_metrics
+def handler(event, context):
+    &quot;&quot;&quot;
+    Lambda function description.
+
+    Triggered by: S3 PUT / API Gateway / EventBridge
+
+    Input: event structure (see below)
+    Output: response structure (see below)
+    &quot;&quot;&quot;
+    try:
+        # 1. Validate input
+        validate_input(event)
+
+        # 2. Process request
+        result = process_request(event)
+
+        # 3. Log success metrics
+        metrics.add_metric(name=&quot;SuccessCount&quot;, unit=MetricUnit.Count, value=1)
+
+        # 4. Return response
+        return {
+            &#39;statusCode&#39;: 200,
+            &#39;body&#39;: json.dumps(result)
+        }
+
+    except ValidationError as e:
+        logger.error(f&quot;Validation failed: {str(e)}&quot;)
+        metrics.add_metric(name=&quot;ValidationErrorCount&quot;, unit=MetricUnit.Count, value=1)
+        return {
+            &#39;statusCode&#39;: 400,
+            &#39;body&#39;: json.dumps({&#39;error&#39;: &#39;Validation failed&#39;, &#39;details&#39;: str(e)})
+        }
+
+    except Exception as e:
+        logger.exception(f&quot;Unexpected error: {str(e)}&quot;)
+        metrics.add_metric(name=&quot;ErrorCount&quot;, unit=MetricUnit.Count, value=1)
+        return {
+            &#39;statusCode&#39;: 500,
+            &#39;body&#39;: json.dumps({&#39;error&#39;: &#39;Internal server error&#39;})
+        }
+</code></pre>
+<p><strong>Key Packages</strong>:</p>
+<pre><code class="language-txt"># requirements.txt
+aws-lambda-powertools==2.30.0
+boto3==1.34.0
+opensearch-py==2.4.0
+requests-aws4auth==1.2.3
+</code></pre>
+<hr>
+<h3 id="e2-opensearch-client-initialization">E.2: OpenSearch Client Initialization</h3>
+<pre><code class="language-python">from opensearchpy import OpenSearch, RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
+import boto3
+import os
+
+def get_opensearch_client():
+    &quot;&quot;&quot;
+    Initialize OpenSearch client with IAM authentication.
+
+    Environment Variables:
+    - OPENSEARCH_ENDPOINT: OpenSearch domain endpoint (e.g., aeo-kb.us-east-1.es.amazonaws.com)
+    - AWS_REGION: AWS region (default: us-east-1)
+    &quot;&quot;&quot;
+    host = os.environ[&#39;OPENSEARCH_ENDPOINT&#39;]
+    region = os.environ.get(&#39;AWS_REGION&#39;, &#39;us-east-1&#39;)
+
+    # Get AWS credentials from Lambda execution role
+    credentials = boto3.Session().get_credentials()
+    awsauth = AWS4Auth(
+        credentials.access_key,
+        credentials.secret_key,
+        region,
+        &#39;es&#39;,
+        session_token=credentials.token
+    )
+
+    client = OpenSearch(
+        hosts=[{&#39;host&#39;: host, &#39;port&#39;: 443}],
+        http_auth=awsauth,
+        use_ssl=True,
+        verify_certs=True,
+        connection_class=RequestsHttpConnection,
+        timeout=30,
+        max_retries=3,
+        retry_on_timeout=True
+    )
+
+    return client
+</code></pre>
+<hr>
+<h3 id="e3-ingestion-lambda-handler">E.3: Ingestion Lambda Handler</h3>
+<pre><code class="language-python">import json
+import boto3
+from datetime import datetime
+from typing import Dict, List
+
+s3 = boto3.client(&#39;s3&#39;)
+opensearch = get_opensearch_client()
+bedrock_runtime = boto3.client(&#39;bedrock-runtime&#39;, region_name=&#39;us-east-1&#39;)
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context
+def handler(event, context):
+    &quot;&quot;&quot;
+    Ingestion Lambda: S3 PUT → Validate → Embeddings → OpenSearch
+
+    Triggered by: S3 PUT event on aeo-raw-data/profound-exports/
+
+    Input event structure:
+    {
+      &quot;Records&quot;: [
+        {
+          &quot;s3&quot;: {
+            &quot;bucket&quot;: {&quot;name&quot;: &quot;aeo-raw-data&quot;},
+            &quot;object&quot;: {&quot;key&quot;: &quot;profound-exports/2024/01/15/batch-abc123.json&quot;}
+          }
+        }
+      ]
+    }
+    &quot;&quot;&quot;
+    successful = 0
+    failed = 0
+
+    for record in event[&#39;Records&#39;]:
+        try:
+            # 1. Fetch from S3
+            bucket = record[&#39;s3&#39;][&#39;bucket&#39;][&#39;name&#39;]
+            key = record[&#39;s3&#39;][&#39;object&#39;][&#39;key&#39;]
+
+            logger.info(f&quot;Processing {bucket}/{key}&quot;)
+
+            response = s3.get_object(Bucket=bucket, Key=key)
+            raw_data = json.loads(response[&#39;Body&#39;].read().decode(&#39;utf-8&#39;))
+
+            # 2. Validate schema
+            batch = validate_profound_batch(raw_data)
+
+            # 3. Process each scan
+            for scan in batch[&#39;scans&#39;]:
+                process_scan(scan)
+                successful += 1
+
+        except ValidationError as e:
+            logger.error(f&quot;Validation failed for {key}: {str(e)}&quot;)
+            failed += 1
+            # Send to DLQ for manual review
+            send_to_dlq(record, str(e))
+
+        except Exception as e:
+            logger.exception(f&quot;Processing failed for {key}: {str(e)}&quot;)
+            failed += 1
+
+    metrics.add_metric(name=&quot;SuccessfulScans&quot;, unit=MetricUnit.Count, value=successful)
+    metrics.add_metric(name=&quot;FailedScans&quot;, unit=MetricUnit.Count, value=failed)
+
+    return {
+        &#39;statusCode&#39;: 200,
+        &#39;body&#39;: json.dumps({
+            &#39;successful&#39;: successful,
+            &#39;failed&#39;: failed
+        })
+    }
+
+def validate_profound_batch(data: Dict) -&gt; Dict:
+    &quot;&quot;&quot;
+    Validate Profound batch structure.
+
+    Required fields:
+    - batch_id (str)
+    - scans (list, max 100 items)
+
+    Each scan requires:
+    - query (str, must be in prompt bank)
+    - scan_date (ISO 8601)
+    - llm_provider (str)
+    - brand_mentioned (bool)
+    - share_of_voice (float, 0-1)
+    - response_text (str)
+    &quot;&quot;&quot;
+    if &#39;batch_id&#39; not in data:
+        raise ValidationError(&quot;Missing batch_id&quot;)
+
+    if &#39;scans&#39; not in data or not isinstance(data[&#39;scans&#39;], list):
+        raise ValidationError(&quot;Missing or invalid scans array&quot;)
+
+    if len(data[&#39;scans&#39;]) &gt; 100:
+        raise ValidationError(f&quot;Batch size {len(data[&#39;scans&#39;])} exceeds limit of 100&quot;)
+
+    for i, scan in enumerate(data[&#39;scans&#39;]):
+        validate_scan(scan, i)
+
+    return data
+
+def validate_scan(scan: Dict, index: int):
+    &quot;&quot;&quot;Validate individual scan structure.&quot;&quot;&quot;
+    required_fields = [&#39;query&#39;, &#39;scan_date&#39;, &#39;llm_provider&#39;, &#39;brand_mentioned&#39;, &#39;share_of_voice&#39;, &#39;response_text&#39;]
+
+    for field in required_fields:
+        if field not in scan:
+            raise ValidationError(f&quot;Scan {index}: Missing field &#39;{field}&#39;&quot;)
+
+    # Validate share_of_voice range
+    if not (0 &lt;= scan[&#39;share_of_voice&#39;] &lt;= 1):
+        raise ValidationError(f&quot;Scan {index}: share_of_voice must be 0-1, got {scan[&#39;share_of_voice&#39;]}&quot;)
+
+    # Validate scan_date is recent (within last 48 hours)
+    scan_date = datetime.fromisoformat(scan[&#39;scan_date&#39;].replace(&#39;Z&#39;, &#39;+00:00&#39;))
+    age_hours = (datetime.now(scan_date.tzinfo) - scan_date).total_seconds() / 3600
+    if age_hours &gt; 48:
+        raise ValidationError(f&quot;Scan {index}: scan_date is {age_hours:.1f} hours old (max 48)&quot;)
+
+def process_scan(scan: Dict):
+    &quot;&quot;&quot;
+    Process single scan: Generate embedding → Index to OpenSearch.
+    &quot;&quot;&quot;
+    # 1. Generate embedding for query text
+    embedding = generate_embedding(scan[&#39;query&#39;])
+
+    # 2. Prepare document
+    document = {
+        &#39;query&#39;: scan[&#39;query&#39;],
+        &#39;query_vector&#39;: embedding,
+        &#39;scan_date&#39;: scan[&#39;scan_date&#39;],
+        &#39;llm_provider&#39;: scan[&#39;llm_provider&#39;],
+        &#39;brand_mentioned&#39;: scan[&#39;brand_mentioned&#39;],
+        &#39;share_of_voice&#39;: scan[&#39;share_of_voice&#39;],
+        &#39;response_text&#39;: scan[&#39;response_text&#39;],
+        &#39;competitors&#39;: scan.get(&#39;competitors&#39;, []),
+        &#39;indexed_at&#39;: datetime.utcnow().isoformat()
+    }
+
+    # 3. Index to OpenSearch
+    doc_id = f&quot;{scan[&#39;query&#39;]}_{scan[&#39;scan_date&#39;]}&quot;  # Unique ID
+
+    opensearch.index(
+        index=&#39;aeo-scans&#39;,
+        id=doc_id,
+        body=document,
+        refresh=False  # Don&#39;t force immediate refresh (performance optimization)
+    )
+
+    logger.info(f&quot;Indexed document: {doc_id}&quot;)
+
+def generate_embedding(text: str) -&gt; List[float]:
+    &quot;&quot;&quot;
+    Generate 1024-dim embedding using Bedrock Titan.
+
+    Args:
+        text: Input text (query)
+
+    Returns:
+        1024-dimensional vector
+    &quot;&quot;&quot;
+    request_body = json.dumps({
+        &#39;inputText&#39;: text
+    })
+
+    response = bedrock_runtime.invoke_model(
+        modelId=&#39;amazon.titan-embed-text-v1&#39;,
+        contentType=&#39;application/json&#39;,
+        accept=&#39;application/json&#39;,
+        body=request_body
+    )
+
+    response_body = json.loads(response[&#39;body&#39;].read())
+    embedding = response_body[&#39;embedding&#39;]
+
+    return embedding
+
+class ValidationError(Exception):
+    pass
+
+def send_to_dlq(record: Dict, error_message: str):
+    &quot;&quot;&quot;Send failed record to Dead Letter Queue for manual review.&quot;&quot;&quot;
+    sqs = boto3.client(&#39;sqs&#39;)
+    dlq_url = os.environ[&#39;DLQ_URL&#39;]
+
+    sqs.send_message(
+        QueueUrl=dlq_url,
+        MessageBody=json.dumps({
+            &#39;record&#39;: record,
+            &#39;error&#39;: error_message,
+            &#39;timestamp&#39;: datetime.utcnow().isoformat()
+        })
+    )
+</code></pre>
+<p><strong>Environment Variables</strong>:</p>
+<pre><code class="language-bash">OPENSEARCH_ENDPOINT=aeo-kb-dev.us-east-1.es.amazonaws.com
+DLQ_URL=https://sqs.us-east-1.amazonaws.com/123456789/aeo-ingestion-dlq
+AWS_REGION=us-east-1
+</code></pre>
+<p><strong>Memory</strong>: 1GB
+<strong>Timeout</strong>: 5 minutes
+<strong>Concurrency</strong>: 10 (limit concurrent executions to avoid overwhelming OpenSearch)</p>
+<hr>
+<h3 id="e4-opensearch-index-schema">E.4: OpenSearch Index Schema</h3>
+<p><strong>Index Name</strong>: <code>aeo-scans</code></p>
+<p><strong>Mapping</strong>:</p>
+<pre><code class="language-json">{
+  &quot;settings&quot;: {
+    &quot;index&quot;: {
+      &quot;number_of_shards&quot;: 3,
+      &quot;number_of_replicas&quot;: 1,
+      &quot;knn&quot;: true,
+      &quot;knn.algo_param.ef_search&quot;: 512
+    }
+  },
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;query&quot;: {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;fields&quot;: {
+          &quot;keyword&quot;: {
+            &quot;type&quot;: &quot;keyword&quot;
+          }
+        }
+      },
+      &quot;query_vector&quot;: {
+        &quot;type&quot;: &quot;knn_vector&quot;,
+        &quot;dimension&quot;: 1024,
+        &quot;method&quot;: {
+          &quot;name&quot;: &quot;hnsw&quot;,
+          &quot;space_type&quot;: &quot;cosinesimil&quot;,
+          &quot;engine&quot;: &quot;nmslib&quot;,
+          &quot;parameters&quot;: {
+            &quot;m&quot;: 16,
+            &quot;ef_construction&quot;: 100
+          }
+        }
+      },
+      &quot;scan_date&quot;: {
+        &quot;type&quot;: &quot;date&quot;,
+        &quot;format&quot;: &quot;strict_date_optional_time||epoch_millis&quot;
+      },
+      &quot;llm_provider&quot;: {
+        &quot;type&quot;: &quot;keyword&quot;
+      },
+      &quot;brand_mentioned&quot;: {
+        &quot;type&quot;: &quot;boolean&quot;
+      },
+      &quot;share_of_voice&quot;: {
+        &quot;type&quot;: &quot;float&quot;
+      },
+      &quot;response_text&quot;: {
+        &quot;type&quot;: &quot;text&quot;
+      },
+      &quot;competitors&quot;: {
+        &quot;type&quot;: &quot;keyword&quot;
+      },
+      &quot;indexed_at&quot;: {
+        &quot;type&quot;: &quot;date&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Index Creation</strong> (run once in dev):</p>
+<pre><code class="language-python">opensearch.indices.create(
+    index=&#39;aeo-scans&#39;,
+    body=index_mapping  # JSON above
+)
+</code></pre>
+<p><strong>Query Example</strong> (k-NN search):</p>
+<pre><code class="language-python">def search_similar_queries(query_text: str, top_k: int = 10) -&gt; List[Dict]:
+    &quot;&quot;&quot;
+    Search for similar queries using k-NN vector search.
+    &quot;&quot;&quot;
+    # 1. Generate query embedding
+    query_embedding = generate_embedding(query_text)
+
+    # 2. k-NN search
+    response = opensearch.search(
+        index=&#39;aeo-scans&#39;,
+        body={
+            &#39;size&#39;: top_k,
+            &#39;query&#39;: {
+                &#39;knn&#39;: {
+                    &#39;query_vector&#39;: {
+                        &#39;vector&#39;: query_embedding,
+                        &#39;k&#39;: top_k
+                    }
+                }
+            },
+            &#39;_source&#39;: [&#39;query&#39;, &#39;scan_date&#39;, &#39;share_of_voice&#39;, &#39;brand_mentioned&#39;]
+        }
+    )
+
+    results = []
+    for hit in response[&#39;hits&#39;][&#39;hits&#39;]:
+        results.append({
+            &#39;query&#39;: hit[&#39;_source&#39;][&#39;query&#39;],
+            &#39;scan_date&#39;: hit[&#39;_source&#39;][&#39;scan_date&#39;],
+            &#39;share_of_voice&#39;: hit[&#39;_source&#39;][&#39;share_of_voice&#39;],
+            &#39;brand_mentioned&#39;: hit[&#39;_source&#39;][&#39;brand_mentioned&#39;],
+            &#39;score&#39;: hit[&#39;_score&#39;]  # Cosine similarity score
+        })
+
+    return results
+</code></pre>
+<hr>
+<h3 id="e5-bedrock-agent-tool-lambda-query-tool">E.5: Bedrock Agent Tool Lambda (Query Tool)</h3>
+<pre><code class="language-python">import json
+from typing import Dict, List
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context
+def handler(event, context):
+    &quot;&quot;&quot;
+    Query Tool Lambda: Search knowledge base via k-NN.
+
+    Invoked by: Bedrock Agent
+
+    Input event structure:
+    {
+      &quot;messageVersion&quot;: &quot;1.0&quot;,
+      &quot;agent&quot;: {...},
+      &quot;inputText&quot;: &quot;What&#39;s our visibility on gold chains?&quot;,
+      &quot;sessionId&quot;: &quot;session-abc123&quot;,
+      &quot;actionGroup&quot;: &quot;query_knowledge_base&quot;,
+      &quot;function&quot;: &quot;search&quot;,
+      &quot;parameters&quot;: [
+        {&quot;name&quot;: &quot;query_text&quot;, &quot;type&quot;: &quot;string&quot;, &quot;value&quot;: &quot;gold chains&quot;},
+        {&quot;name&quot;: &quot;top_k&quot;, &quot;type&quot;: &quot;integer&quot;, &quot;value&quot;: &quot;10&quot;}
+      ]
+    }
+
+    Output structure:
+    {
+      &quot;messageVersion&quot;: &quot;1.0&quot;,
+      &quot;response&quot;: {
+        &quot;actionGroup&quot;: &quot;query_knowledge_base&quot;,
+        &quot;function&quot;: &quot;search&quot;,
+        &quot;functionResponse&quot;: {
+          &quot;responseBody&quot;: {
+            &quot;TEXT&quot;: {
+              &quot;body&quot;: &quot;{\&quot;results\&quot;: [...], \&quot;count\&quot;: 10, \&quot;confidence\&quot;: 0.87}&quot;
+            }
+          }
+        }
+      }
+    }
+    &quot;&quot;&quot;
+    # 1. Extract parameters
+    parameters = {p[&#39;name&#39;]: p[&#39;value&#39;] for p in event[&#39;parameters&#39;]}
+    query_text = parameters[&#39;query_text&#39;]
+    top_k = int(parameters.get(&#39;top_k&#39;, 10))
+
+    logger.info(f&quot;Searching for: {query_text}, top_k={top_k}&quot;)
+
+    # 2. Search OpenSearch
+    results = search_similar_queries(query_text, top_k)
+
+    # 3. Calculate confidence (average similarity score)
+    confidence = sum(r[&#39;score&#39;] for r in results) / len(results) if results else 0
+
+    # 4. Format response for Bedrock Agent
+    response_body = {
+        &#39;results&#39;: results,
+        &#39;count&#39;: len(results),
+        &#39;confidence&#39;: round(confidence, 2)
+    }
+
+    return {
+        &#39;messageVersion&#39;: &#39;1.0&#39;,
+        &#39;response&#39;: {
+            &#39;actionGroup&#39;: event[&#39;actionGroup&#39;],
+            &#39;function&#39;: event[&#39;function&#39;],
+            &#39;functionResponse&#39;: {
+                &#39;responseBody&#39;: {
+                    &#39;TEXT&#39;: {
+                        &#39;body&#39;: json.dumps(response_body)
+                    }
+                }
+            }
+        }
+    }
+</code></pre>
+<p><strong>Memory</strong>: 1GB
+<strong>Timeout</strong>: 30 seconds</p>
+<hr>
+<h3 id="e6-distillation-lambda-weekly-sov-delta">E.6: Distillation Lambda (Weekly SOV Delta)</h3>
+<pre><code class="language-python">import json
+from datetime import datetime, timedelta
+from typing import Dict, List
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context
+def handler(event, context):
+    &quot;&quot;&quot;
+    Distillation Lambda: Calculate weekly SOV delta (T0 vs T1).
+
+    Triggered by: EventBridge schedule (Sunday 2am UTC)
+
+    Process:
+    1. Query T0 data (T-14d to T-7d)
+    2. Query T1 data (T-7d to T)
+    3. Calculate deltas per query
+    4. Generate aggregate report
+    5. Write to S3
+    &quot;&quot;&quot;
+    # 1. Define time windows
+    now = datetime.utcnow()
+    t1_end = now
+    t1_start = now - timedelta(days=7)
+    t0_end = t1_start
+    t0_start = now - timedelta(days=14)
+
+    logger.info(f&quot;T0: {t0_start} to {t0_end}&quot;)
+    logger.info(f&quot;T1: {t1_start} to {t1_end}&quot;)
+
+    # 2. Query T0 and T1 data
+    t0_data = query_time_window(t0_start, t0_end)
+    t1_data = query_time_window(t1_start, t1_end)
+
+    # 3. Calculate deltas
+    deltas = calculate_deltas(t0_data, t1_data)
+
+    # 4. Generate report
+    report = generate_report(deltas, t1_end)
+
+    # 5. Write to S3
+    report_key = f&quot;weekly/{t1_end.strftime(&#39;%Y-%m-%d&#39;)}.json&quot;
+    write_report_to_s3(report, report_key)
+
+    logger.info(f&quot;Report written to s3://aeo-reports/{report_key}&quot;)
+
+    return {
+        &#39;statusCode&#39;: 200,
+        &#39;body&#39;: json.dumps({
+            &#39;report_date&#39;: t1_end.isoformat(),
+            &#39;aggregate_delta&#39;: report[&#39;aggregate_delta&#39;],
+            &#39;improved_count&#39;: report[&#39;improved_count&#39;],
+            &#39;declined_count&#39;: report[&#39;declined_count&#39;]
+        })
+    }
+
+def query_time_window(start: datetime, end: datetime) -&gt; Dict[str, float]:
+    &quot;&quot;&quot;
+    Query OpenSearch for average SOV per query in time window.
+
+    Returns:
+        {&quot;query1&quot;: 0.25, &quot;query2&quot;: 0.18, ...}
+    &quot;&quot;&quot;
+    response = opensearch.search(
+        index=&#39;aeo-scans&#39;,
+        body={
+            &#39;size&#39;: 0,  # No individual hits, just aggregations
+            &#39;query&#39;: {
+                &#39;range&#39;: {
+                    &#39;scan_date&#39;: {
+                        &#39;gte&#39;: start.isoformat(),
+                        &#39;lt&#39;: end.isoformat()
+                    }
+                }
+            },
+            &#39;aggs&#39;: {
+                &#39;by_query&#39;: {
+                    &#39;terms&#39;: {
+                        &#39;field&#39;: &#39;query.keyword&#39;,
+                        &#39;size&#39;: 500  # Assume &lt;500 unique queries
+                    },
+                    &#39;aggs&#39;: {
+                        &#39;avg_sov&#39;: {
+                            &#39;avg&#39;: {
+                                &#39;field&#39;: &#39;share_of_voice&#39;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    )
+
+    result = {}
+    for bucket in response[&#39;aggregations&#39;][&#39;by_query&#39;][&#39;buckets&#39;]:
+        query = bucket[&#39;key&#39;]
+        avg_sov = bucket[&#39;avg_sov&#39;][&#39;value&#39;]
+        result[query] = avg_sov
+
+    return result
+
+def calculate_deltas(t0_data: Dict[str, float], t1_data: Dict[str, float]) -&gt; List[Dict]:
+    &quot;&quot;&quot;
+    Calculate SOV delta for each query.
+
+    Returns:
+        [
+          {&quot;query&quot;: &quot;gold chains&quot;, &quot;t0_sov&quot;: 0.20, &quot;t1_sov&quot;: 0.25, &quot;delta&quot;: 0.05},
+          ...
+        ]
+    &quot;&quot;&quot;
+    deltas = []
+
+    all_queries = set(t0_data.keys()) | set(t1_data.keys())
+
+    for query in all_queries:
+        t0_sov = t0_data.get(query, 0)
+        t1_sov = t1_data.get(query, 0)
+        delta = t1_sov - t0_sov
+
+        deltas.append({
+            &#39;query&#39;: query,
+            &#39;t0_sov&#39;: round(t0_sov, 3),
+            &#39;t1_sov&#39;: round(t1_sov, 3),
+            &#39;delta&#39;: round(delta, 3)
+        })
+
+    # Sort by absolute delta (biggest changes first)
+    deltas.sort(key=lambda x: abs(x[&#39;delta&#39;]), reverse=True)
+
+    return deltas
+
+def generate_report(deltas: List[Dict], report_date: datetime) -&gt; Dict:
+    &quot;&quot;&quot;Generate summary report.&quot;&quot;&quot;
+    improved = [d for d in deltas if d[&#39;delta&#39;] &gt; 0]
+    declined = [d for d in deltas if d[&#39;delta&#39;] &lt; 0]
+
+    aggregate_delta = sum(d[&#39;delta&#39;] for d in deltas) / len(deltas) if deltas else 0
+
+    return {
+        &#39;report_date&#39;: report_date.isoformat(),
+        &#39;aggregate_delta&#39;: round(aggregate_delta, 3),
+        &#39;improved_count&#39;: len(improved),
+        &#39;declined_count&#39;: len(declined),
+        &#39;total_queries&#39;: len(deltas),
+        &#39;top_gainers&#39;: improved[:10],  # Top 10 improvements
+        &#39;top_decliners&#39;: declined[:10],  # Top 10 declines
+        &#39;all_deltas&#39;: deltas
+    }
+
+def write_report_to_s3(report: Dict, key: str):
+    &quot;&quot;&quot;Write report to S3.&quot;&quot;&quot;
+    s3.put_object(
+        Bucket=&#39;aeo-reports&#39;,
+        Key=key,
+        Body=json.dumps(report, indent=2),
+        ContentType=&#39;application/json&#39;
+    )
+</code></pre>
+<p><strong>Memory</strong>: 4GB (handles large aggregation queries)
+<strong>Timeout</strong>: 15 minutes
+<strong>EventBridge Schedule</strong>: <code>cron(0 2 ? * SUN *)</code> (Sunday 2am UTC)</p>
+<hr>
+        </main>
+    </div>
+</body>
+</html>

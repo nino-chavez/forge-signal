@@ -1,0 +1,232 @@
+# Agentic Commerce Stack
+# Layered architecture for AI-powered commerce
+
+direction: down
+
+# Title
+title: Agentic Commerce Stack {
+  shape: text
+  style.font-size: 32
+  style.bold: true
+  style.font-color: "#460073"
+  near: top-center
+}
+
+# Layer 1: Customer Touchpoints
+touchpoints: CUSTOMER TOUCHPOINTS {
+  style.fill: "#A100FF"
+  style.stroke: "#460073"
+  style.stroke-width: 2
+  style.font-color: "#FFFFFF"
+  style.font-size: 16
+  style.bold: true
+  style.border-radius: 16
+
+  voice: Voice Assistants {
+    style.fill: "#E8D5F2"
+    style.stroke: "#460073"
+    style.font-color: "#460073"
+    style.border-radius: 8
+  }
+  chat: Chat {
+    style.fill: "#E8D5F2"
+    style.stroke: "#460073"
+    style.font-color: "#460073"
+    style.border-radius: 8
+  }
+  mobile: Mobile {
+    style.fill: "#E8D5F2"
+    style.stroke: "#460073"
+    style.font-color: "#460073"
+    style.border-radius: 8
+  }
+  web: Web {
+    style.fill: "#E8D5F2"
+    style.stroke: "#460073"
+    style.font-color: "#460073"
+    style.border-radius: 8
+  }
+  store: In-Store {
+    style.fill: "#E8D5F2"
+    style.stroke: "#460073"
+    style.font-color: "#460073"
+    style.border-radius: 8
+  }
+}
+
+# Layer 2: Agent Layer
+agents: AGENT LAYER {
+  style.fill: "#00D4AA"
+  style.stroke: "#008866"
+  style.stroke-width: 2
+  style.font-color: "#1a1a2e"
+  style.font-size: 16
+  style.bold: true
+  style.border-radius: 16
+
+  llms: LLMs {
+    style.fill: "#FFFFFF"
+    style.stroke: "#008866"
+    style.font-color: "#008866"
+    style.border-radius: 8
+  }
+  tools: Tool Calling {
+    style.fill: "#FFFFFF"
+    style.stroke: "#008866"
+    style.font-color: "#008866"
+    style.border-radius: 8
+  }
+  guardrails: Guardrails {
+    style.fill: "#FFFFFF"
+    style.stroke: "#008866"
+    style.font-color: "#008866"
+    style.border-radius: 8
+  }
+  context: Context Engine {
+    style.fill: "#FFFFFF"
+    style.stroke: "#008866"
+    style.font-color: "#008866"
+    style.border-radius: 8
+  }
+}
+
+# Layer 3: Protocol Layer
+protocols: PROTOCOL LAYER {
+  style.fill: "#3B82F6"
+  style.stroke: "#1D4ED8"
+  style.stroke-width: 2
+  style.font-color: "#FFFFFF"
+  style.font-size: 16
+  style.bold: true
+  style.border-radius: 16
+
+  acp: "ACP (OpenAI)" {
+    style.fill: "#DBEAFE"
+    style.stroke: "#3B82F6"
+    style.font-color: "#1D4ED8"
+    style.border-radius: 8
+  }
+  ap2: "AP2 (Google)" {
+    style.fill: "#DBEAFE"
+    style.stroke: "#3B82F6"
+    style.font-color: "#1D4ED8"
+    style.border-radius: 8
+  }
+  mcp: "MCP (Anthropic)" {
+    style.fill: "#DBEAFE"
+    style.stroke: "#3B82F6"
+    style.font-color: "#1D4ED8"
+    style.border-radius: 8
+  }
+}
+
+# Layer 4: Commerce Services
+commerce: COMMERCE SERVICES {
+  style.fill: "#F59E0B"
+  style.stroke: "#D97706"
+  style.stroke-width: 2
+  style.font-color: "#1a1a2e"
+  style.font-size: 16
+  style.bold: true
+  style.border-radius: 16
+
+  oms: OMS {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+  pim: PIM {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+  cdp: CDP {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+  atp: ATP {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+  payments: Payments {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+  fulfillment: Fulfillment {
+    style.fill: "#FEF3C7"
+    style.stroke: "#F59E0B"
+    style.font-color: "#92400E"
+    style.border-radius: 8
+  }
+}
+
+# Layer 5: Data Layer
+data: DATA LAYER {
+  style.fill: "#6366F1"
+  style.stroke: "#4338CA"
+  style.stroke-width: 2
+  style.font-color: "#FFFFFF"
+  style.font-size: 16
+  style.bold: true
+  style.border-radius: 16
+
+  vector: Vector DB {
+    shape: cylinder
+    style.fill: "#E0E7FF"
+    style.stroke: "#6366F1"
+    style.font-color: "#4338CA"
+  }
+  features: Feature Store {
+    shape: cylinder
+    style.fill: "#E0E7FF"
+    style.stroke: "#6366F1"
+    style.font-color: "#4338CA"
+  }
+  analytics: Analytics {
+    shape: cylinder
+    style.fill: "#E0E7FF"
+    style.stroke: "#6366F1"
+    style.font-color: "#4338CA"
+  }
+  rag: RAG Sources {
+    shape: cylinder
+    style.fill: "#E0E7FF"
+    style.stroke: "#6366F1"
+    style.font-color: "#4338CA"
+  }
+}
+
+# Main flow connections
+touchpoints -> agents: {
+  style.stroke: "#460073"
+  style.stroke-width: 3
+}
+agents -> protocols: {
+  style.stroke: "#008866"
+  style.stroke-width: 3
+}
+protocols -> commerce: {
+  style.stroke: "#1D4ED8"
+  style.stroke-width: 3
+}
+commerce -> data: {
+  style.stroke: "#D97706"
+  style.stroke-width: 3
+}
+
+# Feedback loop
+data -> agents: Real-time Data {
+  style.stroke: "#6366F1"
+  style.stroke-width: 2
+  style.stroke-dash: 5
+  style.font-color: "#6366F1"
+  style.font-size: 12
+}

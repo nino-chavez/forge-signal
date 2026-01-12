@@ -1,0 +1,110 @@
+direction: right
+
+title: |md
+  ## Phase Dependencies & Critical Path
+| {
+  near: top-center
+  shape: text
+  style.font-size: 18
+}
+
+classes: {
+  critical: {
+    shape: rectangle
+    style.border-radius: 8
+    style.stroke-width: 2
+    style.font-size: 10
+  }
+  parallel: {
+    shape: rectangle
+    style.border-radius: 8
+    style.stroke-width: 2
+    style.font-size: 10
+    style.stroke-dash: 3
+  }
+  critical-arrow: {
+    style.stroke: "#dc2626"
+    style.stroke-width: 3
+  }
+  parallel-arrow: {
+    style.stroke: "#6b7280"
+    style.stroke-width: 2
+  }
+}
+
+# Simple flowchart - Critical Path as main spine
+P0: |md
+  **P0: Design**
+  Wk 0-2
+| {
+  class: critical
+  style.stroke: "#6366f1"
+  style.fill: "#eef2ff"
+}
+
+P2: |md
+  **P2: Data Foundation**
+  Wk 3-4
+| {
+  class: critical
+  style.stroke: "#7c3aed"
+  style.fill: "#f5f3ff"
+}
+
+P3: |md
+  **P3: Agent Core**
+  Wk 5-7
+| {
+  class: critical
+  style.stroke: "#f59e0b"
+  style.fill: "#fffbeb"
+}
+
+P5: |md
+  **P5: Integration**
+  Wk 9
+| {
+  class: critical
+  style.stroke: "#0ea5e9"
+  style.fill: "#f0f9ff"
+}
+
+P6: |md
+  **P6: Pilot**
+  Wk 10-12
+| {
+  class: critical
+  style.stroke: "#ec4899"
+  style.fill: "#fdf2f8"
+}
+
+# Parallel phases
+P1: |md
+  **P1: Mobilization**
+  Wk 2
+| {
+  class: parallel
+  style.stroke: "#059669"
+  style.fill: "#ecfdf5"
+}
+
+P4: |md
+  **P4: Measurement**
+  Wk 8
+| {
+  class: parallel
+  style.stroke: "#10b981"
+  style.fill: "#ecfdf5"
+}
+
+# Critical Path (red arrows)
+P0 -> P2: { class: critical-arrow }
+P2 -> P3: { class: critical-arrow }
+P3 -> P5: { class: critical-arrow }
+P5 -> P6: { class: critical-arrow }
+
+# Parallel branches (gray arrows)
+P0 -> P1: { class: parallel-arrow }
+P1 -> P2: { class: parallel-arrow }
+P2 -> P4: { class: parallel-arrow }
+P4 -> P5: { class: parallel-arrow }

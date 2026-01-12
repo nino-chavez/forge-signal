@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Optimization Service - Appendix: Alternative Staffing Model</title>
+    <style>
+        :root {
+            --color-brand-violet: #7c3aed;
+            --color-brand-navy: #1a365d;
+            --color-text-primary: #171717;
+            --color-text-secondary: #404040;
+            --color-text-body: #525252;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f5f5f5;
+            --color-bg-dark: #111827;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-info: #0284c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-body);
+            line-height: 1.6;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--color-bg-primary);
+            border-right: 1px solid #e5e5e5;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--color-brand-violet);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-header h1 {
+            font-weight: 700;
+            color: var(--color-brand-violet);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header .doc-type {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-section {
+            margin-bottom: 16px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.15s;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-brand-violet);
+        }
+
+        .nav-link.active {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 28px;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--color-brand-violet);
+            margin: 32px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-violet);
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            margin: 24px 0 12px;
+        }
+
+        h4 {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin: 16px 0 8px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--color-brand-violet);
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 12px 0 16px 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        li::marker {
+            color: var(--color-brand-violet);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+            background: var(--color-bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        th {
+            background: var(--color-bg-secondary);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: #f0fdf4;
+            font-weight: 600;
+        }
+
+        .highlight-row td {
+            color: var(--color-success);
+        }
+
+        .warning-row {
+            background: #fef3c7;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--color-bg-dark);
+            color: #e5e5e5;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        p code, li code, td code {
+            background: #f5f5f5;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--color-brand-violet);
+            border: 1px solid #e5e5e5;
+        }
+
+        /* Blockquotes & Special Boxes */
+        blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid var(--color-brand-violet);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-body);
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid var(--color-warning);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 4px solid var(--color-info);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid var(--color-success);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .text-diagram {
+            background: var(--color-bg-primary);
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .text-diagram h4 {
+            color: var(--color-brand-violet);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--color-success);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: var(--color-warning);
+        }
+
+        .badge-info {
+            background: #e0f2fe;
+            color: var(--color-info);
+        }
+
+        /* Links */
+        a {
+            color: var(--color-brand-violet);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        a:hover {
+            color: var(--color-brand-navy);
+            text-decoration: underline;
+        }
+
+        /* Horizontal Rules */
+        hr {
+            border: none;
+            border-top: 1px solid #e5e5e5;
+            margin: 32px 0;
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .comparison-card {
+            background: var(--color-bg-primary);
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .comparison-card h4 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-violet);
+        }
+
+        .comparison-card.recommended {
+            border-color: var(--color-success);
+            border-width: 2px;
+        }
+
+        .comparison-card.recommended h4 {
+            border-bottom-color: var(--color-success);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main-content {
+                margin-left: 240px;
+                padding: 32px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                margin: 0.5in;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+                font-size: 11px;
+            }
+
+            h1 { font-size: 22px; }
+            h2 { font-size: 16px; page-break-after: avoid; }
+            h3 { font-size: 13px; page-break-after: avoid; }
+
+            table { font-size: 10px; page-break-inside: avoid; }
+            th, td { padding: 6px 8px; }
+
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .text-diagram, .note, .info-box, .success-box {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>AEO Optimization Service: Technical Handoff</h1>
+                <div class="doc-type">Appendix: Alternative Staffing</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Document Navigation</div>
+                <a href="00-executive-summary.html" class="nav-link">Executive Summary</a>
+                <a href="01-architecture-design.html" class="nav-link">Technical Architecture</a>
+                <a href="02-implementation-guide.html" class="nav-link">Implementation Guide</a>
+                <a href="03-lambda-patterns.html" class="nav-link">Lambda Implementation Patterns</a>
+                <a href="04-operations-testing.html" class="nav-link">Operations & Testing</a>
+                <a href="05-api-specifications.html" class="nav-link">API Specifications</a>
+                <a href="06-appendix-alternative-staffing.html" class="nav-link active">Appendix: Alternative Staffing</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">On This Page</div>
+                <a href="#context" class="nav-link">Context</a>
+                <a href="#cdk-scope" class="nav-link">CDK Work Scope</a>
+                <a href="#staffing-comparison" class="nav-link">Staffing Comparison</a>
+                <a href="#financial-impact" class="nav-link">Financial Impact</a>
+                <a href="#offshore-profile" class="nav-link">Offshore Engineer Profile</a>
+                <a href="#coordination-model" class="nav-link">Coordination Model</a>
+                <a href="#risks" class="nav-link">Risks & Mitigations</a>
+                <a href="#recommendation" class="nav-link">Recommendation</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h2 id="context">Appendix: Alternative Staffing Model</h2>
+
+            <p><strong>Version</strong>: 1.0 | <strong>Last Updated</strong>: December 2024</p>
+
+            <h3>Context & Rationale</h3>
+
+            <p>The baseline staffing model assumes the <strong>Lead Architect</strong> possesses AWS CDK (Cloud Development Kit) expertise to implement infrastructure-as-code deliverables. If a Lead Architect candidate cannot be identified with this specific skill, an alternative staffing model can offload CDK development to an offshore infrastructure engineer.</p>
+
+            <div class="info-box">
+                <strong>When to Use This Model:</strong>
+                <ul style="margin-bottom: 0;">
+                    <li>Lead Architect candidates lack CDK/IaC experience</li>
+                    <li>AI Engineer is not versed in CDK (confirmed assumption)</li>
+                    <li>Cost optimization is a priority</li>
+                    <li>Offshore resources with CDK skills are available</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <h2 id="cdk-scope">CDK Work Scope Analysis</h2>
+
+            <h3>CDK-Specific Deliverables</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Total Hours</th>
+                        <th>CDK-Specific</th>
+                        <th>Can Offshore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>D5:</strong> CDK Infrastructure Skeleton</td>
+                        <td>16</td>
+                        <td>16</td>
+                        <td><strong>16</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>D4:</strong> IAM Role Definitions (CDK portion)</td>
+                        <td>8</td>
+                        <td>4</td>
+                        <td><strong>4</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Ongoing CDK updates (Weeks 3-9)</td>
+                        <td>~16</td>
+                        <td>16</td>
+                        <td><strong>12</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Total CDK Hours</strong></td>
+                        <td></td>
+                        <td><strong>36</strong></td>
+                        <td><strong>32</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>CDK Infrastructure Components</h3>
+
+            <div class="text-diagram">
+                <h4>D5: CDK Infrastructure Skeleton (16 hours)</h4>
+                <ol>
+                    <li><strong>CDK App Structure</strong> — <code>lib/</code>, <code>bin/</code>, <code>test/</code> directories</li>
+                    <li><strong>Environment Configs</strong> — dev, staging, prod parameter files</li>
+                    <li><strong>S3 Buckets</strong> — raw-data, reports, manual-uploads with lifecycle policies</li>
+                    <li><strong>OpenSearch Cluster</strong> — t3.small.search for dev, production sizing TBD</li>
+                    <li><strong>Lambda Stubs</strong> — 6 functions with correct runtime, memory, timeout configs</li>
+                    <li><strong>EventBridge Schedule</strong> — Distillation trigger (Sunday 2am UTC)</li>
+                    <li><strong>Deployment Validation</strong> — Smoke test: S3 PUT triggers Lambda</li>
+                </ol>
+            </div>
+
+            <h3>Scope Boundaries</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>In Scope (Offshore CDK Engineer)</th>
+                        <th>Out of Scope (Lead Architect Retains)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CDK app structure and environment configs</td>
+                        <td>Architecture decisions and design</td>
+                    </tr>
+                    <tr>
+                        <td>S3 bucket provisioning with lifecycle policies</td>
+                        <td>OpenSearch index mapping design</td>
+                    </tr>
+                    <tr>
+                        <td>OpenSearch cluster provisioning</td>
+                        <td>Lambda business logic implementation</td>
+                    </tr>
+                    <tr>
+                        <td>Lambda function stubs (runtime, memory, timeout)</td>
+                        <td>Bedrock Agent configuration</td>
+                    </tr>
+                    <tr>
+                        <td>EventBridge schedule configuration</td>
+                        <td>Integration design and API specifications</td>
+                    </tr>
+                    <tr>
+                        <td>IAM role CDK constructs</td>
+                        <td>Security policy decisions</td>
+                    </tr>
+                    <tr>
+                        <td>CI/CD pipeline for CDK deployments</td>
+                        <td>Technical coordination and client communication</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="staffing-comparison">Staffing Model Comparison</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Baseline Model</h4>
+                    <p><strong>Lead Architect does CDK</strong></p>
+                    <table>
+                        <tr>
+                            <td>Lead Architect</td>
+                            <td>284 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>AI Engineer</td>
+                            <td>184 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>DL/PM</td>
+                            <td>140 hrs</td>
+                        </tr>
+                        <tr style="font-weight: 600;">
+                            <td>Total</td>
+                            <td>608 hrs</td>
+                        </tr>
+                    </table>
+                    <p><strong>Pros:</strong> Simpler coordination, single owner for infrastructure</p>
+                    <p><strong>Cons:</strong> Requires rare skill combination, higher Lead Architect rate</p>
+                </div>
+
+                <div class="comparison-card recommended">
+                    <h4>Alternative Model <span class="badge badge-success">Recommended</span></h4>
+                    <p><strong>Offshore CDK Engineer</strong></p>
+                    <table>
+                        <tr>
+                            <td>Lead Architect</td>
+                            <td>252 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>AI Engineer</td>
+                            <td>184 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>DL/PM</td>
+                            <td>140 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>CDK Engineer (Offshore)</td>
+                            <td>40 hrs</td>
+                        </tr>
+                        <tr style="font-weight: 600;">
+                            <td>Total</td>
+                            <td>616 hrs</td>
+                        </tr>
+                    </table>
+                    <p><strong>Pros:</strong> Easier to staff, cost savings, specialized skills</p>
+                    <p><strong>Cons:</strong> Additional coordination overhead, timezone management</p>
+                </div>
+            </div>
+
+            <h3>Lead Architect Hour Reallocation</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Baseline Hours</th>
+                        <th>Revised Hours</th>
+                        <th>Delta</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Week 1</td>
+                        <td>32</td>
+                        <td>28</td>
+                        <td>-4</td>
+                        <td>CDK setup offloaded</td>
+                    </tr>
+                    <tr>
+                        <td>Week 2</td>
+                        <td>32</td>
+                        <td>24</td>
+                        <td>-8</td>
+                        <td>D5 deliverable offloaded</td>
+                    </tr>
+                    <tr>
+                        <td>Week 3</td>
+                        <td>24</td>
+                        <td>20</td>
+                        <td>-4</td>
+                        <td>IAM CDK code offloaded</td>
+                    </tr>
+                    <tr>
+                        <td>Week 4</td>
+                        <td>24</td>
+                        <td>20</td>
+                        <td>-4</td>
+                        <td>Ongoing CDK updates</td>
+                    </tr>
+                    <tr>
+                        <td>Week 5</td>
+                        <td>24</td>
+                        <td>20</td>
+                        <td>-4</td>
+                        <td>Ongoing CDK updates</td>
+                    </tr>
+                    <tr>
+                        <td>Weeks 6-12</td>
+                        <td>148</td>
+                        <td>140</td>
+                        <td>-8</td>
+                        <td>Minor CDK maintenance</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Total</strong></td>
+                        <td><strong>284</strong></td>
+                        <td><strong>252</strong></td>
+                        <td><strong>-32</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="financial-impact">Financial Impact Analysis</h2>
+
+            <h3>Cost Comparison</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Baseline</th>
+                        <th>Alternative</th>
+                        <th>Delta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lead Architect (284 → 252 hrs @ $382)</td>
+                        <td>$108,488</td>
+                        <td>$96,264</td>
+                        <td class="badge badge-success">-$12,224</td>
+                    </tr>
+                    <tr>
+                        <td>AI Engineer (184 hrs @ $382)</td>
+                        <td>$70,288</td>
+                        <td>$70,288</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td>DL/PM (140 hrs @ $421)</td>
+                        <td>$58,940</td>
+                        <td>$58,940</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td>CDK Engineer Offshore (40 hrs @ $165)*</td>
+                        <td>—</td>
+                        <td>$6,600</td>
+                        <td class="badge badge-warning">+$6,600</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Total</strong></td>
+                        <td><strong>$237,716</strong></td>
+                        <td><strong>$232,092</strong></td>
+                        <td><strong>-$5,624</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><em>* Offshore rate assumption: $150-180/hr range, using $165 midpoint</em></p>
+
+            <div class="success-box">
+                <strong>Net Savings: $5,624 (2.4%)</strong>
+                <p style="margin-bottom: 0;">While the percentage savings is modest, the primary benefit is <strong>staffing flexibility</strong>—the Lead Architect role becomes significantly easier to fill without requiring CDK expertise.</p>
+            </div>
+
+            <h3>Offshore CDK Engineer Budget</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Hours</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core CDK development</td>
+                        <td>32</td>
+                        <td>Direct implementation work</td>
+                    </tr>
+                    <tr>
+                        <td>Coordination buffer</td>
+                        <td>8</td>
+                        <td>Handoffs, PR reviews, troubleshooting</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Total Budget</strong></td>
+                        <td><strong>40</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="offshore-profile">Offshore CDK Engineer Profile</h2>
+
+            <h3>Required Skills</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Requirements</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AWS CDK</strong></td>
+                        <td>TypeScript CDK, L2/L3 constructs, multi-environment deployments</td>
+                        <td><span class="badge badge-primary">Required</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>AWS Services</strong></td>
+                        <td>Lambda, S3, OpenSearch, EventBridge, IAM</td>
+                        <td><span class="badge badge-primary">Required</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IaC Experience</strong></td>
+                        <td>3+ years Infrastructure as Code (CDK, Terraform, CloudFormation)</td>
+                        <td><span class="badge badge-primary">Required</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TypeScript</strong></td>
+                        <td>Proficient in TypeScript for CDK development</td>
+                        <td><span class="badge badge-primary">Required</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>CI/CD</strong></td>
+                        <td>GitHub Actions, CodePipeline, or similar</td>
+                        <td><span class="badge badge-info">Preferred</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>OpenSearch/Elasticsearch</strong></td>
+                        <td>Cluster provisioning, index management</td>
+                        <td><span class="badge badge-info">Preferred</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Engagement Parameters</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Duration</strong></td>
+                        <td>Weeks 1-5 (heaviest infrastructure work)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weekly Commitment</strong></td>
+                        <td>8-10 hours/week</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time Zone</strong></td>
+                        <td>4+ hour overlap with US East preferred</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Communication</strong></td>
+                        <td>English proficiency required</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rate Range</strong></td>
+                        <td>$150-180/hour</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Ideal Candidate Profile</h3>
+
+            <ul>
+                <li>3+ years AWS infrastructure experience</li>
+                <li>1+ year CDK-specific development</li>
+                <li>Experience with serverless architectures (Lambda, EventBridge)</li>
+                <li>Familiarity with vector databases or search engines (OpenSearch, Elasticsearch)</li>
+                <li>Strong Git workflow discipline (feature branches, PR-based reviews)</li>
+                <li>Self-directed; can work from specifications with minimal supervision</li>
+            </ul>
+
+            <hr>
+
+            <h2 id="coordination-model">Coordination Model</h2>
+
+            <h3>Responsibility Assignment</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Lead Architect</th>
+                        <th>CDK Engineer</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CDK requirements definition</td>
+                        <td>R/A</td>
+                        <td>I</td>
+                        <td>Lead Arch writes spec</td>
+                    </tr>
+                    <tr>
+                        <td>CDK implementation</td>
+                        <td>C</td>
+                        <td>R</td>
+                        <td>CDK Eng implements</td>
+                    </tr>
+                    <tr>
+                        <td>Code review / PR approval</td>
+                        <td>A</td>
+                        <td>R</td>
+                        <td>Lead Arch approves all PRs</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment to dev</td>
+                        <td>A</td>
+                        <td>R</td>
+                        <td>CDK Eng executes</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment to staging/prod</td>
+                        <td>R/A</td>
+                        <td>C</td>
+                        <td>Lead Arch controls prod</td>
+                    </tr>
+                    <tr>
+                        <td>Integration troubleshooting</td>
+                        <td>R</td>
+                        <td>C</td>
+                        <td>Lead Arch leads; CDK Eng supports</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><em>R = Responsible, A = Accountable, C = Consulted, I = Informed</em></p>
+
+            <h3>Coordination Overhead (Built into Lead Architect Hours)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Hours</th>
+                        <th>Timing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CDK requirements handoff document</td>
+                        <td>2</td>
+                        <td>Week 1, Day 1</td>
+                    </tr>
+                    <tr>
+                        <td>Code review / PR reviews</td>
+                        <td>4</td>
+                        <td>Ongoing, Weeks 1-5</td>
+                    </tr>
+                    <tr>
+                        <td>Integration troubleshooting</td>
+                        <td>2</td>
+                        <td>As needed</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Total Coordination</strong></td>
+                        <td><strong>8</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>Note:</strong> The 8-hour coordination overhead is already factored into the Lead Architect reduction (284 → 252 = 32 hours, not 40). This ensures the Lead Architect retains capacity for oversight without increasing their total hours.
+            </div>
+
+            <h3>Communication Cadence</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Touchpoint</th>
+                        <th>Frequency</th>
+                        <th>Format</th>
+                        <th>Participants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Async standup</td>
+                        <td>Daily</td>
+                        <td>Slack message</td>
+                        <td>CDK Eng → Lead Arch</td>
+                    </tr>
+                    <tr>
+                        <td>PR submission</td>
+                        <td>2-3x/week</td>
+                        <td>GitHub PR</td>
+                        <td>CDK Eng → Lead Arch review</td>
+                    </tr>
+                    <tr>
+                        <td>Sync call (if needed)</td>
+                        <td>Weekly</td>
+                        <td>30-min video call</td>
+                        <td>Lead Arch + CDK Eng</td>
+                    </tr>
+                    <tr>
+                        <td>Blockers escalation</td>
+                        <td>As needed</td>
+                        <td>Slack DM</td>
+                        <td>CDK Eng → Lead Arch</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="risks">Risks & Mitigations</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Risk</th>
+                        <th>Likelihood</th>
+                        <th>Impact</th>
+                        <th>Mitigation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CDK code quality issues</strong></td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Lead Architect reviews all PRs; no direct merges to main</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Communication lag (timezone)</strong></td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Daily async standups; 4+ hour overlap requirement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Context gaps</strong></td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Detailed CDK requirements doc (2 hrs Lead Arch time upfront)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Offshore resource unavailability</strong></td>
+                        <td>Low</td>
+                        <td>High</td>
+                        <td>Identify backup resource before Week 1; SOW includes replacement clause</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integration issues at handoff</strong></td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Smoke tests required before PR approval; Lead Arch validates in dev</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scope creep in CDK work</strong></td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>Fixed 40-hour budget; additional work requires change request</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="recommendation">Recommendation</h2>
+
+            <div class="success-box">
+                <strong>Recommendation: Adopt Alternative Staffing Model</strong>
+                <p>If a Lead Architect with CDK expertise cannot be identified within the staffing timeline, the alternative model provides:</p>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Staffing flexibility</strong> — Broader candidate pool for Lead Architect</li>
+                    <li><strong>Cost savings</strong> — ~$5,600 reduction in professional services fees</li>
+                    <li><strong>Specialized skills</strong> — Dedicated CDK expertise vs. generalist approach</li>
+                    <li><strong>Manageable risk</strong> — Clear coordination model with built-in oversight</li>
+                </ul>
+            </div>
+
+            <h3>Decision Criteria</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Recommended Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lead Architect candidate has CDK experience</td>
+                        <td><strong>Baseline Model</strong> (simpler coordination)</td>
+                    </tr>
+                    <tr>
+                        <td>Lead Architect candidate lacks CDK experience</td>
+                        <td><strong>Alternative Model</strong> (offshore CDK engineer)</td>
+                    </tr>
+                    <tr>
+                        <td>Cost optimization is priority</td>
+                        <td><strong>Alternative Model</strong> (~$5.6K savings)</td>
+                    </tr>
+                    <tr>
+                        <td>Minimal coordination overhead is priority</td>
+                        <td><strong>Baseline Model</strong> (single owner)</td>
+                    </tr>
+                    <tr>
+                        <td>Offshore resources unavailable or restricted</td>
+                        <td><strong>Baseline Model</strong> (must find CDK-skilled Lead Arch)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Next Steps (If Adopting Alternative Model)</h3>
+
+            <ol>
+                <li><strong>Update SOW</strong> — Add offshore CDK Engineer role with 40-hour budget</li>
+                <li><strong>Revise Lead Architect hours</strong> — Reduce from 284 to 252 hours</li>
+                <li><strong>Identify offshore resource</strong> — Begin sourcing Week -2 (before kickoff)</li>
+                <li><strong>Prepare CDK requirements doc</strong> — Lead Architect drafts Week 1, Day 1</li>
+                <li><strong>Establish communication channels</strong> — Slack channel, GitHub repo access</li>
+            </ol>
+
+            <hr>
+
+            <p><strong>Document Version</strong>: 1.0<br>
+            <strong>Last Updated</strong>: December 2024<br>
+            <strong>Author</strong>: Accenture Delivery Team</p>
+
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Commerce - Executive Summary</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="shared-theme.css">
+  <style>
+    /* Page-specific overrides if needed */
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+  <div class="slide-container p-12">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-4xl font-bold" style="color: var(--text-primary);">Agentic Composable Commerce</h1>
+        <p class="text-xl mt-2" style="color: var(--text-secondary);">Executive Summary — Reference Architecture Package</p>
+      </div>
+      <div class="text-right">
+        <div class="font-bold text-2xl" style="color: var(--primary);">v3.0</div>
+        <div style="color: var(--text-muted);">December 2024</div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-3 gap-8">
+
+      <!-- Column 1: What & Why -->
+      <div class="space-y-6">
+
+        <!-- What -->
+        <div class="rounded-xl p-6" style="background: var(--primary-light); border: 1px solid var(--primary);">
+          <h2 class="text-lg font-bold mb-3" style="color: var(--primary-dark);">What Is This?</h2>
+          <p class="leading-relaxed" style="color: var(--text-primary);">
+            A reference architecture for enabling <strong>AI agents</strong> (ChatGPT, Claude, Gemini) to
+            <strong>shop, transact, and get support</strong> on behalf of customers through your commerce platform.
+          </p>
+          <div class="mt-4 flex gap-2">
+            <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--secondary-light); color: var(--primary-dark);">B2C Retail</span>
+            <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--secondary-light); color: var(--primary-dark);">AI-Native</span>
+            <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--secondary-light); color: var(--primary-dark);">Vendor-Neutral</span>
+          </div>
+        </div>
+
+        <!-- Why Now -->
+        <div class="rounded-xl p-6" style="background: var(--status-warning-light); border: 1px solid var(--status-warning);">
+          <h2 class="text-lg font-bold mb-3" style="color: var(--status-warning-dark);">Why Now?</h2>
+          <ul class="space-y-2" style="color: var(--text-primary);">
+            <li class="flex items-start gap-2">
+              <span class="mt-1" style="color: var(--status-warning);">●</span>
+              <span><strong>ChatGPT Operator</strong> launching commerce capabilities</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1" style="color: var(--status-warning);">●</span>
+              <span><strong>Google AP2</strong> enabling agent payments</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1" style="color: var(--status-warning);">●</span>
+              <span><strong>Anthropic MCP</strong> becoming standard for tool use</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1" style="color: var(--status-warning);">●</span>
+              <span>Early movers capturing <strong>agent-driven traffic</strong></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Scope -->
+        <div class="rounded-xl p-6" style="background: var(--muted-light); border: 1px solid var(--border);">
+          <h2 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Scope</h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="font-semibold mb-1" style="color: var(--status-success);">Included</div>
+              <ul class="space-y-1" style="color: var(--text-secondary);">
+                <li>✓ Product discovery</li>
+                <li>✓ Cart & checkout</li>
+                <li>✓ Agent payments</li>
+                <li>✓ Order tracking</li>
+                <li>✓ Returns & support</li>
+                <li>✓ Consent & compliance</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-semibold mb-1" style="color: var(--text-muted);">Not Included</div>
+              <ul class="space-y-1" style="color: var(--text-muted);">
+                <li>○ B2B commerce</li>
+                <li>○ Marketplace seller</li>
+                <li>○ In-store POS</li>
+                <li>○ Logistics optimization</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Column 2: Business Case -->
+      <div class="space-y-6">
+
+        <!-- ROI -->
+        <div class="rounded-xl p-6" style="background: var(--status-success-light); border: 1px solid var(--status-success);">
+          <h2 class="text-lg font-bold mb-4" style="color: var(--status-success-dark);">Business Case</h2>
+
+          <div class="space-y-4">
+            <div class="bg-white rounded-lg p-4" style="border: 1px solid var(--status-success-light);">
+              <div class="text-sm uppercase tracking-wide" style="color: var(--text-muted);">Cost Reduction</div>
+              <div class="text-3xl font-bold mt-1" style="color: var(--status-success);">40-60%</div>
+              <div class="text-sm mt-1" style="color: var(--text-secondary);">Lower cost per customer contact</div>
+              <div class="text-xs mt-2" style="color: var(--text-muted);">$8-15 human → $0.10-0.50 agent</div>
+            </div>
+
+            <div class="bg-white rounded-lg p-4" style="border: 1px solid var(--status-success-light);">
+              <div class="text-sm uppercase tracking-wide" style="color: var(--text-muted);">Revenue Uplift</div>
+              <div class="text-3xl font-bold mt-1" style="color: var(--status-success);">3-5%</div>
+              <div class="text-sm mt-1" style="color: var(--text-secondary);">Agent-driven conversion rate</div>
+              <div class="text-xs mt-2" style="color: var(--text-muted);">24/7 availability, personalized recommendations</div>
+            </div>
+
+            <div class="bg-white rounded-lg p-4" style="border: 1px solid var(--status-success-light);">
+              <div class="text-sm uppercase tracking-wide" style="color: var(--text-muted);">Containment Rate</div>
+              <div class="text-3xl font-bold mt-1" style="color: var(--status-success);">70-80%</div>
+              <div class="text-sm mt-1" style="color: var(--text-secondary);">Issues resolved without human</div>
+              <div class="text-xs mt-2" style="color: var(--text-muted);">Target by Phase 3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Investment -->
+        <div class="rounded-xl p-6" style="background: var(--secondary-light); border: 1px solid var(--secondary);">
+          <h2 class="text-lg font-bold mb-4" style="color: var(--secondary-dark);">Investment Range</h2>
+
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span style="color: var(--text-primary);">Initial Build (Year 1)</span>
+              <span class="font-bold" style="color: var(--secondary-dark);">$400K - $600K</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span style="color: var(--text-primary);">Annual Operations</span>
+              <span class="font-bold" style="color: var(--secondary-dark);">$800K - $1.2M</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span style="color: var(--text-primary);">Platform/SaaS</span>
+              <span class="font-bold" style="color: var(--secondary-dark);">$300K - $500K/yr</span>
+            </div>
+            <hr style="border-color: var(--border);">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold" style="color: var(--text-primary);">3-Year TCO</span>
+              <span class="font-bold text-lg" style="color: var(--secondary-dark);">$4M - $6M</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-semibold" style="color: var(--text-primary);">3-Year Benefit</span>
+              <span class="font-bold text-lg" style="color: var(--status-success);">$15M - $25M</span>
+            </div>
+          </div>
+
+          <div class="mt-4 text-center">
+            <span class="px-4 py-2 rounded-full font-semibold" style="background: var(--status-success-light); color: var(--status-success-dark);">
+              3-4x ROI over 3 years
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Column 3: Timeline & Team -->
+      <div class="space-y-6">
+
+        <!-- Timeline -->
+        <div class="rounded-xl p-6" style="background: var(--muted-light); border: 1px solid var(--border-strong);">
+          <h2 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Implementation Timeline</h2>
+
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="w-20 flex-shrink-0">
+                <div class="text-white text-center py-1 rounded font-bold text-sm" style="background: var(--phase-1);">Day 1</div>
+                <div class="text-xs text-center mt-1" style="color: var(--text-muted);">Weeks 1-8</div>
+              </div>
+              <div>
+                <div class="font-semibold" style="color: var(--text-primary);">MVP Launch</div>
+                <ul class="text-sm mt-1" style="color: var(--text-secondary);">
+                  <li>• Shopping + Service agents</li>
+                  <li>• MCP + ACP protocols</li>
+                  <li>• Basic payment auth</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="w-20 flex-shrink-0">
+                <div class="text-white text-center py-1 rounded font-bold text-sm" style="background: var(--phase-2);">Phase 2</div>
+                <div class="text-xs text-center mt-1" style="color: var(--text-muted);">Weeks 9-24</div>
+              </div>
+              <div>
+                <div class="font-semibold" style="color: var(--text-primary);">Full Agent Suite</div>
+                <ul class="text-sm mt-1" style="color: var(--text-secondary);">
+                  <li>• Returns + Fulfillment agents</li>
+                  <li>• Memory + personalization</li>
+                  <li>• GEO content pipeline</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="w-20 flex-shrink-0">
+                <div class="text-white text-center py-1 rounded font-bold text-sm" style="background: var(--phase-3);">Phase 3</div>
+                <div class="text-xs text-center mt-1" style="color: var(--text-muted);">Weeks 25-48</div>
+              </div>
+              <div>
+                <div class="font-semibold" style="color: var(--text-primary);">Advanced Capabilities</div>
+                <ul class="text-sm mt-1" style="color: var(--text-secondary);">
+                  <li>• Dynamic pricing agent</li>
+                  <li>• Subscription commerce</li>
+                  <li>• Partner SDK</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team -->
+        <div class="rounded-xl p-6" style="background: var(--primary-light); border: 1px solid var(--primary);">
+          <h2 class="text-lg font-bold mb-4" style="color: var(--primary-dark);">Team Requirements</h2>
+
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span style="color: var(--text-primary);">MVP (Day 1)</span>
+              <span class="font-bold" style="color: var(--primary);">15 FTE</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: var(--text-primary);">Phase 2</span>
+              <span class="font-bold" style="color: var(--primary);">23 FTE</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: var(--text-primary);">Steady State</span>
+              <span class="font-bold" style="color: var(--primary);">25-30 FTE</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4" style="border-top: 1px solid var(--border);">
+            <div class="text-sm font-semibold mb-2" style="color: var(--text-primary);">Key Roles</div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2 py-1 rounded text-xs" style="background: var(--secondary-light); color: var(--primary-dark);">AI/ML Engineers</span>
+              <span class="px-2 py-1 rounded text-xs" style="background: var(--secondary-light); color: var(--primary-dark);">Platform Engineers</span>
+              <span class="px-2 py-1 rounded text-xs" style="background: var(--secondary-light); color: var(--primary-dark);">Commerce Devs</span>
+              <span class="px-2 py-1 rounded text-xs" style="background: var(--secondary-light); color: var(--primary-dark);">Product Managers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="rounded-xl p-6 text-white" style="background: var(--primary);">
+          <h2 class="text-lg font-bold mb-3">Next Steps</h2>
+          <ol class="space-y-2 text-sm">
+            <li class="flex items-center gap-2">
+              <span class="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              <span>Review architecture diagrams (C4 views)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              <span>Validate cost model with finance</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              <span>Assess current platform readiness</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+              <span>Identify Day 1 pilot scope</span>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-8 pt-6 flex justify-between items-center text-sm" style="border-top: 1px solid var(--border); color: var(--text-muted);">
+      <div>Agentic Composable Commerce Reference Architecture v3.0</div>
+      <div><a href="00-index.html" class="hover:underline" style="color: var(--primary);">See Index for full package navigation →</a></div>
+    </div>
+
+  </div>
+
+</body>
+</html>

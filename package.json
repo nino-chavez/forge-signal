@@ -12,7 +12,8 @@
     "build": "tsc",
     "dev": "tsx src/cli/index.ts",
     "generate": "tsx src/cli/index.ts",
-    "migrate-decks": "tsx scripts/migrate-decks.ts"
+    "migrate-decks": "tsx scripts/migrate-decks.ts",
+    "audit:council": "tsx scripts/ai-council-audit.ts"
   },
   "keywords": [
     "content-generation",
@@ -28,7 +29,7 @@
     "@google/generative-ai": "*",
     "commander": "*",
     "docx": "*",
-    "dotenv": "*",
+    "dotenv": "^17.2.3",
     "fs-extra": "*",
     "googleapis": "*",
     "gray-matter": "*",
@@ -39,12 +40,13 @@
   },
   "devDependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
+    "@excalidraw/utils": "^0.1.3-test32",
     "@mermaid-js/mermaid-cli": "^11.12.0",
     "@types/fs-extra": "^11.0.4",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^22.10.5",
     "excalidraw-to-svg": "^3.1.0",
-    "puppeteer": "^23.9.0",
+    "puppeteer": "^23.11.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Commerce: FY'27 Discovery — Best Buy × Accenture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* Dark Landscape Theme - v9.0 Color Hierarchy
+       Primary Accent: Cyan (UI elements, borders, highlights)
+       Secondary Accent: Orange (key numbers, active states, CTAs)
+       Semantic: Green (positive), Red (negative) */
+    :root {
+      /* Backgrounds - Dark to light */
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-elevated: #263548;
+      --bg-divider: #0a1018;
+
+      /* Text hierarchy */
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Primary accent: Cyan - UI elements, borders, highlights */
+      --accent-primary: #22d3ee;
+      --accent-primary-muted: rgba(34, 211, 238, 0.15);
+
+      /* Secondary accent: Orange - key numbers, active states */
+      --accent-secondary: #f97316;
+      --accent-secondary-muted: rgba(249, 115, 22, 0.15);
+
+      /* Legacy aliases for compatibility */
+      --accent: #f97316;
+      --accent-cyan: #22d3ee;
+
+      /* Semantic colors */
+      --positive: #34d399;
+      --negative: #f87171;
+
+      /* Borders */
+      --border: #334155;
+      --border-subtle: #1e293b;
+
+      /* Workstream colors */
+      --song: #a78bfa;
+      --strategy: #fbbf24;
+      --workco: #34d399;
+    }
+
+    /* Typography */
+    .display {
+      font-size: 3.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .display-accent { color: var(--accent-cyan); }
+    .display-lg {
+      font-size: 4.5rem;
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .headline {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .subhead {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .body-lg { font-size: 1.25rem; line-height: 1.7; color: var(--text-muted); }
+    .caption { font-size: 0.875rem; color: var(--text-muted); }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    /* Slide Layout with scroll-snap */
+    .slide {
+      min-height: 100vh;
+      height: 100vh;
+      width: 100%;
+      padding: 4rem 6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Section Divider Slide */
+    .slide-divider {
+      background: var(--bg-divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .divider-content {
+      max-width: 900px;
+    }
+    .divider-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8rem;
+      font-weight: 200;
+      color: var(--accent-primary);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .divider-title {
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .divider-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .page-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .brand {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* Breadcrumb header for content slides */
+    .slide-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-section {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .breadcrumb-divider {
+      color: var(--border);
+    }
+    .breadcrumb-page {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Section info block */
+    .section-info {
+      border-left: 4px solid var(--accent-primary);
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .section-info .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+    }
+    .section-info .title {
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .section-info .subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    /* Navigation dots with section separators */
+    .nav-dots {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+    .nav-dot.section-start {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+    .nav-dot.section-start:hover, .nav-dot.section-start.active {
+      opacity: 1;
+    }
+    .nav-separator {
+      height: 8px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+    @media (max-width: 1200px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-5 { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .slide { padding: 2rem; height: auto; min-height: 100vh; }
+      .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+      .nav-dots { display: none; }
+      html { scroll-snap-type: none; }
+    }
+
+    /* Spacing */
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 0.75rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.5rem; }
+    .mb-6 { margin-bottom: 2rem; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-6 { margin-top: 2rem; }
+
+    /* Dark Panels & Cards */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .panel-header {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    /* Highlighted card - single left border accent */
+    .card-highlight {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    /* Elevated card - for "new/positive" comparisons */
+    .card-elevated {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-elevated .panel-header {
+      color: var(--accent-primary);
+    }
+
+    /* Stat Cards */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .stat-value {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent-secondary);
+      line-height: 1;
+    }
+    .stat-value-alt {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent-primary);
+      line-height: 1;
+    }
+
+    /* Comparison */
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 768px) { .comparison { grid-template-columns: 1fr; } }
+
+    /* List styles */
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+    .marker {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-primary);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .marker-muted { background: var(--text-dim); }
+    .marker-secondary { background: var(--accent-secondary); }
+    .marker-song { background: var(--song); }
+    .marker-strategy { background: var(--strategy); }
+    .marker-workco { background: var(--workco); }
+    .counter {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+    th {
+      text-align: left;
+      padding: 1rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--accent-primary);
+      border-radius: 4px;
+      color: var(--accent-primary);
+    }
+    .badge-secondary {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+    }
+    .badge-song {
+      border-color: var(--song);
+      color: var(--song);
+    }
+    .badge-strategy {
+      border-color: var(--strategy);
+      color: var(--strategy);
+    }
+    .badge-workco {
+      border-color: var(--workco);
+      color: var(--workco);
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--accent-primary-muted);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 2rem;
+    }
+    .callout-secondary {
+      background: var(--accent-secondary-muted);
+      border-left-color: var(--accent-secondary);
+    }
+    .callout p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* Text colors */
+    .text-muted { color: var(--text-muted); }
+    .text-accent { color: var(--accent); }
+    .text-cyan { color: var(--accent-cyan); }
+    .text-green { color: #22c55e; }
+    .text-red { color: #ef4444; }
+    .text-white { color: white; }
+    .text-song { color: var(--song); }
+    .text-strategy { color: var(--strategy); }
+    .text-workco { color: var(--workco); }
+    .text-strikethrough { text-decoration: line-through; opacity: 0.5; }
+
+    /* Print - Dark theme, one slide per 16:9 widescreen page */
+    @media print {
+      @page {
+        size: 13.33in 7.5in;  /* 16:9 widescreen - matches PowerPoint LAYOUT_WIDE */
+        margin: 0;
+      }
+
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      html { scroll-snap-type: none; }
+
+      .no-print, .nav-dots { display: none !important; }
+
+      body {
+        background: var(--bg) !important;
+        color: var(--text) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        padding: 1.25rem 2rem;
+        page-break-after: always;
+        page-break-inside: avoid;
+        break-after: page;
+        break-inside: avoid;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .slide:last-child {
+        page-break-after: auto;
+      }
+
+      /* Tighter spacing for print */
+      .slide-content { gap: 0.5rem; }
+      .grid-2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 0.5rem !important; }
+      .grid-3 { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 0.5rem !important; }
+      .grid-4 { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 0.5rem !important; }
+      .grid-5 { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 0.5rem !important; }
+      .panel, .card, .card-highlight, .card-elevated { padding: 0.5rem; }
+      .callout, .callout-secondary { padding: 0.5rem 0.75rem; }
+      .mb-6, .mt-6 { margin-bottom: 0.5rem; margin-top: 0.5rem; }
+      .mb-4 { margin-bottom: 0.375rem; }
+      .mb-3 { margin-bottom: 0.25rem; }
+      .mb-2 { margin-bottom: 0.125rem; }
+
+      /* Smaller fonts for print density */
+      .slide-subtitle { font-size: 0.75rem; margin-bottom: 0.5rem; }
+      .slide-title { font-size: 1.125rem; margin-bottom: 0.25rem; }
+      .headline { font-size: 1rem; line-height: 1.2; }
+      .panel-header { font-size: 0.625rem; margin-bottom: 0.375rem; padding-bottom: 0.25rem; }
+      .list-item { font-size: 0.75rem; margin-bottom: 0.25rem; }
+      .list-item .marker { width: 6px; height: 6px; margin-top: 0.375rem; }
+      .callout p, .callout-secondary p { font-size: 0.75rem; line-height: 1.35; }
+      .subhead { font-size: 0.625rem; }
+      .text-muted { font-size: 0.6875rem; }
+
+      /* Breadcrumb compact */
+      .slide-breadcrumb { margin-bottom: 0.5rem; padding-bottom: 0.375rem; }
+      .breadcrumb-section { font-size: 0.625rem; }
+      .breadcrumb-page { font-size: 0.9375rem; }
+
+      /* Quote blocks compact */
+      .quote-block { padding-left: 0.75rem; margin: 0.375rem 0; }
+      .quote-block .text { font-size: 0.6875rem; margin-bottom: 0.125rem; }
+      .quote-block .attribution { font-size: 0.625rem; }
+
+      /* Pillar cards compact */
+      .pillar-card { padding: 0.375rem; }
+      .pillar-card .icon { font-size: 1.25rem; margin-bottom: 0.25rem; }
+      .pillar-card .icon svg { width: 20px; height: 20px; }
+      .pillar-card .title { font-size: 0.6875rem; margin-bottom: 0.125rem; }
+      .pillar-card .desc { font-size: 0.5625rem; line-height: 1.3; }
+
+      /* Timeline cards compact */
+      .timeline-card { padding: 0.375rem; }
+      .timeline-card .phase { font-size: 0.5rem; margin-bottom: 0.125rem; }
+      .timeline-card .title { font-size: 0.6875rem; margin-bottom: 0.0625rem; }
+      .timeline-card .items { font-size: 0.5625rem; line-height: 1.3; }
+      .timeline-card .items p { font-size: 0.5625rem; }
+
+      /* Ensure footer stays in view */
+      .slide-footer {
+        padding-top: 0.75rem;
+        margin-top: auto;
+        flex-shrink: 0;
+      }
+
+      .slide-divider {
+        background: var(--bg-divider) !important;
+      }
+
+      .hero-slide {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%) !important;
+      }
+
+      .card, .panel, .stat-card, .card-highlight, .card-elevated, .pillar-card, .timeline-card, .workstream-card {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+
+      .callout {
+        background: var(--accent-primary-muted) !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .callout-secondary {
+        background: var(--accent-secondary-muted) !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      table th {
+        background: var(--bg-card) !important;
+      }
+
+      /* Compact tables in print */
+      table {
+        font-size: 0.75rem !important;
+      }
+      table th {
+        padding: 0.375rem 0.5rem !important;
+        font-size: 0.625rem !important;
+      }
+      table td {
+        padding: 0.375rem 0.5rem !important;
+        line-height: 1.3 !important;
+      }
+
+      /* Ensure text colors print correctly */
+      .text-muted { color: var(--text-muted) !important; }
+      .text-cyan { color: var(--accent-cyan) !important; }
+      .text-accent { color: var(--accent) !important; }
+      .text-song { color: var(--song) !important; }
+      .text-strategy { color: var(--strategy) !important; }
+      .text-workco { color: var(--workco) !important; }
+
+      /* Ensure accents print */
+      .divider-num { color: var(--accent-primary) !important; }
+      .display-accent { color: var(--accent-cyan) !important; }
+      .stat-value { color: var(--accent-secondary) !important; }
+      .stat-value-alt { color: var(--accent-primary) !important; }
+
+      /* Markers */
+      .marker { background: var(--accent-primary) !important; }
+      .marker-secondary { background: var(--accent-secondary) !important; }
+      .marker-song { background: var(--song) !important; }
+      .marker-strategy { background: var(--strategy) !important; }
+      .marker-workco { background: var(--workco) !important; }
+
+      /* Badges */
+      .badge { border-color: var(--accent-primary) !important; color: var(--accent-primary) !important; }
+      .badge-secondary { border-color: var(--accent-secondary) !important; color: var(--accent-secondary) !important; }
+      .badge-song { border-color: var(--song) !important; color: var(--song) !important; }
+      .badge-strategy { border-color: var(--strategy) !important; color: var(--strategy) !important; }
+
+      /* Timeline cards */
+      .timeline-card-quick { border-top-color: var(--positive) !important; }
+      .timeline-card-short { border-top-color: var(--accent-primary) !important; }
+      .timeline-card-mid { border-top-color: var(--song) !important; }
+      .timeline-card-long { border-top-color: var(--accent-secondary) !important; }
+
+      /* Quote blocks */
+      .quote-block { border-left-color: var(--accent-primary) !important; }
+
+      /* Card highlights */
+      .card-highlight, .card-elevated { border-left-color: var(--accent-primary) !important; }
+    }
+
+    /* Workstream cards */
+    .workstream-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 3px solid var(--accent-primary);
+    }
+    .workstream-card-song { border-left-color: var(--song); }
+    .workstream-card-strategy { border-left-color: var(--strategy); }
+    .workstream-card-workco { border-left-color: var(--workco); }
+
+    .workstream-card .num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .workstream-card .title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0.5rem 0;
+    }
+    .workstream-card .desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Timeline card for roadmap */
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-top: 3px solid var(--accent-primary);
+    }
+    .timeline-card-quick { border-top-color: var(--positive); }
+    .timeline-card-short { border-top-color: var(--accent-primary); }
+    .timeline-card-mid { border-top-color: var(--song); }
+    .timeline-card-long { border-top-color: var(--accent-secondary); }
+
+    .timeline-card .phase {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-card-quick .phase { color: var(--positive); }
+    .timeline-card-short .phase { color: var(--accent-primary); }
+    .timeline-card-mid .phase { color: var(--song); }
+    .timeline-card-long .phase { color: var(--accent-secondary); }
+
+    .timeline-card .title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .timeline-card .time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .timeline-card .items {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Hero slide */
+    .hero-slide {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    /* Slide title */
+    .slide-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .slide-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Pillar cards */
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .pillar-card .icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .pillar-card .title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .pillar-card .desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Quote block */
+    .quote-block {
+      border-left: 3px solid var(--accent-primary);
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+    .quote-block .text {
+      font-size: 1.125rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .quote-block .attribution {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Dots (18 slides with separators) -->
+  <nav class="nav-dots no-print">
+    <a href="#hero" class="nav-dot section-start active" title="Cover"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-context" class="nav-dot section-start" title="Section: Strategic Context"></a>
+    <a href="#exec-summary" class="nav-dot" title="Executive Summary"></a>
+    <a href="#what-we-heard" class="nav-dot" title="What We Heard"></a>
+    <a href="#platform-matrix" class="nav-dot" title="Platform Matrix"></a>
+    <a href="#success-pillars" class="nav-dot" title="Success Pillars"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-workstreams" class="nav-dot section-start" title="Section: Workstreams"></a>
+    <a href="#channels" class="nav-dot" title="Channels"></a>
+    <a href="#rmn" class="nav-dot" title="RMN"></a>
+    <a href="#marketing" class="nav-dot" title="Marketing"></a>
+    <a href="#technical" class="nav-dot" title="Technical"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-roadmap" class="nav-dot section-start" title="Section: Roadmap"></a>
+    <a href="#roadmap-overview" class="nav-dot" title="Overview"></a>
+    <a href="#roadmap-detail" class="nav-dot" title="Detail"></a>
+    <div class="nav-separator"></div>
+    <a href="#divider-partnership" class="nav-dot section-start" title="Section: Partner Ecosystem"></a>
+    <a href="#partnership" class="nav-dot" title="Ecosystem Strategy"></a>
+    <a href="#build-buy" class="nav-dot" title="Decision Framework"></a>
+    <a href="#next-steps" class="nav-dot" title="Next Steps"></a>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Slide 1: Hero/Cover -->
+  <!-- ============================================ -->
+  <section id="hero" class="slide hero-slide">
+    <div class="slide-header" style="position: absolute; top: 2rem; left: 3rem; right: 3rem;">
+      <span class="brand">Best Buy × Accenture</span>
+      <span class="subhead">Internal Document</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="subhead mb-4">FY'27 Strategic Initiative</p>
+      <h1 class="display mb-4">Agentic Commerce<br><span class="display-accent">FY'27 Discovery</span></h1>
+      <p class="body-lg" style="max-width: 700px; margin: 0 auto;">
+        How Best Buy shows up when AI answers product questions — and what it takes to get there.
+      </p>
+    </div>
+
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">1 / 17</span>
+      <span class="caption">December 2025 — v10.2</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: STRATEGIC CONTEXT -->
+  <!-- ============================================ -->
+  <section id="divider-context" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">01</div>
+      <h2 class="divider-title">Strategic Context</h2>
+      <p class="divider-subtitle">What we've heard from stakeholders, the platform landscape, and success pillars for FY'27</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">2 / 17</span>
+      <span class="caption">Section 01</span>
+    </div>
+  </section>
+
+  <!-- Slide 3: Executive Summary -->
+  <section id="exec-summary" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Executive Summary</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 2rem; margin-bottom: 2rem;">
+        <div class="card-highlight">
+          <p class="subhead mb-3">Strategic Imperative #1</p>
+          <p class="headline mb-2">Build the Intelligence</p>
+          <p class="text-muted">Own the decision engine. Control the context. Your proprietary data—purchase history, repair logs, return reasons—is the competitive moat.</p>
+        </div>
+        <div class="card-highlight">
+          <p class="subhead mb-3">Strategic Imperative #2</p>
+          <p class="headline mb-2">Connect the Plumbing</p>
+          <p class="text-muted">Use vendors (Feedonomics, Rithum) for connectivity. Keep decision logic and data enrichment in your GCP environment.</p>
+        </div>
+        <div class="card-highlight">
+          <p class="subhead mb-3">Strategic Imperative #3</p>
+          <p class="headline mb-2">Defend the Brand</p>
+          <p class="text-muted">Protect brand perception in AI responses. Ensure agents represent Best Buy accurately across all platforms.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Core Thesis:</strong> Generic AI platforms are "tourists" in your customers' lives. You win by leveraging context that only you have. <span style="color: var(--accent-secondary); font-weight: 600;">Accenture's cross-industry experience and platform relationships accelerate your path to owning this advantage — before competitors figure it out.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">3 / 17</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- Slide 4: What We Heard -->
+  <section id="what-we-heard" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">What We Heard</span>
+    </div>
+    <p class="slide-subtitle">Key themes from Nov 21, Dec 5, and Dec 9 stakeholder sessions</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Executive Priorities</p>
+          <div class="quote-block">
+            <p class="text">"How do we tackle all of this, all at the same time? Where do we focus first?"</p>
+            <p class="attribution">— Amy Williams</p>
+          </div>
+          <div class="quote-block">
+            <p class="text">"Feedonomics promises you the world and then does not follow through."</p>
+            <p class="attribution">— Ram Raipati</p>
+          </div>
+          <div class="quote-block">
+            <p class="text">"Devil is in the details integrating with Best Buy APIs and legacy systems."</p>
+            <p class="attribution">— Dec 9 Workshop</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Dec 9 Workshop Themes</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Build vs. Buy</strong> — ACP server: cost, sustainability, integration complexity</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Cloud Portability</strong> — GCP-first, but solutions must remain vendor-agnostic</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Architecture Foundation</strong> — Standardized tooling and protocols (ACP, MCP, A2A) before use-case expansion</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Cost Concern</strong> — Slim margins; stacked fees (advertising, licensing) under scrutiny</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">4 / 17</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- Slide 5: On vs Off Platform Matrix -->
+  <section id="platform-matrix" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">The Platform Matrix</span>
+    </div>
+    <p class="slide-subtitle">Channel strategy differs fundamentally between owned and third-party agent surfaces</p>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-elevated">
+          <p class="subhead text-cyan mb-3">Off-Platform (Third-Party)</p>
+          <p class="headline mb-3">The New Battleground</p>
+          <div class="panel" style="background: transparent; border: none; padding: 0; margin-top: 1rem;">
+            <table style="font-size: 0.9375rem;">
+              <tbody>
+                <tr>
+                  <td style="font-weight: 500;">ChatGPT</td>
+                  <td class="text-muted">Largest consumer audience; ACP enables commerce actions</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">Microsoft Copilot</td>
+                  <td class="text-muted">Enterprise reach via M365; Bing shopping integration</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">Google SGE</td>
+                  <td class="text-muted">Search traffic at stake; Schema.org compliance critical</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">Perplexity/Others</td>
+                  <td class="text-muted">Citation-driven; 20-30% spec data exposure risk</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <p class="subhead mb-3">On-Platform (Owned)</p>
+          <p class="headline mb-3">Full Control, Full Context</p>
+          <div class="panel" style="background: transparent; border: none; padding: 0; margin-top: 1rem;">
+            <table style="font-size: 0.9375rem;">
+              <tbody>
+                <tr>
+                  <td style="font-weight: 500;">Best Buy App</td>
+                  <td class="text-muted">Authenticated, personalized, membership-aware</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">Website Chat</td>
+                  <td class="text-muted">Session context, browsing history, cart state</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">In-Store Agents</td>
+                  <td class="text-muted">Inventory-aware, associate complement</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 500;">Geek Squad</td>
+                  <td class="text-muted">Post-purchase, service history, repair logs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">5 / 17</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- Slide 6: Success Pillars -->
+  <section id="success-pillars" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Strategic Context</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Success Pillars</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4" style="gap: 1.5rem;">
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <p class="title">Brand Sentiment</p>
+          <p class="desc">Protect and enhance brand perception in AI responses. Ensure accurate representation across all agent platforms.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <p class="title">Topical Visibility</p>
+          <p class="desc">Be found for the right topics. Optimize for GEO (Generative Engine Optimization), not just SEO.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <p class="title">Value & Service</p>
+          <p class="desc">Lead with differentiation: Geek Squad, Total Tech membership, in-store expertise. These are your moats.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
+          <p class="title">Product Discovery</p>
+          <p class="desc">Enable agents to find, understand, and confidently recommend your products. Machine-readable data wins.</p>
+        </div>
+      </div>
+
+      <div class="callout mt-6">
+        <p><strong>The Question:</strong> When a customer asks an AI "What laptop should I buy for video editing?", will the agent confidently recommend Best Buy—or will you be just another option in a generic comparison?</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">6 / 17</span>
+      <span class="caption">Section 01: Strategic Context</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: WORKSTREAMS -->
+  <!-- ============================================ -->
+  <section id="divider-workstreams" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">02</div>
+      <h2 class="divider-title">Workstreams</h2>
+      <p class="divider-subtitle">Four parallel tracks: Channels, Retail Media, Marketing Performance, and Technical Foundation</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">7 / 17</span>
+      <span class="caption">Section 02</span>
+    </div>
+  </section>
+
+  <!-- Slide 8: Channels Strategy -->
+  <section id="channels" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 Workstreams</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Channels Strategy</span>
+    </div>
+    <p class="slide-subtitle">Translating workshop feedback into channel priorities</p>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="panel">
+          <p class="panel-header">What We Heard</p>
+          <div class="quote-block" style="margin-bottom: 1rem;">
+            <p class="text" style="font-size: 0.875rem;">"Needs to create API ready infrastructure for the LLMs"</p>
+            <p class="attribution">— Adam Sand</p>
+          </div>
+          <div class="quote-block" style="margin-bottom: 1rem;">
+            <p class="text" style="font-size: 0.875rem;">"Do we build, buy, or enable hybrid technology when creating agent ready infrastructure"</p>
+            <p class="attribution">— Amy Williams</p>
+          </div>
+          <div class="quote-block">
+            <p class="text" style="font-size: 0.875rem;">"Content gaps exist at the top of the funnel for user journey behavior"</p>
+            <p class="attribution">— Jason Bonfig</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">What We Recommend Exploring</p>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>API & Feed Structure</strong> — Create machine-readable data layer for agent consumption</span></div>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>LLM Merchant Submission</strong> — Register with ChatGPT, Google, Bing for off-platform visibility</span></div>
+          <div class="list-item"><span class="marker marker-workco"></span><span><strong>Content Structure & IA</strong> — Address top-of-funnel gaps with helpful guides and FAQs</span></div>
+          <div class="list-item"><span class="marker marker-strategy"></span><span><strong>Schema.org Compliance</strong> — Ensure product data is structured for AI extraction</span></div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="caption">Source: Dec 5 PDF, pages 5-6</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">8 / 17</span>
+      <span class="caption">Section 02: Workstreams</span>
+    </div>
+  </section>
+
+  <!-- Slide 9: Retail Media Network -->
+  <section id="rmn" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 Workstreams</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Retail Media Network</span>
+    </div>
+    <p class="slide-subtitle">Uncharted territory — our approach is to experiment early and build measurement infrastructure as we learn</p>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="panel">
+          <p class="panel-header">Hypotheses to Test</p>
+          <p class="text-muted mb-3">LLM-driven discovery may shift where ad impressions occur. We're exploring how RMN can adapt.</p>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Structured Data Placement</strong> — Test sponsored content within agent responses, not just page inventory</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Agent API Sponsorship</strong> — Explore embedding sponsored units directly, tagged for transparency</span></div>
+          <div class="list-item"><span class="marker marker-secondary"></span><span><strong>Upper-Funnel Experiments</strong> — Pilot category-level content that naturally hosts RMN placements</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Measurement Approach</p>
+          <p class="text-muted mb-3">Industry standards are still emerging. We're building forward-compatible infrastructure to capture early signals.</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Forward-Compatible Hooks</strong> — API impression tokens, inclusion tracking</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>IAB/MRC Monitoring</strong> — Tracking emerging industry standards as they develop</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Learn-as-We-Go</strong> — Instrument now, refine attribution models as patterns emerge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">9 / 17</span>
+      <span class="caption">Section 02: Workstreams</span>
+    </div>
+  </section>
+
+  <!-- Slide 10: Technical Foundation -->
+  <section id="technical" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 Workstreams</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Technical Foundation</span>
+    </div>
+    <p class="slide-subtitle">Table-stakes: Ensuring AI systems can access and interpret your site through structured data</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header">Initial Steps (Technical)</p>
+          <p class="text-muted mb-3">Foundation for agent-ready infrastructure — from Dec 5 roadmap</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Enhanced Product Schema</strong> — Structured data for AI extraction</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>API & Feed Structure</strong> — Machine-readable data layer</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>LLM Merchant Submission</strong> — Register with ChatGPT, Google, Bing</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Service Integrations</strong> — Connect existing services to agent layer</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>RMN Schema Integration</strong> — Sponsored content in structured feeds</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">The "Machine Lane"</p>
+          <p class="text-muted mb-3">Shift from human-optimized to machine-optimized content delivery</p>
+          <div class="grid-2" style="gap: 1rem; font-size: 0.875rem;">
+            <div>
+              <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted);">Web (Today)</p>
+              <p class="text-muted">Inefficient ingestion</p>
+              <p class="text-muted">Incomplete information</p>
+              <p class="text-muted">Legacy constraints</p>
+              <p class="text-muted">Human-optimized</p>
+            </div>
+            <div>
+              <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">API (Tomorrow)</p>
+              <p>Structured, machine-readable</p>
+              <p>Real-time access</p>
+              <p>Fresh, unified content</p>
+              <p>Foundation for monetization</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Key Integration:</strong> OpenAI's ACP (Agent Commerce Protocol) enables commerce actions — checkout, cart, inventory — directly within AI conversations. This is the emerging standard for off-platform agent commerce.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">10 / 17</span>
+      <span class="caption">Section 02: Workstreams</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: ROADMAP -->
+  <!-- ============================================ -->
+  <section id="divider-roadmap" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">03</div>
+      <h2 class="divider-title">Roadmap</h2>
+      <p class="divider-subtitle">Assessment → Readiness → Enrichment → Optimization → Use Cases</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">11 / 17</span>
+      <span class="caption">Section 03</span>
+    </div>
+  </section>
+
+  <!-- Slide 12: Roadmap Overview -->
+  <section id="roadmap-overview" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Roadmap</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Phase Overview</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-5" style="gap: 1rem;">
+        <div class="timeline-card timeline-card-quick">
+          <p class="phase">Phase 1</p>
+          <p class="title">Assessment</p>
+          <div class="items">
+            <p>Understand current state. Audit, measure, identify gaps.</p>
+          </div>
+        </div>
+        <div class="timeline-card timeline-card-short">
+          <p class="phase">Phase 2</p>
+          <p class="title">Data Readiness</p>
+          <div class="items">
+            <p>Prepare infrastructure. APIs, feeds, structured data foundations.</p>
+          </div>
+        </div>
+        <div class="timeline-card timeline-card-mid">
+          <p class="phase">Phase 3</p>
+          <p class="title">Enrichment</p>
+          <div class="items">
+            <p>Build out content. Schema, guides, FAQs, service integrations.</p>
+          </div>
+        </div>
+        <div class="timeline-card timeline-card-long">
+          <p class="phase">Phase 4</p>
+          <p class="title">Optimization</p>
+          <div class="items">
+            <p>Refine and measure. Content enrichment, sponsored alignment, measurement.</p>
+          </div>
+        </div>
+        <div class="timeline-card" style="border-color: var(--accent-secondary);">
+          <p class="phase" style="color: var(--accent-secondary);">Phase 5</p>
+          <p class="title">Use Cases</p>
+          <div class="items">
+            <p>Apply and scale. Agentic UX, brand monitoring, full attribution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-secondary mt-6">
+        <p><strong>Thin Slice First:</strong> We'll deliver a complete end-to-end pass through all five phases with a <span style="color: var(--accent-secondary); font-weight: 600;">single category vertical</span> before scaling broadly. This validates the model fast, surfaces integration challenges early, and builds momentum with measurable wins. <em>Prove the full loop, then scale horizontally.</em></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">12 / 17</span>
+      <span class="caption">Section 03: Roadmap</span>
+    </div>
+  </section>
+
+  <!-- Slide 13: Roadmap Detail -->
+  <section id="roadmap-detail" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Roadmap</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Detailed Initiatives</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto;">
+        <table style="font-size: 0.875rem;">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Phase</th>
+              <th style="width: 42.5%;">Initiatives</th>
+              <th style="width: 42.5%;">Outcomes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge" style="border-color: var(--positive); color: var(--positive);">Phase 1</span><br><span class="text-muted" style="font-size: 0.75rem;">Assessment</span></td>
+              <td class="text-muted">Schema.org compliance audit • Baseline GEO visibility measurement • Content gap identification • API/feed structure assessment</td>
+              <td class="text-muted">Clear picture of current state and gaps to address</td>
+            </tr>
+            <tr>
+              <td><span class="badge">Phase 2</span><br><span class="text-muted" style="font-size: 0.75rem;">Data Readiness</span></td>
+              <td class="text-muted">API & Feed structure for agents • LLM Merchant Submission (ChatGPT, Google, Bing) • Structured data templates • RMN schema planning</td>
+              <td class="text-muted">Infrastructure ready for agent consumption</td>
+            </tr>
+            <tr>
+              <td><span class="badge-song">Phase 3</span><br><span class="text-muted" style="font-size: 0.75rem;">Enrichment</span></td>
+              <td class="text-muted">Enhanced product schema rollout • Content Structure & IA • Helpful guides and FAQs • Service integrations</td>
+              <td class="text-muted">Rich, machine-readable content across catalog</td>
+            </tr>
+            <tr>
+              <td><span class="badge-secondary">Phase 4</span><br><span class="text-muted" style="font-size: 0.75rem;">Optimization</span></td>
+              <td class="text-muted">PDP/category content enrichment • Sponsored content alignment • UGC & reviews integration • Measurement hooks</td>
+              <td class="text-muted">Optimized content with measurement in place</td>
+            </tr>
+            <tr>
+              <td><span class="badge" style="border-color: var(--accent-secondary); color: var(--accent-secondary);">Phase 5</span><br><span class="text-muted" style="font-size: 0.75rem;">Use Cases</span></td>
+              <td class="text-muted">Agentic search design & UX • Brand sentiment monitoring • Off-platform optimization • Full GEO attribution</td>
+              <td class="text-muted">Scaled use cases with full visibility</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">13 / 17</span>
+      <span class="caption">Section 03: Roadmap</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION DIVIDER: PARTNERSHIP MODEL -->
+  <!-- ============================================ -->
+  <section id="divider-partnership" class="slide slide-divider">
+    <div class="divider-content">
+      <div class="divider-num">04</div>
+      <h2 class="divider-title">Partner Ecosystem</h2>
+      <p class="divider-subtitle">Assessing current partners, managing technical requirements, and balancing consolidation vs. diversification</p>
+    </div>
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">14 / 17</span>
+      <span class="caption">Section 04</span>
+    </div>
+  </section>
+
+  <!-- Slide 15: Partner Ecosystem -->
+  <section id="partnership" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Partner Ecosystem</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">How We Accelerate</span>
+    </div>
+    <p class="slide-subtitle">We've navigated emerging tech transitions before. Our ecosystem and pattern recognition compress what would take years to learn alone.</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="card-highlight">
+          <p class="subhead mb-2 text-song">Accelerated Build</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Accenture accelerates development; Best Buy owns the asset and competitive advantage</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span>Decision logic & intelligence layer</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span>Customer context & matchmaking</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span>Proprietary data enrichment</span></div>
+        </div>
+        <div class="card-highlight">
+          <p class="subhead mb-2 text-cyan">License & Integrate</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Speed to market for commodity capabilities; monitor vendor delivery closely</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>Feed management (Feedonomics, Rithum)</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>API connectivity & plumbing</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>Schema validation tools</span></div>
+        </div>
+        <div class="card-highlight">
+          <p class="subhead mb-2 text-strategy">Platform Access</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">Leverage Accenture's relationships for direct access to evolving protocols</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-strategy"></span><span>LLM platforms (OpenAI, Google, Microsoft)</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-strategy"></span><span>ACP protocol compliance</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-strategy"></span><span>Merchant submission programs</span></div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header">Why Acceleration Matters</p>
+          <p class="text-muted mb-3" style="font-size: 0.875rem;">The market is still learning. While competitors are experimenting, we can move decisively.</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span><strong>Cross-industry patterns</strong> — what's working in retail, CPG, financial services</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span><strong>Platform relationships</strong> — direct access to Google, Microsoft, OpenAI engineering</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-song"></span><span><strong>Proven methodology</strong> — assess, pilot, scale framework we've applied before</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">What We'll Resolve Together</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span>How to balance <strong>multiple partners vs. consolidating</strong>?</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span>How to assess current partners' <strong>agentic commerce capabilities</strong>?</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span>How to manage <strong>different technical requirements</strong> across ecosystem?</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker marker-secondary"></span><span>What's the <strong>risk vs. reward</strong> of building technology for LLM search?</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">15 / 17</span>
+      <span class="caption">Section 04: Partner Ecosystem</span>
+    </div>
+  </section>
+
+  <!-- Slide 16: Decision Framework -->
+  <section id="build-buy" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Partner Ecosystem</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Decision Framework</span>
+    </div>
+    <p class="slide-subtitle">How to evaluate which approach for which capability — factoring in speed, risk, and control</p>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto; margin-bottom: 1.5rem;">
+        <table style="font-size: 0.875rem;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Capability</th>
+              <th style="width: 20%;">Approach</th>
+              <th style="width: 55%;">Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 500;">Intelligence Layer</td>
+              <td><span class="badge badge-song">Accelerate</span></td>
+              <td class="text-muted">Proprietary advantage. We build it fast; you own the competitive moat forever.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Data Enrichment</td>
+              <td><span class="badge badge-song">Accelerate</span></td>
+              <td class="text-muted">Your data is unique. We accelerate the transformation; you own the asset.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Feed Management</td>
+              <td><span class="badge">License</span></td>
+              <td class="text-muted">Commodity capability. Feedonomics, Rithum — use for connectivity, but monitor delivery.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">Schema & Structured Data</td>
+              <td><span class="badge">License + Accelerate</span></td>
+              <td class="text-muted">License validation tools; we accelerate custom enrichment for your catalog.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 500;">LLM Platform Access</td>
+              <td><span class="badge badge-strategy">Access</span></td>
+              <td class="text-muted">Our platform relationships get you to the table faster with Google, Microsoft, OpenAI.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p><strong>Guiding Principle:</strong> Accelerate what differentiates you — you own the asset, we compress the timeline. License commodity capabilities. Leverage our platform access to move faster than going direct. <span style="color: var(--accent-secondary); font-weight: 600;">Speed is the strategy.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">16 / 17</span>
+      <span class="caption">Section 04: Partner Ecosystem</span>
+    </div>
+  </section>
+
+  <!-- Slide 18: Next Steps -->
+  <section id="next-steps" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Partner Ecosystem</span>
+      <span class="breadcrumb-divider">→</span>
+      <span class="breadcrumb-page">Where We Go From Here</span>
+    </div>
+    <p class="slide-subtitle">While the market is still learning, we're already building. Our access, methodology, and capacity compress timelines dramatically.</p>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="panel">
+          <p class="panel-header">Why We Accelerate This</p>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>We're already doing it</strong> — building agentic commerce for retail, CPG, financial services right now</span></div>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>Platform insider access</strong> — direct lines to Google, Microsoft, OpenAI engineering teams</span></div>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>Proven playbook</strong> — same assess, pilot, scale framework from mobile, cloud, AI/ML transitions</span></div>
+          <div class="list-item"><span class="marker marker-song"></span><span><strong>Ready to execute</strong> — teams staffed and experienced in this exact problem space</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Recommended Actions</p>
+          <div class="list-item"><span class="marker"></span><span><strong>Current State Assessment</strong> — Schema audit, API readiness, content gap analysis</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Success Criteria Definition</strong> — What does "good" look like? Measurement framework.</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Pilot Program</strong> — Targeted experiment with one LLM platform to validate approach</span></div>
+          <div class="list-item"><span class="marker"></span><span><strong>Governance Framework</strong> — How Best Buy adapts as protocols and standards evolve</span></div>
+        </div>
+      </div>
+
+      <div class="callout-secondary mt-6">
+        <p><strong>Immediate Next Step:</strong> Schedule a working session with engineering and data leadership to scope the thin-slice pilot. <span style="color: var(--accent-secondary); font-weight: 600;">Every week of delay is a week your competitors might catch up.</span></p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">17 / 17</span>
+      <span class="caption">Section 04: Partner Ecosystem</span>
+    </div>
+  </section>
+
+</body>
+</html>

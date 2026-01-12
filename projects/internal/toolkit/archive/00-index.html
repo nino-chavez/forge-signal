@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Commerce - Reference Architecture Package</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="shared-theme.css">
+  <style>
+    /* Index page specific variables using semantic palette */
+    :root {
+      /* Audience path cards - 4 distinct semantic colors */
+      --path-executive: var(--color-platform);      /* Blue */
+      --path-architect: var(--color-data);          /* Purple */
+      --path-developer: var(--color-agent);         /* Teal */
+      --path-pm: var(--color-external);             /* Slate */
+
+      /* Category badges */
+      --cat-overview-bg: var(--color-platform-light);
+      --cat-overview-text: var(--color-platform-dark);
+      --cat-arch-bg: var(--color-data-light);
+      --cat-arch-text: var(--color-data-dark);
+      --cat-planning-bg: var(--color-agent-light);
+      --cat-planning-text: var(--color-agent-dark);
+      --cat-reference-bg: var(--bg-surface);
+      --cat-reference-text: var(--text-secondary);
+
+      /* Number badges */
+      --num-1-bg: var(--color-platform-light);
+      --num-1-text: var(--color-platform-dark);
+      --num-arch-bg: var(--color-data-light);
+      --num-arch-text: var(--color-data-dark);
+      --num-plan-bg: var(--color-agent-light);
+      --num-plan-text: var(--color-agent-dark);
+      --num-ref-bg: var(--bg-surface);
+      --num-ref-text: var(--text-secondary);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+  <div class="slide-container p-10">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold" style="color: var(--text-primary);">Agentic Composable Commerce</h1>
+      <p class="text-lg mt-2" style="color: var(--text-secondary);">Reference Architecture Package</p>
+      <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style="background: var(--color-platform-light); color: var(--color-platform-dark);">
+        <span>v3.0</span>
+        <span>•</span>
+        <span>13 Documents</span>
+        <span>•</span>
+        <span>Production Ready</span>
+      </div>
+    </div>
+
+    <!-- Audience Pathways -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold mb-4 text-center" style="color: var(--text-primary);">Choose Your Path</h2>
+      <div class="grid grid-cols-4 gap-4">
+
+        <!-- Executive - Blue (Platform) -->
+        <div class="path-card rounded-xl p-5 text-white" style="background: var(--path-executive);">
+          <div class="text-2xl mb-2">👔</div>
+          <h3 class="font-bold text-lg">Executive</h3>
+          <p class="text-white/80 text-sm mt-2">Business case, ROI, timeline</p>
+          <div class="mt-4 pt-4 border-t border-white/20">
+            <div class="text-xs uppercase tracking-wide text-white/70 mb-2">15 min path</div>
+            <ol class="text-sm space-y-1 text-white/90">
+              <li><a href="01-executive-summary.html" class="hover:underline">01 Executive Summary</a></li>
+              <li><a href="02-context-diagram.html" class="hover:underline">02 Context Diagram</a></li>
+              <li><a href="10-cost-model.html" class="hover:underline">10 Cost Model</a></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Architect - Purple (Data) -->
+        <div class="path-card rounded-xl p-5 text-white" style="background: var(--path-architect);">
+          <div class="text-2xl mb-2">🏗️</div>
+          <h3 class="font-bold text-lg">Architect</h3>
+          <p class="text-white/80 text-sm mt-2">Technical design, decisions</p>
+          <div class="mt-4 pt-4 border-t border-white/20">
+            <div class="text-xs uppercase tracking-wide text-white/70 mb-2">60 min path</div>
+            <ol class="text-sm space-y-1 text-white/90">
+              <li><a href="02-context-diagram.html" class="hover:underline">02-04 C4 Diagrams</a></li>
+              <li><a href="09-decision-log.html" class="hover:underline">09 Decision Log</a></li>
+              <li><a href="08-component-catalog.html" class="hover:underline">08 Component Catalog</a></li>
+              <li><a href="07-data-access-matrix.html" class="hover:underline">07 Data Access Matrix</a></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Developer - Teal (Agent) -->
+        <div class="path-card rounded-xl p-5 text-white" style="background: var(--path-developer);">
+          <div class="text-2xl mb-2">💻</div>
+          <h3 class="font-bold text-lg">Developer</h3>
+          <p class="text-white/80 text-sm mt-2">APIs, data flows, integration</p>
+          <div class="mt-4 pt-4 border-t border-white/20">
+            <div class="text-xs uppercase tracking-wide text-white/70 mb-2">45 min path</div>
+            <ol class="text-sm space-y-1 text-white/90">
+              <li><a href="04-component-diagram.html" class="hover:underline">04 Component Diagram</a></li>
+              <li><a href="06-data-flow-diagram.html" class="hover:underline">06 Data Flow Diagram</a></li>
+              <li><a href="08-component-catalog.html" class="hover:underline">08 Component Catalog</a></li>
+              <li><a href="12-migration-playbook.html" class="hover:underline">12 Migration Playbook</a></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- PM / Program - Slate (External) -->
+        <div class="path-card rounded-xl p-5 text-white" style="background: var(--path-pm);">
+          <div class="text-2xl mb-2">📋</div>
+          <h3 class="font-bold text-lg">PM / Program Lead</h3>
+          <p class="text-white/80 text-sm mt-2">Roadmap, team, rollout</p>
+          <div class="mt-4 pt-4 border-t border-white/20">
+            <div class="text-xs uppercase tracking-wide text-white/70 mb-2">30 min path</div>
+            <ol class="text-sm space-y-1 text-white/90">
+              <li><a href="01-executive-summary.html" class="hover:underline">01 Executive Summary</a></li>
+              <li><a href="05-implementation-roadmap.html" class="hover:underline">05 Implementation Roadmap</a></li>
+              <li><a href="11-team-topology.html" class="hover:underline">11 Team Topology</a></li>
+              <li><a href="12-migration-playbook.html" class="hover:underline">12 Migration Playbook</a></li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Package Contents -->
+    <div class="grid grid-cols-3 gap-6">
+
+      <!-- Column 1: Overview & Architecture -->
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wide mb-3" style="color: var(--text-muted);">Overview</h2>
+        <div class="space-y-3">
+
+          <a href="01-executive-summary.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-1-bg); color: var(--num-1-text);">01</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Executive Summary</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">What, why, ROI, timeline — start here</p>
+                <div class="mt-2 flex gap-2">
+                  <span class="px-2 py-0.5 rounded text-xs" style="background: var(--cat-overview-bg); color: var(--cat-overview-text);">Start Here</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+        <h2 class="text-sm font-bold uppercase tracking-wide mb-3 mt-6" style="color: var(--text-muted);">Architecture (C4 Model)</h2>
+        <div class="space-y-3">
+
+          <a href="02-context-diagram.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-arch-bg); color: var(--num-arch-text);">02</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Context Diagram</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">System boundaries & external actors</p>
+                <div class="mt-2 flex gap-2">
+                  <span class="px-2 py-0.5 rounded text-xs" style="background: var(--cat-arch-bg); color: var(--cat-arch-text);">C4 Level 1</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="03-container-diagram.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-arch-bg); color: var(--num-arch-text);">03</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Container Diagram</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Major systems & connections</p>
+                <div class="mt-2 flex gap-2">
+                  <span class="px-2 py-0.5 rounded text-xs" style="background: var(--cat-arch-bg); color: var(--cat-arch-text);">C4 Level 2</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="04-component-diagram.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-arch-bg); color: var(--num-arch-text);">04</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Component Diagram</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Detailed breakdown with phases</p>
+                <div class="mt-2 flex gap-2">
+                  <span class="px-2 py-0.5 rounded text-xs" style="background: var(--cat-arch-bg); color: var(--cat-arch-text);">C4 Level 3</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Column 2: Planning -->
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wide mb-3" style="color: var(--text-muted);">Planning</h2>
+        <div class="space-y-3">
+
+          <a href="05-implementation-roadmap.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-plan-bg); color: var(--num-plan-text);">05</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Implementation Roadmap</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Phased timeline & dependencies</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="06-data-flow-diagram.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-plan-bg); color: var(--num-plan-text);">06</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Data Flow Diagram</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Order lifecycle through architecture</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="10-cost-model.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-plan-bg); color: var(--num-plan-text);">10</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Cost Model</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">TCO framework & ROI calculation</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="11-team-topology.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-plan-bg); color: var(--num-plan-text);">11</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Team Topology</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Org structure & skills matrix</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="12-migration-playbook.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-plan-bg); color: var(--num-plan-text);">12</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Migration Playbook</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Adoption paths & rollout strategy</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Column 3: Reference -->
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wide mb-3" style="color: var(--text-muted);">Reference</h2>
+        <div class="space-y-3">
+
+          <a href="07-data-access-matrix.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-ref-bg); color: var(--num-ref-text);">07</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Data Access Matrix</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Agent permissions by data type</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="08-component-catalog.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-ref-bg); color: var(--num-ref-text);">08</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Component Catalog</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">Detailed specs per component</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="09-decision-log.html" class="card rounded-lg p-4 block" style="background: var(--bg-card); border: 1px solid var(--border);">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background: var(--num-ref-bg); color: var(--num-ref-text);">09</div>
+              <div>
+                <h3 class="font-semibold" style="color: var(--text-primary);">Decision Log (ADRs)</h3>
+                <p class="text-sm mt-1" style="color: var(--text-secondary);">10 architecture decisions with rationale</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-6 pt-4 flex justify-between items-center text-sm" style="border-top: 1px solid var(--border); color: var(--text-muted);">
+      <div>Agentic Composable Commerce Reference Architecture v3.0</div>
+      <div>All files in <code class="px-2 py-0.5 rounded" style="background: var(--bg-surface); color: var(--text-secondary);">package/</code> folder</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

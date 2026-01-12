@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Optimization Service - Technical Handoff</title>
+        <style>
+        :root {
+            --color-brand-violet: #7c3aed;
+            --color-brand-navy: #1a365d;
+            --color-text-primary: #171717;
+            --color-text-secondary: #404040;
+            --color-text-body: #525252;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f5f5f5;
+            --color-bg-dark: #111827;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-info: #0284c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-body);
+            line-height: 1.6;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--color-bg-primary);
+            border-right: 1px solid #e5e5e5;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--color-brand-violet);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-header h1 {
+            font-weight: 700;
+            color: var(--color-brand-violet);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header .doc-type {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-section {
+            margin-bottom: 16px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.15s;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-brand-violet);
+        }
+
+        .nav-link.active {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 28px;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--color-brand-violet);
+            margin: 32px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-violet);
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            margin: 24px 0 12px;
+        }
+
+        h4 {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin: 16px 0 8px;
+        }
+
+        h5 {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin: 12px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--color-brand-violet);
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 12px 0 16px 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        li::marker {
+            color: var(--color-brand-violet);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+            background: var(--color-bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        th {
+            background: var(--color-bg-secondary);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: #f0fdf4;
+            font-weight: 600;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--color-bg-dark);
+            color: #e5e5e5;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        pre code {
+            display: block;
+            line-height: 1.5;
+            color: #e5e5e5;
+        }
+
+        p code, li code, td code {
+            background: #f5f5f5;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--color-brand-violet);
+            border: 1px solid #e5e5e5;
+        }
+
+        /* Blockquotes & Special Boxes */
+        blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid var(--color-brand-violet);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-body);
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid var(--color-warning);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 4px solid var(--color-info);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .text-diagram {
+            background: var(--color-bg-primary);
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .text-diagram h4 {
+            color: var(--color-brand-violet);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: #ede9fe;
+            color: var(--color-brand-violet);
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--color-success);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: var(--color-warning);
+        }
+
+        .badge-info {
+            background: #e0f2fe;
+            color: var(--color-info);
+        }
+
+        /* Checkboxes */
+        input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: var(--color-brand-violet);
+        }
+
+        /* Links */
+        a {
+            color: var(--color-brand-violet);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        a:hover {
+            color: var(--color-brand-navy);
+            text-decoration: underline;
+        }
+
+        /* Horizontal Rules */
+        hr {
+            border: none;
+            border-top: 1px solid #e5e5e5;
+            margin: 32px 0;
+        }
+
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            margin: 24px 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main-content {
+                margin-left: 240px;
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                margin: 0.5in;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+                font-size: 11px;
+            }
+
+            h1 { font-size: 22px; }
+            h2 { font-size: 16px; page-break-after: avoid; }
+            h3 { font-size: 13px; page-break-after: avoid; }
+            h4 { font-size: 11px; }
+
+            table { font-size: 10px; page-break-inside: avoid; }
+            th, td { padding: 6px 8px; }
+
+            .text-diagram {
+                page-break-inside: avoid;
+                border: 1px solid #e5e5e5;
+            }
+
+            pre {
+                page-break-inside: avoid;
+                background: #1a1a1a !important;
+                color: #e5e5e5 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .badge, .highlight-row {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>AEO Optimization Service: Technical Handoff</h1>
+                <div class="doc-type">AEO Optimization Service</div>
+            </div>
+
+
+    <div class="nav-section">
+      <div class="nav-section-title">Document Navigation</div>
+      <a href="00-executive-summary.html" class="nav-link">Executive Summary</a>
+      <a href="01-architecture-design.html" class="nav-link">Technical Architecture</a>
+      <a href="02-implementation-guide.html" class="nav-link">Implementation Guide</a>
+      <a href="03-lambda-patterns.html" class="nav-link">Lambda Implementation Patterns</a>
+      <a href="04-operations-testing.html" class="nav-link">Operations & Testing</a>
+      <a href="05-api-specifications.html" class="nav-link active">API Specifications</a>
+      <a href="06-appendix-alternative-staffing.html" class="nav-link">Appendix: Alternative Staffing</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">On This Page</div>
+      <a href="#appendix-j-complete-openapi-specifications" class="nav-link">Appendix J: OpenAPI Specifications</a>
+      <a href="#j1-inbound-api-profound-s3" class="nav-link">J.1: Inbound API (Profound → S3)</a>
+      <a href="#j2-outbound-api-recommendations-pim" class="nav-link">J.2: Outbound API (Recommendations → PIM)</a>
+    </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+<h2 id="appendix-j-complete-openapi-specifications">Appendix J: Complete OpenAPI Specifications</h2>
+<h3 id="j1-inbound-api-profound-s3">J.1: Inbound API (Profound → S3)</h3>
+<p><strong>File</strong>: <code>v4/specs/inbound-api-profound.yaml</code></p>
+<pre><code class="language-yaml">openapi: 3.0.0
+info:
+  title: AEO Profound Ingestion API
+  description: |
+    API for ESI Team to deliver Profound scan batches to AEO system.
+
+    **Delivery Method**: Write JSON to S3 bucket (event-driven ingestion)
+
+    **S3 Path Structure**: s3://aeo-raw-data/profound-exports/{YYYY}/{MM}/{DD}/{batch_id}.json
+  version: 1.0.0
+  contact:
+    name: Accenture AEO Team
+    email: aeo-team@accenture.com
+
+servers:
+  - url: s3://aeo-raw-data/profound-exports
+    description: S3 bucket (not HTTP endpoint)
+
+paths:
+  /{YYYY}/{MM}/{DD}/{batch_id}.json:
+    put:
+      summary: Upload Profound scan batch
+      description: |
+        ESI Team writes JSON file to S3 bucket. Lambda automatically triggered by S3 PUT event.
+
+        **Validation Rules**:
+        - Max 100 scans per batch
+        - query must match prompt bank (400 prompts)
+        - scan_date must be within last 48 hours
+        - share_of_voice must be 0-1
+      parameters:
+        - name: YYYY
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: &#39;^\d{4}$&#39;
+          example: &#39;2024&#39;
+        - name: MM
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: &#39;^(0[1-9]|1[0-2])$&#39;
+          example: &#39;01&#39;
+        - name: DD
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: &#39;^(0[1-9]|[12]\d|3[01])$&#39;
+          example: &#39;15&#39;
+        - name: batch_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: &#39;^[a-zA-Z0-9-]+$&#39;
+          example: &#39;daily-morning-batch&#39;
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: &#39;#/components/schemas/ProfoundBatch&#39;
+            example:
+              batch_id: &#39;daily-morning-batch&#39;
+              scans:
+                - query: &#39;best engagement rings under $5000&#39;
+                  scan_date: &#39;2024-01-15T08:00:00Z&#39;
+                  llm_provider: &#39;ChatGPT-4&#39;
+                  brand_mentioned: true
+                  share_of_voice: 0.15
+                  response_text: &#39;Top options include Kay Jewelers...&#39;
+                  competitors: [&#39;Blue Nile&#39;, &#39;James Allen&#39;]
+
+      responses:
+        &#39;200&#39;:
+          description: File uploaded successfully (S3 PUT succeeded)
+        &#39;400&#39;:
+          description: Validation failed (detected by Lambda, sent to DLQ)
+          content:
+            application/json:
+              schema:
+                $ref: &#39;#/components/schemas/Error&#39;
+        &#39;413&#39;:
+          description: Batch size exceeds 100 scans
+
+components:
+  schemas:
+    ProfoundBatch:
+      type: object
+      required:
+        - batch_id
+        - scans
+      properties:
+        batch_id:
+          type: string
+          description: Unique identifier for this batch
+          example: &#39;daily-morning-batch&#39;
+        scans:
+          type: array
+          maxItems: 100
+          items:
+            $ref: &#39;#/components/schemas/ProfoundScan&#39;
+
+    ProfoundScan:
+      type: object
+      required:
+        - query
+        - scan_date
+        - llm_provider
+        - brand_mentioned
+        - share_of_voice
+        - response_text
+      properties:
+        query:
+          type: string
+          description: Search query (must be in 400-prompt bank)
+          example: &#39;best engagement rings under $5000&#39;
+        scan_date:
+          type: string
+          format: date-time
+          description: When the LLM was queried (ISO 8601)
+          example: &#39;2024-01-15T08:00:00Z&#39;
+        llm_provider:
+          type: string
+          enum: [&#39;ChatGPT-4&#39;, &#39;Perplexity&#39;, &#39;Google-AI&#39;, &#39;Claude&#39;]
+          example: &#39;ChatGPT-4&#39;
+        brand_mentioned:
+          type: boolean
+          description: Was Signet brand mentioned in response?
+          example: true
+        share_of_voice:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Signet SOV (0-1 range)
+          example: 0.15
+        response_text:
+          type: string
+          description: Full LLM response text
+          example: &#39;Top options include Kay Jewelers...&#39;
+        competitors:
+          type: array
+          items:
+            type: string
+          description: Competitors mentioned in response
+          example: [&#39;Blue Nile&#39;, &#39;James Allen&#39;]
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: &#39;Validation failed&#39;
+        details:
+          type: string
+          example: &#39;Scan 0: Missing field &quot;query&quot;&#39;
+</code></pre>
+<p><strong>IAM Policy</strong> (ESI Team S3 write access):</p>
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;s3:PutObject&quot;,
+        &quot;s3:PutObjectAcl&quot;
+      ],
+      &quot;Resource&quot;: &quot;arn:aws:s3:::aeo-raw-data/profound-exports/*&quot;
+    }
+  ]
+}
+</code></pre>
+<hr>
+<h3 id="j2-outbound-api-recommendations-pim">J.2: Outbound API (Recommendations → PIM)</h3>
+<p><strong>File</strong>: <code>v4/specs/outbound-api-pim.yaml</code></p>
+<pre><code class="language-yaml">openapi: 3.0.0
+info:
+  title: AEO PIM Recommendations API
+  description: |
+    API for AEO system to send content recommendations to Infoverity PIM.
+
+    **Implementation**: Infoverity team implements this API.
+    **Timeline**: Week 6+ (not blocking Week 1-2)
+  version: 1.0.0
+
+servers:
+  - url: https://pim-api.infoverity.com/v1
+    description: Production PIM API
+  - url: https://pim-api-staging.infoverity.com/v1
+    description: Staging PIM API
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /recommendations:
+    post:
+      summary: Submit content recommendation
+      description: |
+        AEO system sends recommendation for PIM content update.
+
+        **Workflow**:
+        1. AEO Analyze Tool generates recommendation
+        2. Content Strategist reviews (optional)
+        3. POST to this endpoint
+        4. Infoverity creates P360 task for content update
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: &#39;#/components/schemas/Recommendation&#39;
+            example:
+              recommendation_id: &#39;rec-abc123&#39;
+              created_at: &#39;2024-01-15T10:30:00Z&#39;
+              product_category: &#39;engagement-rings&#39;
+              visibility_gap:
+                query: &#39;best engagement rings under $5000&#39;
+                current_sov: 0.15
+                target_sov: 0.30
+              recommended_changes:
+                - field: &#39;product_description&#39;
+                  current_value: &#39;Classic engagement ring&#39;
+                  suggested_value: &#39;Affordable engagement ring under $5000 with lab-grown diamond&#39;
+                  rationale: &#39;LLMs prioritize price point and diamond type in this query segment&#39;
+
+      responses:
+        &#39;201&#39;:
+          description: Recommendation accepted
+          content:
+            application/json:
+              schema:
+                $ref: &#39;#/components/schemas/RecommendationAccepted&#39;
+        &#39;400&#39;:
+          description: Invalid recommendation format
+        &#39;429&#39;:
+          description: Rate limit exceeded (max 100/hour)
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    Recommendation:
+      type: object
+      required:
+        - recommendation_id
+        - created_at
+        - product_category
+        - visibility_gap
+        - recommended_changes
+      properties:
+        recommendation_id:
+          type: string
+          example: &#39;rec-abc123&#39;
+        created_at:
+          type: string
+          format: date-time
+          example: &#39;2024-01-15T10:30:00Z&#39;
+        product_category:
+          type: string
+          example: &#39;engagement-rings&#39;
+        visibility_gap:
+          $ref: &#39;#/components/schemas/VisibilityGap&#39;
+        recommended_changes:
+          type: array
+          items:
+            $ref: &#39;#/components/schemas/ContentChange&#39;
+
+    VisibilityGap:
+      type: object
+      properties:
+        query:
+          type: string
+          example: &#39;best engagement rings under $5000&#39;
+        current_sov:
+          type: number
+          format: float
+          example: 0.15
+        target_sov:
+          type: number
+          format: float
+          example: 0.30
+
+    ContentChange:
+      type: object
+      required:
+        - field
+        - suggested_value
+        - rationale
+      properties:
+        field:
+          type: string
+          enum: [&#39;product_description&#39;, &#39;product_title&#39;, &#39;meta_description&#39;, &#39;keywords&#39;]
+          example: &#39;product_description&#39;
+        current_value:
+          type: string
+          example: &#39;Classic engagement ring&#39;
+        suggested_value:
+          type: string
+          example: &#39;Affordable engagement ring under $5000 with lab-grown diamond&#39;
+        rationale:
+          type: string
+          example: &#39;LLMs prioritize price point and diamond type in this query segment&#39;
+
+    RecommendationAccepted:
+      type: object
+      properties:
+        recommendation_id:
+          type: string
+          example: &#39;rec-abc123&#39;
+        p360_task_id:
+          type: string
+          description: Informatica P360 task ID (for tracking)
+          example: &#39;P360-TASK-456&#39;
+        status:
+          type: string
+          enum: [&#39;pending_review&#39;, &#39;approved&#39;, &#39;rejected&#39;]
+          example: &#39;pending_review&#39;
+</code></pre>
+<p><strong>Example cURL Command</strong>:</p>
+<pre><code class="language-bash">curl -X POST https://pim-api.infoverity.com/v1/recommendations \
+  -H &quot;X-API-Key: YOUR_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{
+    &quot;recommendation_id&quot;: &quot;rec-abc123&quot;,
+    &quot;created_at&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;product_category&quot;: &quot;engagement-rings&quot;,
+    &quot;visibility_gap&quot;: {
+      &quot;query&quot;: &quot;best engagement rings under $5000&quot;,
+      &quot;current_sov&quot;: 0.15,
+      &quot;target_sov&quot;: 0.30
+    },
+    &quot;recommended_changes&quot;: [
+      {
+        &quot;field&quot;: &quot;product_description&quot;,
+        &quot;current_value&quot;: &quot;Classic engagement ring&quot;,
+        &quot;suggested_value&quot;: &quot;Affordable engagement ring under $5000 with lab-grown diamond&quot;,
+        &quot;rationale&quot;: &quot;LLMs prioritize price point and diamond type in this query segment&quot;
+      }
+    ]
+  }&#39;
+</code></pre>
+
+        </main>
+    </div>
+
+    <script>
+        // Highlight active nav item on scroll
+        const navLinks = document.querySelectorAll('.nav-link');
+        const headings = document.querySelectorAll('h2, h3');
+
+        function updateActiveNav() {
+            let current = '';
+
+            headings.forEach(heading => {
+                const sectionTop = heading.offsetTop;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = heading.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+
+        // Smooth scroll for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic AI Workforce Strategy — Building the Delivery Capability</title>
+  <link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'rival-sans', 'articulat-cf', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    :root {
+      /* CIX Bronze Slate Hybrid - Backgrounds */
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --bg-card-elevated: #1a1a1a;
+      --bg-divider: #050505;
+
+      /* CIX Bronze Slate Hybrid - Text */
+      --text: #f5f3f0;
+      --text-muted: #9a938b;
+      --text-dim: #5c5955;
+
+      /* CIX Bronze Slate Hybrid - Accents */
+      --accent-primary: #e8935f;
+      --accent-primary-muted: rgba(232, 147, 95, 0.12);
+      --accent-secondary: #d4a574;
+      --accent-secondary-muted: rgba(212, 165, 116, 0.12);
+      --accent: #e8935f;
+      --accent-cyan: #e8935f;
+      --accent-orange: #f7931e;
+
+      /* Semantic colors */
+      --positive: #6b9a7a;
+      --positive-muted: rgba(107, 154, 122, 0.15);
+      --negative: #c2553d;
+      --negative-muted: rgba(194, 85, 61, 0.15);
+      --caution: #d4a574;
+
+      /* Borders */
+      --border: #252525;
+      --border-subtle: #1a1a1a;
+
+      /* Supporting */
+      --accent-tertiary: #7a6f5d;
+      --accent-highlight: #f7931e;
+      --purple: var(--accent-secondary);
+      --yellow: var(--accent-highlight);
+    }
+
+    /* Typography */
+    .display {
+      font-size: 3.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .display-accent { color: var(--accent-cyan); }
+    .headline {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .subhead {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .body-lg { font-size: 1.25rem; line-height: 1.7; color: var(--text-muted); }
+    .caption { font-size: 0.875rem; color: var(--text-muted); }
+    .mono { font-family: 'apparat-semicond', 'komet', monospace; }
+
+    /* Slide Layout */
+    .slide {
+      min-height: 100vh;
+      height: 100vh;
+      max-height: 100vh;
+      width: 100%;
+      padding: 4rem 6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .slide-divider {
+      background: var(--bg-divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .divider-content { max-width: 900px; }
+    .divider-num {
+      font-family: 'apparat-semicond', 'komet', monospace;
+      font-size: 8rem;
+      font-weight: 200;
+      color: var(--accent-primary);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .divider-title {
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .divider-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+    .slide-content {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .page-num {
+      font-family: 'apparat-semicond', 'komet', monospace;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .brand {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .slide-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-section {
+      font-family: 'apparat-semicond', 'komet', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section Header (integrated divider) */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-family: 'apparat-semicond', 'komet', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      line-height: 1;
+    }
+    .section-title-group {
+      flex: 1;
+    }
+    .section-title {
+      font-family: 'minion-pro-display', 'Times New Roman', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 0.25rem 0;
+      line-height: 1.2;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .breadcrumb-divider { color: var(--border); }
+    .breadcrumb-page {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Navigation dots */
+    .nav-dots {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+    .nav-dot.section-start {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+    .nav-dot.section-start:hover, .nav-dot.section-start.active { opacity: 1; }
+    .nav-separator { height: 8px; }
+
+    /* Grid Layouts */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1200px) {
+      .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); }
+      .slide { padding: 3rem 4rem; }
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        padding: 2rem 2.5rem;
+        height: auto;
+        min-height: 100vh;
+        max-height: none;
+        overflow: visible;
+      }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1.5rem; }
+      .grid-4, .grid-5 { grid-template-columns: 1fr; gap: 1rem; }
+      .nav-dots { display: none; }
+      html { scroll-snap-type: none; }
+
+      .display { font-size: 2.5rem; }
+      .divider-num { font-size: 5rem; }
+      .divider-title { font-size: 2rem; }
+      .divider-subtitle { font-size: 1rem; }
+      .stat-value, .stat-value-alt { font-size: 2rem; }
+
+      .slide-content { overflow: visible; }
+    }
+
+    @media (max-width: 768px) {
+      .slide { padding: 1.5rem; }
+
+      .display { font-size: 2rem; }
+      .headline { font-size: 1.25rem; }
+      .body-lg { font-size: 1rem; }
+      .divider-num { font-size: 4rem; }
+      .divider-title { font-size: 1.75rem; }
+      .divider-subtitle { font-size: 0.9375rem; }
+
+      .slide-title { font-size: 1.25rem; }
+      .slide-subtitle { font-size: 0.9375rem; margin-bottom: 1rem; }
+      .slide-breadcrumb {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+      }
+      .breadcrumb-section { font-size: 0.625rem; }
+      .breadcrumb-page { font-size: 1rem; }
+
+      .section-header { gap: 1rem; margin-bottom: 1rem; }
+      .section-num { font-size: 2rem; }
+      .section-title { font-size: 1.5rem; }
+      .section-desc { font-size: 0.875rem; }
+
+      .stat-card { padding: 1rem 0.75rem; }
+      .stat-value, .stat-value-alt { font-size: 1.75rem; }
+      .stat-label { font-size: 0.6875rem; }
+
+      .panel, .card, .card-highlight, .card-elevated, .card-negative, .card-positive {
+        padding: 1rem;
+        border-radius: 8px;
+      }
+      .panel-header { font-size: 0.75rem; margin-bottom: 0.75rem; }
+      .list-item { font-size: 0.875rem; }
+
+      .callout, .callout-secondary { padding: 1rem 1.25rem; }
+      .callout p { font-size: 0.9375rem; }
+
+      .role-card { padding: 1rem; }
+      .role-title { font-size: 0.9375rem; }
+      .role-desc { font-size: 0.8125rem; }
+
+      .slide-footer {
+        padding-top: 1rem;
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      /* Tables: horizontal scroll wrapper */
+      .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -1.5rem;
+        padding: 0 1.5rem;
+      }
+      table {
+        font-size: 0.75rem;
+        min-width: 600px;
+      }
+      th, td { padding: 0.5rem 0.75rem; }
+    }
+
+    @media (max-width: 480px) {
+      .slide { padding: 1rem; }
+
+      .display { font-size: 1.5rem; }
+      .headline { font-size: 1.125rem; }
+      .subhead { font-size: 0.75rem; }
+      .body-lg { font-size: 0.9375rem; }
+      .divider-num { font-size: 3rem; }
+      .divider-title { font-size: 1.5rem; }
+      .divider-subtitle { font-size: 0.875rem; }
+
+      .slide-title { font-size: 1.125rem; }
+      .slide-subtitle { font-size: 0.875rem; }
+      .slide-breadcrumb { gap: 0.375rem; }
+      .breadcrumb-section { font-size: 0.5625rem; letter-spacing: 0.03em; }
+      .breadcrumb-page { font-size: 0.875rem; }
+
+      .stat-card { padding: 0.75rem 0.5rem; }
+      .stat-value, .stat-value-alt { font-size: 1.5rem; }
+      .stat-label { font-size: 0.625rem; margin-bottom: 0.5rem; }
+      .stat-source { font-size: 0.5rem; }
+
+      .panel, .card, .card-highlight, .card-elevated, .card-negative, .card-positive {
+        padding: 0.75rem;
+      }
+      .panel-header { font-size: 0.6875rem; }
+      .list-item { font-size: 0.8125rem; gap: 0.375rem; }
+      .marker { width: 5px; height: 5px; }
+
+      .callout, .callout-secondary { padding: 0.75rem 1rem; }
+      .callout p { font-size: 0.875rem; }
+
+      .role-card { padding: 0.75rem; }
+      .role-icon { width: 1.5rem; height: 1.5rem; margin-bottom: 0.5rem; }
+      .role-title { font-size: 0.875rem; }
+      .role-level { font-size: 0.625rem; }
+      .role-desc { font-size: 0.75rem; }
+      .badge { font-size: 0.625rem; padding: 0.25rem 0.5rem; }
+
+      .hero-content { padding: 0 0.5rem; }
+      .hero-slide .subhead { font-size: 0.6875rem; }
+
+      .slide-footer { font-size: 0.6875rem; }
+      .page-num { font-size: 0.6875rem; }
+
+      table { min-width: 500px; font-size: 0.6875rem; }
+      th { font-size: 0.5625rem; padding: 0.375rem 0.5rem; }
+      td { padding: 0.375rem 0.5rem; }
+    }
+
+    /* Spacing */
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 0.75rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.5rem; }
+    .mb-6 { margin-bottom: 2rem; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-6 { margin-top: 2rem; }
+
+    /* Panels & Cards */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .panel-header {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-highlight {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-elevated {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-negative {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--negative);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-positive {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--positive);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    /* List styles */
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+    .marker {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-primary);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .marker-muted { background: var(--text-dim); }
+    .marker-secondary { background: var(--accent-secondary); }
+    .marker-negative { background: var(--negative); }
+    .marker-positive { background: var(--positive); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+    th {
+      text-align: left;
+      padding: 1rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-family: 'apparat-semicond', 'komet', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--accent-primary);
+      border-radius: 4px;
+      color: var(--accent-primary);
+    }
+    .badge-secondary {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+    }
+    .badge-negative {
+      border-color: var(--negative);
+      color: var(--negative);
+    }
+    .badge-positive {
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--accent-primary-muted);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 2rem;
+    }
+    .callout-secondary {
+      background: var(--accent-secondary-muted);
+      border-left-color: var(--accent-secondary);
+    }
+    .callout p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* Text colors */
+    .text-muted { color: var(--text-muted); }
+    .text-accent { color: var(--accent); }
+    .text-cyan { color: var(--accent-cyan); }
+    .text-green { color: var(--positive); }
+    .text-red { color: var(--negative); }
+    .text-orange { color: var(--accent-orange); }
+    .text-copper { color: var(--accent-secondary); }
+
+    /* Hero slide */
+    .hero-slide {
+      background: linear-gradient(135deg, #0a0a0a 0%, #181818 50%, #0a0a0a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .slide-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .slide-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .stat-value {
+      font-family: 'rival-sans', 'articulat-cf', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--accent-secondary);
+      line-height: 1;
+    }
+    .stat-value-alt {
+      font-family: 'rival-sans', 'articulat-cf', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--accent-primary);
+      line-height: 1;
+    }
+    .stat-source {
+      font-size: 0.625rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* Role cards */
+    .role-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .role-icon {
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+    .role-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .svg-icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .breadcrumb-icon {
+      width: 0.75rem;
+      height: 0.75rem;
+      color: var(--text-dim);
+      margin: 0 0.25rem;
+    }
+    .role-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .role-level {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .role-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .role-strategy {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Citation */
+    .citation {
+      font-size: 0.6875rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+    .source-link {
+      color: var(--accent-secondary);
+      text-decoration: none;
+    }
+    .source-link:hover { text-decoration: underline; }
+
+    /* Dense slide adjustments for screen */
+    #skills-matrix .slide-content { justify-content: flex-start; }
+    #skills-matrix .panel { margin-bottom: 1rem; }
+    #skills-matrix table { font-size: 0.75rem; }
+    #skills-matrix .badge { font-size: 0.625rem; padding: 0.125rem 0.375rem; }
+    #skills-matrix .grid-2 { gap: 1rem; }
+    #skills-matrix .card,
+    #skills-matrix .card-elevated { padding: 0.75rem; }
+    #skills-matrix .list-item { font-size: 0.75rem; margin-bottom: 0.25rem; }
+
+    #interview .slide-content { justify-content: flex-start; }
+    #interview .grid-2 { gap: 1rem; }
+    #interview .panel { padding: 0.75rem 1rem; }
+    #interview .panel-header { font-size: 0.75rem; margin-bottom: 0.5rem; }
+    #interview .list-item { font-size: 0.8125rem; margin-bottom: 0.375rem; line-height: 1.4; }
+
+    /* Print styles */
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        font-family: inherit !important;
+      }
+
+      html {
+        scroll-snap-type: none;
+        font-size: 62.5%;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+        background: #0a0a0a !important;
+        color: #f5f3f0 !important;
+      }
+
+      .mono {
+        font-family: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+      }
+
+      .no-print, .nav-dots { display: none !important; }
+
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        padding: 1.5rem 2.5rem;
+        page-break-after: always;
+        page-break-inside: avoid;
+        break-after: page;
+        break-inside: avoid;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .slide:last-child { page-break-after: auto; }
+
+      .slide-content {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        gap: 0.75rem;
+      }
+
+      .display { font-size: 2.5rem; }
+      .headline { font-size: 1.125rem; }
+      .subhead { font-size: 0.6875rem; }
+      .body-lg { font-size: 1rem; }
+      .caption { font-size: 0.6875rem; }
+
+      .divider-num { font-size: 5rem; margin-bottom: 0.5rem; }
+      .divider-title { font-size: 2rem; margin-bottom: 0.5rem; }
+      .divider-subtitle { font-size: 1rem; }
+
+      .slide-title { font-size: 1.125rem; margin-bottom: 0.25rem; }
+      .slide-subtitle { font-size: 0.8125rem; margin-bottom: 1rem; }
+
+      .breadcrumb-section { font-size: 0.625rem; }
+      .breadcrumb-page { font-size: 1rem; }
+
+      .slide-breadcrumb {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .section-header {
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+      }
+      .section-num { font-size: 1.75rem; }
+      .section-title { font-size: 1.25rem; }
+      .section-desc { font-size: 0.75rem; }
+
+      /* Override responsive breakpoints - maintain grid layouts for print */
+      .grid-2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+      .grid-3 { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 1rem !important; }
+      .grid-4 { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 0.75rem !important; }
+      .grid-5 { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 0.75rem !important; }
+
+      .panel, .card, .card-highlight, .card-elevated, .card-negative, .card-positive {
+        padding: 0.875rem;
+        border-radius: 8px;
+      }
+
+      .panel-header {
+        font-size: 0.6875rem;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.375rem;
+      }
+
+      .list-item {
+        font-size: 0.875rem;
+        margin-bottom: 0.375rem;
+        gap: 0.5rem;
+      }
+
+      .marker {
+        width: 6px;
+        height: 6px;
+        margin-top: 0.375rem;
+      }
+
+      table {
+        font-size: 0.75rem;
+        width: 100%;
+        table-layout: auto;
+      }
+      th {
+        padding: 0.375rem 0.5rem;
+        font-size: 0.625rem;
+        white-space: nowrap;
+      }
+      td {
+        padding: 0.375rem 0.5rem;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      /* Ensure last column doesn't truncate */
+      td:last-child, th:last-child {
+        white-space: normal;
+      }
+
+      .callout, .callout-secondary {
+        padding: 0.875rem 1.25rem;
+        border-radius: 0 8px 8px 0;
+      }
+      .callout p { font-size: 0.875rem; line-height: 1.5; }
+
+      .badge {
+        font-size: 0.625rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .stat-card { padding: 0.75rem 0.5rem; }
+      .stat-label { font-size: 0.5625rem; margin-bottom: 0.375rem; }
+      .stat-value, .stat-value-alt { font-size: 1.5rem; }
+      .stat-source { font-size: 0.5rem; }
+
+      .role-card { padding: 0.75rem; }
+      .role-icon { width: 1.25rem; height: 1.25rem; margin-bottom: 0.375rem; }
+      .breadcrumb-icon { width: 0.5rem; height: 0.5rem; }
+      .role-title { font-size: 0.8125rem; }
+      .role-level { font-size: 0.625rem; }
+      .role-desc { font-size: 0.6875rem; }
+
+      .slide-footer {
+        padding-top: 0.75rem;
+        margin-top: auto;
+        flex-shrink: 0;
+        font-size: 0.6875rem;
+      }
+      .page-num { font-size: 0.6875rem; }
+
+      .mb-1 { margin-bottom: 0.25rem; }
+      .mb-2 { margin-bottom: 0.375rem; }
+      .mb-3 { margin-bottom: 0.5rem; }
+      .mb-4 { margin-bottom: 0.75rem; }
+      .mb-6 { margin-bottom: 1rem; }
+      .mt-4 { margin-top: 0.75rem; }
+      .mt-6 { margin-top: 1rem; }
+
+      .hero-slide {
+        background: linear-gradient(135deg, #0a0a0a 0%, #181818 50%, #0a0a0a 100%) !important;
+      }
+      .slide-divider { background: var(--bg-divider) !important; }
+
+      .panel, .card, .stat-card, .role-card {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+
+      .card-highlight, .card-elevated {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+        border-left-color: var(--accent-primary) !important;
+      }
+
+      .card-negative {
+        border-left-color: var(--negative) !important;
+      }
+
+      .card-positive {
+        border-left-color: var(--positive) !important;
+      }
+
+      .callout {
+        background: var(--accent-primary-muted) !important;
+        border-left-color: var(--accent-primary) !important;
+      }
+
+      .text-muted { color: var(--text-muted) !important; }
+      .text-cyan { color: var(--accent-cyan) !important; }
+      .text-accent { color: var(--accent) !important; }
+      .text-green { color: var(--positive) !important; }
+      .text-red { color: var(--negative) !important; }
+      .text-orange { color: var(--accent-orange) !important; }
+      .text-copper { color: var(--accent-secondary) !important; }
+
+      .divider-num { color: var(--accent-primary) !important; }
+      .display-accent { color: var(--accent-cyan) !important; }
+      .stat-value { color: var(--accent-secondary) !important; }
+      .stat-value-alt { color: var(--accent-primary) !important; }
+
+      .marker { background: var(--accent-primary) !important; }
+      .marker-muted { background: var(--text-dim) !important; }
+      .marker-secondary { background: var(--accent-secondary) !important; }
+      .marker-negative { background: var(--negative) !important; }
+      .marker-positive { background: var(--positive) !important; }
+
+      .badge { border-color: var(--accent-primary) !important; color: var(--accent-primary) !important; }
+      .badge-secondary { border-color: var(--accent-secondary) !important; color: var(--accent-secondary) !important; }
+      .badge-negative { border-color: var(--negative) !important; color: var(--negative) !important; }
+      .badge-positive { border-color: var(--positive) !important; color: var(--positive) !important; }
+
+      table th { background: var(--bg-card) !important; }
+
+      .citation { font-size: 0.5rem; }
+
+      /* Slide 4: Talent Gap - compact for print */
+      #talent-gap .grid-4 { gap: 0.5rem; margin-bottom: 1rem; }
+      #talent-gap .stat-card { padding: 0.5rem 0.375rem; }
+      #talent-gap .stat-label { font-size: 0.5rem; }
+      #talent-gap .stat-value,
+      #talent-gap .stat-value-alt { font-size: 1.25rem; }
+      #talent-gap .stat-source { font-size: 0.4375rem; }
+      #talent-gap .grid-2 { gap: 0.75rem; margin-bottom: 0.75rem; }
+      #talent-gap .card-negative,
+      #talent-gap .card-positive { padding: 0.5rem 0.75rem; }
+      #talent-gap .list-item { font-size: 0.6875rem; margin-bottom: 0.25rem; }
+      #talent-gap .callout-secondary { padding: 0.5rem 0.75rem; }
+      #talent-gap .callout-secondary p { font-size: 0.6875rem; }
+
+      /* Slide 5: Competitor Moves - compact for print */
+      #competitor-moves table { font-size: 0.625rem; }
+      #competitor-moves th,
+      #competitor-moves td { padding: 0.375rem 0.5rem; }
+      #competitor-moves .panel { margin-bottom: 0.75rem; padding: 0.5rem; }
+      #competitor-moves .grid-2 { gap: 0.75rem; }
+      #competitor-moves .list-item { font-size: 0.6875rem; margin-bottom: 0.25rem; }
+      #competitor-moves .panel-header { font-size: 0.5625rem; }
+
+      /* Slide 12: Reskilling Programs - compact for print */
+      #reskilling .grid-3 { gap: 0.75rem; }
+      #reskilling .card-highlight { padding: 0.5rem 0.75rem; }
+      #reskilling .headline { font-size: 0.875rem; margin-bottom: 0.375rem; }
+      #reskilling .mono { font-size: 0.5625rem; }
+      #reskilling p { font-size: 0.625rem; margin-bottom: 0.25rem; }
+      #reskilling .text-muted { font-size: 0.5625rem; }
+
+      /* Slide 13: Team Pyramids - compact for print */
+      #pyramid .grid-3 { gap: 0.75rem; margin-bottom: 0.75rem; }
+      #pyramid .panel,
+      #pyramid .card-elevated { padding: 0.5rem 0.75rem; }
+      #pyramid .panel-header { font-size: 0.5625rem; margin-bottom: 0.25rem; }
+      #pyramid .list-item { font-size: 0.625rem; margin-bottom: 0.125rem; }
+      #pyramid .stat-value,
+      #pyramid .stat-value-alt { font-size: 1.25rem; }
+      #pyramid .callout { padding: 0.5rem 0.75rem; }
+      #pyramid .callout p { font-size: 0.6875rem; }
+
+      /* Slide 15: Skills Matrix - compact for print */
+      #skills-matrix table { font-size: 0.625rem; }
+      #skills-matrix th,
+      #skills-matrix td { padding: 0.25rem 0.5rem; }
+      #skills-matrix .badge { font-size: 0.4375rem; padding: 0.0625rem 0.25rem; }
+      #skills-matrix .panel { margin-bottom: 0.75rem; }
+      #skills-matrix .grid-2 { gap: 0.5rem; }
+      #skills-matrix .card,
+      #skills-matrix .card-elevated { padding: 0.375rem 0.5rem; }
+      #skills-matrix .list-item { font-size: 0.5625rem; margin-bottom: 0.125rem; }
+      #skills-matrix .panel-header { font-size: 0.5rem; margin-bottom: 0.25rem; }
+      #skills-matrix .marker { width: 4px; height: 4px; margin-top: 0.25rem; }
+
+      /* Slide 16: Interview Framework - compact for print */
+      #interview .grid-2 { gap: 0.5rem; }
+      #interview .panel { padding: 0.375rem 0.5rem; }
+      #interview .panel-header { font-size: 0.5rem; margin-bottom: 0.25rem; }
+      #interview .list-item { font-size: 0.5625rem; margin-bottom: 0.125rem; line-height: 1.25; }
+      #interview .marker { width: 4px; height: 4px; margin-top: 0.25rem; }
+
+      /* Slide 17: Investment Summary - compact for print */
+      #investment .grid-2 { gap: 0.75rem; margin-bottom: 0.75rem; }
+      #investment .panel { padding: 0.5rem 0.75rem; }
+      #investment table { font-size: 0.625rem; }
+      #investment th,
+      #investment td { padding: 0.25rem 0.5rem; }
+      #investment .stat-card { padding: 0.375rem; }
+      #investment .stat-value,
+      #investment .stat-value-alt { font-size: 1.25rem; }
+      #investment .callout { padding: 0.5rem 0.75rem; }
+      #investment .callout p { font-size: 0.6875rem; }
+
+      /* Slide 18: Next Steps - compact for print */
+      #next-steps .grid-2 { gap: 0.75rem; }
+      #next-steps .card,
+      #next-steps .card-elevated { padding: 0.5rem 0.75rem; }
+      #next-steps .headline { font-size: 0.75rem; margin-bottom: 0.375rem; }
+      #next-steps .list-item { font-size: 0.6875rem; margin-bottom: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SVG Icon Definitions -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <!-- Architect Icon - Blueprint/Building -->
+    <symbol id="icon-architect" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 21h18"/>
+      <path d="M5 21V7l7-4 7 4v14"/>
+      <path d="M9 21v-6h6v6"/>
+      <path d="M10 10h4"/>
+    </symbol>
+    <!-- Engineer Icon - Gear/Cog -->
+    <symbol id="icon-engineer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </symbol>
+    <!-- Prompt/Writer Icon - Edit/Pen -->
+    <symbol id="icon-prompt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 20h9"/>
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+    </symbol>
+    <!-- Knowledge Icon - Database/Book -->
+    <symbol id="icon-knowledge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </symbol>
+    <!-- QA Icon - Test/Check Shield -->
+    <symbol id="icon-qa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <path d="M9 12l2 2 4-4"/>
+    </symbol>
+    <!-- Chevron Right -->
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </symbol>
+    <!-- Arrow Right -->
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </symbol>
+  </svg>
+
+  <!-- Navigation Dots -->
+  <nav class="nav-dots no-print">
+    <a href="#hero" class="nav-dot section-start active" title="Cover"></a>
+    <div class="nav-separator"></div>
+    <a href="#market-size" class="nav-dot section-start" title="Market Intelligence"></a>
+    <a href="#talent-gap" class="nav-dot" title="Talent Gap"></a>
+    <a href="#competitor-moves" class="nav-dot" title="Competitor Moves"></a>
+    <div class="nav-separator"></div>
+    <a href="#five-roles" class="nav-dot section-start" title="Role Taxonomy"></a>
+    <a href="#role-details" class="nav-dot" title="Role Details"></a>
+    <a href="#adjacent-roles" class="nav-dot" title="Adjacent Roles"></a>
+    <div class="nav-separator"></div>
+    <a href="#build-buy" class="nav-dot section-start" title="Build Strategy"></a>
+    <a href="#reskilling" class="nav-dot" title="Reskilling Programs"></a>
+    <a href="#pyramid" class="nav-dot" title="Team Pyramids"></a>
+    <div class="nav-separator"></div>
+    <a href="#skills-matrix" class="nav-dot section-start" title="Assessment"></a>
+    <a href="#interview" class="nav-dot" title="Interview Questions"></a>
+    <div class="nav-separator"></div>
+    <a href="#investment" class="nav-dot section-start" title="Investment"></a>
+    <a href="#different" class="nav-dot" title="Appendix"></a>
+    <a href="#sources" class="nav-dot" title="Sources"></a>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Slide 1: Hero/Cover -->
+  <!-- ============================================ -->
+  <section id="hero" class="slide hero-slide">
+    <div class="slide-header" style="position: absolute; top: 2rem; left: 3rem; right: 3rem;">
+      <span class="brand">Internal Strategy</span>
+      <span class="subhead">Workforce Capability</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="subhead mb-4">AI & Intelligent Automation Practice</p>
+      <h1 class="display mb-4">Building the<br><span class="display-accent">Agentic Workforce</span></h1>
+      <p class="body-lg" style="max-width: 700px; margin: 0 auto;">
+        Roles, skills, and investment strategy for delivering agentic AI at scale.
+      </p>
+    </div>
+
+    <div class="slide-footer" style="position: absolute; bottom: 2rem; left: 3rem; right: 3rem;">
+      <span class="page-num">1 / 16</span>
+      <span class="caption">December 2025 · Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION 01: MARKET INTELLIGENCE -->
+  <!-- ============================================ -->
+  <section id="market-size" class="slide">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div class="section-title-group">
+        <h2 class="section-title">Market Intelligence</h2>
+        <p class="section-desc">The agentic AI market is entering hypergrowth — delivery capacity is the constraint</p>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <p class="stat-label">AI Agents Market 2025</p>
+          <p class="stat-value-alt">$7.6B</p>
+          <p class="stat-source">GM Insights, 2024</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Projected 2030</p>
+          <p class="stat-value">$50B</p>
+          <p class="stat-source">DemandSage, 2024</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">CAGR Through 2030</p>
+          <p class="stat-value-alt">45.8%</p>
+          <p class="stat-source">BCG/Gartner</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Enterprise Adoption 2025</p>
+          <p class="stat-value">85%</p>
+          <p class="stat-source">DemandSage, 2024</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="card-highlight">
+          <p class="panel-header" style="color: var(--accent-cyan);">Gartner Prediction</p>
+          <p style="font-size: 1.125rem; line-height: 1.6; margin-bottom: 1rem;">
+            "By 2028, <strong class="text-cyan">33% of enterprise software</strong> applications will incorporate agentic AI, up from less than 1% in 2024."
+          </p>
+          <p class="citation">Source: Gartner, October 2024</p>
+        </div>
+        <div class="card-elevated">
+          <p class="panel-header" style="color: var(--accent-cyan);">Enterprise Reality</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>90%</strong> of non-tech companies plan to put agents in production</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>66%</strong> report increased productivity from agents</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>78%</strong> of enterprises will deploy agents by end of 2025</span></div>
+          <p class="citation" style="margin-top: 0.75rem;">Source: LangChain State of AI Agents, 2024</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>The constraint isn't demand — it's delivery capacity.</strong> Enterprises are ready to deploy. The question is: who can build it?</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">2 / 16</span>
+      <span class="caption">Section 01: Market Intelligence</span>
+    </div>
+  </section>
+
+  <!-- Slide 4: Talent Gap -->
+  <section id="talent-gap" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Market Intelligence</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">The Talent Gap</span>
+    </div>
+    <p class="slide-subtitle">Demand outstrips supply across all AI-related roles — agentic skills are the scarcest</p>
+
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <p class="stat-label">Expected AI Talent Gap</p>
+          <p class="stat-value-alt" style="color: var(--negative);">50%</p>
+          <p class="stat-source">Reuters, 2024</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Job Postings vs. Talent Pool</p>
+          <p class="stat-value">78% / 24%</p>
+          <p class="stat-source">LinkedIn Insights</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">GenAI Course Enrollment</p>
+          <p class="stat-value-alt">1,060%</p>
+          <p class="stat-source">YoY Growth (Coursera)</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Workforce Needing Reskill</p>
+          <p class="stat-value">40%</p>
+          <p class="stat-source">Executive estimate</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="card-negative">
+          <p class="panel-header">The Challenge</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>51%</strong> of organizations lack skilled AI talent in-house</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>46%</strong> cite skill gaps as #1 barrier to AI success</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span>Only <strong>35%</strong> of talent received AI training last year</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>78%</strong> of execs say AI advances too fast for training</span></div>
+          <p class="citation" style="margin-top: 0.75rem;">Sources: IBM AI Skills Gap, Randstad, McKinsey State of AI 2025</p>
+        </div>
+        <div class="card-positive">
+          <p class="panel-header" style="color: var(--positive);">The Opportunity</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span>AI Engineer salaries: <strong>$139K-$149K</strong> avg; Senior up to $284K</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span>Prompt engineering market: <strong>350% growth</strong> through 2026</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span>GenAI delivers <strong>$3.70 ROI</strong> per dollar invested (Microsoft)</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span>AI consulting market: <strong>31.6% CAGR</strong> to $72.8B by 2030</span></div>
+          <p class="citation" style="margin-top: 0.75rem;">Sources: Glassdoor, Grand View Research, Microsoft, GlobeNewswire</p>
+        </div>
+      </div>
+
+      <div class="callout-secondary">
+        <p><strong>Gartner:</strong> "Through 2027, generative AI will spawn new roles in software engineering and operations, requiring <strong>80% of the engineering workforce to upskill</strong>."</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">3 / 16</span>
+      <span class="caption">Section 01: Market Intelligence</span>
+    </div>
+  </section>
+
+  <!-- Slide 5: Competitor Moves -->
+  <section id="competitor-moves" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">01 Market Intelligence</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Competitor Investment</span>
+    </div>
+    <p class="slide-subtitle">Major consulting firms are making significant workforce bets on AI capability</p>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto; margin-bottom: 1.5rem;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Firm</th>
+              <th style="width: 20%;">Investment</th>
+              <th style="width: 40%;">Strategy</th>
+              <th style="width: 20%;">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Accenture</strong></td>
+              <td class="text-cyan">$3 Billion</td>
+              <td>Hiring + training 80,000 AI specialists; acquired Udacity for $1B; 550,000+ trained in GenAI fundamentals</td>
+              <td>77,000 AI/data professionals (2x in 2 years)</td>
+            </tr>
+            <tr>
+              <td><strong>Deloitte</strong></td>
+              <td class="text-cyan">$3B (through FY2030)</td>
+              <td>AI capability build across all practices; Zora AI co-workers</td>
+              <td>Market leader positioning</td>
+            </tr>
+            <tr>
+              <td><strong>PwC</strong></td>
+              <td class="text-copper">$1B (2023) <svg class="svg-icon" style="width: 0.875rem; height: 0.875rem; vertical-align: -0.125rem;"><use href="#icon-arrow-right"/></svg> $1.5B</td>
+              <td>AI-focused reskilling; Microsoft/OpenAI partnership</td>
+              <td>65,000 employees upskilled</td>
+            </tr>
+            <tr>
+              <td><strong>Microsoft</strong></td>
+              <td class="text-cyan">AutoGen + Semantic Kernel merger</td>
+              <td>Unified agent framework; GA Q1 2026</td>
+              <td>40K+ GitHub stars; Azure-integrated</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="citation" style="margin-top: 0.75rem;">Sources: Accenture Newsroom, CIO Dive, Fortune, The Consulting Report</p>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="card-highlight">
+          <p class="panel-header" style="color: var(--accent-cyan);">Accenture's Three-Prong Strategy</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>Invest in upskilling</strong> existing workforce</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>Exit people</strong> where reskilling isn't viable</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>Drive efficiencies</strong> through AI augmentation</span></div>
+          <p class="citation" style="margin-top: 0.75rem;">Source: Fortune, September 2025 ($865M restructuring)</p>
+        </div>
+        <div class="card-elevated">
+          <p class="panel-header" style="color: var(--accent-cyan);">Framework Adoption</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>LangGraph:</strong> 400+ companies in production (LinkedIn, Uber, Klarna)</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>CrewAI:</strong> 40% of Fortune 500, $18M Series A, 10M+ agents/month</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker"></span><span><strong>AutoGen:</strong> 40K+ GitHub stars, Microsoft enterprise backing</span></div>
+          <p class="citation" style="margin-top: 0.75rem;">Source: Ideas2IT, Turing, Medium</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">4 / 16</span>
+      <span class="caption">Section 01: Market Intelligence</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION 02: ROLE TAXONOMY -->
+  <!-- ============================================ -->
+  <section id="five-roles" class="slide">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div class="section-title-group">
+        <h2 class="section-title">Role Taxonomy</h2>
+        <p class="section-desc">The five core roles required to deliver agentic AI systems</p>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-5" style="gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="role-card" style="border-top: 3px solid var(--accent-primary);">
+          <div class="role-icon"><svg><use href="#icon-architect"/></svg></div>
+          <p class="role-title">Agentic Systems Architect</p>
+          <p class="role-level">SM / MD</p>
+          <p class="role-desc">Designs how agents work together. Multi-agent orchestration, safety, enterprise integration.</p>
+          <div class="role-strategy">
+            <span class="badge badge-negative">Hire</span>
+          </div>
+        </div>
+        <div class="role-card" style="border-top: 3px solid var(--accent-secondary);">
+          <div class="role-icon"><svg><use href="#icon-engineer"/></svg></div>
+          <p class="role-title">Agent Engineer</p>
+          <p class="role-level">C / SC</p>
+          <p class="role-desc">Builds agents, tools, and orchestration logic. LangChain, LangGraph, tool design.</p>
+          <div class="role-strategy">
+            <span class="badge badge-positive">Reskill</span>
+          </div>
+        </div>
+        <div class="role-card" style="border-top: 3px solid var(--positive);">
+          <div class="role-icon"><svg><use href="#icon-prompt"/></svg></div>
+          <p class="role-title">Prompt Engineer</p>
+          <p class="role-level">A / C</p>
+          <p class="role-desc">Crafts agent instructions and system prompts. Evaluation, iteration, safety.</p>
+          <div class="role-strategy">
+            <span class="badge badge-positive">Reskill</span>
+          </div>
+        </div>
+        <div class="role-card" style="border-top: 3px solid var(--accent-tertiary);">
+          <div class="role-icon"><svg><use href="#icon-knowledge"/></svg></div>
+          <p class="role-title">Knowledge Engineer</p>
+          <p class="role-level">C / SC</p>
+          <p class="role-desc">Builds RAG pipelines and knowledge bases. Embeddings, retrieval, curation.</p>
+          <div class="role-strategy">
+            <span class="badge badge-secondary">Hire + Reskill</span>
+          </div>
+        </div>
+        <div class="role-card" style="border-top: 3px solid var(--accent-highlight);">
+          <div class="role-icon"><svg><use href="#icon-qa"/></svg></div>
+          <p class="role-title">Agentic QA Engineer</p>
+          <p class="role-level">A / C</p>
+          <p class="role-desc">Tests agent behavior, not just outputs. Red teaming, evaluation, monitoring.</p>
+          <div class="role-strategy">
+            <span class="badge badge-positive">Reskill</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Key Insight:</strong> These roles don't exist in traditional teams. ML engineers don't understand agent orchestration. Backend devs don't understand LLMs. The capability must be built intentionally.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">5 / 16</span>
+      <span class="caption">Section 02: Role Taxonomy</span>
+    </div>
+  </section>
+
+  <!-- Slide 8: Role Details -->
+  <section id="role-details" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 Role Taxonomy</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Role Deep Dive</span>
+    </div>
+    <p class="slide-subtitle">What each role does — and what differentiates strong candidates</p>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto;">
+        <table style="font-size: 0.875rem;">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Role</th>
+              <th style="width: 32%;">Key Responsibilities</th>
+              <th style="width: 25%;">Must-Have Skills</th>
+              <th style="width: 25%;">Red Flags</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Agentic Architect</strong></td>
+              <td>Design multi-agent systems; define agent boundaries; establish guardrails and safety; own technical decisions</td>
+              <td>Distributed systems (10+ yrs); LLM internals; multi-agent patterns; production AI experience</td>
+              <td class="text-red">Only knows one framework; no production experience; can't discuss failure modes</td>
+            </tr>
+            <tr>
+              <td><strong>Agent Engineer</strong></td>
+              <td>Implement agent logic; build tool libraries; integrate with enterprise systems; debug reasoning chains</td>
+              <td>Python (strong); agent frameworks; async programming; API design; tool/function calling</td>
+              <td class="text-red">Can't explain tool design; no async experience; treats agents as chatbots</td>
+            </tr>
+            <tr>
+              <td><strong>Prompt Engineer</strong></td>
+              <td>Craft system prompts; design prompt templates; A/B test variations; optimize for safety</td>
+              <td>Writing clarity; structured thinking; LLM behavior understanding; evaluation methodology</td>
+              <td class="text-red">Thinks it's "just talking to AI"; no evaluation rigor; can't iterate systematically</td>
+            </tr>
+            <tr>
+              <td><strong>Knowledge Engineer</strong></td>
+              <td>Design RAG pipelines; implement retrieval strategies; manage embeddings; curate knowledge quality</td>
+              <td>Vector DBs (Pinecone, Weaviate); embedding models; chunking strategies; information retrieval</td>
+              <td class="text-red">Only knows one vector DB; ignores retrieval quality; no chunking strategy</td>
+            </tr>
+            <tr>
+              <td><strong>Agentic QA</strong></td>
+              <td>Design behavioral test cases; build evaluation pipelines; red team agents; monitor production</td>
+              <td>AI testing methods; evaluation metrics; adversarial testing; statistical analysis</td>
+              <td class="text-red">Expects deterministic outputs; only tests happy paths; no behavioral evaluation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">6 / 16</span>
+      <span class="caption">Section 02: Role Taxonomy</span>
+    </div>
+  </section>
+
+  <!-- Slide 9: Adjacent Roles -->
+  <section id="adjacent-roles" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">02 Role Taxonomy</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Adjacent & Supporting Roles</span>
+    </div>
+    <p class="slide-subtitle">Existing roles that need agentic augmentation</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+        <div class="panel" style="overflow-x: auto;">
+          <p class="panel-header">Reskill Candidates</p>
+          <table style="font-size: 0.875rem;">
+            <thead>
+              <tr>
+                <th>Current Role</th>
+                <th>Target Role</th>
+                <th>Training</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Backend Developer</td>
+                <td>Agent Engineer</td>
+                <td>120 hrs</td>
+              </tr>
+              <tr>
+                <td>UX Writer / Content Strategist</td>
+                <td>Prompt Engineer</td>
+                <td>40-60 hrs</td>
+              </tr>
+              <tr>
+                <td>QA Engineer</td>
+                <td>Agentic QA</td>
+                <td>60-80 hrs</td>
+              </tr>
+              <tr>
+                <td>Data Engineer</td>
+                <td>Knowledge Engineer</td>
+                <td>80-100 hrs</td>
+              </tr>
+              <tr>
+                <td>UX Designer</td>
+                <td>Conversational Designer</td>
+                <td>40-80 hrs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-elevated">
+          <p class="panel-header" style="color: var(--accent-cyan);">Supporting Role Augmentation</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-secondary"></span><span><strong>Data Engineer:</strong> +Vector DB ops, embedding pipelines</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-secondary"></span><span><strong>DevOps/Platform:</strong> +LLMOps, model serving, observability</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-secondary"></span><span><strong>Security Engineer:</strong> +AI threats, prompt injection defense</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-secondary"></span><span><strong>Solutions Architect:</strong> +Agent integration patterns</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-secondary"></span><span><strong>Product Manager:</strong> +AI capability assessment, evaluation</span></div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="text-muted" style="font-size: 0.8125rem;">These roles don't transition — they augment with 20-40 hours of agentic-specific training.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-secondary">
+        <p><strong>Note on Prompt Engineering:</strong> Some predict prompt engineering becomes a capability within roles, not a standalone job. Our strategy: train broadly, but maintain specialist capacity for complex agent systems.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">7 / 16</span>
+      <span class="caption">Section 02: Role Taxonomy</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION 03: BUILD STRATEGY -->
+  <!-- ============================================ -->
+  <section id="build-buy" class="slide">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div class="section-title-group">
+        <h2 class="section-title">Build Strategy</h2>
+        <p class="section-desc">Strategic decisions on where to hire externally vs. reskill internally</p>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem; margin-bottom: 1.5rem;">
+        <div class="card-negative">
+          <p class="panel-header">Hire Externally (Scarce Skills)</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>Agentic Systems Architects</strong> — High impact, rare skill, must hire</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>Senior Knowledge Engineers</strong> — Specialized retrieval expertise</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-negative"></span><span><strong>AI Research Leads</strong> — PhD-level, emerging techniques</span></div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="text-muted" style="font-size: 0.8125rem;"><strong>Target:</strong> 15-20 external hires to form capability nucleus</p>
+          </div>
+        </div>
+        <div class="card-positive">
+          <p class="panel-header" style="color: var(--positive);">Reskill Internally (High Success Rate)</p>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span><strong>Agent Engineers</strong> — From backend developers (70%+ success)</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span><strong>Prompt Engineers</strong> — From UX/content/QA (80%+ success)</span></div>
+          <div class="list-item" style="font-size: 0.9375rem;"><span class="marker marker-positive"></span><span><strong>Agentic QA</strong> — From QA engineers (75%+ success)</span></div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="text-muted" style="font-size: 0.8125rem;"><strong>Target:</strong> 200+ practitioners through reskilling programs</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="overflow-x: auto;">
+        <p class="panel-header">Reskilling Viability Matrix</p>
+        <table style="font-size: 0.8125rem;">
+          <thead>
+            <tr>
+              <th>From <svg class="svg-icon" style="width: 0.75rem; height: 0.75rem; vertical-align: -0.0625rem;"><use href="#icon-arrow-right"/></svg> To</th>
+              <th>Agent Eng.</th>
+              <th>Prompt Eng.</th>
+              <th>Knowledge Eng.</th>
+              <th>Agentic QA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Backend Developer</strong></td>
+              <td class="text-green">High (70%)</td>
+              <td class="text-copper">Medium</td>
+              <td class="text-copper">Medium</td>
+              <td class="text-copper">Medium</td>
+            </tr>
+            <tr>
+              <td><strong>Data Engineer</strong></td>
+              <td class="text-copper">Medium</td>
+              <td class="text-muted">Low</td>
+              <td class="text-green">High (65%)</td>
+              <td class="text-muted">Low</td>
+            </tr>
+            <tr>
+              <td><strong>QA Engineer</strong></td>
+              <td class="text-muted">Low</td>
+              <td class="text-copper">Medium</td>
+              <td class="text-muted">Low</td>
+              <td class="text-green">High (75%)</td>
+            </tr>
+            <tr>
+              <td><strong>UX Writer / Content</strong></td>
+              <td class="text-muted">Low</td>
+              <td class="text-green">High (80%)</td>
+              <td class="text-muted">Low</td>
+              <td class="text-copper">Medium</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">8 / 16</span>
+      <span class="caption">Section 03: Build Strategy</span>
+    </div>
+  </section>
+
+  <!-- Slide 12: Reskilling Programs -->
+  <section id="reskilling" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Build Strategy</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Reskilling Programs</span>
+    </div>
+    <p class="slide-subtitle">Structured training tracks with defined outcomes</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem;">
+        <div class="card-highlight" style="border-left-color: var(--positive);">
+          <p class="mono text-green mb-2" style="font-size: 0.75rem; font-weight: 600;">FAST TRACK · 40 HRS</p>
+          <p class="headline mb-2">Prompt Engineering</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;"><strong>For:</strong> Content strategists, UX writers, QA engineers</p>
+          <div style="font-size: 0.8125rem;">
+            <p class="mb-2"><strong>Week 1:</strong> LLM Fundamentals (8 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">How LLMs work, tokenization, capabilities/limitations</p>
+            <p class="mb-2"><strong>Week 2:</strong> Prompt Patterns (16 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">Zero/few-shot, CoT, system prompts, structured outputs</p>
+            <p class="mb-2"><strong>Week 3:</strong> Evaluation (16 hrs)</p>
+            <p class="text-muted" style="font-size: 0.75rem;">Criteria design, A/B testing, red teaming, capstone</p>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p style="font-size: 0.75rem;"><strong class="text-green">Outcome:</strong> Independent prompt design capability</p>
+          </div>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--accent-primary);">
+          <p class="mono text-cyan mb-2" style="font-size: 0.75rem; font-weight: 600;">STANDARD TRACK · 120 HRS</p>
+          <p class="headline mb-2">Agent Engineering</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;"><strong>For:</strong> Backend devs, full-stack engineers</p>
+          <div style="font-size: 0.8125rem;">
+            <p class="mb-2"><strong>Month 1:</strong> Foundations (40 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">LLM APIs, agent frameworks, tool calling, memory</p>
+            <p class="mb-2"><strong>Month 2:</strong> Advanced (40 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">Multi-agent orchestration, RAG, streaming, fallbacks</p>
+            <p class="mb-2"><strong>Month 3:</strong> Production (40 hrs)</p>
+            <p class="text-muted" style="font-size: 0.75rem;">Observability, testing, deployment, security, capstone</p>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p style="font-size: 0.75rem;"><strong class="text-cyan">Outcome:</strong> Production agent system delivery</p>
+          </div>
+        </div>
+        <div class="card-highlight" style="border-left-color: var(--accent-secondary);">
+          <p class="mono text-copper mb-2" style="font-size: 0.75rem; font-weight: 600;">DEEP TRACK · 200 HRS</p>
+          <p class="headline mb-2">Agentic Architecture</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;"><strong>For:</strong> Senior architects, tech leads</p>
+          <div style="font-size: 0.8125rem;">
+            <p class="mb-2"><strong>Month 1:</strong> Foundations (40 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">Complete agent engineering track (accelerated)</p>
+            <p class="mb-2"><strong>Month 2-3:</strong> System Design (120 hrs)</p>
+            <p class="text-muted mb-2" style="font-size: 0.75rem;">Multi-agent architecture, enterprise patterns, safety</p>
+            <p class="mb-2"><strong>Month 4:</strong> Leadership (40 hrs)</p>
+            <p class="text-muted" style="font-size: 0.75rem;">Technical leadership, stakeholder comms, capstone</p>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p style="font-size: 0.75rem;"><strong class="text-copper">Outcome:</strong> Enterprise system design capability</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">9 / 16</span>
+      <span class="caption">Section 03: Build Strategy</span>
+    </div>
+  </section>
+
+  <!-- Slide 13: Team Pyramids -->
+  <section id="pyramid" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">03 Build Strategy</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Team Structures</span>
+    </div>
+    <p class="slide-subtitle">Pyramid composition by engagement size</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="panel">
+          <p class="panel-header">POC / Pilot</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;">8-12 weeks · 2-3 use cases</p>
+          <div style="font-size: 0.8125rem;">
+            <div class="list-item"><span class="marker"></span><span>1 Agentic Architect</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>2 Agent Engineers</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>1 Prompt Engineer</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>1 Knowledge Engineer</span></div>
+            <div class="list-item"><span class="marker marker-muted"></span><span>1 Agentic QA</span></div>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="stat-value-alt" style="font-size: 2rem;">6 FTEs</p>
+          </div>
+        </div>
+        <div class="card-elevated">
+          <p class="panel-header" style="color: var(--accent-cyan);">Production MVP</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;">16-24 weeks · Full use case coverage</p>
+          <div style="font-size: 0.8125rem;">
+            <div class="list-item"><span class="marker"></span><span>1 Architect + 1 Tech Lead</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>4 Agent Engineers</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>2 Prompt Engineers</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>2 Knowledge Engineers</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>2 Conversational Designers</span></div>
+            <div class="list-item"><span class="marker marker-muted"></span><span>2 Agentic QA</span></div>
+            <div class="list-item"><span class="marker marker-muted"></span><span>1 AI PM + 1 Domain Lead</span></div>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="stat-value-alt" style="font-size: 2rem;">16 FTEs</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Enterprise Scale</p>
+          <p class="text-muted mb-3" style="font-size: 0.8125rem;">Ongoing · Multi-domain platform</p>
+          <div style="font-size: 0.8125rem;">
+            <div class="list-item"><span class="marker"></span><span>1 Practice Lead (MD)</span></div>
+            <div class="list-item"><span class="marker"></span><span>3 Directors (Arch, Product, Domain)</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>Agent Squad (8)</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>Prompt Squad (4)</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>Knowledge Squad (4)</span></div>
+            <div class="list-item"><span class="marker marker-secondary"></span><span>Conversational Squad (4)</span></div>
+            <div class="list-item"><span class="marker marker-muted"></span><span>Quality Squad (4)</span></div>
+          </div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <p class="stat-value" style="font-size: 2rem;">28+ FTEs</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Staffing Ratio:</strong> For every 1 Architect, plan for 4-6 Agent Engineers, 2 Prompt Engineers, 1-2 Knowledge Engineers, and 1-2 QA.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">10 / 16</span>
+      <span class="caption">Section 03: Build Strategy</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION 04: ASSESSMENT FRAMEWORK -->
+  <!-- ============================================ -->
+  <section id="skills-matrix" class="slide">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div class="section-title-group">
+        <h2 class="section-title">Assessment Framework</h2>
+        <p class="section-desc">Skills evaluation, proficiency levels, and interview questions</p>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto; margin-bottom: 1.5rem;">
+        <table style="font-size: 0.8125rem;">
+          <thead>
+            <tr>
+              <th>Skill Area</th>
+              <th>Analyst</th>
+              <th>Consultant</th>
+              <th>Sr. Consultant</th>
+              <th>Manager+</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>LLM Fundamentals</strong></td>
+              <td><span class="badge">Aware</span></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+            </tr>
+            <tr>
+              <td><strong>Agent Frameworks</strong></td>
+              <td><span class="badge">Learning</span></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Architect</td>
+            </tr>
+            <tr>
+              <td><strong>Prompt Engineering</strong></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Reviewer</td>
+            </tr>
+            <tr>
+              <td><strong>RAG / Knowledge</strong></td>
+              <td><span class="badge">Aware</span></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Architect</td>
+            </tr>
+            <tr>
+              <td><strong>Tool Design</strong></td>
+              <td><span class="badge">Learning</span></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Reviewer</td>
+            </tr>
+            <tr>
+              <td><strong>Evaluation / Testing</strong></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Strategist</td>
+            </tr>
+            <tr>
+              <td><strong>Production Systems</strong></td>
+              <td><span class="badge">Aware</span></td>
+              <td><span class="badge badge-secondary">Proficient</span></td>
+              <td><span class="badge badge-positive">Expert</span></td>
+              <td>Architect</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="card">
+          <p class="panel-header">Proficiency Definitions</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-muted"></span><span><strong>Aware:</strong> Understands concepts, can discuss intelligently</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span><strong>Learning:</strong> Can complete guided tasks, needs supervision</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-secondary"></span><span><strong>Proficient:</strong> Works independently, delivers quality</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker marker-positive"></span><span><strong>Expert:</strong> Solves novel problems, mentors others</span></div>
+        </div>
+        <div class="card-elevated">
+          <p class="panel-header" style="color: var(--accent-cyan);">Assessment Methods</p>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span><strong>Live coding:</strong> Build agent with tools (4 hrs)</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span><strong>System design:</strong> Multi-agent architecture (1 hr)</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span><strong>Debugging:</strong> Fix failing agent interaction (1 hr)</span></div>
+          <div class="list-item" style="font-size: 0.8125rem;"><span class="marker"></span><span><strong>Portfolio:</strong> Previous agent project review</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">11 / 16</span>
+      <span class="caption">Section 04: Assessment</span>
+    </div>
+  </section>
+
+  <!-- Slide 16: Interview Framework -->
+  <section id="interview" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">04 Assessment</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Interview Questions</span>
+    </div>
+    <p class="slide-subtitle">Role-specific questions that differentiate strong candidates</p>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Agent Engineer</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Design an agent that helps someone pick a TV. Walk me through the tool design."</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"What's the difference between ReAct and function calling? When use each?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How do you handle an agent stuck in a loop?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Explain how you'd implement memory in a conversational agent."</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Agentic Architect</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Design an agentic system for product discovery, comparison, and purchase."</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How would you architect multi-agent collaboration?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"What are the key failure modes? How do you mitigate them?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How do you balance latency, cost, and quality?"</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Prompt Engineer</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"This agent keeps recommending wrong products. Here's the prompt. Fix it."</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Design a prompt for a multi-step task with constraints."</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How do you measure prompt quality? What metrics?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Walk me through your iteration process when a prompt fails."</span></div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Agentic QA</p>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How do you test something that gives different answers each time?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"Design a test suite for a shopping assistant agent."</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"What adversarial test cases would you create?"</span></div>
+          <div class="list-item" style="font-size: 0.875rem;"><span class="marker"></span><span>"How do you establish success thresholds for agent behavior?"</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">12 / 16</span>
+      <span class="caption">Section 04: Assessment</span>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SECTION 05: INVESTMENT & ACTION PLAN -->
+  <!-- ============================================ -->
+  <section id="investment" class="slide">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div class="section-title-group">
+        <h2 class="section-title">Investment & Action Plan</h2>
+        <p class="section-desc">Year 1 investment strategy and 90-day action plan</p>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 1.5rem; margin-bottom: 1.25rem;">
+        <div>
+          <div class="panel" style="overflow-x: auto; margin-bottom: 1rem;">
+            <p class="panel-header">Investment Categories</p>
+            <table style="font-size: 0.8125rem;">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Investment</th>
+                  <th>Outcome</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>External Hiring</strong></td>
+                  <td>15-20 specialists</td>
+                  <td>Capability nucleus</td>
+                </tr>
+                <tr>
+                  <td><strong>Reskilling Programs</strong></td>
+                  <td>200 practitioners</td>
+                  <td>Scaled delivery</td>
+                </tr>
+                <tr>
+                  <td><strong>Training Development</strong></td>
+                  <td>Curriculum creation</td>
+                  <td>Sustainable pipeline</td>
+                </tr>
+                <tr>
+                  <td><strong>Certification Program</strong></td>
+                  <td>Assessment infra</td>
+                  <td>Quality assurance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2" style="gap: 0.75rem;">
+            <div class="stat-card" style="padding: 0.75rem;">
+              <p class="stat-label">Certified Practitioners</p>
+              <p class="stat-value-alt" style="font-size: 1.5rem;">500</p>
+            </div>
+            <div class="stat-card" style="padding: 0.75rem;">
+              <p class="stat-label">Agent Engineers</p>
+              <p class="stat-value" style="font-size: 1.5rem;">200</p>
+            </div>
+            <div class="stat-card" style="padding: 0.75rem;">
+              <p class="stat-label">Agentic Architects</p>
+              <p class="stat-value-alt" style="font-size: 1.5rem;">25</p>
+            </div>
+            <div class="stat-card" style="padding: 0.75rem;">
+              <p class="stat-label">Reskill Success</p>
+              <p class="stat-value" style="font-size: 1.5rem;">70%</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card-highlight" style="border-left-color: var(--positive); margin-bottom: 1rem; padding: 1rem;">
+            <p class="mono text-green mb-2" style="font-size: 0.6875rem; font-weight: 600;">MONTH 1 · FOUNDATION</p>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker marker-positive"></span><span><strong>Identify 20 backend engineers</strong> for Agent Engineer track</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker marker-positive"></span><span><strong>Open 3-5 Agentic Architect</strong> requisitions (external)</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker marker-positive"></span><span><strong>Launch Prompt Engineering</strong> course pilot (40 hrs)</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0;"><span class="marker marker-positive"></span><span><strong>Partner with LangChain/CrewAI</strong> for training content</span></div>
+          </div>
+          <div class="card-highlight" style="border-left-color: var(--accent-primary); padding: 1rem;">
+            <p class="mono text-cyan mb-2" style="font-size: 0.6875rem; font-weight: 600;">MONTH 2-3 · SCALE</p>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker"></span><span><strong>Build assessment infrastructure</strong> for certification</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker"></span><span><strong>Launch Agent Engineering</strong> 120-hour track</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0.5rem;"><span class="marker"></span><span><strong>Staff first production engagement</strong> (hybrid team)</span></div>
+            <div class="list-item" style="font-size: 0.8125rem; margin-bottom: 0;"><span class="marker"></span><span><strong>Define certification path</strong> and career ladder</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" style="padding: 0.875rem 1.25rem;">
+        <p style="font-size: 0.875rem;"><strong>ROI Context:</strong> Microsoft reports GenAI delivers <strong>$3.70 return per dollar invested</strong>. With AI consulting market growing at 31.6% CAGR, workforce investment is directly tied to revenue capture.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">13 / 16</span>
+      <span class="caption">Section 05: Investment</span>
+    </div>
+  </section>
+
+  <!-- Slide 19: What Makes Agentic Different -->
+  <section id="different" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Appendix</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Agentic vs. Traditional Development</span>
+    </div>
+    <p class="slide-subtitle">Why existing teams can't just "figure it out"</p>
+
+    <div class="slide-content">
+      <div class="panel" style="overflow-x: auto; margin-bottom: 2rem;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50%;">Traditional Development</th>
+              <th style="width: 50%;">Agentic Development</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Deterministic outputs</td>
+              <td class="text-cyan"><strong>Probabilistic reasoning</strong></td>
+            </tr>
+            <tr>
+              <td>Unit tests pass/fail</td>
+              <td class="text-cyan"><strong>Behavioral evaluation</strong></td>
+            </tr>
+            <tr>
+              <td>Debug with logs</td>
+              <td class="text-cyan"><strong>Debug with traces & reasoning chains</strong></td>
+            </tr>
+            <tr>
+              <td>Ship and monitor</td>
+              <td class="text-cyan"><strong>Ship, monitor, and iterate prompts</strong></td>
+            </tr>
+            <tr>
+              <td>Edge cases are bugs</td>
+              <td class="text-cyan"><strong>Edge cases are training data</strong></td>
+            </tr>
+            <tr>
+              <td>Users follow flows</td>
+              <td class="text-cyan"><strong>Users have conversations</strong></td>
+            </tr>
+            <tr>
+              <td>Model training & fine-tuning</td>
+              <td class="text-cyan"><strong>Agent orchestration & tool design</strong></td>
+            </tr>
+            <tr>
+              <td>Single-model optimization</td>
+              <td class="text-cyan"><strong>Multi-agent coordination</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p><strong>The Gap:</strong> Agentic AI requires a blend of software engineering, systems thinking, and domain expertise that <strong>doesn't exist in current ML or traditional software teams</strong>. This capability must be intentionally built.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">14 / 16</span>
+      <span class="caption">Appendix</span>
+    </div>
+  </section>
+
+  <!-- Slide 20: Fact Check -->
+  <section id="fact-check" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Appendix</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Fact Check Summary</span>
+    </div>
+    <p class="slide-subtitle">All statistics verified December 2025</p>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="stat-card" style="padding: 0.75rem;">
+          <p class="stat-label">Verified</p>
+          <p class="stat-value" style="font-size: 2rem; color: var(--sage-green);">67%</p>
+          <p class="stat-source">18 of 27 claims</p>
+        </div>
+        <div class="stat-card" style="padding: 0.75rem;">
+          <p class="stat-label">Corrected</p>
+          <p class="stat-value" style="font-size: 2rem; color: var(--copper);">26%</p>
+          <p class="stat-source">7 claims updated</p>
+        </div>
+        <div class="stat-card" style="padding: 0.75rem;">
+          <p class="stat-label">Removed</p>
+          <p class="stat-value" style="font-size: 2rem; color: var(--terracotta);">7%</p>
+          <p class="stat-source">2 unverifiable</p>
+        </div>
+      </div>
+
+      <div class="panel" style="overflow-x: auto; margin-bottom: 1rem;">
+        <p class="panel-header">Key Corrections Applied</p>
+        <table class="comparison-table" style="font-size: 0.7rem;">
+          <thead>
+            <tr>
+              <th style="width: 35%;">Original Claim</th>
+              <th style="width: 35%;">Corrected To</th>
+              <th style="width: 30%;">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$3.70 ROI (McKinsey)</td>
+              <td class="text-cyan">$3.70 ROI (Microsoft)</td>
+              <td><a href="https://opentools.ai/news/microsoft-reports-a-staggering-37x-roi-with-generative-aiheres-how" class="source-link">Microsoft Blog</a></td>
+            </tr>
+            <tr>
+              <td>AI Engineer $206K avg</td>
+              <td class="text-cyan">$139K-$149K avg</td>
+              <td><a href="https://www.glassdoor.com/Salaries/ai-engineer-salary-SRCH_KO0,11.htm" class="source-link">Glassdoor Dec 2025</a></td>
+            </tr>
+            <tr>
+              <td>CrewAI 60% Fortune 500</td>
+              <td class="text-cyan">40% Fortune 500</td>
+              <td><a href="https://www.emarketer.com/content/40--of-fortune-500-companies-using-crewai-s-ai-agents-" class="source-link">eMarketer Oct 2024</a></td>
+            </tr>
+            <tr>
+              <td>LLM Skills +340%</td>
+              <td class="text-cyan">GenAI Enrollment +1,060%</td>
+              <td><a href="https://www.coursera.org/skills-reports" class="source-link">Coursera 2024</a></td>
+            </tr>
+            <tr>
+              <td>Deloitte $3B</td>
+              <td class="text-cyan">$3B through FY2030</td>
+              <td><a href="https://www.deloitte.com/global/en/about/press-room/global-gen-ai-simulation-center-of-excellence.html" class="source-link">Deloitte Press</a></td>
+            </tr>
+            <tr>
+              <td>PwC $1B</td>
+              <td class="text-cyan">$1B (2023) <svg class="svg-icon" style="width: 0.75rem; height: 0.75rem; vertical-align: -0.0625rem;"><use href="#icon-arrow-right"/></svg> $1.5B</td>
+              <td><a href="https://www.pwc.com/us/en/about-us/newsroom/press-releases/pwc-us-makes-billion-investment-in-ai-capabilities.html" class="source-link">PwC Newsroom</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout" style="padding: 0.75rem;">
+        <p style="font-size: 0.75rem;"><strong>Methodology:</strong> All statistics cross-referenced against primary sources including Gartner, McKinsey, official company press releases, Glassdoor, and verified industry reports. Full fact-check report available upon request.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">15 / 16</span>
+      <span class="caption">Appendix</span>
+    </div>
+  </section>
+
+  <!-- Slide 21: Sources -->
+  <section id="sources" class="slide">
+    <div class="slide-breadcrumb">
+      <span class="breadcrumb-section">Appendix</span>
+      <svg class="breadcrumb-icon"><use href="#icon-chevron-right"/></svg>
+      <span class="breadcrumb-page">Sources & References</span>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 2rem;">
+        <div class="panel">
+          <p class="panel-header">Market Intelligence</p>
+          <div style="font-size: 0.75rem; line-height: 1.8; color: var(--text-muted);">
+            <p><a href="https://www.gminsights.com/industry-analysis/ai-agents-market" class="source-link">GM Insights</a> — AI Agents Market Size & Share (2024)</p>
+            <p><a href="https://www.demandsage.com/ai-agents-statistics/" class="source-link">DemandSage</a> — AI Agents Statistics (2025)</p>
+            <p><a href="https://www.gartner.com/en/newsroom/press-releases/2024-10-03-gartner-says-generative-ai-will-require-80-percent-of-engineering-workforce-to-upskill-through-2027" class="source-link">Gartner</a> — GenAI Workforce Upskilling (Oct 2024)</p>
+            <p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" class="source-link">McKinsey</a> — State of AI (2025)</p>
+            <p><a href="https://www.langchain.com/stateofaiagents" class="source-link">LangChain</a> — State of AI Agents Report (2024)</p>
+            <p><a href="https://www.ibm.com/think/insights/ai-skills-gap" class="source-link">IBM</a> — AI Skills Gap Report</p>
+            <p><a href="https://www.randstad.com/press/2024/ai-skills-gap-widens/" class="source-link">Randstad</a> — AI Skills Gap Widens (2024)</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-header">Industry & Competitor</p>
+          <div style="font-size: 0.75rem; line-height: 1.8; color: var(--text-muted);">
+            <p><a href="https://newsroom.accenture.com/news/2024/new-accenture-research-finds-that-companies-with-ai-led-processes-outperform-peers" class="source-link">Accenture Newsroom</a> — AI-Led Process Research (2024)</p>
+            <p><a href="https://www.ciodive.com/news/accenture-generative-ai-revenue-skills-training-data-modernization/761161/" class="source-link">CIO Dive</a> — Accenture GenAI Revenue (2024)</p>
+            <p><a href="https://fortune.com/2025/09/27/accenture-865-million-reinvention-exiting-people-ai-skills/" class="source-link">Fortune</a> — Accenture $865M Restructuring (2025)</p>
+            <p><a href="https://www.ideas2it.com/blogs/ai-agent-frameworks" class="source-link">Ideas2IT</a> — AI Agent Frameworks (2025)</p>
+            <p><a href="https://www.turing.com/resources/ai-agent-frameworks" class="source-link">Turing</a> — AI Agent Framework Comparison</p>
+            <p><a href="https://365datascience.com/career-advice/career-guides/ai-engineer-job-outlook-2025/" class="source-link">365 Data Science</a> — AI Engineer Job Outlook (2025)</p>
+            <p><a href="https://www.coursera.org/articles/prompt-engineering-salary" class="source-link">Coursera</a> — Prompt Engineering Salary Guide (2026)</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <p class="text-muted" style="font-size: 0.875rem;">All statistics verified as of December 2025. Contact AI Practice Lead for methodology details.</p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span class="page-num">16 / 16</span>
+      <span class="caption">Confidential · Internal Use Only</span>
+    </div>
+  </section>
+
+</body>
+</html>

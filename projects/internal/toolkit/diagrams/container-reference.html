@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C4 Level 2: Container Diagram - Agentic Commerce</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    .container-box {
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      color: white;
+    }
+    .container-internal { background: var(--container-service); }
+    .container-aiml { background: var(--container-aiml); }
+    .container-agent { background: var(--container-agent); }
+    .container-data { background: var(--container-data); }
+    .container-trust { background: var(--container-trust); }
+    .container-observability { background: var(--container-observability); }
+    .container-external { background: var(--box-external); }
+    .system-boundary {
+      border: 3px dashed var(--primary);
+      border-radius: 16px;
+      background: var(--muted-light);
+    }
+    .person-icon {
+      background: var(--primary-dark);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+  <div style="position: fixed; top: 0; left: 0; right: 0; background: #fef3c7; border-bottom: 2px solid #f59e0b; padding: 0.5rem 1.5rem; font-size: 0.8rem; z-index: 100;">
+    <strong style="color: #92400e;">Reference Diagram</strong> — <span style="color: #78350f;">Use as conversation starter. Adapt boxes to client's actual systems.</span>
+    <a href="../index.html" style="float: right; color: #92400e;">← Back to Toolkit</a>
+  </div>
+
+  <div class="slide-container p-8" style="margin-top: 40px;">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <div class="text-sm font-semibold uppercase tracking-wide" style="color: var(--primary);">C4 Model — Level 2 | Reference</div>
+        <h1 class="text-2xl font-bold mt-1" style="color: var(--text-primary);">Container Diagram</h1>
+        <p class="text-sm" style="color: var(--text-secondary);">Reference architecture for agentic commerce platforms</p>
+      </div>
+      <div class="text-right">
+        <div class="px-4 py-2 rounded-lg font-semibold" style="background: var(--primary); color: var(--text-inverse);">5 minutes</div>
+        <div class="text-sm mt-1" style="color: var(--text-muted);">Time to understand</div>
+      </div>
+    </div>
+
+    <!-- Main Diagram -->
+    <div class="flex gap-6 h-[900px]">
+
+      <!-- Left: External Actors -->
+      <div class="w-48 flex flex-col justify-center gap-6">
+
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full mx-auto mb-2 flex items-center justify-center person-icon">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+            </svg>
+          </div>
+          <div class="font-semibold text-sm" style="color: var(--text-primary);">Customer</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">LLM Platforms</div>
+          <div class="text-xs opacity-80 mt-1">ChatGPT, Claude, Gemini</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">AI Search</div>
+          <div class="text-xs opacity-80 mt-1">Perplexity, AI Overviews</div>
+        </div>
+
+      </div>
+
+      <!-- Center: System Boundary -->
+      <div class="flex-1 system-boundary p-4">
+        <div class="text-center font-bold text-sm mb-4 uppercase tracking-wide" style="color: var(--primary);">
+          Agentic Commerce Platform [System Boundary]
+        </div>
+
+        <div class="grid grid-cols-4 gap-4 h-full pb-8">
+
+          <!-- Column 1: Ingress -->
+          <div class="space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wide text-center mb-2" style="color: var(--text-muted);">Ingress Layer</div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Protocol Gateway</div>
+              <div class="text-xs opacity-80 mt-1">ACP, MCP, AP2</div>
+              <div class="text-[10px] mt-2 opacity-60">Translates agent protocols to internal API</div>
+            </div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">API Gateway</div>
+              <div class="text-xs opacity-80 mt-1">Rate limiting, auth</div>
+              <div class="text-[10px] mt-2 opacity-60">Kong / Apigee</div>
+            </div>
+
+            <div class="container-box container-trust">
+              <div class="font-bold text-sm">Consent Service</div>
+              <div class="text-xs opacity-80 mt-1">Data access control</div>
+              <div class="text-[10px] mt-2 opacity-60">GDPR/CCPA enforcement</div>
+            </div>
+
+            <div class="container-box container-data">
+              <div class="font-bold text-sm">Resilience Layer</div>
+              <div class="text-xs opacity-80 mt-1">Circuit breakers</div>
+              <div class="text-[10px] mt-2 opacity-60">Fallback chain</div>
+            </div>
+          </div>
+
+          <!-- Column 2: AI/ML -->
+          <div class="space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wide text-center mb-2" style="color: var(--text-muted);">AI/ML Services</div>
+
+            <div class="container-box container-aiml">
+              <div class="font-bold text-sm">LLM Gateway</div>
+              <div class="text-xs opacity-80 mt-1">Multi-provider routing</div>
+              <div class="text-[10px] mt-2 opacity-60">GPT-4, Claude, Gemini</div>
+            </div>
+
+            <div class="container-box container-aiml">
+              <div class="font-bold text-sm">Agent Orchestrator</div>
+              <div class="text-xs opacity-80 mt-1">LangGraph / LangChain</div>
+              <div class="text-[10px] mt-2 opacity-60">ReAct, planning, handoff</div>
+            </div>
+
+            <div class="container-box container-data">
+              <div class="font-bold text-sm">Vector Store</div>
+              <div class="text-xs opacity-80 mt-1">RAG / semantic search</div>
+              <div class="text-[10px] mt-2 opacity-60">Pinecone / Weaviate</div>
+            </div>
+
+            <div class="container-box container-data">
+              <div class="font-bold text-sm">Memory Store</div>
+              <div class="text-xs opacity-80 mt-1">Session + long-term</div>
+              <div class="text-[10px] mt-2 opacity-60">Redis / Zep</div>
+            </div>
+
+            <div class="container-box container-observability">
+              <div class="font-bold text-sm">Observability</div>
+              <div class="text-xs opacity-80 mt-1">Tracing + eval</div>
+              <div class="text-[10px] mt-2 opacity-60">LangSmith / Phoenix</div>
+            </div>
+          </div>
+
+          <!-- Column 3: Domain Agents -->
+          <div class="space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wide text-center mb-2" style="color: var(--text-muted);">Domain Agents</div>
+
+            <div class="container-box container-agent">
+              <div class="font-bold text-sm">Shopping Agent</div>
+              <div class="text-xs opacity-80 mt-1">Discovery, compare, cart</div>
+            </div>
+
+            <div class="container-box container-agent">
+              <div class="font-bold text-sm">Service Agent</div>
+              <div class="text-xs opacity-80 mt-1">Support, FAQ, warranty</div>
+            </div>
+
+            <div class="container-box container-agent">
+              <div class="font-bold text-sm">Returns Agent</div>
+              <div class="text-xs opacity-80 mt-1">RMA, refunds, exchanges</div>
+            </div>
+
+            <div class="container-box container-agent">
+              <div class="font-bold text-sm">Fulfillment Agent</div>
+              <div class="text-xs opacity-80 mt-1">Tracking, delivery</div>
+            </div>
+
+            <div class="container-box container-trust">
+              <div class="font-bold text-sm">Trust Service</div>
+              <div class="text-xs opacity-80 mt-1">Confidence, escalation</div>
+              <div class="text-[10px] mt-2 opacity-60">HITL handoff</div>
+            </div>
+
+            <div class="container-box container-trust">
+              <div class="font-bold text-sm">Guardrails</div>
+              <div class="text-xs opacity-80 mt-1">Policy, limits, filters</div>
+              <div class="text-[10px] mt-2 opacity-60">NeMo / Guardrails AI</div>
+            </div>
+          </div>
+
+          <!-- Column 4: Integration -->
+          <div class="space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wide text-center mb-2" style="color: var(--text-muted);">Integration Layer</div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Commerce Adapter</div>
+              <div class="text-xs opacity-80 mt-1">Unified commerce API</div>
+              <div class="text-[10px] mt-2 opacity-60">Cart, checkout, orders</div>
+            </div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Payment Service</div>
+              <div class="text-xs opacity-80 mt-1">Mandate + tokens</div>
+              <div class="text-[10px] mt-2 opacity-60">SPT lifecycle</div>
+            </div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Customer Service</div>
+              <div class="text-xs opacity-80 mt-1">Profile + consent</div>
+              <div class="text-[10px] mt-2 opacity-60">CDP integration</div>
+            </div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Fulfillment Service</div>
+              <div class="text-xs opacity-80 mt-1">OMS + tracking</div>
+            </div>
+
+            <div class="container-box container-internal">
+              <div class="font-bold text-sm">Webhook Service</div>
+              <div class="text-xs opacity-80 mt-1">Async callbacks</div>
+              <div class="text-[10px] mt-2 opacity-60">Order status → agent</div>
+            </div>
+
+            <div class="container-box container-data">
+              <div class="font-bold text-sm">Event Bus</div>
+              <div class="text-xs opacity-80 mt-1">Message queue</div>
+              <div class="text-[10px] mt-2 opacity-60">Kafka / SQS</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right: External Systems -->
+      <div class="w-48 flex flex-col justify-center gap-4">
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">Commerce Platform</div>
+          <div class="text-xs opacity-80 mt-1">Headless commerce</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">Payment Provider</div>
+          <div class="text-xs opacity-80 mt-1">Stripe, Adyen</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">CDP</div>
+          <div class="text-xs opacity-80 mt-1">Customer data</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">OMS / WMS</div>
+          <div class="text-xs opacity-80 mt-1">Order management</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">CRM</div>
+          <div class="text-xs opacity-80 mt-1">Support cases</div>
+        </div>
+
+        <div class="container-box container-external">
+          <div class="font-bold text-sm">Knowledge Base</div>
+          <div class="text-xs opacity-80 mt-1">FAQ, policies</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Legend -->
+    <div class="absolute bottom-6 left-8 flex gap-6 text-xs">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--container-service);"></div>
+        <span style="color: var(--text-secondary);">Application service</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--container-aiml);"></div>
+        <span style="color: var(--text-secondary);">AI/ML service</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--container-agent);"></div>
+        <span style="color: var(--text-secondary);">Domain agent</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--container-trust);"></div>
+        <span style="color: var(--text-secondary);">Trust/safety</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--container-data);"></div>
+        <span style="color: var(--text-secondary);">Data store</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-5 rounded" style="background: var(--box-external);"></div>
+        <span style="color: var(--text-secondary);">External system</span>
+      </div>
+    </div>
+
+    <!-- Key Question -->
+    <div class="absolute bottom-6 right-8 rounded-lg p-3 max-w-sm" style="background: var(--primary-light); border: 1px solid var(--primary);">
+      <div class="font-semibold text-sm mb-1" style="color: var(--primary-dark);">Key Question This Answers:</div>
+      <p class="text-xs" style="color: var(--primary-dark);">"What are the major building blocks and how do they interact?"</p>
+      <div class="mt-2 text-xs" style="color: var(--primary);">Next: Component Diagram → What's inside each container?</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

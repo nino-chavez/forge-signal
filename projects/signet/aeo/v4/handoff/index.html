@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Optimization Service - Technical Handoff</title>
+            <style>
+        :root {
+            --color-brand-violet: #7c3aed;
+            --color-brand-navy: #1a365d;
+            --color-text-primary: #171717;
+            --color-text-secondary: #404040;
+            --color-text-body: #525252;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f5f5f5;
+            --color-bg-dark: #111827;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-info: #0284c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 48px 24px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--color-brand-violet);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-brand-violet);
+        }
+
+        .header .subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+        }
+
+        .meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--color-text-body);
+        }
+
+        .meta-item strong {
+            color: var(--color-text-secondary);
+        }
+
+        .intro {
+            background: var(--color-bg-primary);
+            border: 2px solid var(--color-brand-violet);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .intro p {
+            color: var(--color-text-body);
+            margin-bottom: 12px;
+        }
+
+        .intro p:last-child {
+            margin-bottom: 0;
+        }
+
+        .doc-section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            color: var(--color-brand-violet);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .doc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .doc-item {
+            background: var(--color-bg-primary);
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .doc-item:hover {
+            border-color: var(--color-brand-violet);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+        }
+
+        .doc-item .doc-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .doc-item h3 {
+            color: var(--color-text-primary);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .doc-item .doc-number {
+            color: var(--color-text-body);
+            font-size: 14px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .doc-item .what {
+            color: var(--color-text-body);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .doc-item .why {
+            color: var(--color-text-secondary);
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e5;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 20px;
+            }
+
+            .doc-item {
+                page-break-inside: avoid;
+            }
+
+            .header {
+                page-break-after: avoid;
+            }
+
+            @page {
+                margin: 1in;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AEO Optimization Service</h1>
+            <div class="subtitle">Technical Handoff Documentation</div>
+            <div class="meta">
+                <div class="meta-item"><strong>Version:</strong> 2.0</div>
+                <div class="meta-item"><strong>Date:</strong> December 27, 2024</div>
+                <div class="meta-item"><strong>Phase:</strong> Weeks 1-2 Delivery</div>
+            </div>
+        </div>
+
+        <div class="intro">
+            <p><strong>What this is:</strong> Complete technical handoff for Signet's AEO Optimization Service - an AWS-native agentic RAG system that optimizes product visibility in LLM-powered answer engines.</p>
+            <p><strong>Who this is for:</strong> Accenture delivery team taking over implementation in Weeks 1-2 (Plan, Analyze, Design phases).</p>
+            <p><strong>How to use it:</strong> Start with Document 00 if you're new. Jump to specific documents based on your role or task below.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">Core Documentation</h2>
+            <div class="doc-list">
+                <a href="00-executive-summary.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Executive Summary & Planning</h3>
+                        <span class="doc-number">00</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> High-level overview, week 1-2 deliverables, exit criteria, business context, top 5 risks, daily action plan.</div>
+                    <div class="why"><strong>Read this if:</strong> You're new to the project, leading delivery, or need to understand scope and timeline.</div>
+                </a>
+
+                <a href="01-architecture-design.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Architecture & Design</h3>
+                        <span class="doc-number">01</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> C4 diagrams (system context, container), 4 ADRs, technology stack deep dive, Bedrock Agent architecture, OpenSearch k-NN implementation.</div>
+                    <div class="why"><strong>Read this if:</strong> You're the architect, need to understand technical decisions, or designing system components.</div>
+                </a>
+
+                <a href="02-implementation-guide.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Implementation Guide</h3>
+                        <span class="doc-number">02</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> Complete data flows (ingestion, query, measurement), integration specs, deliverables D1-D8 with acceptance criteria, common pitfalls.</div>
+                    <div class="why"><strong>Read this if:</strong> You're implementing the system, integrating with Profound/PIM, or need detailed workflow specs.</div>
+                </a>
+
+                <a href="03-lambda-patterns.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Lambda Implementation Patterns</h3>
+                        <span class="doc-number">03</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> Complete Lambda code patterns, handlers, OpenSearch client setup, ingestion Lambda, Bedrock Agent tool Lambda, distillation Lambda.</div>
+                    <div class="why"><strong>Read this if:</strong> You're writing Lambda functions or need implementation examples.</div>
+                </a>
+
+                <a href="04-operations-testing.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Operations & Testing</h3>
+                        <span class="doc-number">04</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> CloudWatch dashboards, alarms, logging strategy, cost model ($1,864/month), security checklist, testing toolkit (unit, integration, load).</div>
+                    <div class="why"><strong>Read this if:</strong> You're responsible for observability, cost management, security, or QA.</div>
+                </a>
+
+                <a href="05-api-specifications.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>API Specifications</h3>
+                        <span class="doc-number">05</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> Complete OpenAPI 3.0 specs for inbound API (Profound → S3) and outbound API (Recommendations → PIM), schema definitions, cURL examples.</div>
+                    <div class="why"><strong>Read this if:</strong> You're integrating external systems or building API clients.</div>
+                </a>
+
+                <a href="diagrams.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Architecture Diagrams</h3>
+                        <span class="doc-number">📊</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> 7 interactive diagrams - system overview, component architecture, data flows (ingestion, query, measurement), deployment architecture, implementation roadmap.</div>
+                    <div class="why"><strong>Read this if:</strong> You need visual understanding of system architecture, data flows, or project timeline.</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">Appendices</h2>
+            <div class="doc-list">
+                <a href="06-appendix-alternative-staffing.html" class="doc-item">
+                    <div class="doc-title">
+                        <h3>Appendix: Alternative Staffing Model</h3>
+                        <span class="doc-number">06</span>
+                    </div>
+                    <div class="what"><strong>What:</strong> Alternative staffing approach using offshore CDK engineer when Lead Architect lacks IaC expertise. Includes scope analysis, financial impact, coordination model, and risk mitigations.</div>
+                    <div class="why"><strong>Read this if:</strong> You're having difficulty staffing a Lead Architect with CDK skills, or exploring cost optimization options.</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>AEO Optimization Service</strong> • Accenture → Signet Jewelers</p>
+            <p>AWS Bedrock Agent + OpenSearch + Lambda • Version 2.0</p>
+        </div>
+    </div>
+</body>
+</html>

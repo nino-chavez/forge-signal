@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Store - Composable Commerce Reference Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f8f9fa;
+    }
+
+    .slide-container {
+      width: 1920px;
+      height: 1080px;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Color palette matching Accenture style */
+    .bg-navy { background: #1a365d; }
+    .bg-teal { background: #0d9488; }
+    .bg-teal-light { background: #14b8a6; }
+    .bg-cyan { background: #22d3ee; }
+    .bg-slate-light { background: #e2e8f0; }
+    .text-navy { color: #1a365d; }
+    .text-teal { color: #0d9488; }
+    .border-teal { border-color: #0d9488; }
+
+    /* Component box styles */
+    .service-box {
+      background: #e0f2fe;
+      border: 1px solid #7dd3fc;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .service-box-dark {
+      background: #0e7490;
+      color: white;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .channel-box {
+      background: #f0fdfa;
+      border: 1px solid #5eead4;
+      border-radius: 4px;
+      padding: 10px 16px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .orchestration-bar {
+      background: linear-gradient(90deg, #0d9488, #14b8a6);
+      color: white;
+      padding: 8px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .domain-header {
+      background: #1e293b;
+      color: white;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .domain-content {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      padding: 12px;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .vendor-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-top: 4px;
+    }
+
+    .vendor-adobe { background: #ff0000; color: white; }
+    .vendor-sap { background: #0070f2; color: white; }
+    .vendor-msft { background: #0078d4; color: white; }
+    .vendor-signifyd { background: #00d4aa; color: white; }
+    .vendor-adyen { background: #0abf53; color: white; }
+
+    .layer-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      padding: 8px 4px;
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+
+    .backend-box {
+      background: #1e3a5f;
+      color: white;
+      border-radius: 4px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    .backend-box .title {
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .backend-box .subtitle {
+      font-size: 9px;
+      opacity: 0.8;
+    }
+
+    /* Print styles */
+    @media print {
+      @page { size: landscape; margin: 0; }
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-8">
+
+  <div class="slide-container p-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-navy">Microsoft Store Composable Commerce Architecture</h1>
+        <p class="text-slate-500 text-sm mt-1">Future State Reference Architecture | Outsourcing Assessment</p>
+      </div>
+      <div class="text-right">
+        <div class="text-teal font-bold text-xl tracking-widest">FUTURE STATE</div>
+        <div class="text-slate-400 text-xs mt-1">December 2024</div>
+      </div>
+    </div>
+
+    <!-- Cloud Layer -->
+    <div class="bg-slate-100 rounded-lg p-3 mb-3 border border-slate-200">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Cloud (Azure Primary)</span>
+      </div>
+
+      <!-- Channels Row -->
+      <div class="flex gap-2 mb-3">
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Website</div>
+          <div class="text-[10px] text-slate-500">microsoft.com/store</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Mobile Web</div>
+          <div class="text-[10px] text-slate-500">Responsive</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Store Assistant</div>
+          <div class="text-[10px] text-slate-500">AI Chatbot</div>
+        </div>
+        <div class="channel-box flex-1 border-dashed border-orange-400">
+          <div class="font-semibold text-orange-600">Copilot Integration</div>
+          <div class="text-[10px] text-orange-500">Embedded Commerce</div>
+        </div>
+        <div class="channel-box flex-1 border-dashed border-orange-400">
+          <div class="font-semibold text-orange-600">Agentic / AEO</div>
+          <div class="text-[10px] text-orange-500">LLM Discovery</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Social</div>
+          <div class="text-[10px] text-slate-500">Marketplace</div>
+        </div>
+      </div>
+
+      <!-- CDN & API Gateway -->
+      <div class="flex gap-2 mb-2">
+        <div class="flex-1 bg-cyan-600 text-white text-center py-2 rounded text-xs font-semibold">CDN (Azure Front Door)</div>
+      </div>
+      <div class="flex gap-2">
+        <div class="flex-1 bg-cyan-700 text-white text-center py-2 rounded text-xs font-semibold">API Gateway (Azure API Management)</div>
+      </div>
+    </div>
+
+    <!-- Orchestration Layer -->
+    <div class="orchestration-bar rounded mb-3">
+      Orchestration Layer (Events, Notifications, Pub-Sub, Message Queues)
+    </div>
+
+    <!-- Main Architecture Grid -->
+    <div class="flex gap-3 mb-3">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Engagement Layer</div>
+      </div>
+
+      <!-- Content Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Content Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Content & Experience Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Web Templates • Digital Assets • Editorial</div>
+            <span class="vendor-tag vendor-adobe">Adobe AEM</span>
+            <span class="vendor-tag bg-emerald-600 text-white ml-1">RETAIN</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Content Personalization</div>
+            <div class="text-[9px] text-slate-500 mt-1">A/B Testing • Targeting • Optimization</div>
+            <span class="vendor-tag vendor-adobe">Adobe Target</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">DAM</div>
+            <div class="text-[9px] text-slate-500 mt-1">Digital Asset Repository • Lifecycle Mgmt</div>
+            <span class="vendor-tag vendor-adobe">AEM Assets</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commerce Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Commerce Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Headless Commerce Platform</div>
+            <div class="text-[9px] text-slate-500 mt-1">Cart • Checkout • Payment Integration • Delivery</div>
+            <span class="vendor-tag vendor-adobe">Adobe Commerce</span>
+            <span class="vendor-tag vendor-sap ml-1">SAP</span>
+            <span class="vendor-tag bg-violet-600 text-white ml-1">BigCommerce</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Pricing & Promotions Engine</div>
+            <div class="text-[9px] text-slate-500 mt-1">Dynamic Pricing • Vouchers • Trade-In</div>
+            <span class="vendor-tag bg-slate-600 text-white">Platform Native</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Search & Merchandising</div>
+            <div class="text-[9px] text-slate-500 mt-1">AI Search • Facets • Visual Merch</div>
+            <span class="vendor-tag bg-blue-600 text-white">Algolia</span>
+            <span class="vendor-tag bg-purple-600 text-white ml-1">Bloomreach</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalogue Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Catalogue Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Product Information Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Catalog • Attributes • Dropship Integration</div>
+            <span class="vendor-tag bg-teal-600 text-white">Syndigo</span>
+            <span class="vendor-tag bg-pink-600 text-white ml-1">Salsify</span>
+            <span class="vendor-tag bg-orange-600 text-white ml-1">Stibo</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Recommendation Engine</div>
+            <div class="text-[9px] text-slate-500 mt-1">Upsell / Cross-sell • AI Recommendations</div>
+            <span class="vendor-tag vendor-adobe">Adobe Sensei</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Catalogue Services</div>
+            <div class="text-[9px] text-slate-500 mt-1">Data Aggregation • Syndication • Exposure</div>
+            <span class="vendor-tag bg-slate-600 text-white">Platform Native</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Marketing Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Journey Orchestration</div>
+            <div class="text-[9px] text-slate-500 mt-1">Campaign Mgmt • Email • Cross-Channel</div>
+            <span class="vendor-tag vendor-adobe">Adobe AJO</span>
+            <span class="vendor-tag bg-rose-500 text-white ml-1">Braze</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Loyalty & Offer Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Rewards • Voucher/Coupon Mgmt</div>
+            <span class="vendor-tag bg-slate-600 text-white">TBD</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">DMP / Audience Mgmt</div>
+            <div class="text-[9px] text-slate-500 mt-1">1st/2nd/3rd Party Data • Ad Optimization</div>
+            <span class="vendor-tag vendor-adobe">Adobe Audience Mgr</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Customer Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Customer Data Platform</div>
+            <div class="text-[9px] text-slate-500 mt-1">Unified Profiles • Identity Resolution</div>
+            <span class="vendor-tag vendor-adobe">RT-CDP</span>
+            <span class="vendor-tag bg-green-600 text-white ml-1">Segment</span>
+            <span class="vendor-tag bg-indigo-600 text-white ml-1">Tealium</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">CRM / Customer Account</div>
+            <div class="text-[9px] text-slate-500 mt-1">CIAM • Profile • After Sales Service</div>
+            <span class="vendor-tag vendor-sap">SAP CRM</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Social Media Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Social Listening • Crisis Mgmt • Analytics</div>
+            <span class="vendor-tag bg-slate-600 text-white">TBD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orchestration Layer 2 -->
+    <div class="orchestration-bar rounded mb-3">
+      Integration Layer (ESB / iPaaS / Azure Integration Services)
+    </div>
+
+    <!-- Backend Layer -->
+    <div class="flex gap-3">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Backend Layer</div>
+      </div>
+
+      <!-- Payments & Trust -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">Payments & Trust</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b flex gap-2">
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Payment Processing</div>
+            <div class="text-[9px] opacity-80 mt-1">Cards • Wallets • BNPL</div>
+            <span class="vendor-tag vendor-adyen mt-2 inline-block">Adyen</span>
+            <span class="inline-block text-[8px] bg-emerald-500 text-white px-1 rounded ml-1">RETAIN</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Fraud Prevention</div>
+            <div class="text-[9px] opacity-80 mt-1">AI/ML Detection • Holds</div>
+            <span class="vendor-tag vendor-signifyd mt-2 inline-block">Signifyd</span>
+            <span class="vendor-tag bg-purple-500 text-white ml-1">Forter</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Gift Card Services</div>
+            <div class="text-[9px] opacity-80 mt-1">Issuance • Fraud • Balance</div>
+            <span class="vendor-tag bg-slate-500 text-white mt-2 inline-block">Blackhawk</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Management -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">Order Management</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b">
+          <div class="flex gap-2 mb-2">
+            <div class="flex-1 bg-cyan-700 text-white rounded p-2 text-center">
+              <div class="text-[10px] font-bold">Unified Inventory Visibility</div>
+            </div>
+            <div class="flex-1 bg-cyan-800 text-white rounded p-2 text-center">
+              <div class="text-[10px] font-bold">Order Orchestration</div>
+            </div>
+            <div class="flex-1 bg-cyan-900 text-white rounded p-2 text-center">
+              <div class="text-[10px] font-bold">Cross-Channel History</div>
+            </div>
+          </div>
+          <div class="text-center">
+            <span class="vendor-tag vendor-sap">IBM Sterling</span>
+            <span class="vendor-tag bg-blue-700 text-white ml-1">Manhattan</span>
+            <span class="vendor-tag bg-teal-700 text-white ml-1">Fluent</span>
+            <span class="inline-block text-[8px] bg-purple-500 text-white px-1 rounded ml-2">INFLUENCE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">Analytics Domain</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b flex gap-2">
+          <div class="flex-1 service-box">
+            <div class="font-semibold text-xs">Web Analytics</div>
+            <div class="text-[9px] text-slate-500">Tracking • Funnel Analysis</div>
+            <span class="vendor-tag vendor-adobe mt-1 inline-block">Adobe Analytics</span>
+          </div>
+          <div class="flex-1 service-box">
+            <div class="font-semibold text-xs">BI / Reporting</div>
+            <div class="text-[9px] text-slate-500">Dashboards • Insights</div>
+            <span class="vendor-tag vendor-msft mt-1 inline-block">Power BI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Systems Row -->
+    <div class="flex gap-2 mt-3">
+      <div class="backend-box flex-1">
+        <div class="title">Subscription</div>
+        <div class="subtitle">Subscription Mgmt.</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">WMS</div>
+        <div class="subtitle">Fulfillment Logistics</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">SAP CAR</div>
+        <div class="subtitle">Customer Activity</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">ERP</div>
+        <div class="subtitle">Accounting, PLM, Mfg.</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">MDM</div>
+        <div class="subtitle">Master Data Governance</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Tax</div>
+        <div class="subtitle">Tax Compliance</div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200">
+      <div class="flex items-center gap-6">
+        <span class="text-xs font-bold text-slate-500 uppercase">Legend:</span>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-emerald-600"></span>
+          <span class="text-slate-600 text-xs">Retain / Keep</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-teal-600"></span>
+          <span class="text-slate-600 text-xs">Outsource (3rd Party SaaS)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-purple-600"></span>
+          <span class="text-slate-600 text-xs">Influence (Enterprise Decision)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-orange-500"></span>
+          <span class="text-slate-600 text-xs">New Capability</span>
+        </div>
+      </div>
+      <div class="text-slate-400 text-xs">
+        Microsoft Store Platform Operations | Accenture
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

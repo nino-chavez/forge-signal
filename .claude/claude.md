@@ -10,7 +10,7 @@ Signal Forge is a strategic content generation system that produces high-fidelit
 
 ## Content Taxonomy (CRITICAL)
 
-Signal Forge supports **three content modes** with distinct voice, structure, and workflows. **Selecting the correct mode is essential** for quality output.
+Signal Forge supports **four content modes** with distinct voice, structure, and workflows. **Selecting the correct mode is essential** for quality output.
 
 Reference: `/docs/content-taxonomy.md`
 
@@ -29,9 +29,14 @@ Reference: `/docs/content-taxonomy.md`
 **Voice**: Confident consultant, outcome-focused, pattern-recognizing
 **Guide**: `/docs/executive-advisory-guide.md`
 
+### Mode 4: Documentation
+**Use for**: User guides, tutorials, quick references, technical documentation
+**Voice**: Instructional, direct, user-focused, copy-paste ready
+**Guide**: `/docs/documentation-voice-guide.md`
+
 ### Mode Selection
 
-1. **Explicit**: User specifies `--mode thought-leadership|architecture|advisory`
+1. **Explicit**: User specifies `--mode thought-leadership|architecture|advisory|documentation`
 2. **Output type**: Map output to default mode (see taxonomy)
 3. **Content signals**: Classify based on keywords and patterns
 4. **Default**: Executive Advisory (safest for client work)
@@ -68,6 +73,15 @@ Reference: `/src/classifier/content-type-classifier.md`
 5. **Structured clarity**: Scannable headers, tables, bullets
 6. **Consultant perspective**: External advisor, not internal team
 
+### Documentation Voice
+1. **Lead with user benefit**: What will they accomplish?
+2. **Use imperative verbs**: "Run," "Install," "Configure" - not "You should run"
+3. **Numbered steps** for all procedures
+4. **Tables over paragraphs** for options and commands
+5. **Code blocks generously**: Copy-paste ready
+6. **Direct "you" address**: Talk to the user
+7. **No provisional language**: This isn't thought leadership
+
 ---
 
 ## Workflows by Mode
@@ -90,6 +104,12 @@ Raw Input → Strategist → Copywriter → Editor → Final
            (framing)    (polish)      (QA)
 ```
 
+### Documentation Workflow
+```
+Raw Input → Doc Writer → Tech Editor → Final
+           (structure)   (accuracy)
+```
+
 Reference: `/docs/role-definitions.md`
 
 ---
@@ -108,6 +128,9 @@ Reference: `/docs/role-definitions.md`
 | `deck` | Executive Advisory | Strategic slide deck |
 | `brief` | Executive Advisory | Executive brief (1-3 pages) |
 | `roadmap` | Executive Advisory | Strategic implementation roadmap |
+| `guide` | Documentation | User guide, getting started guide |
+| `reference` | Documentation | Quick reference, command reference |
+| `tutorial` | Documentation | Step-by-step tutorial |
 | `whitepaper` | (Classify by content) | Can be any mode |
 
 ---
@@ -128,6 +151,11 @@ Reference: `/docs/role-definitions.md`
 - Before-After-Breakthrough
 - Recommendation Stack
 
+### Documentation
+- User Guide: Overview → Quick Start → Concepts → Features → Examples → Troubleshooting
+- Tutorial: Goal → Prerequisites → Steps → Verification → Next Steps
+- Reference: Commands Table → Options Table → Examples → Troubleshooting
+
 ---
 
 ## Usage
@@ -147,6 +175,11 @@ npm run generate deck --input recap.md --output deck.pptx
 npm run generate brief --input meeting-notes.md
 npm run generate roadmap --input strategy-session.md
 
+# Documentation
+npm run generate guide --input product-notes.md
+npm run generate reference --input cli-docs.md
+npm run generate tutorial --input workflow-notes.md
+
 # Explicit mode override
 npm run generate deck --mode architecture --input tech-context.md
 ```
@@ -156,7 +189,7 @@ npm run generate deck --mode architecture --input tech-context.md
 ## Quality Checklists
 
 ### Before Generating Content
-- [ ] Correct mode identified (thought-leadership, architecture, advisory)
+- [ ] Correct mode identified (thought-leadership, architecture, advisory, documentation)
 - [ ] Appropriate voice guide referenced
 - [ ] Input contains sufficient context for the mode
 
@@ -177,6 +210,14 @@ npm run generate deck --mode architecture --input tech-context.md
 - [ ] Business outcomes lead
 - [ ] Grounded in client context
 - [ ] Scannable structure
+
+### Documentation Quality
+- [ ] Opens with user benefit statement
+- [ ] All procedures use numbered steps
+- [ ] Code blocks are copy-paste ready
+- [ ] Tables used for options/commands
+- [ ] No provisional or exploratory language
+- [ ] Troubleshooting section included
 
 ---
 
@@ -238,6 +279,8 @@ npm run generate # Generate content
 | Using blog voice for architecture docs | Prose-heavy, unimplementable output | Switch to architecture mode |
 | Using architecture voice for strategy decks | Too technical for executives | Switch to advisory mode |
 | Using advisory voice for technical specs | Lacks precision for implementation | Switch to architecture mode |
+| Using blog voice for user guides | Exploratory, not instructional | Switch to documentation mode |
+| Using advisory voice for tutorials | Too high-level, not actionable | Switch to documentation mode |
 
 ### Voice Contamination
 
@@ -246,6 +289,8 @@ npm run generate # Generate content
 | Provisional language in architecture | "I think we should use Lambda" | "The system uses Lambda" |
 | Technical depth in executive brief | Full API specifications | Move to appendix or separate doc |
 | Missing self-interrogation in thought leadership | Pure assertion without questioning | Add "But that raises a question..." |
+| Exploratory language in documentation | "Here's where I've landed on..." | "Run this command to..." |
+| Questions in user guides | "What if we tried X?" | "To do X, follow these steps:" |
 
 ---
 
@@ -255,3 +300,4 @@ npm run generate # Generate content
 |---------|------|---------|
 | 1.0 | Initial | Single voice guide, three-role workflow |
 | 2.0 | 2024-11-25 | Three content modes, specialized roles, classification logic |
+| 3.0 | 2024-12-30 | Four content modes - added Documentation mode with instructional voice |

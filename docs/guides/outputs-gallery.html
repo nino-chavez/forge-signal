@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>outputs-gallery</title>
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #2a2a2a;
+            --success: #22c55e;
+            --warning: #eab308;
+            --code-bg: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .doc-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .version {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        main {
+            padding: 48px 0;
+        }
+
+        .content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        .content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .content ul, .content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .content li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .content code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+            font-size: 0.875em;
+        }
+
+        .content pre {
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            background: transparent;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9375rem;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 24px 16px;
+            }
+
+            .content h1 {
+                font-size: 1.75rem;
+            }
+
+            .content h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div>
+                <div class="doc-type">User Guide</div>
+                <h1 class="title">outputs-gallery</h1>
+            </div>
+            <span class="version">v1.0.0</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content">
+            <h1>Signal Forge Output Gallery</h1>
+<p><strong>What You&#39;ll Learn</strong>: Understand what Signal Forge generates for each content type and mode, so you can choose the right format for your needs and recognize quality outputs.</p>
+<hr>
+<h2>Quick Start: Understanding Your Output</h2>
+<p><strong>Run Signal Forge with any content type to see its output</strong>:</p>
+<pre><code class="language-bash">signal-forge generate --type deck --input &quot;modernize legacy platform&quot;
+</code></pre>
+<p><strong>Check the voice score</strong> in the console output:</p>
+<pre><code>✓ Content generated successfully
+  Voice Score: 8.2/10 (Executive Advisory)
+  Output: output/strategic-modernization-deck.pptx
+</code></pre>
+<p><strong>Voice scores above 7.0 are ready to use</strong>. Scores below 5.0 indicate the wrong mode was detected.</p>
+<hr>
+<h2>Output Format Reference</h2>
+<h3>Available Content Types</h3>
+<table>
+<thead>
+<tr>
+<th>Content Type</th>
+<th>Mode</th>
+<th>Typical Length</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>deck</code></td>
+<td>Executive Advisory</td>
+<td>10-15 slides</td>
+<td>Strategy presentations, recommendations</td>
+</tr>
+<tr>
+<td><code>brief</code></td>
+<td>Executive Advisory</td>
+<td>1-3 pages</td>
+<td>Executive summaries, decision memos</td>
+</tr>
+<tr>
+<td><code>roadmap</code></td>
+<td>Executive Advisory</td>
+<td>5-10 pages</td>
+<td>Initiative planning, timelines</td>
+</tr>
+<tr>
+<td><code>architecture</code></td>
+<td>Solution Architecture</td>
+<td>15-30 pages</td>
+<td>Technical documentation, system design</td>
+</tr>
+<tr>
+<td><code>adr</code></td>
+<td>Solution Architecture</td>
+<td>2-3 pages</td>
+<td>Recording technical decisions</td>
+</tr>
+<tr>
+<td><code>spec</code></td>
+<td>Solution Architecture</td>
+<td>5-15 pages</td>
+<td>Implementation specifications</td>
+</tr>
+<tr>
+<td><code>pov</code></td>
+<td>Thought Leadership</td>
+<td>800-1200 words</td>
+<td>Opinion pieces, blog posts</td>
+</tr>
+<tr>
+<td><code>paper</code></td>
+<td>Thought Leadership</td>
+<td>3000-8000 words</td>
+<td>In-depth analysis, white papers</td>
+</tr>
+</tbody></table>
+<h3>Available Output Formats</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Extension</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PowerPoint</td>
+<td><code>.pptx</code></td>
+<td>Presentations (deck only)</td>
+</tr>
+<tr>
+<td>Word</td>
+<td><code>.docx</code></td>
+<td>Editable documents</td>
+</tr>
+<tr>
+<td>PDF</td>
+<td><code>.pdf</code></td>
+<td>Final distribution</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td><code>.html</code></td>
+<td>Web publishing</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td><code>.md</code></td>
+<td>Version control, wikis</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Executive Advisory Outputs</h2>
+<h3>Strategic Deck</h3>
+<p><strong>Generate a strategy presentation</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type deck \
+  --format pptx \
+  --input &quot;cloud migration strategy for retail company&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>Slide 1:  Cover (title, date, confidential marking)
+Slide 2:  Executive Summary
+Slide 3:  Current State Assessment
+Slide 4:  Key Challenges
+Slide 5:  Strategic Approach
+Slide 6:  Phase 1 Details
+Slide 7:  Phase 2 Details
+Slide 8:  Investment &amp; Timeline
+Slide 9:  Risk Mitigation
+Slide 10: Next Steps
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Confident recommendations</strong>: &quot;I recommend a three-phase approach...&quot;</li>
+<li><strong>Pattern recognition</strong>: &quot;We&#39;ve seen this work across similar transformations...&quot;</li>
+<li><strong>Business outcomes</strong>: &quot;This delivers 40% cost reduction while enabling 3x faster launches...&quot;</li>
+<li><strong>Scannable bullets</strong>: Short, declarative statements, not paragraphs</li>
+</ul>
+<p><strong>Sample slide content</strong>:</p>
+<pre><code>RECOMMENDATION: PHASED CLOUD MIGRATION
+
+I recommend a three-phase approach based on
+successful patterns from retail transformations:
+
+Phase 1: Foundation (Q1-Q2)
+• Establish AWS infrastructure
+• Migrate dev/test environments
+• Build cloud competency
+
+Phase 2: Core Systems (Q3-Q4)
+• E-commerce platform migration
+• Customer data consolidation
+• API gateway implementation
+
+Phase 3: Optimization (Q1 Year 2)
+• Auto-scaling and cost optimization
+• Advanced analytics
+• AI/ML capabilities
+
+This approach minimizes disruption while
+delivering early wins.
+</code></pre>
+<p><strong>Format options</strong>:</p>
+<pre><code class="language-bash"># PowerPoint (default for decks)
+signal-forge generate --type deck --format pptx --input &quot;...&quot;
+
+# HTML (interactive web version)
+signal-forge generate --type deck --format html --input &quot;...&quot;
+
+# PDF (print-ready)
+signal-forge generate --type deck --format pdf --input &quot;...&quot;
+</code></pre>
+<hr>
+<h3>Executive Brief</h3>
+<p><strong>Generate a 1-3 page executive summary</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type brief \
+  --format docx \
+  --input &quot;digital transformation initiative approval&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Headline Summary (2-3 sentences)
+2. Situation Overview (1 paragraph)
+3. Key Findings (3-5 bullets)
+4. Recommendations (numbered list)
+5. Investment &amp; Timeline (table)
+6. Decision Request (clear ask)
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Lead with conclusion</strong>: &quot;I recommend proceeding with $4M Phase 1 funding...&quot;</li>
+<li><strong>Dense, information-rich</strong>: Every sentence delivers value</li>
+<li><strong>No preamble</strong>: Jumps straight to the point</li>
+<li><strong>Clear ask</strong>: &quot;I need approval for Phase 1 by January 15&quot;</li>
+</ul>
+<p><strong>Sample opening</strong>:</p>
+<pre><code>DIGITAL TRANSFORMATION INITIATIVE
+EXECUTIVE BRIEF | Q4 2024
+
+SUMMARY
+The proposed $12M digital transformation will reduce
+operational costs by 40% and enable 3x faster product
+launches. I recommend proceeding with Phase 1 funding
+of $4M in Q1, with Phase 2 approval contingent on
+milestone achievement.
+
+SITUATION
+TechCorp&#39;s 7-year-old commerce platform cannot support
+growth trajectory. Customer complaints increased 300%
+year-over-year. Engineering spends 60% capacity on
+maintenance versus innovation.
+</code></pre>
+<p><strong>Format options</strong>:</p>
+<pre><code class="language-bash"># Word document (editable)
+signal-forge generate --type brief --format docx --input &quot;...&quot;
+
+# PDF (final version)
+signal-forge generate --type brief --format pdf --input &quot;...&quot;
+
+# HTML (web viewing)
+signal-forge generate --type brief --format html --input &quot;...&quot;
+</code></pre>
+<hr>
+<h3>Strategic Roadmap</h3>
+<p><strong>Generate an initiative roadmap</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type roadmap \
+  --format html \
+  --input &quot;platform modernization over 18 months&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Executive Summary
+2. Strategic Objectives
+3. Phased Approach Overview
+4. Phase 1 Breakdown (timeline, deliverables, resources)
+5. Phase 2 Breakdown
+6. Phase 3 Breakdown
+7. Dependencies &amp; Critical Path
+8. Resource Requirements
+9. Success Metrics
+10. Governance Model
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Definitive timelines</strong>: &quot;Phase 1 completes Q2 2025&quot;</li>
+<li><strong>Clear ownership</strong>: &quot;Platform team leads, Security reviews&quot;</li>
+<li><strong>Measurable milestones</strong>: &quot;Deploy to production with &lt;100ms latency&quot;</li>
+<li><strong>Risk awareness</strong>: &quot;Critical path: API gateway must complete before service migration&quot;</li>
+</ul>
+<hr>
+<h2>Solution Architecture Outputs</h2>
+<h3>Architecture Document</h3>
+<p><strong>Generate comprehensive technical documentation</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type architecture \
+  --format html \
+  --input &quot;microservices e-commerce platform with event streaming&quot;
+</code></pre>
+<p><strong>Expected output structure</strong> (arc42 standard):</p>
+<pre><code>1.  Introduction and Goals
+2.  Constraints
+3.  Context and Scope
+4.  Solution Strategy
+5.  Building Block View
+    - System Context
+    - Container View
+    - Component View
+6.  Runtime View
+7.  Deployment View
+8.  Crosscutting Concepts
+9.  Architecture Decisions
+10. Quality Requirements
+11. Risks and Technical Debt
+12. Glossary
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Precise technical language</strong>: &quot;The API Gateway routes requests based on path prefix to backend services&quot;</li>
+<li><strong>No provisional statements</strong>: &quot;The system uses PostgreSQL&quot; not &quot;We might use PostgreSQL&quot;</li>
+<li><strong>Implementation-ready</strong>: Specific technologies, versions, configurations</li>
+<li><strong>Diagram descriptions</strong>: Text descriptions of each architectural view</li>
+</ul>
+<p><strong>Sample section</strong>:</p>
+<pre><code>## 5. BUILDING BLOCK VIEW
+
+### 5.1 Container View
+
+The system consists of four primary containers:
+
+**API Gateway**
+- Technology: Kong 3.x on Kubernetes
+- Responsibilities: Request routing, rate limiting,
+  authentication
+- Dependencies: Identity Service for JWT validation
+- Scaling: Horizontal auto-scaling, 2-10 pods
+
+**Commerce Service**
+- Technology: Node.js 20 with TypeScript
+- Responsibilities: Product catalog, pricing, inventory
+- Database: PostgreSQL 15 with read replicas
+- Events Published: OrderCreated, InventoryUpdated
+- API: REST with OpenAPI 3.0 specification
+
+**Order Service**
+- Technology: Java 17 with Spring Boot 3.1
+- Responsibilities: Order lifecycle management
+- Database: PostgreSQL 15 with read replicas
+- Events Consumed: OrderCreated
+- Events Published: OrderShipped, OrderCancelled
+
+**Notification Service**
+- Technology: Python 3.11 with FastAPI
+- Responsibilities: Email, SMS, push notifications
+- Dependencies: Consumes events from Commerce and
+  Order services
+- External APIs: SendGrid, Twilio
+</code></pre>
+<p><strong>Format options</strong>:</p>
+<pre><code class="language-bash"># HTML (interactive with navigation)
+signal-forge generate --type architecture --format html --input &quot;...&quot;
+
+# PDF (print-ready with TOC)
+signal-forge generate --type architecture --format pdf --input &quot;...&quot;
+
+# Markdown (version control friendly)
+signal-forge generate --type architecture --format md --input &quot;...&quot;
+</code></pre>
+<hr>
+<h3>Architecture Decision Record (ADR)</h3>
+<p><strong>Generate a technical decision record</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type adr \
+  --format md \
+  --input &quot;choosing between Kafka and RabbitMQ for event streaming&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Title (ADR-NNN: Decision Title)
+2. Status (Proposed/Accepted/Deprecated/Superseded)
+3. Context (Why this decision is needed)
+4. Decision (What was decided)
+5. Consequences
+   - Positive
+   - Negative
+6. Alternatives Considered
+7. References
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Factual, not persuasive</strong>: States facts, not opinions</li>
+<li><strong>Balanced consequences</strong>: Lists both pros and cons</li>
+<li><strong>Clear rationale</strong>: Explains the &quot;why&quot; with data</li>
+<li><strong>Linked decisions</strong>: References related ADRs</li>
+</ul>
+<p><strong>Sample ADR</strong>:</p>
+<pre><code class="language-markdown"># ADR-003: Event Streaming Platform Selection
+
+## Status
+Accepted
+
+## Context
+The microservices architecture requires an event
+streaming platform for asynchronous communication.
+
+Requirements:
+- Throughput: 100,000 messages/second
+- Durability: Events must persist for replay
+- Ordering: Strict ordering per partition
+- Budget: $50K/year maximum
+- Team: Moderate Kafka experience exists
+
+## Decision
+Use Apache Kafka deployed via Strimzi operator on
+existing Kubernetes cluster.
+
+## Consequences
+
+### Positive
+- High throughput meets requirements with 3x margin
+- Event replay enables event sourcing patterns
+- Strong monitoring ecosystem (Prometheus, Grafana)
+- Team has prior experience
+- No vendor lock-in
+
+### Negative
+- Operational complexity higher than managed services
+- Requires 0.5 FTE dedicated ops capacity
+- Learning curve for advanced features (KSQL, Streams)
+- Self-managed upgrades and patching
+
+## Alternatives Considered
+
+### AWS MSK (Managed Kafka)
+**Rejected**: Cost $120K/year at projected volume.
+Vendor lock-in concerns for multi-cloud strategy.
+
+### RabbitMQ
+**Rejected**: Throughput ceiling 50K messages/second
+insufficient for growth projections.
+
+### AWS SQS + SNS
+**Rejected**: No native event replay capability.
+Ordering guarantees insufficient for financial
+transactions.
+
+## References
+- Performance benchmarks: [link to internal doc]
+- Cost analysis: [link to spreadsheet]
+- Related: ADR-001 (Cloud Platform Selection)
+</code></pre>
+<p><strong>Format options</strong>:</p>
+<pre><code class="language-bash"># Markdown (standard for ADRs)
+signal-forge generate --type adr --format md --input &quot;...&quot;
+
+# HTML (web viewing)
+signal-forge generate --type adr --format html --input &quot;...&quot;
+
+# PDF (archival)
+signal-forge generate --type adr --format pdf --input &quot;...&quot;
+</code></pre>
+<hr>
+<h3>Technical Specification</h3>
+<p><strong>Generate detailed implementation specs</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type spec \
+  --format html \
+  --input &quot;REST API for product catalog with search and filtering&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Overview
+2. Functional Requirements
+3. API Endpoints (complete with request/response)
+4. Data Models (schemas)
+5. Error Codes
+6. Authentication &amp; Authorization
+7. Performance Requirements
+8. Security Considerations
+9. Testing Requirements
+10. Deployment Configuration
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Extremely precise</strong>: &quot;Returns 200 OK with JSON array&quot; not &quot;Returns success&quot;</li>
+<li><strong>No ambiguity</strong>: Every parameter, header, status code specified</li>
+<li><strong>Complete contracts</strong>: Full request/response examples</li>
+<li><strong>Implementation-ready</strong>: Developers can code directly from this</li>
+</ul>
+<hr>
+<h2>Thought Leadership Outputs</h2>
+<h3>Point of View (POV)</h3>
+<p><strong>Generate an opinion piece</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type pov \
+  --format html \
+  --input &quot;why enterprise AI projects fail in POC phase&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Opening Hook (question or tension)
+2. Personal Observation
+3. Exploration of the Idea
+4. Complications or Objections
+5. Provisional Conclusion
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Question-led opening</strong>: &quot;Why do enterprise AI projects keep dying in POC purgatory?&quot;</li>
+<li><strong>Personal grounding</strong>: &quot;I&#39;ve watched this pattern repeat across a dozen organizations...&quot;</li>
+<li><strong>Self-interrogation</strong>: &quot;I used to think... Now I&#39;m not so sure.&quot;</li>
+<li><strong>Provisional ending</strong>: &quot;So here&#39;s where I&#39;ve landed—for now.&quot;</li>
+<li><strong>Natural rhythm</strong>: Intentional fragments and varied sentence length</li>
+</ul>
+<p><strong>Sample opening</strong>:</p>
+<pre><code>Why do enterprise AI projects keep dying in POC purgatory?
+
+I&#39;ve watched this pattern repeat across a dozen
+organizations now. The demo dazzles. Executives applaud.
+Budget flows.
+
+And then... nothing.
+
+Six months later, the prototype sits abandoned while
+the team moves on to the next shiny thing.
+
+I used to think this was a technology problem. Get the
+models right. Nail the infrastructure. Build the pipeline.
+
+Now I&#39;m not so sure.
+</code></pre>
+<p><strong>Sample closing</strong>:</p>
+<pre><code>So here&#39;s where I&#39;ve landed—for now.
+
+Enterprise AI success isn&#39;t about the model. It&#39;s about
+the muscle. The organizational muscle to actually change
+how work gets done.
+
+That&#39;s harder to demo in a boardroom. But it&#39;s the only
+thing that actually works.
+
+I could be wrong. I often am. But if you&#39;re about to
+greenlight another AI POC, maybe pause and ask: do we
+have the muscle to actually use this?
+</code></pre>
+<p><strong>Format options</strong>:</p>
+<pre><code class="language-bash"># HTML (blog-ready)
+signal-forge generate --type pov --format html --input &quot;...&quot;
+
+# Markdown (for CMS platforms)
+signal-forge generate --type pov --format md --input &quot;...&quot;
+
+# Word (for editing and feedback)
+signal-forge generate --type pov --format docx --input &quot;...&quot;
+</code></pre>
+<hr>
+<h3>Strategy Paper</h3>
+<p><strong>Generate an in-depth analysis</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type paper \
+  --format pdf \
+  --input &quot;the future of platform engineering in enterprise&quot;
+</code></pre>
+<p><strong>Expected output structure</strong>:</p>
+<pre><code>1. Opening Hook and Thesis Preview
+2. Section 1: First Angle of Exploration
+3. Section 2: Second Angle
+4. Section 3: Third Angle
+5. Section 4: Complications and Objections
+6. Synthesis and Implications
+7. Provisional Conclusions
+</code></pre>
+<p><strong>Voice characteristics you&#39;ll see</strong>:</p>
+<ul>
+<li><strong>Same voice as POV</strong>: Question-led, personal, provisional</li>
+<li><strong>More depth</strong>: 3000-8000 words versus 800-1200</li>
+<li><strong>Multiple angles</strong>: Explores topic from several perspectives</li>
+<li><strong>More evidence</strong>: Examples, data, case studies throughout</li>
+<li><strong>Still provisional</strong>: Ends with &quot;here&#39;s where I&#39;ve landed—for now&quot;</li>
+</ul>
+<p><strong>Length</strong>: 3000-8000 words (approximately 10-25 pages)</p>
+<hr>
+<h2>Understanding Voice Scores</h2>
+<p><strong>Check voice scores in console output</strong>:</p>
+<pre><code>✓ Content generated successfully
+  Voice Score: 8.2/10 (Executive Advisory)
+  Confidence: High
+  Output: output/strategic-deck.pptx
+</code></pre>
+<h3>Voice Score Ranges</h3>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Meaning</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9.0-10.0</td>
+<td>Excellent</td>
+<td>Ready to use as-is</td>
+</tr>
+<tr>
+<td>7.0-8.9</td>
+<td>Good</td>
+<td>Ready for most uses, minor polish optional</td>
+</tr>
+<tr>
+<td>5.0-6.9</td>
+<td>Acceptable</td>
+<td>Usable with review, consider <code>--iterate</code></td>
+</tr>
+<tr>
+<td>3.0-4.9</td>
+<td>Weak</td>
+<td>Significant issues, likely wrong mode detected</td>
+</tr>
+<tr>
+<td>0.0-2.9</td>
+<td>Poor</td>
+<td>Re-generate with clearer input context</td>
+</tr>
+</tbody></table>
+<p><strong>Improve low scores with iteration</strong>:</p>
+<pre><code class="language-bash"># Run with iteration for important content
+signal-forge generate \
+  --type deck \
+  --input &quot;cloud strategy&quot; \
+  --iterate 3
+</code></pre>
+<p>This generates 3 versions and selects the highest-scoring output.</p>
+<hr>
+<h2>Format Quality Indicators</h2>
+<h3>PowerPoint (PPTX) Quality</h3>
+<p><strong>What to expect</strong>:</p>
+<ul>
+<li>Consistent slide layouts throughout</li>
+<li>Readable text sizes (minimum 18pt body, 28pt headers)</li>
+<li>Proper visual hierarchy</li>
+<li>Professional color scheme</li>
+<li>No text overflow or truncation</li>
+</ul>
+<p><strong>Check quality</strong>:</p>
+<ol>
+<li>Open in PowerPoint or Google Slides</li>
+<li>Verify all text is readable</li>
+<li>Check for consistent styling</li>
+<li>Ensure slides flow logically</li>
+</ol>
+<hr>
+<h3>HTML Quality</h3>
+<p><strong>What to expect</strong>:</p>
+<ul>
+<li>Responsive design (works on mobile and desktop)</li>
+<li>Clean typography with proper line spacing</li>
+<li>Navigation for documents over 5 pages</li>
+<li>Print-friendly styling</li>
+<li>Semantic HTML structure</li>
+</ul>
+<p><strong>Check quality</strong>:</p>
+<pre><code class="language-bash"># Open HTML output in browser
+open output/architecture-document.html
+
+# Check responsive design
+# Resize browser window to verify mobile layout
+</code></pre>
+<hr>
+<h3>PDF Quality</h3>
+<p><strong>What to expect</strong>:</p>
+<ul>
+<li>Proper pagination (no awkward page breaks)</li>
+<li>Table of contents for documents over 10 pages</li>
+<li>Consistent headers and footers</li>
+<li>Correct margins (1 inch standard)</li>
+<li>Embedded fonts for consistency</li>
+</ul>
+<p><strong>Check quality</strong>:</p>
+<ol>
+<li>Open PDF in viewer</li>
+<li>Verify table of contents links work</li>
+<li>Check page numbers are sequential</li>
+<li>Ensure no text is cut off</li>
+</ol>
+<hr>
+<h3>Markdown Quality</h3>
+<p><strong>What to expect</strong>:</p>
+<ul>
+<li>Proper heading hierarchy (H1 → H2 → H3)</li>
+<li>Code blocks with language specification</li>
+<li>Tables with proper alignment</li>
+<li>Links in standard format</li>
+<li>Compatible with GitHub, GitLab, Confluence</li>
+</ul>
+<p><strong>Check quality</strong>:</p>
+<pre><code class="language-bash"># Preview markdown
+mdcat output/adr-003-event-streaming.md
+
+# Or push to GitHub and view there
+git add output/adr-003-event-streaming.md
+git commit -m &quot;Add ADR-003&quot;
+git push
+</code></pre>
+<hr>
+<h2>Comparing Modes: Same Input, Different Outputs</h2>
+<h3>Input Context</h3>
+<pre><code>&quot;Our e-commerce platform is 7 years old and struggling
+with performance. Customers are complaining. Competition
+is moving faster. We need to modernize but the team is
+stretched thin.&quot;
+</code></pre>
+<h3>Executive Advisory Mode Output</h3>
+<p><strong>Generate strategy deck</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type deck \
+  --mode advisory \
+  --input &quot;7-year-old e-commerce platform, performance issues, stretched team&quot;
+</code></pre>
+<p><strong>Expected output excerpt</strong>:</p>
+<pre><code>RECOMMENDATION: PHASED MODERNIZATION
+
+I recommend a three-phase approach to modernize your
+commerce platform while managing team capacity:
+
+Phase 1: Quick Wins (Q1-Q2)
+• Performance optimization of existing platform
+• CDN implementation for static assets
+• Database query optimization
+• Delivers immediate customer relief
+
+Phase 2: Platform Replacement (Q3-Q4)
+• New microservices architecture
+• Gradual traffic migration
+• Parallel run for validation
+
+Phase 3: Innovation (Year 2)
+• Advanced features and capabilities
+• AI-powered recommendations
+• Real-time personalization
+
+Based on similar transformations I&#39;ve led, this approach
+delivers early value while building toward the target state.
+</code></pre>
+<hr>
+<h3>Solution Architecture Mode Output</h3>
+<p><strong>Generate architecture document</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type architecture \
+  --mode architecture \
+  --input &quot;modernize 7-year-old e-commerce monolith to microservices&quot;
+</code></pre>
+<p><strong>Expected output excerpt</strong>:</p>
+<pre><code>## SOLUTION STRATEGY
+
+The modernization program employs a strangler fig pattern
+to incrementally replace the legacy monolith with a
+microservices architecture.
+
+Key architectural decisions:
+
+1. **API Gateway Pattern**
+   - Kong Gateway routes traffic between legacy and new services
+   - Enables gradual migration without big-bang cutover
+   - Provides unified authentication and rate limiting
+
+2. **Event-Driven Architecture**
+   - Apache Kafka for inter-service communication
+   - Loose coupling enables independent deployment
+   - Event sourcing for order and inventory domains
+
+3. **Domain-Driven Design**
+   - Bounded contexts: Catalog, Order, Customer, Payment
+   - Each context owns its data
+   - No shared databases between services
+
+4. **Container Orchestration**
+   - Kubernetes for deployment and scaling
+   - Horizontal pod autoscaling based on CPU and custom metrics
+   - Blue-green deployments for zero-downtime updates
+</code></pre>
+<hr>
+<h3>Thought Leadership Mode Output</h3>
+<p><strong>Generate POV article</strong>:</p>
+<pre><code class="language-bash">signal-forge generate \
+  --type pov \
+  --mode thought-leadership \
+  --input &quot;why do platforms become technical debt after 7 years&quot;
+</code></pre>
+<p><strong>Expected output excerpt</strong>:</p>
+<pre><code>Seven years. That&#39;s how long it takes for a &quot;modern&quot;
+platform to become technical debt.
+
+I&#39;ve been watching our commerce platform struggle lately,
+and it&#39;s got me thinking about how we got here. Not the
+technical decisions—those are easy to second-guess.
+I mean the organizational dynamics that let seven years
+slip by without a meaningful refresh.
+
+Here&#39;s what I&#39;m wrestling with.
+
+We built this platform in 2017. React was hot. Microservices
+were the future. We made good choices. Smart choices.
+Choices that any competent architect would have made.
+
+So why does it feel like we&#39;re drowning now?
+
+I used to think platforms aged like milk—they just go bad
+after a while. Now I think they age like relationships.
+They drift. Slowly. Imperceptibly. Until one day you wake
+up and realize you&#39;re not compatible anymore.
+
+The platform didn&#39;t change. The world did.
+</code></pre>
+<hr>
+<h2>Troubleshooting</h2>
+<h3>Low Voice Scores (Below 5.0)</h3>
+<p><strong>Problem</strong>: Generated content has voice score below 5.0</p>
+<p><strong>Likely causes</strong>:</p>
+<ol>
+<li>Input context is ambiguous</li>
+<li>Wrong mode auto-detected</li>
+<li>Conflicting signals in input</li>
+</ol>
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Explicitly specify the mode
+signal-forge generate \
+  --type deck \
+  --mode advisory \
+  --input &quot;your context here&quot;
+
+# Provide more specific context
+signal-forge generate \
+  --type deck \
+  --input &quot;Executive presentation recommending cloud migration for retail company with $50M revenue&quot;
+
+# Use iteration to generate multiple versions
+signal-forge generate \
+  --type deck \
+  --input &quot;your context&quot; \
+  --iterate 3
+</code></pre>
+<hr>
+<h3>Wrong Content Type Generated</h3>
+<p><strong>Problem</strong>: Generated a POV when you wanted a deck</p>
+<p><strong>Cause</strong>: Content type not specified or wrong type used</p>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash"># Always specify --type explicitly
+signal-forge generate --type deck --input &quot;...&quot;
+
+# Verify type before generating
+signal-forge list-types
+</code></pre>
+<p><strong>Available types</strong>:</p>
+<ul>
+<li><code>deck</code> - Strategy presentation</li>
+<li><code>brief</code> - Executive summary</li>
+<li><code>roadmap</code> - Initiative timeline</li>
+<li><code>architecture</code> - Technical documentation</li>
+<li><code>adr</code> - Architecture decision record</li>
+<li><code>spec</code> - Technical specification</li>
+<li><code>pov</code> - Opinion piece (800-1200 words)</li>
+<li><code>paper</code> - In-depth analysis (3000-8000 words)</li>
+</ul>
+<hr>
+<h3>Format Conversion Issues</h3>
+<p><strong>Problem</strong>: PPTX won&#39;t open or PDF looks wrong</p>
+<p><strong>Check format compatibility</strong>:</p>
+<pre><code class="language-bash"># Verify format is supported for content type
+signal-forge list-formats --type deck
+</code></pre>
+<p><strong>Format compatibility table</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Content Type</th>
+<th>PPTX</th>
+<th>DOCX</th>
+<th>PDF</th>
+<th>HTML</th>
+<th>MD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deck</td>
+<td>✓</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>brief</td>
+<td>✗</td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Generated by Signal Forge</p>
+        </div>
+    </footer>
+</body>
+</html>

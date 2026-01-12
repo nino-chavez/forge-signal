@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPG Digital Platform - Composable Reference Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f8f9fa;
+    }
+
+    .slide-container {
+      width: 1920px;
+      min-height: 1080px;
+      height: auto;
+      background: white;
+      position: relative;
+      padding-bottom: 24px;
+    }
+
+    /* CPG Brand Color palette */
+    .bg-cpg-primary { background: #006B3F; }
+    .bg-cpg-dark { background: #004D2C; }
+    .bg-cpg-light { background: #008F52; }
+    .bg-cpg-accent { background: #C5A028; }
+    .text-cpg-primary { color: #006B3F; }
+    .text-cpg-accent { color: #C5A028; }
+    .border-cpg { border-color: #006B3F; }
+
+    /* Component box styles */
+    .service-box {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .service-box-dark {
+      background: #065f46;
+      color: white;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .channel-box {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .orchestration-bar {
+      background: linear-gradient(90deg, #006B3F, #008F52);
+      color: white;
+      padding: 10px 24px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .domain-header {
+      background: #1e293b;
+      color: white;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .domain-content {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      padding: 14px;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .capability-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+
+    .tag-pim { background: #7c3aed; color: white; }
+    .tag-dam { background: #db2777; color: white; }
+    .tag-cms { background: #2563eb; color: white; }
+    .tag-cdp { background: #0891b2; color: white; }
+    .tag-commerce { background: #059669; color: white; }
+    .tag-analytics { background: #d97706; color: white; }
+    .tag-integration { background: #64748b; color: white; }
+    .tag-ai { background: #8b5cf6; color: white; }
+    .tag-retail { background: #dc2626; color: white; }
+
+    .layer-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      padding: 10px 6px;
+      background: #f1f5f9;
+      border-radius: 6px;
+    }
+
+    .backend-box {
+      background: #1e3a5f;
+      color: white;
+      border-radius: 6px;
+      padding: 12px 16px;
+      text-align: center;
+    }
+
+    .backend-box .title {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .backend-box .subtitle {
+      font-size: 9px;
+      opacity: 0.8;
+    }
+
+    .retail-partner-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 6px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    /* Print styles */
+    @media print {
+      @page { size: landscape; margin: 0; }
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-8">
+
+  <div class="slide-container p-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h1 class="text-3xl font-bold text-cpg-primary">CPG Digital Platform Reference Architecture</h1>
+        <p class="text-slate-500 text-sm mt-1">Composable Commerce & GEO-Ready Infrastructure | Partner Agnostic</p>
+      </div>
+      <div class="text-right">
+        <div class="text-cpg-accent font-bold text-xl tracking-widest">REFERENCE</div>
+        <div class="text-slate-400 text-xs mt-1">December 2025</div>
+      </div>
+    </div>
+
+    <!-- Cloud Layer -->
+    <div class="bg-slate-100 rounded-lg p-3 mb-3 border border-slate-200">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Cloud Infrastructure (Multi-Cloud / Hybrid)</span>
+      </div>
+
+      <!-- Consumer Touchpoints Row -->
+      <div class="flex gap-2 mb-3">
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Brand Websites</div>
+          <div class="text-[10px] text-slate-500">Recipe Hubs • Product Pages</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Mobile Apps</div>
+          <div class="text-[10px] text-slate-500">Recipe • Loyalty • Coupons</div>
+        </div>
+        <div class="channel-box flex-1 border-dashed border-amber-500">
+          <div class="font-semibold text-amber-600">AI Agents / GEO</div>
+          <div class="text-[10px] text-amber-500">ChatGPT • Claude • Gemini</div>
+        </div>
+        <div class="channel-box flex-1 border-dashed border-amber-500">
+          <div class="font-semibold text-amber-600">Voice Assistants</div>
+          <div class="text-[10px] text-amber-500">Alexa • Google Home</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Social Commerce</div>
+          <div class="text-[10px] text-slate-500">Shoppable Content</div>
+        </div>
+        <div class="channel-box flex-1 bg-orange-50 border-orange-300">
+          <div class="font-semibold text-orange-700">Retail Media</div>
+          <div class="text-[10px] text-orange-500">Retailer Platforms</div>
+        </div>
+      </div>
+
+      <!-- CDN & API Gateway -->
+      <div class="flex gap-2 mb-2">
+        <div class="flex-1 bg-emerald-600 text-white text-center py-2 rounded text-xs font-semibold">CDN / Edge Delivery (Cloudflare, Fastly, Akamai)</div>
+      </div>
+      <div class="flex gap-2">
+        <div class="flex-1 bg-emerald-700 text-white text-center py-2 rounded text-xs font-semibold">API Gateway / Experience Layer (GraphQL, REST, BFF)</div>
+      </div>
+    </div>
+
+    <!-- Orchestration Layer -->
+    <div class="orchestration-bar rounded mb-3">
+      Experience Orchestration Layer (Event Bus, Message Queues, Pub-Sub, Workflow Engine)
+    </div>
+
+    <!-- Main Architecture Grid -->
+    <div class="flex gap-3 mb-3">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Experience Layer</div>
+      </div>
+
+      <!-- Content Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Content Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Headless CMS</div>
+            <div class="text-[9px] text-slate-500 mt-1">Recipe Content • Editorial • Landing Pages</div>
+            <span class="capability-tag tag-cms">CMS Platform</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Digital Asset Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Product Images • Recipe Photography • Video</div>
+            <span class="capability-tag tag-dam">DAM Platform</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Personalization Engine</div>
+            <div class="text-[9px] text-slate-500 mt-1">A/B Testing • Recommendations • Targeting</div>
+            <span class="capability-tag tag-ai">AI/ML</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commerce Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Commerce Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Headless Commerce Platform</div>
+            <div class="text-[9px] text-slate-500 mt-1">Cart • Checkout • Subscription • D2C</div>
+            <span class="capability-tag tag-commerce">Commerce Engine</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Pricing & Promotions</div>
+            <div class="text-[9px] text-slate-500 mt-1">Coupons • BOGO • Trade Promotions</div>
+            <span class="capability-tag tag-commerce">Promo Engine</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Search & Discovery</div>
+            <div class="text-[9px] text-slate-500 mt-1">Recipe Search • Product Finder • Facets</div>
+            <span class="capability-tag tag-ai">Search Platform</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalogue Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Product Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Product Information Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">SKUs • Nutrition • Ingredients • Allergens</div>
+            <span class="capability-tag tag-pim">PIM Platform</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Recipe Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Structured Recipes • Schema • Variations</div>
+            <span class="capability-tag tag-cms">Recipe Hub</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Data Syndication</div>
+            <div class="text-[9px] text-slate-500 mt-1">GS1 • GDSN • Retailer Feeds</div>
+            <span class="capability-tag tag-pim">Syndication</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Marketing Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Marketing Automation</div>
+            <div class="text-[9px] text-slate-500 mt-1">Email • SMS • Push • Journey Orchestration</div>
+            <span class="capability-tag tag-cdp">MA Platform</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Loyalty & Rewards</div>
+            <div class="text-[9px] text-slate-500 mt-1">Points • Rewards • Gamification</div>
+            <span class="capability-tag tag-commerce">Loyalty Engine</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Campaign Management</div>
+            <div class="text-[9px] text-slate-500 mt-1">Social • Influencer • Retail Media</div>
+            <span class="capability-tag tag-analytics">Campaign Mgmt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Customer Domain</div>
+        <div class="domain-content space-y-2">
+          <div class="service-box">
+            <div class="font-semibold">Customer Data Platform</div>
+            <div class="text-[9px] text-slate-500 mt-1">Unified Profiles • Identity Resolution</div>
+            <span class="capability-tag tag-cdp">CDP Platform</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Consumer Engagement</div>
+            <div class="text-[9px] text-slate-500 mt-1">Community • Reviews • UGC</div>
+            <span class="capability-tag tag-cms">Engagement</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Consent & Privacy</div>
+            <div class="text-[9px] text-slate-500 mt-1">GDPR • CCPA • Preference Center</div>
+            <span class="capability-tag tag-integration">Privacy Mgmt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Layer -->
+    <div class="orchestration-bar rounded mb-3" style="background: linear-gradient(90deg, #475569, #64748b);">
+      Integration Layer (iPaaS, ESB, APIs, ETL/ELT, CDC)
+    </div>
+
+    <!-- Backend Layer -->
+    <div class="flex gap-3 mb-3">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Data & Backend</div>
+      </div>
+
+      <!-- Analytics & Insights -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">Analytics & Insights</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b flex gap-2">
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Web Analytics</div>
+            <div class="text-[9px] opacity-80 mt-1">Traffic • Conversion • Behavior</div>
+            <span class="capability-tag tag-analytics mt-2 inline-block">Analytics</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">BI & Reporting</div>
+            <div class="text-[9px] opacity-80 mt-1">Dashboards • KPIs • Insights</div>
+            <span class="capability-tag tag-analytics mt-2 inline-block">BI Platform</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">GEO Monitoring</div>
+            <div class="text-[9px] opacity-80 mt-1">AI Citations • Rankings</div>
+            <span class="capability-tag tag-ai mt-2 inline-block">GEO Analytics</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI & Schema -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">AI & Schema</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b flex gap-2">
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Schema Generation</div>
+            <div class="text-[9px] opacity-80 mt-1">Recipe • Product • FAQ</div>
+            <span class="capability-tag tag-ai mt-2 inline-block">Schema.org</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Knowledge Graph</div>
+            <div class="text-[9px] opacity-80 mt-1">Entity Relationships</div>
+            <span class="capability-tag tag-ai mt-2 inline-block">Graph DB</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">AI/ML Platform</div>
+            <div class="text-[9px] opacity-80 mt-1">Recommendations • NLP</div>
+            <span class="capability-tag tag-ai mt-2 inline-block">AI/ML</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Platform -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-2 rounded-t text-xs font-bold uppercase tracking-wide">Data Platform</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-3 rounded-b flex gap-2">
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">Data Warehouse</div>
+            <div class="text-[9px] opacity-80 mt-1">Structured Analytics</div>
+            <span class="capability-tag tag-analytics mt-2 inline-block">DW/Lake</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-xs">MDM</div>
+            <div class="text-[9px] opacity-80 mt-1">Master Data Governance</div>
+            <span class="capability-tag tag-pim mt-2 inline-block">MDM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Systems Row -->
+    <div class="flex gap-2 mb-3">
+      <div class="backend-box flex-1">
+        <div class="title">ERP</div>
+        <div class="subtitle">Finance • Supply Chain • Mfg</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">TPM</div>
+        <div class="subtitle">Trade Promotion Mgmt</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">PLM</div>
+        <div class="subtitle">Product Lifecycle</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Supply Chain</div>
+        <div class="subtitle">Demand Planning • Inventory</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Sales Systems</div>
+        <div class="subtitle">CRM • SFA • Retail Execution</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Finance</div>
+        <div class="subtitle">AR/AP • Tax • Treasury</div>
+      </div>
+    </div>
+
+    <!-- Retail Partner Ecosystem -->
+    <div class="bg-amber-50 rounded-lg p-3 border border-amber-200">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-bold text-amber-700 uppercase tracking-wide">Retail Partner Ecosystem</span>
+        <span class="text-[9px] px-2 py-0.5 rounded bg-amber-200 text-amber-800 font-semibold">External</span>
+      </div>
+      <div class="flex gap-2">
+        <div class="retail-partner-box flex-1">
+          <div class="font-semibold text-amber-800 text-xs">Grocery Retailers</div>
+          <div class="text-[9px] text-amber-600">Kroger • Walmart • Albertsons</div>
+        </div>
+        <div class="retail-partner-box flex-1">
+          <div class="font-semibold text-amber-800 text-xs">Mass / Club</div>
+          <div class="text-[9px] text-amber-600">Target • Costco • Sam's</div>
+        </div>
+        <div class="retail-partner-box flex-1">
+          <div class="font-semibold text-amber-800 text-xs">eCommerce</div>
+          <div class="text-[9px] text-amber-600">Amazon • Instacart • DoorDash</div>
+        </div>
+        <div class="retail-partner-box flex-1">
+          <div class="font-semibold text-amber-800 text-xs">Retail Media Networks</div>
+          <div class="text-[9px] text-amber-600">Roundel • Kroger Precision • Walmart Connect</div>
+        </div>
+        <div class="retail-partner-box flex-1">
+          <div class="font-semibold text-amber-800 text-xs">Data Partners</div>
+          <div class="text-[9px] text-amber-600">Nielsen • IRI • 84.51</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200">
+      <div class="flex items-center gap-4 flex-wrap">
+        <span class="text-xs font-bold text-slate-500 uppercase">Capability Categories:</span>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-pim" style="margin-top:0">PIM</span>
+          <span class="text-slate-500 text-[10px]">Product Data</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-dam" style="margin-top:0">DAM</span>
+          <span class="text-slate-500 text-[10px]">Digital Assets</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-cms" style="margin-top:0">CMS</span>
+          <span class="text-slate-500 text-[10px]">Content</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-cdp" style="margin-top:0">CDP</span>
+          <span class="text-slate-500 text-[10px]">Customer Data</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-commerce" style="margin-top:0">Commerce</span>
+          <span class="text-slate-500 text-[10px]">Transactions</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-ai" style="margin-top:0">AI/ML</span>
+          <span class="text-slate-500 text-[10px]">Intelligence</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="capability-tag tag-analytics" style="margin-top:0">Analytics</span>
+          <span class="text-slate-500 text-[10px]">Insights</span>
+        </div>
+      </div>
+      <div class="text-slate-400 text-xs">
+        CPG Digital Platform | Partner Agnostic Reference
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Composable Commerce - Reference Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f8f9fa;
+    }
+
+    .slide-container {
+      width: 1920px;
+      height: 1080px;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Color palette - Song purple theme */
+    .bg-purple-brand { background: #A100FF; }
+    .bg-purple-dark { background: #460073; }
+    .bg-purple-light { background: #E8D5F2; }
+    .bg-accent { background: #00D4AA; }
+    .text-purple-brand { color: #A100FF; }
+    .text-accent { color: #00D4AA; }
+    .border-purple { border-color: #A100FF; }
+
+    /* Component box styles */
+    .service-box {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .service-box-dark {
+      background: #581c87;
+      color: white;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .channel-box {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .agent-channel {
+      background: linear-gradient(135deg, #faf5ff 0%, #f0fdf4 100%);
+      border: 2px solid #A100FF;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .orchestration-bar {
+      background: linear-gradient(90deg, #A100FF, #7c3aed);
+      color: white;
+      padding: 10px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .protocol-bar {
+      background: linear-gradient(90deg, #00D4AA, #06b6d4);
+      color: white;
+      padding: 10px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .domain-header {
+      background: #1e1b4b;
+      color: white;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .domain-content {
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      border-top: none;
+      padding: 10px;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-top: 4px;
+    }
+
+    .tag-llm { background: #7c3aed; color: white; }
+    .tag-vector { background: #0891b2; color: white; }
+    .tag-commerce { background: #dc2626; color: white; }
+    .tag-pim { background: #ea580c; color: white; }
+    .tag-cdp { background: #16a34a; color: white; }
+    .tag-payment { background: #2563eb; color: white; }
+    .tag-oms { background: #4f46e5; color: white; }
+    .tag-search { background: #be185d; color: white; }
+    .tag-analytics { background: #0d9488; color: white; }
+    .tag-content { background: #9333ea; color: white; }
+
+    .layer-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6b7280;
+      padding: 6px 4px;
+      background: #f3f4f6;
+      border-radius: 4px;
+    }
+
+    .backend-box {
+      background: #1e293b;
+      color: white;
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .backend-box .title {
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .backend-box .subtitle {
+      font-size: 9px;
+      opacity: 0.7;
+    }
+
+    .protocol-box {
+      background: #0f172a;
+      color: white;
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-align: center;
+      font-size: 10px;
+    }
+
+    .protocol-box .name {
+      font-weight: 700;
+      color: #00D4AA;
+    }
+
+    .protocol-box .vendor {
+      font-size: 8px;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    /* Print styles */
+    @media print {
+      @page { size: landscape; margin: 0; }
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-8">
+
+  <div class="slide-container p-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Agentic Composable Commerce Reference Architecture</h1>
+        <p class="text-gray-500 text-xs mt-1">Industry-Agnostic Blueprint for AI-Native Retail Platforms</p>
+      </div>
+      <div class="text-right">
+        <div class="text-purple-brand font-bold text-lg tracking-wide">FUTURE STATE</div>
+        <div class="text-gray-400 text-xs mt-1">December 2024</div>
+      </div>
+    </div>
+
+    <!-- External Agent Layer -->
+    <div class="bg-gradient-to-r from-purple-50 to-green-50 rounded-lg p-3 mb-2 border border-purple-200">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs font-bold text-purple-700 uppercase tracking-wide">External Agent Touchpoints</span>
+        <span class="text-[9px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded">AI Discovery Layer</span>
+      </div>
+
+      <!-- Channels Row -->
+      <div class="flex gap-2 mb-2">
+        <div class="agent-channel flex-1">
+          <div class="font-semibold text-purple-700">LLM Platforms</div>
+          <div class="text-[9px] text-gray-500">ChatGPT, Claude, Gemini</div>
+        </div>
+        <div class="agent-channel flex-1">
+          <div class="font-semibold text-purple-700">AI Search</div>
+          <div class="text-[9px] text-gray-500">Perplexity, AI Overviews</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Marketplaces</div>
+          <div class="text-[9px] text-gray-500">Amazon, eBay, Walmart</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Social Commerce</div>
+          <div class="text-[9px] text-gray-500">TikTok, Instagram, Meta</div>
+        </div>
+        <div class="channel-box flex-1">
+          <div class="font-semibold">Voice Assistants</div>
+          <div class="text-[9px] text-gray-500">Alexa, Siri, Google</div>
+        </div>
+        <div class="agent-channel flex-1">
+          <div class="font-semibold text-purple-700">Personal Agents</div>
+          <div class="text-[9px] text-gray-500">Customer AI Assistants</div>
+        </div>
+      </div>
+
+      <!-- Protocol Layer -->
+      <div class="flex gap-2">
+        <div class="protocol-box flex-1">
+          <div class="name">ACP</div>
+          <div class="vendor">Agentic Commerce Protocol (OpenAI)</div>
+        </div>
+        <div class="protocol-box flex-1">
+          <div class="name">AP2</div>
+          <div class="vendor">Agent Payments Protocol (Google)</div>
+        </div>
+        <div class="protocol-box flex-1">
+          <div class="name">MCP</div>
+          <div class="vendor">Model Context Protocol (Anthropic)</div>
+        </div>
+        <div class="protocol-box flex-1">
+          <div class="name">Payment Tokens</div>
+          <div class="vendor">SPT, Delegated Auth, Mandates</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Gateway -->
+    <div class="flex gap-2 mb-2">
+      <div class="flex-1 bg-slate-700 text-white text-center py-2 rounded text-xs font-semibold">API Gateway / CDN (Rate Limiting, Agent Auth, Data Access Control)</div>
+    </div>
+
+    <!-- Orchestration Layer -->
+    <div class="orchestration-bar rounded mb-2">
+      Agentic Orchestration Layer (LangChain, LangGraph, CrewAI, Semantic Kernel) | Agent Patterns: ReAct, Planning, Multi-Agent, Human-in-the-Loop
+    </div>
+
+    <!-- Main Architecture Grid -->
+    <div class="flex gap-2 mb-2">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Engagement</div>
+      </div>
+
+      <!-- AI/ML Domain -->
+      <div class="flex-1">
+        <div class="domain-header bg-violet-900">AI/ML Domain</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box">
+            <div class="font-semibold">LLM Hosting</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Foundation Models, Fine-tuning</div>
+            <span class="category-tag tag-llm">GPT-4</span>
+            <span class="category-tag tag-llm ml-1">Claude</span>
+            <span class="category-tag tag-llm ml-1">Gemini</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Vector Store / RAG</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Semantic Search, Knowledge Base</div>
+            <span class="category-tag tag-vector">Pinecone</span>
+            <span class="category-tag tag-vector ml-1">Weaviate</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Observability</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Tracing, Eval, Guardrails</div>
+            <span class="category-tag tag-analytics">LangSmith</span>
+            <span class="category-tag tag-analytics ml-1">Phoenix</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Domain Agents -->
+      <div class="flex-1">
+        <div class="domain-header bg-emerald-800">Domain Agents</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box border-emerald-300">
+            <div class="font-semibold text-emerald-700">Shopping Agent</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Discovery, Compare, Recommend</div>
+          </div>
+          <div class="service-box border-emerald-300">
+            <div class="font-semibold text-emerald-700">Service Agent</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Support, Returns, Warranty</div>
+          </div>
+          <div class="service-box border-emerald-300">
+            <div class="font-semibold text-emerald-700">Fulfillment Agent</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Inventory, Delivery, Tracking</div>
+          </div>
+          <div class="service-box border-emerald-300">
+            <div class="font-semibold text-emerald-700">Pricing Agent</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Dynamic Pricing, Promos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commerce Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Commerce Domain</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box">
+            <div class="font-semibold">Headless Commerce</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Cart, Checkout, Payment</div>
+            <span class="category-tag tag-commerce">commercetools</span>
+            <span class="category-tag tag-commerce ml-1">Shopify</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Search & Merchandising</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">AI Search, Facets, Ranking</div>
+            <span class="category-tag tag-search">Algolia</span>
+            <span class="category-tag tag-search ml-1">Bloomreach</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Pricing & Promotions</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Rules, Bundles, Loyalty</div>
+            <span class="category-tag bg-gray-500 text-white">Platform</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalogue Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Catalogue Domain</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box">
+            <div class="font-semibold">Product Information (PIM)</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Catalog, Attributes, Schema</div>
+            <span class="category-tag tag-pim">Syndigo</span>
+            <span class="category-tag tag-pim ml-1">Salsify</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Digital Assets (DAM)</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Images, Video, 3D/AR</div>
+            <span class="category-tag tag-content">Cloudinary</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Recommendations</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Upsell, Cross-sell, AI</div>
+            <span class="category-tag tag-llm">AI-Native</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Content Domain</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box">
+            <div class="font-semibold">CMS / Headless Content</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Editorial, Landing Pages</div>
+            <span class="category-tag tag-content">Contentful</span>
+            <span class="category-tag tag-content ml-1">Sanity</span>
+          </div>
+          <div class="service-box border-amber-300 bg-amber-50">
+            <div class="font-semibold text-amber-700">Editorial Content (GEO)</div>
+            <div class="text-[9px] text-amber-600 mt-0.5">Buying Guides, Reviews, How-To</div>
+            <span class="category-tag bg-amber-500 text-white">E-E-A-T</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Personalization</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">A/B Testing, Targeting</div>
+            <span class="category-tag tag-analytics">Optimizely</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Domain -->
+      <div class="flex-1">
+        <div class="domain-header">Customer Domain</div>
+        <div class="domain-content space-y-1.5">
+          <div class="service-box">
+            <div class="font-semibold">Customer Data Platform</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Unified Profiles, Identity</div>
+            <span class="category-tag tag-cdp">Segment</span>
+            <span class="category-tag tag-cdp ml-1">Tealium</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">CRM / CIAM</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Account, Auth, Service</div>
+            <span class="category-tag bg-blue-500 text-white">Salesforce</span>
+          </div>
+          <div class="service-box">
+            <div class="font-semibold">Loyalty & Engagement</div>
+            <div class="text-[9px] text-gray-500 mt-0.5">Rewards, Journeys, Email</div>
+            <span class="category-tag bg-rose-500 text-white">Braze</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Layer -->
+    <div class="protocol-bar rounded mb-2">
+      Integration Layer (Events, Message Queues, iPaaS) | Data Flow: Agent Access Control by Type (Owned / External / Partner / Customer)
+    </div>
+
+    <!-- Backend Layer -->
+    <div class="flex gap-2 mb-2">
+
+      <!-- Layer Label -->
+      <div class="flex flex-col justify-center">
+        <div class="layer-label">Backend</div>
+      </div>
+
+      <!-- Payments & Trust -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-1.5 rounded-t text-[10px] font-bold uppercase tracking-wide">Payments & Trust</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-2 rounded-b flex gap-2">
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-[10px]">Payment Processing</div>
+            <div class="text-[8px] opacity-80 mt-0.5">Cards, Wallets, BNPL</div>
+            <span class="category-tag tag-payment mt-1 inline-block">Stripe</span>
+            <span class="category-tag tag-payment ml-1">Adyen</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-[10px]">Fraud Prevention</div>
+            <div class="text-[8px] opacity-80 mt-0.5">AI Detection, Holds</div>
+            <span class="category-tag bg-green-600 text-white mt-1 inline-block">Signifyd</span>
+          </div>
+          <div class="flex-1 service-box-dark">
+            <div class="font-semibold text-[10px]">Agent Checkout</div>
+            <div class="text-[8px] opacity-80 mt-0.5">SPT Tokens, Mandates</div>
+            <span class="category-tag bg-purple-500 text-white mt-1 inline-block">ACP/AP2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Management -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-1.5 rounded-t text-[10px] font-bold uppercase tracking-wide">Order & Fulfillment</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-2 rounded-b">
+          <div class="flex gap-1.5 mb-1.5">
+            <div class="flex-1 bg-cyan-700 text-white rounded p-1.5 text-center">
+              <div class="text-[9px] font-bold">Inventory (ATP)</div>
+            </div>
+            <div class="flex-1 bg-cyan-800 text-white rounded p-1.5 text-center">
+              <div class="text-[9px] font-bold">OMS / DOM</div>
+            </div>
+            <div class="flex-1 bg-cyan-900 text-white rounded p-1.5 text-center">
+              <div class="text-[9px] font-bold">Returns</div>
+            </div>
+          </div>
+          <div class="text-center">
+            <span class="category-tag tag-oms">Manhattan</span>
+            <span class="category-tag tag-oms ml-1">Fluent</span>
+            <span class="category-tag tag-oms ml-1">Sterling</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics -->
+      <div class="flex-1">
+        <div class="bg-slate-700 text-white px-3 py-1.5 rounded-t text-[10px] font-bold uppercase tracking-wide">Analytics & Intelligence</div>
+        <div class="bg-slate-50 border border-slate-200 border-t-0 p-2 rounded-b flex gap-2">
+          <div class="flex-1 service-box">
+            <div class="font-semibold text-[10px]">Web Analytics</div>
+            <div class="text-[8px] text-gray-500">Tracking, Attribution</div>
+            <span class="category-tag tag-analytics mt-1 inline-block">GA4</span>
+          </div>
+          <div class="flex-1 service-box">
+            <div class="font-semibold text-[10px]">GEO Analytics</div>
+            <div class="text-[8px] text-gray-500">Citation Share, AI Visibility</div>
+            <span class="category-tag bg-amber-500 text-white mt-1 inline-block">Emerging</span>
+          </div>
+          <div class="flex-1 service-box">
+            <div class="font-semibold text-[10px]">BI / Reporting</div>
+            <div class="text-[8px] text-gray-500">Dashboards, Insights</div>
+            <span class="category-tag tag-analytics mt-1 inline-block">Looker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Systems Row -->
+    <div class="flex gap-1.5 mb-3">
+      <div class="backend-box flex-1">
+        <div class="title">ERP</div>
+        <div class="subtitle">Finance, Accounting</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">WMS</div>
+        <div class="subtitle">Warehouse Mgmt</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">MDM</div>
+        <div class="subtitle">Master Data</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Tax</div>
+        <div class="subtitle">Tax Compliance</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">3PL</div>
+        <div class="subtitle">Logistics Partners</div>
+      </div>
+      <div class="backend-box flex-1">
+        <div class="title">Syndication</div>
+        <div class="subtitle">Channel Distribution</div>
+      </div>
+    </div>
+
+    <!-- Owned Surfaces -->
+    <div class="bg-gray-100 rounded-lg p-2 mb-3 border border-gray-200">
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="text-[10px] font-bold text-gray-600 uppercase tracking-wide">Owned Surfaces</span>
+      </div>
+      <div class="flex gap-2">
+        <div class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs">Web / DTC</div>
+          <div class="text-[9px] text-gray-500">Desktop, Mobile Web</div>
+        </div>
+        <div class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs">Mobile Apps</div>
+          <div class="text-[9px] text-gray-500">iOS, Android</div>
+        </div>
+        <div class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs">In-Store</div>
+          <div class="text-[9px] text-gray-500">Associate Tools, Kiosks</div>
+        </div>
+        <div class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs">Contact Center</div>
+          <div class="text-[9px] text-gray-500">Voice, Chat, Email</div>
+        </div>
+        <div class="flex-1 bg-purple-50 border-2 border-purple-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs text-purple-700">AI Shopping Assistant</div>
+          <div class="text-[9px] text-purple-500">Owned Agent Experience</div>
+        </div>
+        <div class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 text-center">
+          <div class="font-semibold text-xs">Embedded SDK</div>
+          <div class="text-[9px] text-gray-500">Partner Integrations</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex items-center justify-between pt-2 border-t border-gray-200">
+      <div class="flex items-center gap-5">
+        <span class="text-[10px] font-bold text-gray-500 uppercase">Legend:</span>
+        <div class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded bg-purple-600"></span>
+          <span class="text-gray-600 text-[10px]">Agentic / AI-Native</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded bg-emerald-600"></span>
+          <span class="text-gray-600 text-[10px]">Domain Agents</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded bg-amber-500"></span>
+          <span class="text-gray-600 text-[10px]">GEO / AI Discovery</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded bg-cyan-700"></span>
+          <span class="text-gray-600 text-[10px]">Commerce Foundation</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded bg-slate-700"></span>
+          <span class="text-gray-600 text-[10px]">Backend Systems</span>
+        </div>
+      </div>
+      <div class="text-gray-400 text-[10px]">
+        Agentic Composable Commerce | Reference Architecture v1.0
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
