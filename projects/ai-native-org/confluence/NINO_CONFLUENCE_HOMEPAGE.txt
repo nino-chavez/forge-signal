@@ -1,0 +1,95 @@
+Nino's Confluence Homepage
+
+Product Architect | Engineering
+
+---
+
+About Me
+
+I'm a Product Architect on the Engineering team, focused on connecting technical architecture decisions to business outcomes. I think about systems — how they scale, how they integrate, and how they serve merchants.
+
+Current focus areas:
+• Platform architecture and API design
+• AI-assisted development workflows
+• Cross-functional alignment on technical decisions
+
+I'm new to BigCommerce and actively learning the landscape. If you're working on something interesting, I'd love to hear about it.
+
+---
+
+What I'm Working On
+
+Initiative | Status | Description
+Onboarding | Active | Learning BigCommerce platform, people, and processes
+Architecture patterns | Exploring | Documenting patterns and practices I'm observing
+AI enablement | Proposing | Exploring ways to activate our AI infrastructure
+
+---
+
+AI & ML Interest
+
+I'm interested in how organizations operationalize AI — not just deploying tools, but building the habits and practices that turn infrastructure into impact.
+
+Things I think about:
+• How do teams move from "AI-curious" to "AI-fluent"?
+• What's the gap between having tools and actually using them?
+• Where does human judgment remain essential?
+
+If you're experimenting with AI in your workflow, I'd genuinely like to learn what's working (and what's not).
+
+---
+
+Quick Links
+
+BigCommerce Resources
+• ChatGPT Knowledge Hub — Getting started with ChatGPT Enterprise
+• Gemini Knowledge Hub — Google Workspace AI tools
+• Prompt Library — Reusable prompts by function
+• AI Governance & Policies — Data classification and approved tools
+
+My Resources
+• Architecture Decision Records — Technical decisions I'm documenting
+• Meeting Notes — Notes from key discussions
+• Reading List — Articles and papers I'm working through
+
+---
+
+Working With Me
+
+How to Reach Me
+
+Channel | Use For | Response Time
+Slack DM | Quick questions, casual chat | Same day
+Email | Formal requests, external context | 24-48 hours
+Calendar | Deep discussions, reviews | Book time directly
+
+Slack: @nino
+Email: nino@bigcommerce.com
+
+Communication Preferences
+• Async first. I check Slack in batches, not continuously. Don't wait for me to respond — drop your question and move on.
+• Context helps. "Can we talk?" is fine, but "Can we talk about the API versioning approach?" is better.
+• Feedback welcome. Tell me what I'm missing. I'm new here and learning.
+
+Best Times to Connect
+
+Day | Availability
+Monday | Meetings, planning
+Tuesday–Thursday | Deep work mornings, available afternoons
+Friday | Flexible, good for longer conversations
+
+---
+
+Let's Connect
+
+I'm here to learn, contribute, and collaborate. If any of this resonates — or if you think I should know about something — reach out.
+
+Some things I'd love to hear about:
+• Architecture challenges you're facing
+• AI experiments that worked (or didn't)
+• Processes that feel broken
+• Teams doing interesting work
+
+---
+
+Last updated: January 2026

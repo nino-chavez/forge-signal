@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Operations Governance Framework | Commerce.com</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --border-color: #2a2a2a;
+            --border-accent: #3a3a3a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666;
+            --accent-blue: #60a5fa;
+            --accent-green: #4ade80;
+            --accent-amber: #fbbf24;
+            --accent-red: #f87171;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #22d3ee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        header .meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        header .meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 .subtitle {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-blue);
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .lead {
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout.warning {
+            border-left-color: var(--accent-amber);
+        }
+
+        .callout.success {
+            border-left-color: var(--accent-green);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+        }
+
+        th, td {
+            padding: 0.875rem 1rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        td {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-r { background: rgba(248, 113, 113, 0.2); color: var(--accent-red); }
+        .badge-a { background: rgba(251, 191, 36, 0.2); color: var(--accent-amber); }
+        .badge-c { background: rgba(96, 165, 250, 0.2); color: var(--accent-blue); }
+        .badge-i { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); }
+
+        .phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .phase-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .phase-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0.25rem 0;
+        }
+
+        .phase-timeline {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .phase-objectives {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .phase-objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .phase-objectives li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.875rem;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .deliverables {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .deliverables-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .deliverables-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .deliverable-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .maturity-level {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .maturity-level.current {
+            border-color: var(--accent-amber);
+            box-shadow: 0 0 0 1px var(--accent-amber);
+        }
+
+        .maturity-level.target {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 1px var(--accent-green);
+        }
+
+        .level-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .level-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 0.25rem 0;
+        }
+
+        .level-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .governance-structure {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .role-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .role-card h4 {
+            margin: 0 0 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .role-org {
+            font-size: 0.8125rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .role-responsibilities {
+            list-style: none;
+            font-size: 0.875rem;
+        }
+
+        .role-responsibilities li {
+            padding: 0.375rem 0;
+            color: var(--text-secondary);
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .role-responsibilities li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .nav-toc {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-toc h3 {
+            margin: 0 0 1rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .nav-toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .nav-toc a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            display: block;
+            padding: 0.375rem 0;
+        }
+
+        .nav-toc a:hover {
+            color: var(--text-primary);
+        }
+
+        .workflow-diagram {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .workflow-diagram .arrow {
+            color: var(--text-muted);
+        }
+
+        .workflow-diagram .node {
+            color: var(--accent-cyan);
+        }
+
+        .workflow-diagram .checkpoint {
+            color: var(--accent-amber);
+        }
+
+        .workflow-diagram .output {
+            color: var(--accent-green);
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            header .meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                AI Operations Governance Framework
+                <span class="subtitle">A Hypothesis for Maturing AI-Assisted Workflows at Scale</span>
+            </h1>
+            <div class="meta">
+                <span>Status: Draft Hypothesis</span>
+                <span>Version: 0.1</span>
+                <span>Last Updated: January 2026</span>
+            </div>
+        </header>
+
+        <nav class="nav-toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#context">1. Context & Problem Statement</a></li>
+                <li><a href="#governance">2. Governance Structure Hypothesis</a></li>
+                <li><a href="#raci">3. RACI Matrix</a></li>
+                <li><a href="#maturity">4. Maturity Model</a></li>
+                <li><a href="#strategy">5. Strategic Plan</a></li>
+                <li><a href="#tactical">6. Tactical Roadmap</a></li>
+                <li><a href="#workflows">7. Workflow Patterns</a></li>
+                <li><a href="#risks">8. Risks & Mitigations</a></li>
+            </ul>
+        </nav>
+
+        <section id="context">
+            <h2>1. Context & Problem Statement</h2>
+
+            <p class="lead">
+                Commerce.com operates under public company constraints with 4-tier data classification
+                and IP protection as the primary security concern. Current AI policies address
+                request-response tooling but leave gaps for agentic workflows, multi-model orchestration,
+                and scaled adoption across product teams.
+            </p>
+
+            <h3>Current State</h3>
+            <table>
+                <tr>
+                    <th>Dimension</th>
+                    <th>Status</th>
+                    <th>Gap</th>
+                </tr>
+                <tr>
+                    <td>Data Classification</td>
+                    <td>4-tier (Public, Internal, Confidential, Restricted)</td>
+                    <td>Doesn't address agent context persistence</td>
+                </tr>
+                <tr>
+                    <td>Tool Approval</td>
+                    <td>Selective (some tools approved with restrictions)</td>
+                    <td>Per-tool, not per-workflow or orchestration chain</td>
+                </tr>
+                <tr>
+                    <td>Policy Documentation</td>
+                    <td>Exists in Confluence (prompt libraries, custom GPTs)</td>
+                    <td>Written for chat paradigm, not agentic operations</td>
+                </tr>
+                <tr>
+                    <td>Team Maturity</td>
+                    <td>Unknown / Unassessed</td>
+                    <td>No baseline to plan interventions</td>
+                </tr>
+            </table>
+
+            <div class="callout">
+                <div class="callout-title">The Agentic Gap</div>
+                <p>
+                    Existing policies assume: Human &rarr; Prompt &rarr; AI &rarr; Response &rarr; Human reviews.
+                    <br><br>
+                    Agentic reality: Human &rarr; Goal &rarr; Agent &rarr; [Tool &rarr; API &rarr; File &rarr; Tool &rarr; ...] &rarr; Output.
+                    <br><br>
+                    The policy gaps: autonomous decision chains, multi-tool orchestration, persistent context,
+                    and the difference between input exposure and output derivation.
+                </p>
+            </div>
+
+            <h3>Strategic Objectives</h3>
+            <ul class="phase-objectives">
+                <li>Establish governance that enables productivity without creating IP/security risk</li>
+                <li>Create a maturity path from individual experimentation to scaled agentic operations</li>
+                <li>Build quality gates that distinguish draft, review-ready, and shippable artifacts</li>
+                <li>Enable the Product Architect role to guide without owning implementation</li>
+            </ul>
+        </section>
+
+        <section id="governance">
+            <h2>2. Governance Structure Hypothesis</h2>
+
+            <p class="lead">
+                AI Ops governance requires cross-functional ownership. No single team owns the full stack.
+                The hypothesis below identifies likely owners and their domains.
+            </p>
+
+            <div class="governance-structure">
+                <div class="role-card">
+                    <h4>AI Center of Excellence (CoE)</h4>
+                    <div class="role-org">Likely: Engineering / Platform</div>
+                    <ul class="role-responsibilities">
+                        <li>Tool evaluation and approval recommendations</li>
+                        <li>Best practices and pattern libraries</li>
+                        <li>Training curriculum and enablement</li>
+                        <li>Maturity assessment and tracking</li>
+                        <li>Cross-team knowledge sharing</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>Security & Compliance</h4>
+                    <div class="role-org">InfoSec / Legal / Privacy</div>
+                    <ul class="role-responsibilities">
+                        <li>Data classification enforcement</li>
+                        <li>Tool security review and approval</li>
+                        <li>Policy creation and updates</li>
+                        <li>Incident response for AI-related breaches</li>
+                        <li>Vendor risk assessment</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>Product Architecture</h4>
+                    <div class="role-org">Product / Engineering</div>
+                    <ul class="role-responsibilities">
+                        <li>Workflow design and optimization</li>
+                        <li>Quality gate definitions</li>
+                        <li>Use case prioritization</li>
+                        <li>Maturity roadmap input</li>
+                        <li>Cross-functional facilitation</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>Engineering Leadership</h4>
+                    <div class="role-org">VP/Director Engineering</div>
+                    <ul class="role-responsibilities">
+                        <li>Resource allocation for AI initiatives</li>
+                        <li>Integration with SDLC</li>
+                        <li>Developer experience ownership</li>
+                        <li>Production guardrails</li>
+                        <li>Executive sponsorship</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>Team Leads / Managers</h4>
+                    <div class="role-org">Individual Teams</div>
+                    <ul class="role-responsibilities">
+                        <li>Team-level adoption and training</li>
+                        <li>Workflow implementation</li>
+                        <li>Quality enforcement</li>
+                        <li>Feedback aggregation</li>
+                        <li>Use case identification</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>Individual Contributors</h4>
+                    <div class="role-org">All Teams</div>
+                    <ul class="role-responsibilities">
+                        <li>Policy compliance</li>
+                        <li>Tool usage within guidelines</li>
+                        <li>Quality self-assessment</li>
+                        <li>Feedback and improvement ideas</li>
+                        <li>Peer knowledge sharing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout warning">
+                <div class="callout-title">Your Role: Product Architect</div>
+                <p>
+                    You sit at the intersection of Product and Engineering with CPO reporting line.
+                    Your value-add is <strong>shaping and facilitating</strong>, not owning.
+                    You bring the vision of what's possible (agentic workflows, multi-modal output,
+                    quality gates) while Security owns policy, Engineering owns implementation,
+                    and the CoE owns enablement.
+                </p>
+            </div>
+        </section>
+
+        <section id="raci">
+            <h2>3. RACI Matrix</h2>
+
+            <p>
+                <span class="badge badge-r">R</span> Responsible &mdash; Does the work
+                <span class="badge badge-a">A</span> Accountable &mdash; Final decision maker
+                <span class="badge badge-c">C</span> Consulted &mdash; Provides input
+                <span class="badge badge-i">I</span> Informed &mdash; Kept updated
+            </p>
+
+            <h3>Policy & Governance</h3>
+            <table>
+                <tr>
+                    <th>Activity</th>
+                    <th>Security</th>
+                    <th>Legal</th>
+                    <th>Eng Lead</th>
+                    <th>CoE</th>
+                    <th>Prod Arch</th>
+                    <th>Team Lead</th>
+                </tr>
+                <tr>
+                    <td>Define data classification for AI inputs</td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                </tr>
+                <tr>
+                    <td>Approve AI tools for use</td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                </tr>
+                <tr>
+                    <td>Define agentic workflow policy</td>
+                    <td><span class="badge badge-a">A</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                </tr>
+                <tr>
+                    <td>Create output classification guidelines</td>
+                    <td><span class="badge badge-a">A</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                </tr>
+            </table>
+
+            <h3>Enablement & Adoption</h3>
+            <table>
+                <tr>
+                    <th>Activity</th>
+                    <th>Security</th>
+                    <th>Legal</th>
+                    <th>Eng Lead</th>
+                    <th>CoE</th>
+                    <th>Prod Arch</th>
+                    <th>Team Lead</th>
+                </tr>
+                <tr>
+                    <td>Develop training curriculum</td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                </tr>
+                <tr>
+                    <td>Assess team maturity</td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                </tr>
+                <tr>
+                    <td>Build prompt/workflow libraries</td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                </tr>
+                <tr>
+                    <td>Run enablement sessions</td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                </tr>
+            </table>
+
+            <h3>Operations & Quality</h3>
+            <table>
+                <tr>
+                    <th>Activity</th>
+                    <th>Security</th>
+                    <th>Legal</th>
+                    <th>Eng Lead</th>
+                    <th>CoE</th>
+                    <th>Prod Arch</th>
+                    <th>Team Lead</th>
+                </tr>
+                <tr>
+                    <td>Define quality gates (draft &rarr; ship)</td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-a">A</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                </tr>
+                <tr>
+                    <td>Implement workflow automation</td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                </tr>
+                <tr>
+                    <td>Monitor compliance</td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                </tr>
+                <tr>
+                    <td>Incident response (AI-related)</td>
+                    <td><span class="badge badge-a">A</span><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-c">C</span></td>
+                    <td><span class="badge badge-i">I</span></td>
+                    <td><span class="badge badge-r">R</span></td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="maturity">
+            <h2>4. Maturity Model</h2>
+
+            <p class="lead">
+                A 6-level maturity model for AI operations, aligned with typical enterprise adoption curves.
+                The hypothesis: Commerce.com is at Level 2 organizationally, with pockets at Level 1 and Level 3.
+            </p>
+
+            <div class="maturity-grid">
+                <div class="maturity-level">
+                    <div class="level-number">0</div>
+                    <div class="level-name">Blocked</div>
+                    <div class="level-desc">No AI usage. Active resistance or prohibition.</div>
+                </div>
+                <div class="maturity-level">
+                    <div class="level-number">1</div>
+                    <div class="level-name">Experimental</div>
+                    <div class="level-desc">Ad-hoc individual usage. No shared patterns.</div>
+                </div>
+                <div class="maturity-level current">
+                    <div class="level-number">2</div>
+                    <div class="level-name">Sanctioned</div>
+                    <div class="level-desc">Approved tools exist. Usage policies defined. Still individual.</div>
+                </div>
+                <div class="maturity-level">
+                    <div class="level-number">3</div>
+                    <div class="level-name">Practiced</div>
+                    <div class="level-desc">Shared workflows. Prompt libraries. Quality patterns emerge.</div>
+                </div>
+                <div class="maturity-level target">
+                    <div class="level-number">4</div>
+                    <div class="level-name">Integrated</div>
+                    <div class="level-desc">AI in the workflow, not bolted on. Clear quality gates.</div>
+                </div>
+                <div class="maturity-level">
+                    <div class="level-number">5</div>
+                    <div class="level-name">Agentic</div>
+                    <div class="level-desc">Autonomous agents with oversight. Production guardrails.</div>
+                </div>
+            </div>
+
+            <h3>Maturity Assessment Dimensions</h3>
+            <table>
+                <tr>
+                    <th>Dimension</th>
+                    <th>Level 1</th>
+                    <th>Level 3</th>
+                    <th>Level 5</th>
+                </tr>
+                <tr>
+                    <td>Tool Familiarity</td>
+                    <td>Tried once or twice</td>
+                    <td>Regular use of approved tools</td>
+                    <td>Multi-tool, custom workflows</td>
+                </tr>
+                <tr>
+                    <td>Prompt Craft</td>
+                    <td>Basic questions</td>
+                    <td>Structured prompts, iteration</td>
+                    <td>System prompts, context injection</td>
+                </tr>
+                <tr>
+                    <td>Output Judgment</td>
+                    <td>Accepts uncritically</td>
+                    <td>Edits and validates</td>
+                    <td>Quality gates, version control</td>
+                </tr>
+                <tr>
+                    <td>Security Awareness</td>
+                    <td>Doesn't consider</td>
+                    <td>Knows restrictions</td>
+                    <td>Active data classification</td>
+                </tr>
+                <tr>
+                    <td>Workflow Integration</td>
+                    <td>Copy/paste only</td>
+                    <td>IDE integration</td>
+                    <td>Agentic, CI/CD integrated</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="strategy">
+            <h2>5. Strategic Plan</h2>
+
+            <p class="lead">
+                A phased approach to move from Level 2 (Sanctioned) to Level 4 (Integrated),
+                with optionality for Level 5 (Agentic) for advanced use cases.
+            </p>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div>
+                        <div class="phase-number">Phase 1</div>
+                        <div class="phase-title">Foundation & Assessment</div>
+                    </div>
+                    <div class="phase-timeline">Weeks 1-4</div>
+                </div>
+                <ul class="phase-objectives">
+                    <li>Complete landscape assessment: current policies, approved tools, actual usage</li>
+                    <li>Run maturity assessment across product teams (survey + interviews)</li>
+                    <li>Identify policy gaps for agentic workflows and multi-model usage</li>
+                    <li>Map existing prompt libraries and custom GPTs</li>
+                    <li>Establish governance working group with key stakeholders</li>
+                </ul>
+                <div class="deliverables">
+                    <div class="deliverables-title">Deliverables</div>
+                    <div class="deliverables-list">
+                        <span class="deliverable-tag">Policy Gap Analysis</span>
+                        <span class="deliverable-tag">Maturity Assessment Report</span>
+                        <span class="deliverable-tag">Stakeholder Map</span>
+                        <span class="deliverable-tag">Working Group Charter</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div>
+                        <div class="phase-number">Phase 2</div>
+                        <div class="phase-title">Policy Extension & Workflow Design</div>
+                    </div>
+                    <div class="phase-timeline">Weeks 5-10</div>
+                </div>
+                <ul class="phase-objectives">
+                    <li>Draft agentic workflow policy extension (with Security/Legal)</li>
+                    <li>Define the "air gap" pattern for confidential inputs</li>
+                    <li>Create workflow classification framework (Sandbox, Guided, Supervised, Prohibited)</li>
+                    <li>Design quality gates: Draft &rarr; Shaped &rarr; Review-Ready &rarr; Shippable</li>
+                    <li>Build initial prompt/workflow library for common use cases</li>
+                </ul>
+                <div class="deliverables">
+                    <div class="deliverables-title">Deliverables</div>
+                    <div class="deliverables-list">
+                        <span class="deliverable-tag">Agentic Policy Extension</span>
+                        <span class="deliverable-tag">Workflow Classification Matrix</span>
+                        <span class="deliverable-tag">Quality Gates Spec</span>
+                        <span class="deliverable-tag">Prompt Library v1</span>
+                        <span class="deliverable-tag">Air Gap Pattern Guide</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div>
+                        <div class="phase-number">Phase 3</div>
+                        <div class="phase-title">Pilot & Iterate</div>
+                    </div>
+                    <div class="phase-timeline">Weeks 11-18</div>
+                </div>
+                <ul class="phase-objectives">
+                    <li>Select 2-3 pilot teams with diverse use cases</li>
+                    <li>Implement workflows with quality gates in pilot teams</li>
+                    <li>Run training sessions using new materials</li>
+                    <li>Collect feedback and iterate on policies/workflows</li>
+                    <li>Measure productivity and compliance metrics</li>
+                </ul>
+                <div class="deliverables">
+                    <div class="deliverables-title">Deliverables</div>
+                    <div class="deliverables-list">
+                        <span class="deliverable-tag">Pilot Playbook</span>
+                        <span class="deliverable-tag">Training Materials v1</span>
+                        <span class="deliverable-tag">Feedback Synthesis</span>
+                        <span class="deliverable-tag">Metrics Dashboard</span>
+                        <span class="deliverable-tag">Policy Updates</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div>
+                        <div class="phase-number">Phase 4</div>
+                        <div class="phase-title">Scale & Operationalize</div>
+                    </div>
+                    <div class="phase-timeline">Weeks 19-30</div>
+                </div>
+                <ul class="phase-objectives">
+                    <li>Roll out to all product teams</li>
+                    <li>Establish AI CoE with ongoing ownership</li>
+                    <li>Integrate quality gates into existing review processes</li>
+                    <li>Build self-service onboarding for new team members</li>
+                    <li>Implement compliance monitoring</li>
+                </ul>
+                <div class="deliverables">
+                    <div class="deliverables-title">Deliverables</div>
+                    <div class="deliverables-list">
+                        <span class="deliverable-tag">Full Rollout Plan</span>
+                        <span class="deliverable-tag">CoE Operating Model</span>
+                        <span class="deliverable-tag">Self-Service Docs</span>
+                        <span class="deliverable-tag">Compliance Reports</span>
+                        <span class="deliverable-tag">Maturity Re-Assessment</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div>
+                        <div class="phase-number">Phase 5</div>
+                        <div class="phase-title">Advanced Capabilities (Optional)</div>
+                    </div>
+                    <div class="phase-timeline">Weeks 31+</div>
+                </div>
+                <ul class="phase-objectives">
+                    <li>Evaluate agentic workflow tooling for approved use cases</li>
+                    <li>Pilot multi-model routing based on task requirements</li>
+                    <li>Build production guardrails for autonomous operations</li>
+                    <li>Establish advanced certification path for practitioners</li>
+                </ul>
+                <div class="deliverables">
+                    <div class="deliverables-title">Deliverables</div>
+                    <div class="deliverables-list">
+                        <span class="deliverable-tag">Agentic Pilot Report</span>
+                        <span class="deliverable-tag">Multi-Model Guidelines</span>
+                        <span class="deliverable-tag">Production Guardrails Spec</span>
+                        <span class="deliverable-tag">Advanced Certification</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tactical">
+            <h2>6. Tactical Roadmap</h2>
+
+            <h3>Immediate Actions (Next 2 Weeks)</h3>
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Owner</th>
+                    <th>Output</th>
+                </tr>
+                <tr>
+                    <td>Schedule discovery meeting with Security/Legal on AI policy</td>
+                    <td>Product Architect</td>
+                    <td>Meeting notes, policy contact identified</td>
+                </tr>
+                <tr>
+                    <td>Review existing Confluence AI documentation</td>
+                    <td>Product Architect</td>
+                    <td>Summary of current state, gap list</td>
+                </tr>
+                <tr>
+                    <td>Identify 3-5 stakeholders for governance working group</td>
+                    <td>Product Architect</td>
+                    <td>Stakeholder list with availability</td>
+                </tr>
+                <tr>
+                    <td>Draft maturity assessment survey (10-15 questions)</td>
+                    <td>Product Architect</td>
+                    <td>Survey ready for pilot</td>
+                </tr>
+                <tr>
+                    <td>Socialize this framework with CPO for alignment</td>
+                    <td>Product Architect</td>
+                    <td>Feedback, executive sponsorship</td>
+                </tr>
+            </table>
+
+            <h3>Month 1 Milestones</h3>
+            <table>
+                <tr>
+                    <th>Milestone</th>
+                    <th>Success Criteria</th>
+                </tr>
+                <tr>
+                    <td>Governance working group formed</td>
+                    <td>Charter signed, meeting cadence established</td>
+                </tr>
+                <tr>
+                    <td>Policy gap analysis complete</td>
+                    <td>Document reviewed by Security, gaps prioritized</td>
+                </tr>
+                <tr>
+                    <td>Maturity assessment deployed</td>
+                    <td>Survey sent to &ge;2 teams, response rate &ge;60%</td>
+                </tr>
+                <tr>
+                    <td>Executive alignment confirmed</td>
+                    <td>CPO/VP Eng sign-off on approach</td>
+                </tr>
+            </table>
+
+            <h3>Quarter 1 Objectives</h3>
+            <ul class="phase-objectives">
+                <li>Complete Phase 1 (Foundation) and Phase 2 (Policy/Workflow Design)</li>
+                <li>Have approved agentic workflow policy extension</li>
+                <li>Have quality gates defined and documented</li>
+                <li>Have at least one pilot team identified and briefed</li>
+            </ul>
+        </section>
+
+        <section id="workflows">
+            <h2>7. Workflow Patterns</h2>
+
+            <h3>The Air Gap Pattern</h3>
+            <p>
+                For confidential inputs that cannot directly enter AI context, use a human
+                abstraction layer to sanitize inputs and rehydrate outputs.
+            </p>
+
+            <div class="workflow-diagram">
+<span class="node">Confidential Context</span> (Confluence, internal docs, roadmaps)
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="checkpoint">[HUMAN: Abstraction Layer]</span> &larr; Extract patterns, anonymize, remove specifics
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="node">Safe Input</span> (patterns, structures, public references)
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="node">[AI Agent]</span> &larr; Operates only on sanitized inputs
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="node">Draft Output</span> (structure, prose, frameworks)
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="checkpoint">[HUMAN: Rehydration Layer]</span> &larr; Add specifics, names, numbers back
+       <span class="arrow">|</span>
+       <span class="arrow">v</span>
+<span class="output">Final Output</span> (classified, ready for intended audience)
+            </div>
+
+            <h3>Workflow Classification</h3>
+            <table>
+                <tr>
+                    <th>Tier</th>
+                    <th>Data Access</th>
+                    <th>Autonomy</th>
+                    <th>Checkpoints</th>
+                    <th>Example Use Cases</th>
+                </tr>
+                <tr>
+                    <td><strong>A: Sandbox</strong></td>
+                    <td>Public only</td>
+                    <td>Full</td>
+                    <td>End-of-session</td>
+                    <td>Learning, experimentation, public docs</td>
+                </tr>
+                <tr>
+                    <td><strong>B: Guided</strong></td>
+                    <td>Public + Internal</td>
+                    <td>Within session</td>
+                    <td>Before external action</td>
+                    <td>Internal docs, code with abstracted context</td>
+                </tr>
+                <tr>
+                    <td><strong>C: Supervised</strong></td>
+                    <td>Up to Confidential (via air gap)</td>
+                    <td>Step-by-step</td>
+                    <td>Every tool call</td>
+                    <td>Strategy docs, product planning</td>
+                </tr>
+                <tr>
+                    <td><strong>D: Prohibited</strong></td>
+                    <td>Restricted</td>
+                    <td>None</td>
+                    <td>N/A</td>
+                    <td>PII, financial data, acquisition materials</td>
+                </tr>
+            </table>
+
+            <h3>Quality Gates</h3>
+            <table>
+                <tr>
+                    <th>Stage</th>
+                    <th>Definition</th>
+                    <th>Gate Criteria</th>
+                    <th>Reviewer</th>
+                </tr>
+                <tr>
+                    <td><strong>Draft</strong></td>
+                    <td>AI-assisted first pass</td>
+                    <td>Exists, roughly structured</td>
+                    <td>Self</td>
+                </tr>
+                <tr>
+                    <td><strong>Shaped</strong></td>
+                    <td>Human-edited, logic verified</td>
+                    <td>Factually accurate, coherent</td>
+                    <td>Self + spot check</td>
+                </tr>
+                <tr>
+                    <td><strong>Review-Ready</strong></td>
+                    <td>Ready for stakeholder input</td>
+                    <td>Complete, addresses known concerns</td>
+                    <td>Peer or stakeholder</td>
+                </tr>
+                <tr>
+                    <td><strong>Shippable</strong></td>
+                    <td>Ready for external consumption</td>
+                    <td>Quality checklist passed, approved</td>
+                    <td>Designated approver</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="risks">
+            <h2>8. Risks & Mitigations</h2>
+
+            <table>
+                <tr>
+                    <th>Risk</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Mitigation</th>
+                </tr>
+                <tr>
+                    <td>Security/Legal blocks agentic policy extension</td>
+                    <td>Medium</td>
+                    <td>High</td>
+                    <td>Start with Sandbox tier; build trust incrementally; provide audit trail</td>
+                </tr>
+                <tr>
+                    <td>Low adoption due to friction/complexity</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                    <td>Start with high-value, low-friction use cases; measure and share wins</td>
+                </tr>
+                <tr>
+                    <td>Quality issues undermine trust</td>
+                    <td>Medium</td>
+                    <td>High</td>
+                    <td>Enforce quality gates; train on output validation; visible review process</td>
+                </tr>
+                <tr>
+                    <td>No clear ownership / CoE doesn't form</td>
+                    <td>Low</td>
+                    <td>High</td>
+                    <td>Secure executive sponsorship early; make ownership explicit in RACI</td>
+                </tr>
+                <tr>
+                    <td>Policy gaps cause incident</td>
+                    <td>Low</td>
+                    <td>Very High</td>
+                    <td>Conservative default (Prohibited); explicit approval required for elevation</td>
+                </tr>
+                <tr>
+                    <td>Maturity gap creates two-tier productivity</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Pair advanced users with teams; focus on raising the floor first</td>
+                </tr>
+            </table>
+
+            <div class="callout success">
+                <div class="callout-title">Success Metrics</div>
+                <p>
+                    <strong>Adoption:</strong> % of teams using approved AI workflows<br>
+                    <strong>Productivity:</strong> Time savings on common tasks (self-reported, then measured)<br>
+                    <strong>Compliance:</strong> Zero policy violations; 100% of outputs classified<br>
+                    <strong>Maturity:</strong> Average team maturity level (target: 3.5 by end of Q2)<br>
+                    <strong>Quality:</strong> % of AI-assisted outputs reaching "Shippable" without major revision
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>
+                <strong>Document Status:</strong> Draft Hypothesis for Discussion<br>
+                <strong>Next Step:</strong> Socialize with CPO and Security stakeholders for initial feedback<br>
+                <strong>Generated:</strong> January 2026 | Signal Forge
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
