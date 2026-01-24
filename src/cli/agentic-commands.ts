@@ -7,19 +7,19 @@
 
 import type { Command } from 'commander';
 import path from 'path';
-import { readFileContent, ensureDir } from '../utils/file-utils.js';
+import { readFileContent, ensureDir } from '../core/utils/file-utils.js';
 import { createProvider, getDefaultProvider, getConfiguredProviders } from '../providers/index.js';
 import type { AIProvider } from '../providers/ai-provider.js';
-import { ForgeOrchestrator } from '../agents/orchestrator.js';
-import { ContentClassifier } from '../classifier/content-classifier.js';
-import { ResearchAgent } from '../agents/research-agent.js';
-import { ProductionAgent } from '../agents/production-agent.js';
-import { PublicationAgent } from '../agents/publication-agent.js';
-import { MemorySystem } from '../memory/memory-system.js';
-import { JsonFileStore } from '../memory/long-term-store.js';
-import { createLocalFilePublisher } from '../publishers/local-file.js';
-import { generateTaskId } from '../agents/types.js';
-import type { ContentMode, ContentTask, OutputFormat } from '../agents/types.js';
+import { ForgeOrchestrator } from '../pipeline/agents/orchestrator.js';
+import { ContentClassifier } from '../content/classifier/content-classifier.js';
+import { ResearchAgent } from '../pipeline/agents/research-agent.js';
+import { ProductionAgent } from '../pipeline/agents/production-agent.js';
+import { PublicationAgent } from '../pipeline/agents/publication-agent.js';
+import { MemorySystem } from '../pipeline/memory/memory-system.js';
+import { JsonFileStore } from '../pipeline/memory/long-term-store.js';
+import { createLocalFilePublisher } from '../output/publishers/local-file.js';
+import { generateTaskId } from '../core/types/index.js';
+import type { ContentMode, ContentTask, OutputFormat } from '../core/types/index.js';
 
 // =============================================================================
 // Register Agentic Commands

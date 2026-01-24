@@ -7,4 +7,8 @@ dist/
 *.docx
 *.pdf
 
-projects/ask-dad/
+projects/
+.forge/
+scripts/generate-*.ts
+scripts/*-pptx.ts
+scripts/*-roadmap*.ts

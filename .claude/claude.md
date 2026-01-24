@@ -12,27 +12,27 @@ Signal Forge is a strategic content generation system that produces high-fidelit
 
 Signal Forge supports **four content modes** with distinct voice, structure, and workflows. **Selecting the correct mode is essential** for quality output.
 
-Reference: `/docs/content-taxonomy.md`
+Reference: `/docs/voice/content-taxonomy.md`
 
 ### Mode 1: Thought Leadership
 **Use for**: Blog posts, opinion pieces, reflections, POVs exploring ideas
 **Voice**: Narrative, provisional, question-led, show-the-work
-**Guide**: `/docs/strategic-content-voice-guide.md`
+**Guide**: `/docs/voice/thought-leadership-voice.md`
 
 ### Mode 2: Solution Architecture
 **Use for**: Technical architecture docs, ADRs, specs, technical decks
 **Voice**: Precise, definitive, diagram-heavy, reference-grade
-**Guide**: `/docs/solution-architecture-guide.md`
+**Guide**: `/docs/voice/solution-architecture-voice.md`
 
 ### Mode 3: Executive Advisory
 **Use for**: Strategy decks, executive briefs, roadmaps, recommendations
 **Voice**: Confident consultant, outcome-focused, pattern-recognizing
-**Guide**: `/docs/executive-advisory-guide.md`
+**Guide**: `/docs/voice/executive-advisory-voice.md`
 
 ### Mode 4: Documentation
 **Use for**: User guides, tutorials, quick references, technical documentation
 **Voice**: Instructional, direct, user-focused, copy-paste ready
-**Guide**: `/docs/documentation-voice-guide.md`
+**Guide**: `/docs/voice/documentation-voice.md`
 
 ### Mode Selection
 
@@ -41,7 +41,7 @@ Reference: `/docs/content-taxonomy.md`
 3. **Content signals**: Classify based on keywords and patterns
 4. **Default**: Executive Advisory (safest for client work)
 
-Reference: `/src/classifier/content-type-classifier.md`
+Reference: `/src/content/classifier/content-classifier.ts`
 
 ---
 
@@ -110,7 +110,7 @@ Raw Input → Doc Writer → Tech Editor → Final
            (structure)   (accuracy)
 ```
 
-Reference: `/docs/role-definitions.md`
+Reference: `/docs/voice/role-definitions.md`
 
 ---
 
@@ -238,24 +238,35 @@ Set API keys in `.env`:
 signal-forge/
 ├── src/
 │   ├── cli/           # CLI interface
-│   ├── roles/         # Role implementations (Ghost Writer, Architect, etc.)
-│   ├── classifier/    # Content type classification
-│   ├── providers/     # AI provider implementations
-│   ├── exporters/     # Export formats (PPTX, DOCX, PDF)
-│   ├── templates/     # Content templates
-│   └── voice/         # Voice validation
+│   ├── core/          # Types and utilities
+│   │   ├── types/     # Domain-specific type definitions
+│   │   └── utils/     # File utilities, slugs
+│   ├── content/       # Content processing
+│   │   ├── voice/     # Voice validation
+│   │   ├── classifier/# Content type classification
+│   │   ├── templates/ # Content templates
+│   │   └── design-system/ # Presentation themes
+│   ├── pipeline/      # Production pipeline
+│   │   ├── roles/     # Ghost Writer, Copywriter, Editor, Doc Writer
+│   │   ├── agents/    # Orchestrator, Production, Research agents
+│   │   └── memory/    # Session and long-term memory
+│   ├── output/        # Output generation
+│   │   ├── exporters/ # PPTX, DOCX, PDF, HTML exporters
+│   │   └── publishers/# Local file, CMS publishers
+│   ├── providers/     # AI provider integrations
+│   └── tools/         # Tool registry
 ├── docs/
-│   ├── content-taxonomy.md              # Mode definitions
-│   ├── strategic-content-voice-guide.md # Thought Leadership voice
-│   ├── solution-architecture-guide.md   # Architecture voice
-│   ├── executive-advisory-guide.md      # Advisory voice
-│   └── role-definitions.md              # Role specifications
-├── templates/
-│   └── architecture/
-│       ├── adr-template.md
-│       └── architecture-deck-template.md
-├── content/           # Generated content
-└── refs/              # Reference materials
+│   ├── voice/         # Voice guides by content mode
+│   ├── design-system/ # Design system documentation
+│   ├── guides/        # User-facing documentation
+│   ├── internal/      # Development reference docs
+│   └── curriculum/    # Training materials
+├── templates/         # Markdown templates for generation
+│   ├── architecture/  # ADR, architecture deck templates
+│   └── governance/    # Playbook templates
+├── projects/          # Client work (gitignored)
+└── .claude/
+    └── skills/        # Claude skills (references symlinked)
 ```
 
 ---
@@ -301,3 +312,4 @@ npm run generate # Generate content
 | 1.0 | Initial | Single voice guide, three-role workflow |
 | 2.0 | 2024-11-25 | Three content modes, specialized roles, classification logic |
 | 3.0 | 2024-12-30 | Four content modes - added Documentation mode with instructional voice |
+| 4.0 | 2025-01-24 | Major reorganization: core/content/pipeline/output src structure, docs reorganized, templates at root, skill symlinks |

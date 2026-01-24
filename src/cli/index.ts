@@ -8,20 +8,21 @@
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import dotenv from 'dotenv';
-import { readFileContent } from '../utils/file-utils.js';
+import { readFileContent } from '../core/utils/file-utils.js';
+import { createDefaultConfig } from '../core/config.js';
 import { createProvider, getDefaultProvider, getConfiguredProviders } from '../providers/index.js';
 import type { AIProvider } from '../providers/ai-provider.js';
-import { GhostWriter } from '../roles/ghost-writer.js';
-import { Copywriter } from '../roles/copywriter.js';
-import { Editor } from '../roles/editor.js';
-import { DocumentationWriter, type DocumentationType } from '../roles/documentation-writer.js';
-import { exportToWord } from '../exporters/word-exporter.js';
-import { exportToPDF } from '../exporters/pdf-exporter.js';
-import { exportToPPTX } from '../exporters/pptx-exporter.js';
-import { exportToGoogleSlides } from '../exporters/slides-exporter.js';
-import { exportToHTML } from '../exporters/html-exporter.js';
-import { generateSlug } from '../utils/slug.js';
-import { ensureDir } from '../utils/file-utils.js';
+import { GhostWriter } from '../pipeline/roles/ghost-writer.js';
+import { Copywriter } from '../pipeline/roles/copywriter.js';
+import { Editor } from '../pipeline/roles/editor.js';
+import { DocumentationWriter, type DocumentationType } from '../pipeline/roles/documentation-writer.js';
+import { exportToWord } from '../output/exporters/word-exporter.js';
+import { exportToPDF } from '../output/exporters/pdf-exporter.js';
+import { exportToPPTX } from '../output/exporters/pptx-exporter.js';
+import { exportToGoogleSlides } from '../output/exporters/slides-exporter.js';
+import { exportToHTML } from '../output/exporters/html-exporter.js';
+import { generateSlug } from '../core/utils/slug.js';
+import { ensureDir } from '../core/utils/file-utils.js';
 import { registerAgenticCommands } from './agentic-commands.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -45,6 +46,18 @@ registerAgenticCommands(program);
 // Valid content types
 const VALID_TYPES = ['deck', 'pov', 'paper', 'guide', 'reference', 'tutorial'];
 const DOCUMENTATION_TYPES = ['guide', 'reference', 'tutorial'];
+
+program
+  .command('init')
+  .description('Initialize Signal Forge configuration')
+  .action(() => {
+    try {
+      createDefaultConfig();
+      console.log('✨ Initialization complete.');
+    } catch (error) {
+      console.error('❌ Initialization failed:', (error as Error).message);
+    }
+  });
 
 program
   .command('generate')

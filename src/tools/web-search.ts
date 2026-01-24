@@ -6,7 +6,7 @@
  */
 
 import { PerplexityProvider } from '../providers/perplexity.js';
-import type { AgentTool, ToolParams, ToolResult, WebSearchResult } from '../agents/types.js';
+import type { AgentTool, ToolParams, ToolResult, WebSearchResult } from '../core/types/index.js';
 
 // =============================================================================
 // Web Search Tool Configuration

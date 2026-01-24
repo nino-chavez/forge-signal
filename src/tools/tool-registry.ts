@@ -5,7 +5,7 @@
  * and execution of tools that agents can use.
  */
 
-import type { AgentTool, ToolParams, ToolResult } from '../agents/types.js';
+import type { AgentTool, ToolParams, ToolResult } from '../core/types/index.js';
 
 // =============================================================================
 // Tool Registry

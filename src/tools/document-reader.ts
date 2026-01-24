@@ -7,7 +7,7 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
-import type { AgentTool, DocumentResult, ToolParams, ToolResult } from '../agents/types.js';
+import type { AgentTool, DocumentResult, ToolParams, ToolResult } from '../core/types/index.js';
 
 // =============================================================================
 // Document Reader Configuration
