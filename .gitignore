@@ -9,6 +9,7 @@ dist/
 
 projects/
 .forge/
+.playwright-mcp/
 scripts/generate-*.ts
 scripts/*-pptx.ts
 scripts/*-roadmap*.ts
