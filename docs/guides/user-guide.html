@@ -1,264 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user-guide</title>
-
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-tertiary: #1a1a1a;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a0a0a0;
-            --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --border: #2a2a2a;
-            --success: #22c55e;
-            --warning: #eab308;
-            --code-bg: #1e1e1e;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        header {
-            border-bottom: 1px solid var(--border);
-            padding: 24px 0;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .doc-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .version {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            background: var(--bg-tertiary);
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        main {
-            padding: 48px 0;
-        }
-
-        .content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 32px;
-        }
-
-        .content h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .content h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
-
-        .content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-top: 24px;
-            margin-bottom: 12px;
-        }
-
-        .content p {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .content ul, .content ol {
-            margin: 16px 0;
-            padding-left: 24px;
-        }
-
-        .content li {
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .content code {
-            background: var(--code-bg);
-            color: var(--accent);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
-            font-size: 0.875em;
-        }
-
-        .content pre {
-            background: var(--code-bg);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 16px 0;
-        }
-
-        .content pre code {
-            background: transparent;
-            padding: 0;
-            color: var(--text-primary);
-        }
-
-        .content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.9375rem;
-        }
-
-        .content th {
-            text-align: left;
-            padding: 12px 16px;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border);
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        .content td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .content tr:hover td {
-            background: var(--bg-tertiary);
-        }
-
-        .content blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 16px;
-            margin: 16px 0;
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        footer {
-            padding: 32px 0;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                padding: 24px 16px;
-            }
-
-            .content h1 {
-                font-size: 1.75rem;
-            }
-
-            .content h2 {
-                font-size: 1.25rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Guide - Signal Forge Documentation</title>
+  <link rel="stylesheet" href="shared.css">
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <div class="doc-type">User Guide</div>
-                <h1 class="title">user-guide</h1>
-            </div>
-            <span class="version">v1.0.0</span>
-        </div>
+  <div class="document">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <span class="header-logo">Signal Forge</span>
+        <span class="header-divider"></span>
+        <span class="header-title">User Guide</span>
+      </div>
+      <span class="header-version">v1.0.0</span>
     </header>
 
-    <main class="container">
-        <div class="content">
-            <h1>Signal Forge User Guide</h1>
-<h2>Overview</h2>
-<p>Signal Forge transforms your raw notes, observations, and meeting recaps into polished professional content. It understands three distinct content modes—thought leadership, solution architecture, and executive advisory—and applies the right voice, structure, and workflow automatically. Generate strategy decks, technical documentation, and thought leadership pieces that maintain consistent quality and appropriate tone.</p>
-<hr>
-<h2>Quick Start</h2>
-<p>Get your first document generated in 60 seconds:</p>
-<pre><code class="language-bash"># 1. Install Signal Forge
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Home</a></li>
+        <li class="nav-item active"><a href="user-guide.html">User Guide</a></li>
+        <li class="nav-item"><a href="quick-reference.html">Quick Reference</a></li>
+        <li class="nav-item"><a href="use-cases-guide.html">Use Cases</a></li>
+        <li class="nav-item"><a href="outputs-gallery.html">Output Gallery</a></li>
+        <li class="nav-item"><a href="signal-forge-method-guide.html">The Method</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Layout with Sidebar -->
+    <div class="main-layout">
+      <!-- Sidebar TOC -->
+      <aside class="sidebar">
+        <div class="toc-title">On This Page</div>
+        <ul class="toc-list">
+          <li class="toc-section">Getting Started</li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#quick-start">Quick Start</a></li>
+          <li><a href="#installation">Installation</a></li>
+
+          <li class="toc-section">Core Concepts</li>
+          <li><a href="#content-modes">Content Modes</a></li>
+          <li><a href="#mode-detection">Mode Detection</a></li>
+          <li><a href="#voice-quality">Voice Quality</a></li>
+
+          <li class="toc-section">Basic Usage</li>
+          <li><a href="#generate-command">Generate Command</a></li>
+          <li><a href="#document-types">Document Types</a></li>
+          <li><a href="#options">Standard Options</a></li>
+
+          <li class="toc-section">Advanced</li>
+          <li><a href="#agentic-workflows">Agentic Workflows</a></li>
+          <li><a href="#output-formats">Output Formats</a></li>
+          <li><a href="#input-files">Working with Inputs</a></li>
+          <li><a href="#mode-workflows">Mode Workflows</a></li>
+          <li><a href="#providers">Provider Selection</a></li>
+          <li><a href="#quality-control">Quality Control</a></li>
+
+          <li class="toc-section">Examples</li>
+          <li><a href="#examples">Real-World Examples</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="content">
+        <h1>Signal Forge User Guide</h1>
+        <p class="subtitle">Complete guide to transforming raw notes into polished professional content.</p>
+
+        <h2 id="overview">Overview</h2>
+        <p>Signal Forge transforms your raw notes, observations, and meeting recaps into polished professional content. It understands four distinct content modes—thought leadership, solution architecture, executive advisory, and documentation—and applies the right voice, structure, and workflow automatically.</p>
+        <p>Generate strategy decks, technical documentation, and thought leadership pieces that maintain consistent quality and appropriate tone.</p>
+
+        <hr>
+
+        <h2 id="quick-start">Quick Start</h2>
+        <p>Get your first document generated in 60 seconds:</p>
+        <pre><code># 1. Install Signal Forge
 npm install -g signal-forge
 
 # 2. Configure your API key
-echo &quot;ANTHROPIC_API_KEY=your_key_here&quot; &gt; .env
+echo "ANTHROPIC_API_KEY=your_key_here" > .env
 
 # 3. Create a simple input file
-echo &quot;Meeting recap: Discussed AI governance strategy for Q2...&quot; &gt; notes.md
+echo "Meeting recap: Discussed AI governance strategy for Q2..." > notes.md
 
 # 4. Generate your first deck
-forge generate deck --input notes.md --format pptx
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code>✓ Analyzing input content...
+forge generate deck --input notes.md --format pptx</code></pre>
+
+        <p><strong>Expected output:</strong></p>
+        <pre><code>✓ Analyzing input content...
 ✓ Detected mode: Executive Advisory
 ✓ Generating deck structure...
 ✓ Creating slides...
 ✓ Voice check passed (score: 8.2/10)
-✓ Generated: output/deck-2024-01-15.pptx
-</code></pre>
-<hr>
-<h2>Installation and Setup</h2>
-<h3>1. Install Signal Forge</h3>
-<pre><code class="language-bash">npm install -g signal-forge
-</code></pre>
-<h3>2. Configure API Keys</h3>
-<p>Create a <code>.env</code> file in your working directory:</p>
-<pre><code class="language-env"># Choose at least one provider
+✓ Generated: output/deck-2024-01-15.pptx</code></pre>
+
+        <hr>
+
+        <h2 id="installation">Installation and Setup</h2>
+
+        <h3>1. Install Signal Forge</h3>
+        <pre><code>npm install -g signal-forge</code></pre>
+
+        <h3>2. Configure API Keys</h3>
+        <p>Create a <code>.env</code> file in your working directory:</p>
+        <pre><code># Choose at least one provider
 ANTHROPIC_API_KEY=sk-ant-xxxxx
 OPENAI_API_KEY=sk-xxxxx
 GOOGLE_API_KEY=xxxxx
@@ -268,320 +116,285 @@ PERPLEXITY_API_KEY=pplx-xxxxx
 DEFAULT_AI_PROVIDER=anthropic
 
 # Optional: For Google Slides export
-GOOGLE_SLIDES_CREDENTIALS_PATH=./credentials.json
-</code></pre>
-<h3>3. Verify Installation</h3>
-<pre><code class="language-bash">forge --version
-forge --help
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code>Signal Forge v1.0.0
-Usage: forge [command] [options]
-</code></pre>
-<hr>
-<h2>Core Concepts</h2>
-<h3>Content Modes</h3>
-<p>Signal Forge operates in three distinct modes, each with specific voice principles and output requirements:</p>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Purpose</th>
-<th>Voice Style</th>
-<th>Output Types</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Thought Leadership</strong></td>
-<td>Explore ideas, share insights</td>
-<td>Narrative, provisional, question-led</td>
-<td>POVs, blog posts, papers</td>
-</tr>
-<tr>
-<td><strong>Solution Architecture</strong></td>
-<td>Document technical systems</td>
-<td>Precise, definitive, reference-grade</td>
-<td>Architecture docs, ADRs, specs</td>
-</tr>
-<tr>
-<td><strong>Executive Advisory</strong></td>
-<td>Strategy and recommendations</td>
-<td>Confident consultant, outcome-focused</td>
-<td>Decks, briefs, roadmaps</td>
-</tr>
-</tbody></table>
-<h3>Mode Detection</h3>
-<p>Signal Forge automatically detects the appropriate mode from your input content. Override when needed:</p>
-<pre><code class="language-bash"># Auto-detect mode (recommended)
+GOOGLE_SLIDES_CREDENTIALS_PATH=./credentials.json</code></pre>
+
+        <h3>3. Verify Installation</h3>
+        <pre><code>forge --version
+forge --help</code></pre>
+
+        <hr>
+
+        <h2 id="content-modes">Content Modes</h2>
+        <p>Signal Forge operates in four distinct modes, each with specific voice principles and output requirements:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Purpose</th>
+              <th>Voice Style</th>
+              <th>Output Types</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Thought Leadership</strong></td>
+              <td>Explore ideas, share insights</td>
+              <td>Narrative, provisional, question-led</td>
+              <td>POVs, blog posts, papers</td>
+            </tr>
+            <tr>
+              <td><strong>Solution Architecture</strong></td>
+              <td>Document technical systems</td>
+              <td>Precise, definitive, reference-grade</td>
+              <td>Architecture docs, ADRs, specs</td>
+            </tr>
+            <tr>
+              <td><strong>Executive Advisory</strong></td>
+              <td>Strategy and recommendations</td>
+              <td>Confident consultant, outcome-focused</td>
+              <td>Decks, briefs, roadmaps</td>
+            </tr>
+            <tr>
+              <td><strong>Documentation</strong></td>
+              <td>User guides, tutorials, references</td>
+              <td>Instructional, direct, copy-paste ready</td>
+              <td>Guides, references, tutorials</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="mode-detection">Mode Detection</h3>
+        <p>Signal Forge automatically detects the appropriate mode from your input content. Override when needed:</p>
+        <pre><code># Auto-detect mode (recommended)
 forge generate deck --input notes.md
 
 # Force specific mode
-forge generate deck --input notes.md --mode advisory
-</code></pre>
-<h3>Voice Quality</h3>
-<p>Every document receives a voice quality score (0-10 scale). The system checks for:</p>
-<ul>
-<li>Appropriate opening style for the mode</li>
-<li>Consistent tone throughout</li>
-<li>Mode-appropriate language patterns</li>
-<li>Structural alignment</li>
-<li>Audience fit</li>
-</ul>
-<p>Documents scoring below 7 trigger automatic revision in agentic workflows.</p>
-<hr>
-<h2>Basic Generation</h2>
-<h3>Generate Command Structure</h3>
-<pre><code class="language-bash">forge generate &lt;type&gt; [options]
-</code></pre>
-<h3>Available Document Types</h3>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Mode</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>pov</code></td>
-<td>Thought Leadership</td>
-<td>Point of view article or blog post</td>
-</tr>
-<tr>
-<td><code>post</code></td>
-<td>Thought Leadership</td>
-<td>Short-form blog post</td>
-</tr>
-<tr>
-<td><code>paper</code></td>
-<td>Thought Leadership</td>
-<td>Long-form exploration paper</td>
-</tr>
-<tr>
-<td><code>architecture</code></td>
-<td>Solution Architecture</td>
-<td>System architecture documentation</td>
-</tr>
-<tr>
-<td><code>adr</code></td>
-<td>Solution Architecture</td>
-<td>Architecture Decision Record</td>
-</tr>
-<tr>
-<td><code>tech-deck</code></td>
-<td>Solution Architecture</td>
-<td>Technical presentation</td>
-</tr>
-<tr>
-<td><code>spec</code></td>
-<td>Solution Architecture</td>
-<td>Technical specification</td>
-</tr>
-<tr>
-<td><code>deck</code></td>
-<td>Executive Advisory</td>
-<td>Strategy presentation deck</td>
-</tr>
-<tr>
-<td><code>brief</code></td>
-<td>Executive Advisory</td>
-<td>Executive summary brief</td>
-</tr>
-<tr>
-<td><code>roadmap</code></td>
-<td>Executive Advisory</td>
-<td>Strategic roadmap</td>
-</tr>
-</tbody></table>
-<h3>Standard Options</h3>
-<pre><code class="language-bash">-i, --input &lt;file&gt;          Input file path (required)
+forge generate deck --input notes.md --mode advisory</code></pre>
+
+        <h3 id="voice-quality">Voice Quality</h3>
+        <p>Every document receives a voice quality score (0-10 scale). The system checks for:</p>
+        <ul>
+          <li>Appropriate opening style for the mode</li>
+          <li>Consistent tone throughout</li>
+          <li>Mode-appropriate language patterns</li>
+          <li>Structural alignment</li>
+          <li>Audience fit</li>
+        </ul>
+        <p>Documents scoring below 7 trigger automatic revision in agentic workflows.</p>
+
+        <hr>
+
+        <h2 id="generate-command">Generate Command</h2>
+        <pre><code>forge generate &lt;type&gt; [options]</code></pre>
+
+        <h3 id="document-types">Available Document Types</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Mode</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>pov</code></td>
+              <td>Thought Leadership</td>
+              <td>Point of view article or blog post</td>
+            </tr>
+            <tr>
+              <td><code>post</code></td>
+              <td>Thought Leadership</td>
+              <td>Short-form blog post</td>
+            </tr>
+            <tr>
+              <td><code>paper</code></td>
+              <td>Thought Leadership</td>
+              <td>Long-form exploration paper</td>
+            </tr>
+            <tr>
+              <td><code>architecture</code></td>
+              <td>Solution Architecture</td>
+              <td>System architecture documentation</td>
+            </tr>
+            <tr>
+              <td><code>adr</code></td>
+              <td>Solution Architecture</td>
+              <td>Architecture Decision Record</td>
+            </tr>
+            <tr>
+              <td><code>tech-deck</code></td>
+              <td>Solution Architecture</td>
+              <td>Technical presentation</td>
+            </tr>
+            <tr>
+              <td><code>spec</code></td>
+              <td>Solution Architecture</td>
+              <td>Technical specification</td>
+            </tr>
+            <tr>
+              <td><code>deck</code></td>
+              <td>Executive Advisory</td>
+              <td>Strategy presentation deck</td>
+            </tr>
+            <tr>
+              <td><code>brief</code></td>
+              <td>Executive Advisory</td>
+              <td>Executive summary brief</td>
+            </tr>
+            <tr>
+              <td><code>roadmap</code></td>
+              <td>Executive Advisory</td>
+              <td>Strategic roadmap</td>
+            </tr>
+            <tr>
+              <td><code>guide</code></td>
+              <td>Documentation</td>
+              <td>User guide or getting started</td>
+            </tr>
+            <tr>
+              <td><code>reference</code></td>
+              <td>Documentation</td>
+              <td>Quick reference or command reference</td>
+            </tr>
+            <tr>
+              <td><code>tutorial</code></td>
+              <td>Documentation</td>
+              <td>Step-by-step tutorial</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="options">Standard Options</h3>
+        <pre><code>-i, --input &lt;file&gt;          Input file path (required)
 -o, --output &lt;file&gt;         Output file path (optional)
 -p, --provider &lt;name&gt;       AI provider: openai, anthropic, google, perplexity
 -f, --format &lt;formats&gt;      Output formats (comma-separated)
 -m, --mode &lt;mode&gt;           Override mode detection
 --audience &lt;description&gt;    Target audience description
---no-edit                   Skip interactive editor review
-</code></pre>
-<h3>Basic Examples</h3>
-<p><strong>Generate a strategy deck:</strong></p>
-<pre><code class="language-bash">forge generate deck \
+--no-edit                   Skip interactive editor review</code></pre>
+
+        <h3>Basic Examples</h3>
+        <p><strong>Generate a strategy deck:</strong></p>
+        <pre><code>forge generate deck \
   --input meeting-notes.md \
   --format pptx,html \
-  --audience &quot;C-suite executives&quot;
-</code></pre>
-<p><strong>Generate technical documentation:</strong></p>
-<pre><code class="language-bash">forge generate architecture \
+  --audience "C-suite executives"</code></pre>
+
+        <p><strong>Generate technical documentation:</strong></p>
+        <pre><code>forge generate architecture \
   --input system-design.md \
   --format html,pdf \
-  --provider openai
-</code></pre>
-<p><strong>Generate a thought leadership POV:</strong></p>
-<pre><code class="language-bash">forge generate pov \
+  --provider openai</code></pre>
+
+        <p><strong>Generate a thought leadership POV:</strong></p>
+        <pre><code>forge generate pov \
   --input observations.md \
-  --format docx,html
-</code></pre>
-<hr>
-<h2>Agentic Workflows</h2>
-<h3>Agentic Generation</h3>
-<p>The agentic workflow adds research capabilities and iterative refinement:</p>
-<pre><code class="language-bash">forge agent generate &lt;type&gt; [options]
-</code></pre>
-<h3>Agentic Options</h3>
-<pre><code class="language-bash">--research                  Enable research agent before generation
+  --format docx,html</code></pre>
+
+        <hr>
+
+        <h2 id="agentic-workflows">Agentic Workflows</h2>
+        <p>The agentic workflow adds research capabilities and iterative refinement:</p>
+        <pre><code>forge agent generate &lt;type&gt; [options]</code></pre>
+
+        <h3>Agentic Options</h3>
+        <pre><code>--research                  Enable research agent before generation
 --iterate                   Enable feedback loop until voice approval
 --max-iterations &lt;n&gt;        Maximum revision attempts (default: 5)
---memory                    Enable long-term memory persistence
-</code></pre>
-<h3>Research-Enhanced Generation</h3>
-<p><strong>1. Generate with automatic research:</strong></p>
-<pre><code class="language-bash">forge agent generate paper \
+--memory                    Enable long-term memory persistence</code></pre>
+
+        <h3>Research-Enhanced Generation</h3>
+        <pre><code>forge agent generate paper \
   --input initial-thoughts.md \
   --research \
   --iterate \
-  --format pdf
-</code></pre>
-<p><strong>Expected workflow:</strong></p>
-<pre><code>✓ Analyzing input...
+  --format pdf</code></pre>
+
+        <p><strong>Expected workflow:</strong></p>
+        <pre><code>✓ Analyzing input...
 ✓ Research agent activated
-  → Searching: &quot;AI governance frameworks&quot;
-  → Searching: &quot;enterprise AI policies&quot;
+  → Searching: "AI governance frameworks"
+  → Searching: "enterprise AI policies"
   → Found 12 relevant sources
 ✓ Generating draft...
 ✓ Voice check: 6.8/10 - iterating...
 ✓ Revision 1: 7.9/10 - approved
-✓ Generated: output/paper-2024-01-15.pdf
-</code></pre>
-<p><strong>2. Research-only mode:</strong></p>
-<pre><code class="language-bash">forge agent research &quot;AI governance in financial services&quot; \
-  --output research-context.json
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code class="language-json">{
-  &quot;query&quot;: &quot;AI governance in financial services&quot;,
-  &quot;sources&quot;: [
-    {
-      &quot;title&quot;: &quot;Federal Reserve AI Guidelines 2024&quot;,
-      &quot;url&quot;: &quot;https://...&quot;,
-      &quot;summary&quot;: &quot;...&quot;,
-      &quot;relevance&quot;: 0.94
-    }
-  ],
-  &quot;synthesis&quot;: &quot;Key themes across sources...&quot;
-}
-</code></pre>
-<p><strong>3. Use research context in generation:</strong></p>
-<pre><code class="language-bash">forge agent generate brief \
-  --input notes.md \
-  --research-context research-context.json \
-  --format docx
-</code></pre>
-<h3>Iteration Workflow</h3>
-<p>When <code>--iterate</code> is enabled, Signal Forge refines content until voice quality reaches 7+:</p>
-<pre><code class="language-bash">forge agent generate deck \
+✓ Generated: output/paper-2024-01-15.pdf</code></pre>
+
+        <h3>Research-Only Mode</h3>
+        <pre><code>forge agent research "AI governance in financial services" \
+  --output research-context.json</code></pre>
+
+        <h3>Iteration Workflow</h3>
+        <p>When <code>--iterate</code> is enabled, Signal Forge refines content until voice quality reaches 7+:</p>
+        <pre><code>forge agent generate deck \
   --input notes.md \
   --iterate \
   --max-iterations 3 \
-  --format pptx
-</code></pre>
-<p><strong>Expected iteration flow:</strong></p>
-<pre><code>✓ Draft generated
-✓ Voice check: 5.2/10
-  Issues: Opening too tentative, lacks business context
-✓ Revision 1: 6.8/10
-  Issues: Recommendations need more confidence
-✓ Revision 2: 8.1/10 - approved
-✓ Generated: output/deck-2024-01-15.pptx
-</code></pre>
-<hr>
-<h2>Output Formats</h2>
-<h3>Format Options</h3>
-<p>Specify output formats with the <code>--format</code> flag (comma-separated):</p>
-<pre><code class="language-bash">forge generate deck --input notes.md --format pptx,html,pdf
-</code></pre>
-<h3>Available Formats</h3>
-<table>
-<thead>
-<tr>
-<th>Format</th>
-<th>Extension</th>
-<th>Best For</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PowerPoint</td>
-<td><code>.pptx</code></td>
-<td>Strategy decks, presentations</td>
-<td>Editable slides with speaker notes</td>
-</tr>
-<tr>
-<td>Word</td>
-<td><code>.docx</code></td>
-<td>POVs, briefs, papers</td>
-<td>Full formatting, comments, track changes</td>
-</tr>
-<tr>
-<td>PDF</td>
-<td><code>.pdf</code></td>
-<td>Final distribution</td>
-<td>Print-ready, locked formatting</td>
-</tr>
-<tr>
-<td>HTML</td>
-<td><code>.html</code></td>
-<td>Web pages, interactive decks</td>
-<td>Responsive, shareable via URL</td>
-</tr>
-<tr>
-<td>Google Slides</td>
-<td>URL</td>
-<td>Collaborative presentations</td>
-<td>Requires Google credentials</td>
-</tr>
-<tr>
-<td>Markdown</td>
-<td><code>.md</code></td>
-<td>Version control, documentation</td>
-<td>Plain text, Git-friendly</td>
-</tr>
-</tbody></table>
-<h3>Format-Specific Features</h3>
-<p><strong>PowerPoint (.pptx):</strong></p>
-<ul>
-<li>Automatic slide layouts based on content</li>
-<li>Speaker notes included</li>
-<li>Charts and tables formatted</li>
-<li>Theme applied based on mode</li>
-</ul>
-<p><strong>Word (.docx):</strong></p>
-<ul>
-<li>Heading styles for navigation</li>
-<li>Table of contents auto-generated</li>
-<li>Comments for review points</li>
-<li>Track changes enabled</li>
-</ul>
-<p><strong>HTML (.html):</strong></p>
-<ul>
-<li>Responsive design</li>
-<li>Interactive navigation</li>
-<li>Embedded diagrams</li>
-<li>Print stylesheet included</li>
-</ul>
-<p><strong>Google Slides:</strong></p>
-<pre><code class="language-bash"># First-time setup
-forge config google-slides --setup
+  --format pptx</code></pre>
 
-# Generate and publish
-forge generate deck \
-  --input notes.md \
-  --format google-slides \
-  --share team@company.com
-</code></pre>
-<hr>
-<h2>Working with Input Files</h2>
-<h3>Input File Format</h3>
-<p>Signal Forge accepts Markdown files with your raw content:</p>
-<pre><code class="language-markdown"># Meeting Recap: Q2 Strategy Session
+        <hr>
+
+        <h2 id="output-formats">Output Formats</h2>
+        <p>Specify output formats with the <code>--format</code> flag (comma-separated):</p>
+        <pre><code>forge generate deck --input notes.md --format pptx,html,pdf</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Extension</th>
+              <th>Best For</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PowerPoint</td>
+              <td><code>.pptx</code></td>
+              <td>Strategy decks, presentations</td>
+              <td>Editable slides with speaker notes</td>
+            </tr>
+            <tr>
+              <td>Word</td>
+              <td><code>.docx</code></td>
+              <td>POVs, briefs, papers</td>
+              <td>Full formatting, comments, track changes</td>
+            </tr>
+            <tr>
+              <td>PDF</td>
+              <td><code>.pdf</code></td>
+              <td>Final distribution</td>
+              <td>Print-ready, locked formatting</td>
+            </tr>
+            <tr>
+              <td>HTML</td>
+              <td><code>.html</code></td>
+              <td>Web pages, interactive decks</td>
+              <td>Responsive, shareable via URL</td>
+            </tr>
+            <tr>
+              <td>Google Slides</td>
+              <td>URL</td>
+              <td>Collaborative presentations</td>
+              <td>Requires Google credentials</td>
+            </tr>
+            <tr>
+              <td>Markdown</td>
+              <td><code>.md</code></td>
+              <td>Version control, documentation</td>
+              <td>Plain text, Git-friendly</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2 id="input-files">Working with Input Files</h2>
+        <p>Signal Forge accepts Markdown files with your raw content:</p>
+        <pre><code># Meeting Recap: Q2 Strategy Session
 
 ## Attendees
 - CEO, CFO, CTO
@@ -598,115 +411,58 @@ forge generate deck \
 - Allocate $500K for initial phase
 
 ## Open Questions
-- What&#39;s the risk framework?
+- What's the risk framework?
 - How do we measure success?
-- Timeline for full rollout?
-</code></pre>
-<h3>Input Quality Guidelines</h3>
-<p><strong>Include context:</strong></p>
-<pre><code class="language-markdown"># Context
+- Timeline for full rollout?</code></pre>
+
+        <h3>Input Quality Guidelines</h3>
+        <p><strong>Include context:</strong></p>
+        <pre><code># Context
 Meeting with retail client (500 stores, $2B revenue)
 Discussing digital transformation strategy
-Key stakeholder: VP of Operations (skeptical of cloud)
-</code></pre>
-<p><strong>Note constraints:</strong></p>
-<pre><code class="language-markdown"># Constraints
+Key stakeholder: VP of Operations (skeptical of cloud)</code></pre>
+
+        <p><strong>Note constraints:</strong></p>
+        <pre><code># Constraints
 - Budget: $1M for year one
 - Timeline: Must launch by Q3
-- Legacy systems: Cannot replace mainframe
-</code></pre>
-<p><strong>Reference materials:</strong></p>
-<pre><code class="language-markdown"># References
-- Previous architecture: docs/current-state.md
-- Competitor analysis: research/competitor-landscape.pdf
-- Stakeholder feedback: interviews/vp-ops-notes.md
-</code></pre>
-<h3>Input Examples by Mode</h3>
-<p><strong>Thought Leadership Input:</strong></p>
-<pre><code class="language-markdown"># Observations on AI Governance
+- Legacy systems: Cannot replace mainframe</code></pre>
 
-Been thinking about how enterprises approach AI governance.
-Most frameworks I see are either too rigid or too vague.
+        <hr>
 
-Key tension: Speed vs. control
-- Teams want to move fast with new AI tools
-- Legal/compliance needs oversight
-- But traditional approval processes kill innovation
+        <h2 id="mode-workflows">Mode-Specific Workflows</h2>
 
-What if governance was more about guardrails than gates?
-
-Examples I&#39;ve seen work:
-- Retail client: Self-service AI tools with automatic compliance checks
-- Manufacturing: Tiered approval based on risk level
-</code></pre>
-<p><strong>Architecture Input:</strong></p>
-<pre><code class="language-markdown"># System Design: Customer Data Platform
-
-Requirements:
-- Ingest data from 15+ sources
-- Real-time profile updates
-- Support 10M customer records
-- 99.9% uptime SLA
-
-Technical constraints:
-- Must use existing AWS infrastructure
-- Data residency: US and EU regions
-- Integration with Salesforce required
-
-Current pain points:
-- Batch processing causes delays
-- No single customer view
-- Manual data quality checks
-</code></pre>
-<p><strong>Executive Advisory Input:</strong></p>
-<pre><code class="language-markdown"># Client Context: Digital Roadmap
-
-Company: Regional bank, $5B assets
-Current state: Legacy core banking, minimal digital
-Competition: Fintechs taking 20% of new accounts
-
-Client concerns (from CEO):
-- &quot;We&#39;re losing young customers&quot;
-- &quot;Our mobile app is embarrassing&quot;
-- &quot;Board wants results in 12 months&quot;
-
-Budget: $10M over 2 years
-Team: 50 IT staff, mostly mainframe
-</code></pre>
-<hr>
-<h2>Mode-Specific Workflows</h2>
-<h3>Thought Leadership Workflow</h3>
-<p><strong>1. Capture observations:</strong></p>
-<pre><code class="language-markdown"># observations.md
+        <h3>Thought Leadership Workflow</h3>
+        <p><strong>1. Capture observations:</strong></p>
+        <pre><code># observations.md
 
 Been noticing a pattern in client conversations...
-Everyone&#39;s talking about AI governance, but nobody&#39;s actually doing it.
+Everyone's talking about AI governance, but nobody's actually doing it.
 
 Why? Three things I keep hearing:
-- &quot;We don&#39;t know where to start&quot;
-- &quot;Legal says no to everything&quot;
-- &quot;We tried a framework but nobody uses it&quot;
+- "We don't know where to start"
+- "Legal says no to everything"
+- "We tried a framework but nobody uses it"</code></pre>
 
-Maybe the problem isn&#39;t the frameworks themselves...
-</code></pre>
-<p><strong>2. Generate POV:</strong></p>
-<pre><code class="language-bash">forge agent generate pov \
+        <p><strong>2. Generate POV:</strong></p>
+        <pre><code>forge agent generate pov \
   --input observations.md \
   --research \
   --iterate \
-  --format docx,html
-</code></pre>
-<p><strong>3. Review voice characteristics:</strong></p>
-<ul>
-<li>Opens with observation, not thesis</li>
-<li>Shows thinking evolution</li>
-<li>Includes self-interrogation</li>
-<li>Ends provisionally</li>
-<li>Uses intentional fragments</li>
-</ul>
-<h3>Solution Architecture Workflow</h3>
-<p><strong>1. Document requirements:</strong></p>
-<pre><code class="language-markdown"># requirements.md
+  --format docx,html</code></pre>
+
+        <p><strong>3. Review voice characteristics:</strong></p>
+        <ul>
+          <li>Opens with observation, not thesis</li>
+          <li>Shows thinking evolution</li>
+          <li>Includes self-interrogation</li>
+          <li>Ends provisionally</li>
+          <li>Uses intentional fragments</li>
+        </ul>
+
+        <h3>Solution Architecture Workflow</h3>
+        <p><strong>1. Document requirements:</strong></p>
+        <pre><code># requirements.md
 
 System: Event-driven microservices platform
 
@@ -718,27 +474,19 @@ Functional requirements:
 
 Non-functional requirements:
 - 99.99% availability
-- &lt;100ms latency p95
+- <100ms latency p95
 - Multi-region deployment
-- GDPR compliant
-</code></pre>
-<p><strong>2. Generate architecture:</strong></p>
-<pre><code class="language-bash">forge generate architecture \
+- GDPR compliant</code></pre>
+
+        <p><strong>2. Generate architecture:</strong></p>
+        <pre><code>forge generate architecture \
   --input requirements.md \
   --format html,pdf \
-  --provider openai
-</code></pre>
-<p><strong>3. Review technical precision:</strong></p>
-<ul>
-<li>Definitive statements (no &quot;might&quot; or &quot;could&quot;)</li>
-<li>Specific technology choices</li>
-<li>Quantified requirements</li>
-<li>Implementable from documentation</li>
-<li>Diagrams described in detail</li>
-</ul>
-<h3>Executive Advisory Workflow</h3>
-<p><strong>1. Prepare client context:</strong></p>
-<pre><code class="language-markdown"># client-context.md
+  --provider openai</code></pre>
+
+        <h3>Executive Advisory Workflow</h3>
+        <p><strong>1. Prepare client context:</strong></p>
+        <pre><code># client-context.md
 
 Client: Manufacturing company, 10K employees
 Engagement: Cloud transformation strategy
@@ -749,169 +497,80 @@ Current state:
 - 200+ applications
 - Average app age: 12 years
 
-Business drivers:
-- New CEO wants &quot;digital-first&quot;
-- Competition from digital natives
-- M&amp;A requires integration capability
-
 Stakeholder landscape:
 - CIO: Supportive but cautious
 - CFO: Focused on cost reduction
-- COO: Skeptical of cloud reliability
-</code></pre>
-<p><strong>2. Generate strategy deck:</strong></p>
-<pre><code class="language-bash">forge agent generate deck \
+- COO: Skeptical of cloud reliability</code></pre>
+
+        <p><strong>2. Generate strategy deck:</strong></p>
+        <pre><code>forge agent generate deck \
   --input client-context.md \
   --research \
   --iterate \
   --format pptx,html \
-  --audience &quot;C-suite executives&quot;
-</code></pre>
-<p><strong>3. Review consultant voice:</strong></p>
-<ul>
-<li>Confident recommendations</li>
-<li>Pattern recognition across industries</li>
-<li>Grounded in client specifics</li>
-<li>Outcome-focused language</li>
-<li>Structured for executive scanning</li>
-</ul>
-<hr>
-<h2>Advanced Features</h2>
-<h3>Multi-Format Publishing</h3>
-<p>Generate multiple formats in one command:</p>
-<pre><code class="language-bash">forge agent publish content.md \
-  --format pptx,docx,pdf,html,google-slides \
-  --output-dir ./deliverables
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code>✓ Generating PowerPoint...
-✓ Generating Word document...
-✓ Generating PDF...
-✓ Generating HTML...
-✓ Publishing to Google Slides...
-✓ All formats generated in ./deliverables/
-</code></pre>
-<h3>Memory Persistence</h3>
-<p>Enable long-term memory for consistent voice across projects:</p>
-<pre><code class="language-bash">forge agent generate deck \
-  --input notes.md \
-  --memory \
-  --project &quot;client-acme&quot;
-</code></pre>
-<p>Memory stores:</p>
-<ul>
-<li>Voice preferences and patterns</li>
-<li>Client-specific context</li>
-<li>Previous document decisions</li>
-<li>Terminology preferences</li>
-</ul>
-<p><strong>View memory:</strong></p>
-<pre><code class="language-bash">forge memory show --project &quot;client-acme&quot;
-</code></pre>
-<p><strong>Clear memory:</strong></p>
-<pre><code class="language-bash">forge memory clear --project &quot;client-acme&quot;
-</code></pre>
-<h3>Custom Voice Profiles</h3>
-<p>Create reusable voice profiles:</p>
-<pre><code class="language-bash">forge voice create &quot;technical-blog&quot; \
-  --mode thought-leadership \
-  --tone &quot;accessible but precise&quot; \
-  --audience &quot;senior engineers&quot; \
-  --examples ./voice-samples/
-</code></pre>
-<p><strong>Use custom profile:</strong></p>
-<pre><code class="language-bash">forge generate post \
-  --input draft.md \
-  --voice-profile &quot;technical-blog&quot;
-</code></pre>
-<h3>Batch Processing</h3>
-<p>Process multiple inputs:</p>
-<pre><code class="language-bash">forge batch generate deck \
-  --input-dir ./meeting-notes/ \
-  --output-dir ./decks/ \
-  --format pptx \
-  --parallel 3
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code>✓ Processing 5 files...
-✓ [1/5] meeting-2024-01-10.md → deck-2024-01-10.pptx
-✓ [2/5] meeting-2024-01-12.md → deck-2024-01-12.pptx
-✓ [3/5] meeting-2024-01-15.md → deck-2024-01-15.pptx
-✓ [4/5] meeting-2024-01-17.md → deck-2024-01-17.pptx
-✓ [5/5] meeting-2024-01-19.md → deck-2024-01-19.pptx
-✓ Batch complete: 5 documents generated
-</code></pre>
-<hr>
-<h2>Provider Selection</h2>
-<h3>Provider Comparison</h3>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>Best For</th>
-<th>Strengths</th>
-<th>Limitations</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Anthropic (Claude)</strong></td>
-<td>Strategic thinking, voice consistency</td>
-<td>Nuanced tone, long context, iterative refinement</td>
-<td>Higher cost per token</td>
-</tr>
-<tr>
-<td><strong>OpenAI (GPT-4)</strong></td>
-<td>General purpose, technical content</td>
-<td>Fast, reliable, good at structure</td>
-<td>Less nuanced voice</td>
-</tr>
-<tr>
-<td><strong>Google (Gemini)</strong></td>
-<td>Long documents, research synthesis</td>
-<td>Large context window, multimodal</td>
-<td>Newer, less tested</td>
-</tr>
-<tr>
-<td><strong>Perplexity</strong></td>
-<td>Research-heavy content</td>
-<td>Web search integration, citations</td>
-<td>Limited creative voice</td>
-</tr>
-</tbody></table>
-<h3>Provider Recommendations by Mode</h3>
-<p><strong>Thought Leadership:</strong></p>
-<pre><code class="language-bash">forge generate pov \
-  --input observations.md \
-  --provider anthropic  # Best for nuanced voice
-</code></pre>
-<p><strong>Solution Architecture:</strong></p>
-<pre><code class="language-bash">forge generate architecture \
-  --input design.md \
-  --provider openai  # Best for technical precision
-</code></pre>
-<p><strong>Executive Advisory:</strong></p>
-<pre><code class="language-bash">forge generate deck \
-  --input client-notes.md \
-  --provider anthropic  # Best for consultant voice
-</code></pre>
-<h3>Provider Configuration</h3>
-<p><strong>Set default provider:</strong></p>
-<pre><code class="language-bash">forge config set-provider anthropic
-</code></pre>
-<p><strong>Check current provider:</strong></p>
-<pre><code class="language-bash">forge config show-provider
-</code></pre>
-<p><strong>Test provider connection:</strong></p>
-<pre><code class="language-bash">forge config test-provider anthropic
-</code></pre>
-<hr>
-<h2>Quality Control</h2>
-<h3>Voice Scoring</h3>
-<p>Every document receives a voice quality score:</p>
-<pre><code class="language-bash">forge voice-check document.md --mode advisory
-</code></pre>
-<p><strong>Expected output:</strong></p>
-<pre><code>Voice Quality Score: 7.8/10
+  --audience "C-suite executives"</code></pre>
+
+        <hr>
+
+        <h2 id="providers">Provider Selection</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Best For</th>
+              <th>Strengths</th>
+              <th>Limitations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Anthropic (Claude)</strong></td>
+              <td>Strategic thinking, voice consistency</td>
+              <td>Nuanced tone, long context, iterative refinement</td>
+              <td>Higher cost per token</td>
+            </tr>
+            <tr>
+              <td><strong>OpenAI (GPT-4)</strong></td>
+              <td>General purpose, technical content</td>
+              <td>Fast, reliable, good at structure</td>
+              <td>Less nuanced voice</td>
+            </tr>
+            <tr>
+              <td><strong>Google (Gemini)</strong></td>
+              <td>Long documents, research synthesis</td>
+              <td>Large context window, multimodal</td>
+              <td>Newer, less tested</td>
+            </tr>
+            <tr>
+              <td><strong>Perplexity</strong></td>
+              <td>Research-heavy content</td>
+              <td>Web search integration, citations</td>
+              <td>Limited creative voice</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Provider by Mode</h3>
+        <pre><code># Thought Leadership - use Anthropic for nuanced voice
+forge generate pov --input observations.md --provider anthropic
+
+# Solution Architecture - use OpenAI for technical precision
+forge generate architecture --input design.md --provider openai
+
+# Executive Advisory - use Anthropic for consultant voice
+forge generate deck --input client-notes.md --provider anthropic</code></pre>
+
+        <hr>
+
+        <h2 id="quality-control">Quality Control</h2>
+
+        <h3>Voice Scoring</h3>
+        <p>Every document receives a voice quality score:</p>
+        <pre><code>forge voice-check document.md --mode advisory</code></pre>
+
+        <p><strong>Expected output:</strong></p>
+        <pre><code>Voice Quality Score: 7.8/10
 
 ✓ Opening: Strong (leads with business outcome)
 ✓ Tone: Consistent (confident consultant throughout)
@@ -921,217 +580,58 @@ Stakeholder landscape:
 
 Recommendations:
 - Convert bullet lists on slides 3-4 to comparison tables
-- Add more pattern recognition references
-</code></pre>
-<h3>Manual Voice Review</h3>
-<p>Review generated content before finalizing:</p>
-<pre><code class="language-bash">forge generate deck \
-  --input notes.md \
-  --format pptx  # Opens in editor for review
-</code></pre>
-<p><strong>Skip review (use with caution):</strong></p>
-<pre><code class="language-bash">forge generate deck \
-  --input notes.md \
-  --format pptx \
-  --no-edit
-</code></pre>
-<h3>Iteration Strategies</h3>
-<p><strong>Targeted fixes (for scores 6-7):</strong></p>
-<pre><code class="language-bash">forge agent generate deck \
-  --input notes.md \
-  --iterate \
-  --strategy targeted  # Fix specific issues only
-</code></pre>
-<p><strong>Strategic revision (for scores 4-6):</strong></p>
-<pre><code class="language-bash">forge agent generate deck \
-  --input notes.md \
-  --iterate \
-  --strategy strategic  # Larger structural changes
-</code></pre>
-<p><strong>Full rewrite (for scores &lt;4):</strong></p>
-<pre><code class="language-bash">forge agent generate deck \
-  --input notes.md \
-  --iterate \
-  --strategy rewrite  # Complete regeneration
-</code></pre>
-<hr>
-<h2>Real-World Examples</h2>
-<h3>Example 1: Meeting Recap to Strategy Deck</h3>
-<p><strong>Scenario:</strong> Transform weekly leadership meeting notes into a board presentation.</p>
-<p><strong>Input file (meeting-recap.md):</strong></p>
-<pre><code class="language-markdown"># Leadership Meeting - 2024-01-15
+- Add more pattern recognition references</code></pre>
 
-Attendees: CEO, CFO, CTO, VP Product, VP Sales
+        <h3>Iteration Strategies</h3>
+        <pre><code># Targeted fixes (for scores 6-7)
+forge agent generate deck --input notes.md --iterate --strategy targeted
 
-Key topics:
-- Q1 performance review
-- AI product roadmap
-- Competitive landscape
-- Budget reallocation request
+# Strategic revision (for scores 4-6)
+forge agent generate deck --input notes.md --iterate --strategy strategic
 
-CEO priorities:
-- Need board deck by Friday
-- Focus on AI differentiation
-- Address competitive threats
-- Show clear ROI on AI investment
+# Full rewrite (for scores &lt;4)
+forge agent generate deck --input notes.md --iterate --strategy rewrite</code></pre>
 
-Sales feedback:
-- Customers asking about AI features
-- Losing deals to AI-native competitors
-- Need clearer positioning
+        <hr>
 
-Product roadmap:
-- AI assistant launch: Q2
-- Predictive analytics: Q3
-- Custom model training: Q4
-</code></pre>
-<p><strong>Command:</strong></p>
-<pre><code class="language-bash">forge agent generate deck \
+        <h2 id="examples">Real-World Examples</h2>
+
+        <h3>Example 1: Meeting Recap to Strategy Deck</h3>
+        <p><strong>Scenario:</strong> Transform weekly leadership meeting notes into a board presentation.</p>
+        <pre><code>forge agent generate deck \
   --input meeting-recap.md \
   --research \
   --iterate \
   --format pptx,html \
-  --audience &quot;Board of Directors&quot;
-</code></pre>
-<p><strong>Generated deck structure:</strong></p>
-<pre><code>Slide 1: Executive Summary
-- Q1 performance snapshot
-- AI strategy imperative
-- Competitive positioning
-- Investment recommendation
+  --audience "Board of Directors"</code></pre>
 
-Slide 2: Market Context
-- AI adoption trends in our sector
-- Competitive landscape analysis
-- Customer demand signals
-
-Slide 3: Our AI Roadmap
-- Q2: AI Assistant (customer-facing)
-- Q3: Predictive Analytics (internal optimization)
-- Q4: Custom Models (enterprise differentiation)
-
-Slide 4: Competitive Differentiation
-- What AI-native competitors offer
-- Our unique advantages
-- Why we&#39;ll win
-
-Slide 5: Investment &amp; ROI
-- Budget allocation: $5M
-- Expected returns: 20% revenue lift
-- Risk mitigation approach
-
-Slide 6: Recommendation
-- Approve AI roadmap
-- Allocate budget
-- Launch Q2 on schedule
-</code></pre>
-<h3>Example 2: Technical Notes to Architecture Document</h3>
-<p><strong>Scenario:</strong> Document a microservices migration for the engineering team.</p>
-<p><strong>Input file (tech-notes.md):</strong></p>
-<pre><code class="language-markdown"># Microservices Migration Planning
-
-Current state:
-- Monolithic Rails app
-- 500K lines of code
-- Single PostgreSQL database
-- Deployed on Heroku
-
-Pain points:
-- Slow deployments (2 hours)
-- Can&#39;t scale components independently
-- Team bottlenecks (20 engineers, 1 codebase)
-- Database becoming a bottleneck
-
-Target architecture:
-- Break into 8-10 services
-- Event-driven communication
-- Independent databases per service
-- Kubernetes deployment
-
-Technical decisions needed:
-- Message broker: Kafka vs RabbitMQ
-- API gateway approach
-- Service discovery
-- Observability stack
-</code></pre>
-<p><strong>Command:</strong></p>
-<pre><code class="language-bash">forge generate architecture \
+        <h3>Example 2: Technical Notes to Architecture Document</h3>
+        <p><strong>Scenario:</strong> Document a microservices migration for the engineering team.</p>
+        <pre><code>forge generate architecture \
   --input tech-notes.md \
   --format html,pdf \
-  --provider openai
-</code></pre>
-<p><strong>Generated document structure:</strong></p>
-<pre><code>1. System Overview
-   - Current monolithic architecture
-   - Target microservices architecture
-   - Migration strategy
+  --provider openai</code></pre>
 
-2. Service Decomposition
-   [Table of 10 services with boundaries]
+        <h3>Example 3: Observations to Thought Leadership POV</h3>
+        <p><strong>Scenario:</strong> Turn industry observations into a blog post exploring AI governance.</p>
+        <pre><code>forge agent generate pov \
+  --input observations.md \
+  --research \
+  --iterate \
+  --format docx,html</code></pre>
+      </main>
+    </div>
 
-3. Communication Patterns
-   - Synchronous: REST APIs via API Gateway
-   - Asynchronous: Kafka event bus
-   - Data consistency: Saga pattern
-
-4. Technology Stack
-   - Runtime: Node.js (services), Python (ML services)
-   - Message Broker: Apache Kafka
-   - API Gateway: Kong
-   - Service Mesh: Istio
-   - Observability: Prometheus + Grafana + Jaeger
-
-5. Data Architecture
-   - Database per service pattern
-   - Event sourcing for critical domains
-   - CQRS for read-heavy services
-
-6. Deployment Architecture
-   [Kubernetes cluster diagram description]
-
-7. Migration Approach
-   - Phase 1: Extract user service (2 weeks)
-   - Phase 2: Extract payment service (3 weeks)
-   - Phase 3: Extract catalog service (2 weeks)
-   [continues...]
-
-8. Operational Considerations
-   - Monitoring and alerting
-   - Incident response
-   - Disaster recovery
-</code></pre>
-<h3>Example 3: Observations to Thought Leadership POV</h3>
-<p><strong>Scenario:</strong> Turn industry observations into a blog post exploring AI governance.</p>
-<p><strong>Input file (observations.md):</strong></p>
-<pre><code class="language-markdown"># Thoughts on AI Governance
-
-Been in a lot of conversations about AI governance lately.
-Everyone&#39;s building frameworks, but nobody&#39;s using them.
-
-Pattern I keep seeing:
-- Company creates detailed AI governance policy
-- Legal reviews it for 3 months
-- Gets published on intranet
-- Teams ignore it and use ChatGPT anyway
-
-Why doesn&#39;t governance work?
-
-Theory 1: Too rigid
-Frameworks try to anticipate every scenario.
-But AI moves too fast. By the time policy is approved, tools have changed.
-
-Theory 2: Wrong incentives
-Governance is positioned as &quot;what you can&#39;t do&quot;
-Teams see it as obstacle, not enabler
-</code></pre>
-
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Generated by Signal Forge</p>
-        </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="quick-reference.html">Quick Reference</a>
+        <a href="use-cases-guide.html">Use Cases</a>
+        <a href="outputs-gallery.html">Output Gallery</a>
+      </nav>
+      <p>Signal Forge Documentation</p>
     </footer>
+  </div>
 </body>
 </html>

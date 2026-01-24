@@ -1,937 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>quick-reference</title>
-
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-tertiary: #1a1a1a;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a0a0a0;
-            --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --border: #2a2a2a;
-            --success: #22c55e;
-            --warning: #eab308;
-            --code-bg: #1e1e1e;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        header {
-            border-bottom: 1px solid var(--border);
-            padding: 24px 0;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .doc-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .version {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            background: var(--bg-tertiary);
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        main {
-            padding: 48px 0;
-        }
-
-        .content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 32px;
-        }
-
-        .content h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .content h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
-
-        .content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-top: 24px;
-            margin-bottom: 12px;
-        }
-
-        .content p {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .content ul, .content ol {
-            margin: 16px 0;
-            padding-left: 24px;
-        }
-
-        .content li {
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .content code {
-            background: var(--code-bg);
-            color: var(--accent);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
-            font-size: 0.875em;
-        }
-
-        .content pre {
-            background: var(--code-bg);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 16px 0;
-        }
-
-        .content pre code {
-            background: transparent;
-            padding: 0;
-            color: var(--text-primary);
-        }
-
-        .content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.9375rem;
-        }
-
-        .content th {
-            text-align: left;
-            padding: 12px 16px;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border);
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        .content td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .content tr:hover td {
-            background: var(--bg-tertiary);
-        }
-
-        .content blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 16px;
-            margin: 16px 0;
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        footer {
-            padding: 32px 0;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                padding: 24px 16px;
-            }
-
-            .content h1 {
-                font-size: 1.75rem;
-            }
-
-            .content h2 {
-                font-size: 1.25rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Reference - Signal Forge Documentation</title>
+  <link rel="stylesheet" href="shared.css">
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <div class="doc-type">Reference</div>
-                <h1 class="title">quick-reference</h1>
-            </div>
-            <span class="version">v1.0.0</span>
-        </div>
+  <div class="document">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <span class="header-logo">Signal Forge</span>
+        <span class="header-divider"></span>
+        <span class="header-title">Quick Reference</span>
+      </div>
+      <span class="header-version">v1.0.0</span>
     </header>
 
-    <main class="container">
-        <div class="content">
-            <h1>Signal Forge Quick Reference</h1>
-<p><strong>What You&#39;ll Find Here</strong>: Commands, options, and workflows to generate content with Signal Forge. Keep this handy while working.</p>
-<hr>
-<h2>Quick Start</h2>
-<p>Get Signal Forge running in 3 steps:</p>
-<ol>
-<li><strong>Install Signal Forge</strong></li>
-</ol>
-<pre><code class="language-bash">git clone &lt;repo&gt;
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Home</a></li>
+        <li class="nav-item"><a href="user-guide.html">User Guide</a></li>
+        <li class="nav-item active"><a href="quick-reference.html">Quick Reference</a></li>
+        <li class="nav-item"><a href="use-cases-guide.html">Use Cases</a></li>
+        <li class="nav-item"><a href="outputs-gallery.html">Output Gallery</a></li>
+        <li class="nav-item"><a href="signal-forge-method-guide.html">The Method</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content (no sidebar for cheat sheet) -->
+    <div class="main-layout no-sidebar">
+      <main class="content">
+        <h1>Signal Forge Quick Reference</h1>
+        <p class="subtitle">Commands, options, and workflows to generate content with Signal Forge. Keep this handy while working.</p>
+
+        <h2>Quick Start</h2>
+        <p>Get Signal Forge running in 3 steps:</p>
+        <ol>
+          <li><strong>Install Signal Forge</strong></li>
+        </ol>
+        <pre><code>git clone &lt;repo&gt;
 cd signal-forge
-npm install
-</code></pre>
-<ol start="2">
-<li><strong>Configure your API keys</strong></li>
-</ol>
-<pre><code class="language-bash">cp .env.example .env
-</code></pre>
-<p>Edit <code>.env</code> and add at least one API key:</p>
-<pre><code class="language-bash">ANTHROPIC_API_KEY=your_key_here
+npm install</code></pre>
+
+        <ol start="2">
+          <li><strong>Configure your API keys</strong></li>
+        </ol>
+        <pre><code>cp .env.example .env</code></pre>
+        <p>Edit <code>.env</code> and add at least one API key:</p>
+        <pre><code>ANTHROPIC_API_KEY=your_key_here
 OPENAI_API_KEY=your_key_here
 GOOGLE_API_KEY=your_key_here
-PERPLEXITY_API_KEY=your_key_here
-</code></pre>
-<ol start="3">
-<li><strong>Generate your first document</strong></li>
-</ol>
-<pre><code class="language-bash">forge generate deck --input meeting-notes.md --format pptx
-</code></pre>
-<hr>
-<h2>Commands</h2>
-<h3>Core Commands</h3>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>forge generate &lt;type&gt;</code></td>
-<td>Generate content from input</td>
-<td><code>forge generate deck -i notes.md</code></td>
-</tr>
-<tr>
-<td><code>forge agent generate &lt;type&gt;</code></td>
-<td>Agentic workflow with research</td>
-<td><code>forge agent generate deck -i notes.md --research</code></td>
-</tr>
-<tr>
-<td><code>forge agent research &quot;&lt;topic&gt;&quot;</code></td>
-<td>Research only, no generation</td>
-<td><code>forge agent research &quot;AI governance&quot;</code></td>
-</tr>
-<tr>
-<td><code>forge agent publish &lt;file&gt;</code></td>
-<td>Publish to multiple formats</td>
-<td><code>forge agent publish deck.md -f pptx,pdf</code></td>
-</tr>
-<tr>
-<td><code>forge --help</code></td>
-<td>Show all commands</td>
-<td><code>forge --help</code></td>
-</tr>
-</tbody></table>
-<h3>Content Types</h3>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Output</th>
-<th>Use For</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>deck</code></td>
-<td>10-15 slides</td>
-<td>Client presentations, strategy reviews</td>
-</tr>
-<tr>
-<td><code>brief</code></td>
-<td>1-3 pages</td>
-<td>Executive summaries, decision memos</td>
-</tr>
-<tr>
-<td><code>roadmap</code></td>
-<td>5-10 pages</td>
-<td>Strategic timelines, implementation plans</td>
-</tr>
-<tr>
-<td><code>pov</code></td>
-<td>800-1200 words</td>
-<td>Opinion pieces, blog posts</td>
-</tr>
-<tr>
-<td><code>paper</code></td>
-<td>3000-8000 words</td>
-<td>Long-form articles, whitepapers</td>
-</tr>
-<tr>
-<td><code>architecture</code></td>
-<td>15-30 pages</td>
-<td>System design, technical specs</td>
-</tr>
-<tr>
-<td><code>adr</code></td>
-<td>1-2 pages</td>
-<td>Architecture decision records</td>
-</tr>
-</tbody></table>
-<hr>
-<h2>Options Reference</h2>
-<h3>Standard Options</h3>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Short</th>
-<th>Values</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--input</code></td>
-<td><code>-i</code></td>
-<td>file path</td>
-<td>required</td>
-<td>Input markdown file</td>
-</tr>
-<tr>
-<td><code>--output</code></td>
-<td><code>-o</code></td>
-<td>file/directory</td>
-<td><code>./output</code></td>
-<td>Output location</td>
-</tr>
-<tr>
-<td><code>--provider</code></td>
-<td><code>-p</code></td>
-<td><code>anthropic</code>, <code>openai</code>, <code>google</code>, <code>perplexity</code></td>
-<td><code>anthropic</code></td>
-<td>AI provider to use</td>
-</tr>
-<tr>
-<td><code>--format</code></td>
-<td><code>-f</code></td>
-<td><code>pptx</code>, <code>docx</code>, <code>pdf</code>, <code>html</code>, <code>markdown</code>, <code>slides</code></td>
-<td>type-specific</td>
-<td>Output formats (comma-separated)</td>
-</tr>
-<tr>
-<td><code>--mode</code></td>
-<td><code>-m</code></td>
-<td><code>thought-leadership</code>, <code>architecture</code>, <code>advisory</code></td>
-<td>auto-detected</td>
-<td>Content mode</td>
-</tr>
-<tr>
-<td><code>--audience</code></td>
-<td></td>
-<td>text</td>
-<td>none</td>
-<td>Target audience description</td>
-</tr>
-<tr>
-<td><code>--no-edit</code></td>
-<td></td>
-<td>flag</td>
-<td>false</td>
-<td>Skip interactive editor review</td>
-</tr>
-</tbody></table>
-<h3>Agentic Workflow Options</h3>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Values</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--research</code></td>
-<td>flag</td>
-<td>false</td>
-<td>Run research agent before generation</td>
-</tr>
-<tr>
-<td><code>--iterate</code></td>
-<td>flag</td>
-<td>false</td>
-<td>Enable feedback loop until voice approved</td>
-</tr>
-<tr>
-<td><code>--max-iterations</code></td>
-<td>number</td>
-<td><code>5</code></td>
-<td>Maximum revision attempts</td>
-</tr>
-<tr>
-<td><code>--memory</code></td>
-<td>flag</td>
-<td>false</td>
-<td>Enable long-term memory persistence</td>
-</tr>
-<tr>
-<td><code>--verbose</code></td>
-<td>flag</td>
-<td>false</td>
-<td>Show detailed progress logs</td>
-</tr>
-</tbody></table>
-<hr>
-<h2>Output Formats</h2>
-<table>
-<thead>
-<tr>
-<th>Format</th>
-<th>Extension</th>
-<th>Best For</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>pptx</code></td>
-<td><code>.pptx</code></td>
-<td>Editable presentations</td>
-<td>PowerPoint, Keynote, Google Slides</td>
-</tr>
-<tr>
-<td><code>docx</code></td>
-<td><code>.docx</code></td>
-<td>Editable documents</td>
-<td>Microsoft Word, Google Docs</td>
-</tr>
-<tr>
-<td><code>pdf</code></td>
-<td><code>.pdf</code></td>
-<td>Final distribution</td>
-<td>Non-editable, universal format</td>
-</tr>
-<tr>
-<td><code>html</code></td>
-<td><code>.html</code></td>
-<td>Interactive viewing</td>
-<td>Browser-based, keyboard navigation</td>
-</tr>
-<tr>
-<td><code>markdown</code></td>
-<td><code>.md</code></td>
-<td>Version control</td>
-<td>Git-friendly, platform-agnostic</td>
-</tr>
-<tr>
-<td><code>slides</code></td>
-<td>URL</td>
-<td>Google Slides</td>
-<td>Requires Google credentials</td>
-</tr>
-</tbody></table>
-<p><strong>Specify multiple formats</strong>:</p>
-<pre><code class="language-bash">forge generate deck -i notes.md -f pptx,html,pdf
-</code></pre>
-<hr>
-<h2>Content Modes</h2>
-<p>Signal Forge auto-detects mode from your input. Override with <code>--mode</code> if needed.</p>
-<h3>Advisory Mode</h3>
-<p><strong>Auto-triggers on</strong>:</p>
-<ul>
-<li>Keywords: recommend, strategy, stakeholder, investment, roadmap, executive</li>
-<li>Audience: executives, leadership, board, clients</li>
-</ul>
-<p><strong>Characteristics</strong>:</p>
-<ul>
-<li>Strategic recommendations</li>
-<li>Executive-friendly language</li>
-<li>Action-oriented conclusions</li>
-<li>Stakeholder considerations</li>
-</ul>
-<p><strong>Example</strong>:</p>
-<pre><code class="language-bash">forge generate deck -i strategy-notes.md --mode advisory -f pptx
-</code></pre>
-<h3>Architecture Mode</h3>
-<p><strong>Auto-triggers on</strong>:</p>
-<ul>
-<li>Keywords: system, API, database, component, deployment, infrastructure</li>
-<li>Audience: engineers, developers, architects, technical teams</li>
-</ul>
-<p><strong>Characteristics</strong>:</p>
-<ul>
-<li>Technical depth</li>
-<li>System diagrams (described in text)</li>
-<li>Implementation details</li>
-<li>Trade-off analysis</li>
-</ul>
-<p><strong>Example</strong>:</p>
-<pre><code class="language-bash">forge generate architecture -i design-notes.md --mode architecture -f html,pdf
-</code></pre>
-<h3>Thought Leadership Mode</h3>
-<p><strong>Auto-triggers on</strong>:</p>
-<ul>
-<li>Keywords: I think, exploring, reflecting, questioning, observing</li>
-<li>Structure: observations, open questions, personal insights</li>
-</ul>
-<p><strong>Characteristics</strong>:</p>
-<ul>
-<li>Personal voice</li>
-<li>Exploratory tone</li>
-<li>Question-driven</li>
-<li>Experience-based</li>
-</ul>
-<p><strong>Example</strong>:</p>
-<pre><code class="language-bash">forge generate pov -i observations.md --mode thought-leadership -f html
-</code></pre>
-<hr>
-<h2>Voice Score Interpretation</h2>
-<p>Signal Forge scores generated content for voice authenticity (0-10 scale).</p>
-<table>
-<thead>
-<tr>
-<th>Score Range</th>
-<th>Status</th>
-<th>Recommended Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>7.0 - 10.0</td>
-<td>✅ Approved</td>
-<td>Content ready to use</td>
-</tr>
-<tr>
-<td>5.0 - 6.9</td>
-<td>⚠️ Review Needed</td>
-<td>Consider using <code>--iterate</code> flag</td>
-</tr>
-<tr>
-<td>0.0 - 4.9</td>
-<td>❌ Issues</td>
-<td>Check mode detection, add context to input</td>
-</tr>
-</tbody></table>
-<p><strong>Improve low scores</strong>:</p>
-<pre><code class="language-bash"># Add iteration for automatic improvement
-forge agent generate deck -i notes.md --iterate
+PERPLEXITY_API_KEY=your_key_here</code></pre>
 
-# Explicitly set mode
-forge generate deck -i notes.md --mode advisory
+        <ol start="3">
+          <li><strong>Generate your first document</strong></li>
+        </ol>
+        <pre><code>forge generate deck --input meeting-notes.md --format pptx</code></pre>
 
-# Add more context to your input file
-</code></pre>
-<hr>
-<h2>Common Workflows</h2>
-<h3>1. Meeting Notes to Strategy Deck</h3>
-<pre><code class="language-bash"># Step 1: Capture meeting notes in markdown
-# Step 2: Generate deck
-forge generate deck -i meeting-recap.md -f pptx,html
+        <hr>
 
-# Step 3: Open output
-open output/decks/meeting-recap.pptx
-</code></pre>
-<p><strong>Expected output</strong>: 10-15 slide deck with executive summary, key points, recommendations, next steps.</p>
-<h3>2. Research-Backed Paper</h3>
-<pre><code class="language-bash"># Step 1: Research topic
-forge agent research &quot;AI governance frameworks 2024&quot; -o research.json
+        <h2>Commands</h2>
 
-# Step 2: Write initial observations in markdown
-# Step 3: Generate paper with research
-forge agent generate paper -i observations.md --research --iterate -f pdf,html
+        <h3>Core Commands</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>forge generate &lt;type&gt;</code></td>
+              <td>Generate content from input</td>
+              <td><code>forge generate deck -i notes.md</code></td>
+            </tr>
+            <tr>
+              <td><code>forge agent generate &lt;type&gt;</code></td>
+              <td>Agentic workflow with research</td>
+              <td><code>forge agent generate deck -i notes.md --research</code></td>
+            </tr>
+            <tr>
+              <td><code>forge agent research "&lt;topic&gt;"</code></td>
+              <td>Research only, no generation</td>
+              <td><code>forge agent research "AI governance"</code></td>
+            </tr>
+            <tr>
+              <td><code>forge agent publish &lt;file&gt;</code></td>
+              <td>Publish to multiple formats</td>
+              <td><code>forge agent publish deck.md -f pptx,pdf</code></td>
+            </tr>
+            <tr>
+              <td><code>forge --help</code></td>
+              <td>Show all commands</td>
+              <td><code>forge --help</code></td>
+            </tr>
+          </tbody>
+        </table>
 
-# Step 4: Review output
-open output/papers/observations.pdf
-</code></pre>
-<p><strong>Expected output</strong>: 3000-8000 word paper with research citations, structured arguments, conclusions.</p>
-<h3>3. Technical Design to Architecture Document</h3>
-<pre><code class="language-bash"># Step 1: Document design session notes
-# Step 2: Generate architecture doc
-forge generate architecture -i design-session.md --mode architecture -f html,pdf
+        <h3>Content Types</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Output</th>
+              <th>Use For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>deck</code></td>
+              <td>10-15 slides</td>
+              <td>Client presentations, strategy reviews</td>
+            </tr>
+            <tr>
+              <td><code>brief</code></td>
+              <td>1-3 pages</td>
+              <td>Executive summaries, decision memos</td>
+            </tr>
+            <tr>
+              <td><code>roadmap</code></td>
+              <td>5-10 pages</td>
+              <td>Strategic timelines, implementation plans</td>
+            </tr>
+            <tr>
+              <td><code>pov</code></td>
+              <td>800-1200 words</td>
+              <td>Opinion pieces, blog posts</td>
+            </tr>
+            <tr>
+              <td><code>paper</code></td>
+              <td>3000-8000 words</td>
+              <td>Long-form articles, whitepapers</td>
+            </tr>
+            <tr>
+              <td><code>architecture</code></td>
+              <td>15-30 pages</td>
+              <td>System design, technical specs</td>
+            </tr>
+            <tr>
+              <td><code>adr</code></td>
+              <td>1-2 pages</td>
+              <td>Architecture decision records</td>
+            </tr>
+            <tr>
+              <td><code>guide</code></td>
+              <td>Variable</td>
+              <td>User guides, getting started docs</td>
+            </tr>
+            <tr>
+              <td><code>reference</code></td>
+              <td>Variable</td>
+              <td>Quick reference, command reference</td>
+            </tr>
+            <tr>
+              <td><code>tutorial</code></td>
+              <td>Variable</td>
+              <td>Step-by-step tutorials</td>
+            </tr>
+          </tbody>
+        </table>
 
-# Step 3: Review in browser
-open output/architecture/design-session.html
-</code></pre>
-<p><strong>Expected output</strong>: 15-30 page architecture document with system overview, component descriptions, integration points, trade-offs.</p>
-<h3>4. Observations to Thought Leadership POV</h3>
-<pre><code class="language-bash"># Step 1: Write personal observations
-# Step 2: Generate POV piece
-forge generate pov -i observations.md --mode thought-leadership -f html,markdown
+        <hr>
 
-# Step 3: Publish
-open output/povs/observations.html
-</code></pre>
-<p><strong>Expected output</strong>: 800-1200 word article with personal voice, exploratory questions, insights.</p>
-<h3>5. Full Agentic Workflow</h3>
-<pre><code class="language-bash"># Research, generate, iterate until approved
-forge agent generate deck -i context.md --research --iterate --verbose -f pptx,html
+        <h2>Options Reference</h2>
 
-# Monitor progress in terminal
-# Agent will:
-# 1. Research topic
-# 2. Generate initial draft
-# 3. Score voice authenticity
-# 4. Iterate if score &lt; 7.0
-# 5. Output final approved version
-</code></pre>
-<hr>
-<h2>AI Provider Selection</h2>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>Strengths</th>
-<th>Best For</th>
-<th>Speed</th>
-<th>Cost</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Anthropic (Claude)</strong></td>
-<td>Strategic thinking, voice authenticity</td>
-<td>Advisory, Thought Leadership</td>
-<td>Fast</td>
-<td>$$</td>
-</tr>
-<tr>
-<td><strong>OpenAI (GPT-4)</strong></td>
-<td>General purpose, reliable</td>
-<td>Technical, mixed content</td>
-<td>Fast</td>
-<td>$$</td>
-</tr>
-<tr>
-<td><strong>Google (Gemini)</strong></td>
-<td>Long context windows</td>
-<td>Papers, architecture docs</td>
-<td>Medium</td>
-<td>$</td>
-</tr>
-<tr>
-<td><strong>Perplexity</strong></td>
-<td>Web research, citations</td>
-<td>Research-heavy content</td>
-<td>Medium</td>
-<td>$</td>
-</tr>
-</tbody></table>
-<p><strong>Set provider</strong>:</p>
-<pre><code class="language-bash">forge generate deck -i notes.md --provider anthropic
-forge generate architecture -i design.md --provider google
-</code></pre>
-<p><strong>Default</strong>: Anthropic (Claude) if API key is configured.</p>
-<hr>
-<h2>Input Guidelines</h2>
-<h3>What Makes Good Input</h3>
-<p><strong>Include</strong>:</p>
-<ul>
-<li>Meeting context (who attended, purpose, date)</li>
-<li>Key decisions and rationale</li>
-<li>Open questions and concerns</li>
-<li>Stakeholder perspectives</li>
-<li>Constraints (budget, timeline, technical)</li>
-<li>Success criteria</li>
-</ul>
-<p><strong>Advisory Mode Input</strong>:</p>
-<pre><code class="language-markdown"># Strategy Meeting - Q1 Planning
-Date: 2024-01-15
-Attendees: CEO, CTO, VP Product
+        <h3>Standard Options</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Short</th>
+              <th>Values</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--input</code></td>
+              <td><code>-i</code></td>
+              <td>file path</td>
+              <td>required</td>
+              <td>Input markdown file</td>
+            </tr>
+            <tr>
+              <td><code>--output</code></td>
+              <td><code>-o</code></td>
+              <td>file/directory</td>
+              <td><code>./output</code></td>
+              <td>Output location</td>
+            </tr>
+            <tr>
+              <td><code>--provider</code></td>
+              <td><code>-p</code></td>
+              <td><code>anthropic</code>, <code>openai</code>, <code>google</code>, <code>perplexity</code></td>
+              <td><code>anthropic</code></td>
+              <td>AI provider to use</td>
+            </tr>
+            <tr>
+              <td><code>--format</code></td>
+              <td><code>-f</code></td>
+              <td><code>pptx</code>, <code>docx</code>, <code>pdf</code>, <code>html</code>, <code>markdown</code>, <code>slides</code></td>
+              <td>type-specific</td>
+              <td>Output formats (comma-separated)</td>
+            </tr>
+            <tr>
+              <td><code>--mode</code></td>
+              <td><code>-m</code></td>
+              <td><code>thought-leadership</code>, <code>architecture</code>, <code>advisory</code>, <code>documentation</code></td>
+              <td>auto-detected</td>
+              <td>Content mode</td>
+            </tr>
+            <tr>
+              <td><code>--audience</code></td>
+              <td></td>
+              <td>text</td>
+              <td>none</td>
+              <td>Target audience description</td>
+            </tr>
+            <tr>
+              <td><code>--no-edit</code></td>
+              <td></td>
+              <td>flag</td>
+              <td>false</td>
+              <td>Skip interactive editor review</td>
+            </tr>
+          </tbody>
+        </table>
 
-## Context
-Discussing AI integration strategy for 2024...
+        <h3>Agentic Workflow Options</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Values</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--research</code></td>
+              <td>flag</td>
+              <td>false</td>
+              <td>Run research agent before generation</td>
+            </tr>
+            <tr>
+              <td><code>--iterate</code></td>
+              <td>flag</td>
+              <td>false</td>
+              <td>Enable feedback loop until voice approved</td>
+            </tr>
+            <tr>
+              <td><code>--max-iterations</code></td>
+              <td>number</td>
+              <td><code>5</code></td>
+              <td>Maximum revision attempts</td>
+            </tr>
+            <tr>
+              <td><code>--memory</code></td>
+              <td>flag</td>
+              <td>false</td>
+              <td>Enable long-term memory persistence</td>
+            </tr>
+            <tr>
+              <td><code>--verbose</code></td>
+              <td>flag</td>
+              <td>false</td>
+              <td>Show detailed progress logs</td>
+            </tr>
+          </tbody>
+        </table>
 
-## Key Points
-- Budget: $500K allocated
-- Timeline: 6 months
-- Stakeholder concern: ROI visibility
+        <hr>
 
-## Decisions
-1. Start with pilot in customer service
-2. Evaluate after 3 months
+        <h2>Output Formats</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Extension</th>
+              <th>Best For</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>pptx</code></td>
+              <td><code>.pptx</code></td>
+              <td>Editable presentations</td>
+              <td>PowerPoint, Keynote, Google Slides</td>
+            </tr>
+            <tr>
+              <td><code>docx</code></td>
+              <td><code>.docx</code></td>
+              <td>Editable documents</td>
+              <td>Microsoft Word, Google Docs</td>
+            </tr>
+            <tr>
+              <td><code>pdf</code></td>
+              <td><code>.pdf</code></td>
+              <td>Final distribution</td>
+              <td>Non-editable, universal format</td>
+            </tr>
+            <tr>
+              <td><code>html</code></td>
+              <td><code>.html</code></td>
+              <td>Interactive viewing</td>
+              <td>Browser-based, keyboard navigation</td>
+            </tr>
+            <tr>
+              <td><code>markdown</code></td>
+              <td><code>.md</code></td>
+              <td>Version control</td>
+              <td>Git-friendly, platform-agnostic</td>
+            </tr>
+            <tr>
+              <td><code>slides</code></td>
+              <td>URL</td>
+              <td>Google Slides</td>
+              <td>Requires Google credentials</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Specify multiple formats</strong>:</p>
+        <pre><code>forge generate deck -i notes.md -f pptx,html,pdf</code></pre>
 
-## Open Questions
-- Which vendor to partner with?
-- How to measure success?
-</code></pre>
-<p><strong>Architecture Mode Input</strong>:</p>
-<pre><code class="language-markdown"># Payment Service Design
-Date: 2024-01-15
+        <hr>
 
-## Requirements
-- Process 10K transactions/minute
-- 99.99% uptime
-- PCI DSS compliant
+        <h2>Content Modes</h2>
+        <p>Signal Forge auto-detects mode from your input. Override with <code>--mode</code> if needed.</p>
 
-## Constraints
-- Existing PostgreSQL database
-- Must integrate with Stripe and PayPal
-- 3-month timeline
+        <h3>Advisory Mode</h3>
+        <p><strong>Auto-triggers on</strong>:</p>
+        <ul>
+          <li>Keywords: recommend, strategy, stakeholder, investment, roadmap, executive</li>
+          <li>Audience: executives, leadership, board, clients</li>
+        </ul>
+        <p><strong>Example</strong>:</p>
+        <pre><code>forge generate deck -i strategy-notes.md --mode advisory -f pptx</code></pre>
 
-## Non-Functional Requirements
-- &lt; 200ms response time
-- Horizontal scalability
-- Zero-downtime deployments
-</code></pre>
-<p><strong>Thought Leadership Input</strong>:</p>
-<pre><code class="language-markdown"># Observations on AI Adoption
+        <h3>Architecture Mode</h3>
+        <p><strong>Auto-triggers on</strong>:</p>
+        <ul>
+          <li>Keywords: system, API, database, component, deployment, infrastructure</li>
+          <li>Audience: engineers, developers, architects, technical teams</li>
+        </ul>
+        <p><strong>Example</strong>:</p>
+        <pre><code>forge generate architecture -i design-notes.md --mode architecture -f html,pdf</code></pre>
 
-I&#39;ve been thinking about why some teams adopt AI tools quickly while others resist...
+        <h3>Thought Leadership Mode</h3>
+        <p><strong>Auto-triggers on</strong>:</p>
+        <ul>
+          <li>Keywords: I think, exploring, reflecting, questioning, observing</li>
+          <li>Structure: observations, open questions, personal insights</li>
+        </ul>
+        <p><strong>Example</strong>:</p>
+        <pre><code>forge generate pov -i observations.md --mode thought-leadership -f html</code></pre>
 
-## What I&#39;m Noticing
-- Teams with psychological safety experiment more
-- Fear of replacement vs. fear of irrelevance
-- The &quot;AI skeptic&quot; often becomes the biggest advocate
+        <h3>Documentation Mode</h3>
+        <p><strong>Auto-triggers on</strong>:</p>
+        <ul>
+          <li>Keywords: install, configure, run, step-by-step, tutorial</li>
+          <li>Audience: users, developers following guides</li>
+        </ul>
+        <p><strong>Example</strong>:</p>
+        <pre><code>forge generate guide -i product-notes.md --mode documentation -f html</code></pre>
 
-## Questions I&#39;m Exploring
-- Is resistance about the tool or the change?
-- What makes someone shift from skeptic to advocate?
+        <hr>
 
-## Personal Experience
-Last quarter, I watched our most skeptical engineer...
-</code></pre>
-<hr>
-<h2>Interactive HTML Navigation</h2>
-<p>When you generate HTML output, use these keyboard shortcuts:</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>→</code> or <code>Space</code></td>
-<td>Next slide/section</td>
-</tr>
-<tr>
-<td><code>←</code></td>
-<td>Previous slide/section</td>
-</tr>
-<tr>
-<td><code>f</code></td>
-<td>Toggle fullscreen</td>
-</tr>
-<tr>
-<td><code>Esc</code></td>
-<td>Exit fullscreen</td>
-</tr>
-<tr>
-<td><code>Home</code></td>
-<td>Jump to first slide</td>
-</tr>
-<tr>
-<td><code>End</code></td>
-<td>Jump to last slide</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>Show keyboard shortcuts</td>
-</tr>
-</tbody></table>
-<hr>
-<h2>File Structure</h2>
-<p>Signal Forge organizes files like this:</p>
-<pre><code>your-project/
-├── .env                    # API keys (never commit)
-├── .env.example           # Template for API keys
-├── input/                 # Your input files
-│   ├── meeting-notes.md
-│   ├── observations.md
-│   └── design-session.md
-├── output/                # Generated content
-│   ├── decks/
-│   │   ├── meeting-notes.pptx
-│   │   └── meeting-notes.html
-│   ├── povs/
-│   │   └── observations.html
-│   ├── papers/
-│   ├── architecture/
-│   └── briefs/
-└── .forge/
-    └── memory.json        # Long-term memory (if --memory enabled)
-</code></pre>
-<hr>
-<h2>Troubleshooting</h2>
-<h3>Wrong Tone or Style</h3>
-<p><strong>Problem</strong>: Output doesn&#39;t match expected voice or style.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Explicitly set mode
+        <h2>Voice Score Interpretation</h2>
+        <p>Signal Forge scores generated content for voice authenticity (0-10 scale).</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Score Range</th>
+              <th>Status</th>
+              <th>Recommended Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>7.0 - 10.0</td>
+              <td>Approved</td>
+              <td>Content ready to use</td>
+            </tr>
+            <tr>
+              <td>5.0 - 6.9</td>
+              <td>Review Needed</td>
+              <td>Consider using <code>--iterate</code> flag</td>
+            </tr>
+            <tr>
+              <td>0.0 - 4.9</td>
+              <td>Issues</td>
+              <td>Check mode detection, add context to input</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>AI Provider Selection</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Strengths</th>
+              <th>Best For</th>
+              <th>Speed</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Anthropic (Claude)</strong></td>
+              <td>Strategic thinking, voice authenticity</td>
+              <td>Advisory, Thought Leadership</td>
+              <td>Fast</td>
+              <td>$$</td>
+            </tr>
+            <tr>
+              <td><strong>OpenAI (GPT-4)</strong></td>
+              <td>General purpose, reliable</td>
+              <td>Technical, mixed content</td>
+              <td>Fast</td>
+              <td>$$</td>
+            </tr>
+            <tr>
+              <td><strong>Google (Gemini)</strong></td>
+              <td>Long context windows</td>
+              <td>Papers, architecture docs</td>
+              <td>Medium</td>
+              <td>$</td>
+            </tr>
+            <tr>
+              <td><strong>Perplexity</strong></td>
+              <td>Web research, citations</td>
+              <td>Research-heavy content</td>
+              <td>Medium</td>
+              <td>$</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>Common Workflows</h2>
+
+        <h3>1. Meeting Notes to Strategy Deck</h3>
+        <pre><code>forge generate deck -i meeting-recap.md -f pptx,html</code></pre>
+
+        <h3>2. Research-Backed Paper</h3>
+        <pre><code>forge agent generate paper -i observations.md --research --iterate -f pdf,html</code></pre>
+
+        <h3>3. Technical Design to Architecture Document</h3>
+        <pre><code>forge generate architecture -i design-session.md --mode architecture -f html,pdf</code></pre>
+
+        <h3>4. Observations to Thought Leadership POV</h3>
+        <pre><code>forge generate pov -i observations.md --mode thought-leadership -f html,markdown</code></pre>
+
+        <h3>5. Full Agentic Workflow</h3>
+        <pre><code>forge agent generate deck -i context.md --research --iterate --verbose -f pptx,html</code></pre>
+
+        <hr>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Wrong Tone or Style</h3>
+        <pre><code># Explicitly set mode
 forge generate deck -i notes.md --mode advisory
 
 # Add iteration for refinement
 forge agent generate deck -i notes.md --iterate
 
 # Specify audience
-forge generate deck -i notes.md --audience &quot;executive leadership team&quot;
-</code></pre>
-<h3>Low Voice Score (&lt; 7.0)</h3>
-<p><strong>Problem</strong>: Voice authenticity score is below approval threshold.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Enable automatic iteration
+forge generate deck -i notes.md --audience "executive leadership team"</code></pre>
+
+        <h3>Low Voice Score (&lt; 7.0)</h3>
+        <pre><code># Enable automatic iteration
 forge agent generate deck -i notes.md --iterate --max-iterations 10
 
-# Add more context to input file
-# Include personal observations, stakeholder quotes, specific details
-
 # Check mode detection
-forge generate deck -i notes.md --mode thought-leadership --verbose
-</code></pre>
-<h3>No Output Generated</h3>
-<p><strong>Problem</strong>: Command runs but no files appear in output directory.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Verify API keys
-cat .env  # Check keys are present and valid
+forge generate deck -i notes.md --mode thought-leadership --verbose</code></pre>
 
-# Verify input file exists
-ls -la input/your-file.md
+        <h3>No Output Generated</h3>
+        <pre><code># Verify API keys
+cat .env
 
 # Run with verbose flag
-forge generate deck -i notes.md --verbose
+forge generate deck -i notes.md --verbose</code></pre>
 
-# Check output directory permissions
-ls -la output/
-</code></pre>
-<h3>Missing Diagrams in Architecture Docs</h3>
-<p><strong>Problem</strong>: Architecture document describes diagrams but doesn&#39;t include visuals.</p>
-<p><strong>Explanation</strong>: Signal Forge describes diagrams in text. You create the visuals.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Generate architecture doc
-forge generate architecture -i design.md -f html
+        <h3>API Rate Limits</h3>
+        <pre><code># Switch to different provider
+forge generate deck -i notes.md --provider openai</code></pre>
 
-# Use diagram descriptions to create visuals in:
-# - Excalidraw (recommended)
-# - Mermaid
-# - Draw.io
-# - Lucidchart
+        <hr>
 
-# Insert visuals into final document
-</code></pre>
-<h3>Format Not Supported</h3>
-<p><strong>Problem</strong>: Requested output format fails or is missing.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Check available formats for content type
-forge generate deck --help
-
-# Use comma-separated list
-forge generate deck -i notes.md -f pptx,html,pdf
-
-# Verify format spelling
-# Correct: pptx, docx, pdf, html, markdown
-# Incorrect: powerpoint, word, htm, md
-</code></pre>
-<h3>API Rate Limits</h3>
-<p><strong>Problem</strong>: Generation fails with rate limit error.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Switch to different provider
-forge generate deck -i notes.md --provider openai
-
-# Wait and retry (rate limits reset)
-sleep 60 &amp;&amp; forge generate deck -i notes.md
-
-# Use --verbose to see detailed error
-forge generate deck -i notes.md --verbose
-</code></pre>
-<h3>Memory Issues with Long Documents</h3>
-<p><strong>Problem</strong>: Generation fails or produces incomplete output for large inputs.</p>
-<p><strong>Solutions</strong>:</p>
-<pre><code class="language-bash"># Use Google provider (longer context window)
-forge generate paper -i long-notes.md --provider google
-
-# Split input into smaller sections
-# Generate separately, then combine
-
-# Reduce input file size
-# Focus on key points, remove tangents
-</code></pre>
-<hr>
-<h2>Getting More Help</h2>
-<pre><code class="language-bash"># Show all commands
+        <h2>Getting More Help</h2>
+        <pre><code># Show all commands
 forge --help
 
 # Show command-specific options
 forge generate --help
 forge agent --help
-forge agent generate --help
 
 # Show version
-forge --version
+forge --version</code></pre>
+        <p><strong>Additional Resources</strong>:</p>
+        <ul>
+          <li><a href="user-guide.html">User Guide</a>: Complete walkthrough</li>
+          <li><a href="use-cases-guide.html">Use Cases Guide</a>: Detailed examples</li>
+          <li><a href="outputs-gallery.html">Output Gallery</a>: Preview outputs</li>
+        </ul>
+      </main>
+    </div>
 
-# Run with verbose logging
-forge generate deck -i notes.md --verbose
-</code></pre>
-<p><strong>Additional Resources</strong>:</p>
-<ul>
-<li>Use Cases Guide: Detailed examples and workflows</li>
-<li>Architecture Guide: How Signal Forge works internally</li>
-<li>Contributing Guide: Extend Signal Forge with custom generators</li>
-</ul>
-<hr>
-<p><strong>Quick Reference Version</strong>: 1.0<br><strong>Last Updated</strong>: 2024</p>
-<p>Keep this reference handy while working with Signal Forge. For detailed tutorials and examples, see the Use Cases Guide.</p>
-
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Generated by Signal Forge</p>
-        </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="use-cases-guide.html">Use Cases</a>
+        <a href="outputs-gallery.html">Output Gallery</a>
+      </nav>
+      <p>Signal Forge Documentation</p>
     </footer>
+  </div>
 </body>
 </html>

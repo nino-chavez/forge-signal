@@ -3,140 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Signal Forge Method - Professional Document Generation with AI</title>
+  <title>The Method - Signal Forge Documentation</title>
+  <link rel="stylesheet" href="shared.css">
   <style>
-    :root {
-      --purple-500: #A100FF;
-      --purple-400: #B833FF;
-      --purple-100: #F3E8FF;
-      --blue-500: #0078D4;
-      --blue-100: #E6F3FF;
-      --green-500: #107C10;
-      --green-100: #E6F5E6;
-      --amber-500: #F59E0B;
-      --amber-100: #FEF3C7;
-      --red-500: #DC2626;
-      --red-100: #FEE2E2;
-      --gray-700: #374151;
-      --gray-600: #4B5563;
-      --gray-500: #6B7280;
-      --gray-400: #9CA3AF;
-      --gray-300: #D1D5DB;
-      --gray-200: #E5E7EB;
-      --gray-100: #F3F4F6;
-      --gray-50: #F9FAFB;
-      --text-primary: #111827;
-      --text-secondary: #374151;
-      --text-body: #4B5563;
-      --text-muted: #6B7280;
-    }
+    /* Method Guide specific styles - extends shared.css */
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #0f0f1a;
-      color: var(--text-body);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    /* Landscape-optimized document */
+    /* Override for wider document layout */
     .document {
       max-width: 1600px;
-      margin: 0 auto;
-      background: white;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.5);
     }
 
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, var(--purple-500) 0%, #7B00C4 100%);
-      padding: 32px 60px;
-      color: white;
-    }
-
-    .header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
+    /* Method-specific header with subtitle */
     .header-subtitle {
       font-size: 15px;
       opacity: 0.9;
+      margin-top: 4px;
     }
 
-    /* Two-Column Layout */
-    .main-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: calc(100vh - 120px);
-    }
-
-    /* Sidebar */
-    .sidebar {
-      background: var(--gray-50);
-      border-right: 1px solid var(--gray-200);
-      padding: 24px;
-      position: sticky;
-      top: 0;
-      height: fit-content;
-      max-height: 100vh;
-      overflow-y: auto;
-    }
-
-    .toc-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-    }
-
-    .toc-list {
-      list-style: none;
-    }
-
-    .toc-list li {
-      margin-bottom: 4px;
-    }
-
-    .toc-list a {
-      display: block;
-      padding: 8px 12px;
-      color: var(--text-body);
-      text-decoration: none;
-      font-size: 13px;
-      border-radius: 6px;
-      transition: all 0.15s;
-    }
-
-    .toc-list a:hover {
-      background: var(--purple-100);
-      color: var(--purple-500);
-    }
-
-    .toc-part {
-      font-weight: 700;
-      color: var(--text-primary);
-      font-size: 12px;
-      margin-top: 16px;
-      margin-bottom: 8px;
-      padding-left: 12px;
-    }
-
-    .toc-part:first-child { margin-top: 0; }
-
-    /* Main Content */
+    /* Override content max-width for this guide */
     .content {
-      padding: 40px 60px;
       max-width: 1200px;
+      padding: 40px 60px;
     }
 
-    /* Core Insight - Horizontal */
+
+    /* ===== METHOD GUIDE SPECIFIC COMPONENTS ===== */
+
+    /* Hero Insight - Horizontal */
     .hero-insight {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -164,7 +57,8 @@
       gap: 16px;
     }
 
-    .mode-pill {
+    /* Override mode pills for hero section */
+    .hero-insight .mode-pill {
       flex: 1;
       padding: 16px 12px;
       background: white;
@@ -172,23 +66,22 @@
       text-align: center;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
       min-width: 100px;
+      border: none;
     }
 
-    .mode-pill-icon {
+    .hero-insight .mode-pill-icon {
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 6px;
       color: var(--purple-500);
     }
 
-    .mode-pill-name {
+    .hero-insight .mode-pill-name {
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text-primary);
       line-height: 1.3;
     }
 
-    /* Section */
+    /* Section with numbered headers */
     .section {
       margin-bottom: 48px;
     }
@@ -220,6 +113,7 @@
       font-size: 22px;
       font-weight: 700;
       color: var(--text-primary);
+      margin: 0;
     }
 
     .section-intro {
@@ -228,32 +122,7 @@
       margin-bottom: 20px;
     }
 
-    /* Horizontal Table - Wide Format */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
-      font-size: 13px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--gray-200);
-    }
-
-    th {
-      background: var(--gray-50);
-      font-weight: 600;
-      color: var(--text-secondary);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    tr:hover { background: var(--gray-50); }
-
-    /* Wide Cards Grid */
+    /* Wide Cards Grid - override for 3-column default */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -264,17 +133,22 @@
     .cards-grid-2 { grid-template-columns: repeat(2, 1fr); }
     .cards-grid-4 { grid-template-columns: repeat(4, 1fr); }
 
-    .card {
+    /* Card overrides for method guide */
+    .cards-grid .card {
       background: var(--gray-50);
-      border-radius: 8px;
+      border: none;
       padding: 20px;
+    }
+
+    .cards-grid .card:hover {
+      box-shadow: none;
     }
 
     .card-title {
       font-size: 14px;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 12px;
+      margin: 0 0 12px 0;
       padding-bottom: 8px;
       border-bottom: 3px solid var(--gray-300);
     }
@@ -291,6 +165,7 @@
     .card-content ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
 
     .card-content li {
@@ -308,11 +183,6 @@
       height: 6px;
       background: var(--purple-500);
       border-radius: 50%;
-    }
-
-    /* Card content tables - improved readability */
-    .card-content table {
-      font-size: 13px;
     }
 
     .card-content table td {
@@ -396,7 +266,11 @@
       border: 1px solid var(--red-500);
     }
 
-    /* Workflow - Horizontal Full Width */
+    .anti-patterns-list li::before {
+      display: none;
+    }
+
+    /* Workflow Diagram */
     .workflow-diagram {
       background: var(--gray-50);
       border-radius: 8px;
@@ -445,18 +319,7 @@
       flex-shrink: 0;
     }
 
-    /* Callout - Compact */
-    .callout {
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin: 20px 0;
-    }
-
-    .callout-warning {
-      background: var(--amber-100);
-      border-left: 4px solid var(--amber-500);
-    }
-
+    /* Callout overrides for method guide */
     .callout-label {
       font-size: 10px;
       font-weight: 700;
@@ -471,31 +334,8 @@
       color: var(--text-secondary);
     }
 
-    /* Code Blocks */
-    .code-block {
-      background: var(--gray-700);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin: 16px 0;
-      overflow-x: auto;
-    }
-
-    .code-block pre {
-      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-      font-size: 12px;
-      line-height: 1.6;
-      color: #E5E7EB;
+    .callout-text p {
       margin: 0;
-      white-space: pre;
-    }
-
-    .code-block-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--gray-400);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
     }
 
     /* Template Block */
@@ -702,7 +542,7 @@
       margin-top: 1px;
     }
 
-    /* Footer */
+    /* Footer override for method guide */
     .footer {
       background: var(--gray-700);
       color: white;
@@ -710,6 +550,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      text-align: left;
     }
 
     .footer-left {
@@ -722,6 +563,14 @@
       font-weight: 600;
     }
 
+    .footer-nav {
+      display: none;
+    }
+
+    .footer p {
+      display: none;
+    }
+
     /* Divider */
     .divider {
       height: 2px;
@@ -730,13 +579,13 @@
       opacity: 0.4;
     }
 
-    /* Quick Reference Tables - improved readability */
+    /* Quick Reference Tables */
     .quick-ref-table {
-      font-size: 13px !important;
+      font-size: 13px;
     }
 
     .quick-ref-table td {
-      padding: 10px 14px !important;
+      padding: 10px 14px;
     }
 
     .quick-ref-table td:first-child {
@@ -748,23 +597,15 @@
       color: var(--text-primary);
     }
 
-    /* Responsive */
+    /* Responsive overrides */
     @media (max-width: 1200px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        display: none;
-      }
       .hero-insight {
         grid-template-columns: 1fr;
       }
       .hero-insight-modes {
         justify-content: center;
       }
-      .cards-grid {
-        grid-template-columns: 1fr;
-      }
+      .cards-grid,
       .cards-grid-2 {
         grid-template-columns: 1fr;
       }
@@ -774,65 +615,74 @@
       .content {
         padding: 24px;
       }
-      .header {
-        padding: 24px;
-      }
       .appendix-section {
         margin: 0 -24px;
         padding: 24px;
       }
       .footer {
-        padding: 20px 24px;
         flex-direction: column;
         gap: 8px;
         text-align: center;
+        padding: 20px 24px;
       }
-    }
-
-    @media print {
-      body { background: white; }
-      .document { box-shadow: none; }
-      .sidebar { display: none; }
-      .main-layout { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="document">
     <!-- Header -->
-    <div class="header">
-      <div class="header-content">
-        <h1>The Signal Forge Method</h1>
-        <p class="header-subtitle">
-          Classify content mode first. Apply the right voice. Generate with structure.
-        </p>
+    <header class="header">
+      <div class="header-brand">
+        <span class="header-logo">Signal Forge</span>
+        <span class="header-divider"></span>
+        <span class="header-title">The Method</span>
       </div>
+      <span class="header-version">v1.0.0</span>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Home</a></li>
+        <li class="nav-item"><a href="user-guide.html">User Guide</a></li>
+        <li class="nav-item"><a href="quick-reference.html">Quick Reference</a></li>
+        <li class="nav-item"><a href="use-cases-guide.html">Use Cases</a></li>
+        <li class="nav-item"><a href="outputs-gallery.html">Output Gallery</a></li>
+        <li class="nav-item active"><a href="signal-forge-method-guide.html">The Method</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Subtitle -->
+    <div style="background: var(--purple-50); padding: 16px 40px; border-bottom: 1px solid var(--purple-100);">
+      <p class="header-subtitle" style="color: var(--purple-600); margin: 0; font-size: 15px;">
+        Classify content mode first. Apply the right voice. Generate with structure.
+      </p>
     </div>
 
     <!-- Two-Column Layout -->
     <div class="main-layout">
       <!-- Sidebar Navigation -->
-      <div class="sidebar">
+      <aside class="sidebar">
         <div class="toc-title">Contents</div>
         <ul class="toc-list">
-          <li class="toc-part">The Framework</li>
+          <li class="toc-section">The Framework</li>
           <li><a href="#classification">1. Content Classification</a></li>
           <li><a href="#voice">2. Voice Calibration</a></li>
           <li><a href="#workflow">3. Role-Based Workflow</a></li>
           <li><a href="#templates">4. Structural Templates</a></li>
           <li><a href="#design">5. Design System</a></li>
-          <li class="toc-part">Implementation</li>
+          <li class="toc-section">Implementation</li>
           <li><a href="#steps">6. Implementation Steps</a></li>
           <li><a href="#quality">7. Quality Checklists</a></li>
-          <li class="toc-part">Appendices</li>
+          <li class="toc-section">Appendices</li>
           <li><a href="#appendix-a">A: Reusable Prompts</a></li>
           <li><a href="#appendix-b">B: Build Your Own</a></li>
           <li><a href="#appendix-c">C: Quick Reference</a></li>
         </ul>
-      </div>
+      </aside>
 
       <!-- Main Content -->
-      <div class="content">
+      <main class="content">
         <!-- Hero Insight -->
         <div class="hero-insight">
           <div class="hero-insight-main">
@@ -2119,18 +1969,18 @@ signal-forge/
           </div>
         </div>
 
-      </div>
+      </main>
     </div>
 
     <!-- Footer -->
-    <div class="footer">
+    <footer class="footer">
       <div class="footer-left">
         This guide is designed to be shared and adapted. Use it as a starting point for your own workflow.
       </div>
       <div class="footer-right">
         Signal Forge Method
       </div>
-    </div>
+    </footer>
   </div>
 </body>
 </html>

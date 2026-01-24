@@ -1,235 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
-
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-tertiary: #1a1a1a;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a0a0a0;
-            --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --border: #2a2a2a;
-            --success: #22c55e;
-            --warning: #eab308;
-            --code-bg: #1e1e1e;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        header {
-            border-bottom: 1px solid var(--border);
-            padding: 24px 0;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .doc-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .version {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            background: var(--bg-tertiary);
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        main {
-            padding: 48px 0;
-        }
-
-        .content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 32px;
-        }
-
-        .content h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .content h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
-
-        .content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-top: 24px;
-            margin-bottom: 12px;
-        }
-
-        .content p {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .content ul, .content ol {
-            margin: 16px 0;
-            padding-left: 24px;
-        }
-
-        .content li {
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .content code {
-            background: var(--code-bg);
-            color: var(--accent);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
-            font-size: 0.875em;
-        }
-
-        .content pre {
-            background: var(--code-bg);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 16px 0;
-        }
-
-        .content pre code {
-            background: transparent;
-            padding: 0;
-            color: var(--text-primary);
-        }
-
-        .content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.9375rem;
-        }
-
-        .content th {
-            text-align: left;
-            padding: 12px 16px;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border);
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        .content td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .content tr:hover td {
-            background: var(--bg-tertiary);
-        }
-
-        .content blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 16px;
-            margin: 16px 0;
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        footer {
-            padding: 32px 0;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                padding: 24px 16px;
-            }
-
-            .content h1 {
-                font-size: 1.75rem;
-            }
-
-            .content h2 {
-                font-size: 1.25rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal Forge Documentation</title>
+  <link rel="stylesheet" href="shared.css">
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <div class="doc-type">User Guide</div>
-                <h1 class="title">index</h1>
-            </div>
-            <span class="version">v1.0.0</span>
-        </div>
+  <div class="document">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <span class="header-logo">Signal Forge</span>
+        <span class="header-divider"></span>
+        <span class="header-title">Documentation</span>
+      </div>
+      <span class="header-version">v1.0.0</span>
     </header>
 
-    <main class="container">
-        <div class="content">
-            <h1>Signal Forge Documentation</h1>
-<p>Find the information you need to transform rough notes into polished professional content.</p>
-<h2>Quick Start</h2>
-<p>Get Signal Forge running in 60 seconds:</p>
-<pre><code class="language-bash"># 1. Install dependencies
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <ul class="nav-list">
+        <li class="nav-item active"><a href="index.html">Home</a></li>
+        <li class="nav-item"><a href="user-guide.html">User Guide</a></li>
+        <li class="nav-item"><a href="quick-reference.html">Quick Reference</a></li>
+        <li class="nav-item"><a href="use-cases-guide.html">Use Cases</a></li>
+        <li class="nav-item"><a href="outputs-gallery.html">Output Gallery</a></li>
+        <li class="nav-item"><a href="signal-forge-method-guide.html">The Method</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content (no sidebar for hub page) -->
+    <div class="main-layout no-sidebar">
+      <main class="content">
+        <h1>Signal Forge Documentation</h1>
+        <p class="subtitle">Transform rough notes into polished professional content with AI-powered voice matching.</p>
+
+        <!-- Quick Start -->
+        <div class="quick-start">
+          <h3>Quick Start</h3>
+          <p>Get Signal Forge running in 60 seconds:</p>
+          <pre><code># 1. Install dependencies
 npm install
 
 # 2. Configure API keys
@@ -237,271 +48,201 @@ cp .env.example .env
 # Edit .env with your OpenAI/Anthropic API key
 
 # 3. Generate your first document
-forge generate deck --input meeting-notes.md --format pptx,html
-</code></pre>
-<p><strong>Expected output</strong>: A professional slide deck in both PowerPoint and HTML formats, ready to present.</p>
-<hr>
-<h2>Documentation Guides</h2>
-<h3><a href="./user-guide.md">User Guide</a></h3>
-<p><strong>Complete introduction to Signal Forge</strong></p>
-<p>Learn how Signal Forge works and master the three content modes.</p>
-<p><strong>You&#39;ll accomplish</strong>:</p>
-<ul>
-<li>Install and configure Signal Forge</li>
-<li>Understand when to use each content mode</li>
-<li>Generate your first documents</li>
-<li>Iterate to improve voice quality</li>
-<li>Troubleshoot common issues</li>
-</ul>
-<p><strong>Best for</strong>: New users or anyone wanting comprehensive understanding</p>
-<p><strong>Time to complete</strong>: 15 minutes</p>
-<hr>
-<h3><a href="./use-cases.md">Use Cases Guide</a></h3>
-<p><strong>Real-world examples with sample inputs and outputs</strong></p>
-<p>See exactly how Signal Forge transforms different types of input into professional content.</p>
-<p><strong>You&#39;ll see</strong>:</p>
-<ul>
-<li>Executive presentations from meeting notes</li>
-<li>Technical architecture docs from design sessions</li>
-<li>Thought leadership from observations</li>
-<li>Agentic workflows with research integration</li>
-<li>Multi-format publishing examples</li>
-</ul>
-<p><strong>Best for</strong>: Users looking for specific examples before starting</p>
-<p><strong>Time to review</strong>: 10 minutes</p>
-<hr>
-<h3><a href="./expected-outputs.md">Expected Outputs Gallery</a></h3>
-<p><strong>Preview what you&#39;ll get from each content type</strong></p>
-<p>Understand the structure, voice, and quality of Signal Forge outputs.</p>
-<p><strong>You&#39;ll explore</strong>:</p>
-<ul>
-<li>Executive advisory outputs (decks, briefs, roadmaps)</li>
-<li>Solution architecture outputs (docs, ADRs, specs)</li>
-<li>Thought leadership outputs (POVs, papers, posts)</li>
-<li>Voice quality indicators and scores</li>
-<li>Format-specific previews (PPTX, HTML, Markdown)</li>
-</ul>
-<p><strong>Best for</strong>: Evaluating Signal Forge or choosing the right content type</p>
-<p><strong>Time to review</strong>: 8 minutes</p>
-<hr>
-<h3><a href="./quick-reference.md">Quick Reference Card</a></h3>
-<p><strong>Command cheat sheet for daily use</strong></p>
-<p>Fast lookup for commands, options, and troubleshooting.</p>
-<p><strong>You&#39;ll find</strong>:</p>
-<ul>
-<li>All commands at a glance</li>
-<li>Common options table</li>
-<li>Content type quick reference</li>
-<li>Provider recommendations</li>
-<li>Troubleshooting tips</li>
-</ul>
-<p><strong>Best for</strong>: Experienced users needing quick command lookup</p>
-<p><strong>Time to scan</strong>: 2 minutes</p>
-<hr>
-<h2>Content Modes Overview</h2>
-<p>Signal Forge automatically applies the right voice and structure based on your content type.</p>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Use When</th>
-<th>Voice Characteristics</th>
-<th>Output Types</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Executive Advisory</strong></td>
-<td>Presenting strategy, making recommendations</td>
-<td>Confident, consultant-style, action-oriented</td>
-<td><code>deck</code>, <code>brief</code>, <code>roadmap</code></td>
-</tr>
-<tr>
-<td><strong>Solution Architecture</strong></td>
-<td>Writing technical documentation</td>
-<td>Precise, definitive, implementation-focused</td>
-<td><code>architecture</code>, <code>adr</code>, <code>spec</code></td>
-</tr>
-<tr>
-<td><strong>Thought Leadership</strong></td>
-<td>Sharing ideas and opinions</td>
-<td>Provisional, questioning, exploratory</td>
-<td><code>pov</code>, <code>paper</code>, <code>post</code></td>
-</tr>
-</tbody></table>
-<h3>How It Works</h3>
-<ol>
-<li><strong>You provide</strong>: Raw notes, meeting recaps, observations</li>
-<li><strong>Signal Forge analyzes</strong>: Content type determines voice mode</li>
-<li><strong>You receive</strong>: Polished document with appropriate structure and tone</li>
-</ol>
-<p><strong>Example</strong>:</p>
-<pre><code class="language-bash"># Same input, different voices
+forge generate deck --input meeting-notes.md --format pptx,html</code></pre>
+          <p><strong>Expected output</strong>: A professional slide deck in both PowerPoint and HTML formats, ready to present.</p>
+        </div>
+
+        <h2>Documentation Guides</h2>
+        <div class="card-grid">
+          <div class="card">
+            <h3><a href="user-guide.html">User Guide</a></h3>
+            <p><strong>Complete introduction to Signal Forge</strong></p>
+            <p>Learn how Signal Forge works and master the content modes. Install, configure, generate, and iterate to improve voice quality.</p>
+            <p class="card-meta">Best for: New users | 15 min read</p>
+          </div>
+
+          <div class="card">
+            <h3><a href="use-cases-guide.html">Use Cases Guide</a></h3>
+            <p><strong>Real-world examples with sample inputs and outputs</strong></p>
+            <p>See exactly how Signal Forge transforms meeting notes, design sessions, and observations into professional content.</p>
+            <p class="card-meta">Best for: Exploring scenarios | 10 min read</p>
+          </div>
+
+          <div class="card">
+            <h3><a href="outputs-gallery.html">Output Gallery</a></h3>
+            <p><strong>Preview what you'll get from each content type</strong></p>
+            <p>Understand the structure, voice, and quality of Signal Forge outputs across executive, technical, and thought leadership modes.</p>
+            <p class="card-meta">Best for: Evaluating | 8 min read</p>
+          </div>
+
+          <div class="card">
+            <h3><a href="quick-reference.html">Quick Reference</a></h3>
+            <p><strong>Command cheat sheet for daily use</strong></p>
+            <p>Fast lookup for commands, options, content types, and troubleshooting. Print-friendly format.</p>
+            <p class="card-meta">Best for: Daily use | 2 min scan</p>
+          </div>
+        </div>
+
+        <h2>Content Modes Overview</h2>
+        <p>Signal Forge automatically applies the right voice and structure based on your content type.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Use When</th>
+              <th>Voice Characteristics</th>
+              <th>Output Types</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Executive Advisory</strong></td>
+              <td>Presenting strategy, making recommendations</td>
+              <td>Confident, consultant-style, action-oriented</td>
+              <td><code>deck</code>, <code>brief</code>, <code>roadmap</code></td>
+            </tr>
+            <tr>
+              <td><strong>Solution Architecture</strong></td>
+              <td>Writing technical documentation</td>
+              <td>Precise, definitive, implementation-focused</td>
+              <td><code>architecture</code>, <code>adr</code>, <code>spec</code></td>
+            </tr>
+            <tr>
+              <td><strong>Thought Leadership</strong></td>
+              <td>Sharing ideas and opinions</td>
+              <td>Provisional, questioning, exploratory</td>
+              <td><code>pov</code>, <code>paper</code>, <code>post</code></td>
+            </tr>
+            <tr>
+              <td><strong>Documentation</strong></td>
+              <td>User guides, tutorials, references</td>
+              <td>Instructional, direct, copy-paste ready</td>
+              <td><code>guide</code>, <code>reference</code>, <code>tutorial</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>How It Works</h3>
+        <ol>
+          <li><strong>You provide</strong>: Raw notes, meeting recaps, observations</li>
+          <li><strong>Signal Forge analyzes</strong>: Content type determines voice mode</li>
+          <li><strong>You receive</strong>: Polished document with appropriate structure and tone</li>
+        </ol>
+
+        <pre><code># Same input, different voices
 forge generate deck --input notes.md        # Confident recommendations
 forge generate architecture --input notes.md # Precise technical detail
-forge generate pov --input notes.md         # Questioning exploration
-</code></pre>
-<hr>
-<h2>Why Signal Forge?</h2>
-<p><strong>The problem</strong>: Generic AI writers produce generic voice. A blog post tone doesn&#39;t work for architecture documents. Technical detail overwhelms executives. Strategy decks need confidence; thought pieces need questions.</p>
-<p><strong>The solution</strong>: Signal Forge matches voice to content type automatically.</p>
-<h3>What Makes It Different</h3>
-<table>
-<thead>
-<tr>
-<th>Traditional AI Writing</th>
-<th>Signal Forge</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>One generic voice</td>
-<td>Three specialized modes</td>
-</tr>
-<tr>
-<td>Manual formatting</td>
-<td>Auto-structured outputs</td>
-</tr>
-<tr>
-<td>Text-only</td>
-<td>Multi-format (PPTX, HTML, MD)</td>
-</tr>
-<tr>
-<td>Requires prompt engineering</td>
-<td>Content type = automatic voice</td>
-</tr>
-</tbody></table>
-<hr>
-<h2>Common Workflows</h2>
-<h3>Executive Presentation</h3>
-<pre><code class="language-bash"># Meeting notes → slide deck
-forge generate deck --input meeting-notes.md --format pptx
-</code></pre>
-<h3>Technical Documentation</h3>
-<pre><code class="language-bash"># Design session → architecture doc
-forge generate architecture --input design-session.md --format html,md
-</code></pre>
-<h3>Thought Leadership</h3>
-<pre><code class="language-bash"># Observations → opinion piece
-forge generate pov --input observations.md --format md
-</code></pre>
-<h3>Research-Enhanced Content</h3>
-<pre><code class="language-bash"># Topic + research → comprehensive paper
-forge generate paper --input topic.md --research --format html
-</code></pre>
-<hr>
-<h2>Installation Requirements</h2>
-<h3>System Requirements</h3>
-<ul>
-<li>Node.js 18 or higher</li>
-<li>npm or yarn package manager</li>
-<li>API key from OpenAI or Anthropic</li>
-</ul>
-<h3>Supported Platforms</h3>
-<ul>
-<li>macOS</li>
-<li>Linux</li>
-<li>Windows (WSL recommended)</li>
-</ul>
-<h3>API Providers</h3>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>Models Supported</th>
-<th>Best For</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>OpenAI</strong></td>
-<td>GPT-4, GPT-4 Turbo</td>
-<td>General use, fastest</td>
-</tr>
-<tr>
-<td><strong>Anthropic</strong></td>
-<td>Claude 3 (Opus, Sonnet)</td>
-<td>Longer documents, nuanced voice</td>
-</tr>
-</tbody></table>
-<hr>
-<h2>Getting Help</h2>
-<h3>Built-in Help</h3>
-<pre><code class="language-bash"># General help
+forge generate pov --input notes.md         # Questioning exploration</code></pre>
+
+        <h2>Why Signal Forge?</h2>
+        <p><strong>The problem</strong>: Generic AI writers produce generic voice. A blog post tone doesn't work for architecture documents. Technical detail overwhelms executives. Strategy decks need confidence; thought pieces need questions.</p>
+        <p><strong>The solution</strong>: Signal Forge matches voice to content type automatically.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Traditional AI Writing</th>
+              <th>Signal Forge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>One generic voice</td>
+              <td>Four specialized modes</td>
+            </tr>
+            <tr>
+              <td>Manual formatting</td>
+              <td>Auto-structured outputs</td>
+            </tr>
+            <tr>
+              <td>Text-only</td>
+              <td>Multi-format (PPTX, HTML, DOCX, PDF)</td>
+            </tr>
+            <tr>
+              <td>Requires prompt engineering</td>
+              <td>Content type = automatic voice</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Common Workflows</h2>
+
+        <h3>Executive Presentation</h3>
+        <pre><code># Meeting notes to slide deck
+forge generate deck --input meeting-notes.md --format pptx</code></pre>
+
+        <h3>Technical Documentation</h3>
+        <pre><code># Design session to architecture doc
+forge generate architecture --input design-session.md --format html,md</code></pre>
+
+        <h3>Thought Leadership</h3>
+        <pre><code># Observations to opinion piece
+forge generate pov --input observations.md --format md</code></pre>
+
+        <h3>Research-Enhanced Content</h3>
+        <pre><code># Topic + research to comprehensive paper
+forge agent generate paper --input topic.md --research --format html</code></pre>
+
+        <h2>Installation Requirements</h2>
+
+        <h3>System Requirements</h3>
+        <ul>
+          <li>Node.js 18 or higher</li>
+          <li>npm or yarn package manager</li>
+          <li>API key from OpenAI or Anthropic</li>
+        </ul>
+
+        <h3>API Providers</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Models Supported</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OpenAI</strong></td>
+              <td>GPT-4, GPT-4 Turbo</td>
+              <td>General use, fastest</td>
+            </tr>
+            <tr>
+              <td><strong>Anthropic</strong></td>
+              <td>Claude 3 (Opus, Sonnet)</td>
+              <td>Longer documents, nuanced voice</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Getting Help</h2>
+
+        <h3>Built-in Help</h3>
+        <pre><code># General help
 forge --help
 
 # Command-specific help
 forge generate --help
-forge generate deck --help
-</code></pre>
-<h3>Documentation</h3>
-<ul>
-<li><strong>This hub</strong>: Overview and guide links</li>
-<li><strong>User Guide</strong>: Comprehensive walkthrough</li>
-<li><strong>Quick Reference</strong>: Command cheat sheet</li>
-</ul>
-<h3>Support Channels</h3>
-<ul>
-<li><strong>Issues</strong>: GitHub repository</li>
-<li><strong>Examples</strong>: Use Cases Guide</li>
-<li><strong>Output previews</strong>: Expected Outputs Gallery</li>
-</ul>
-<hr>
-<h2>Next Steps</h2>
-<h3>New Users</h3>
-<ol>
-<li>Read the <a href="./user-guide.md">User Guide</a> (15 min)</li>
-<li>Try the Quick Start commands above</li>
-<li>Review <a href="./use-cases.md">Use Cases</a> for your scenario</li>
-</ol>
-<h3>Experienced Users</h3>
-<ol>
-<li>Bookmark the <a href="./quick-reference.md">Quick Reference</a></li>
-<li>Explore <a href="./expected-outputs.md">Expected Outputs</a> for new content types</li>
-<li>Check troubleshooting section for issues</li>
-</ol>
-<h3>Evaluating Signal Forge</h3>
-<ol>
-<li>Review <a href="./expected-outputs.md">Expected Outputs Gallery</a></li>
-<li>Scan <a href="./use-cases.md">Use Cases Guide</a> for relevant examples</li>
-<li>Try Quick Start with your own content</li>
-</ol>
-<hr>
-<h2>Troubleshooting Quick Tips</h2>
-<h3>Command Not Found</h3>
-<pre><code class="language-bash"># Ensure installation completed
-npm install
+forge generate deck --help</code></pre>
 
-# Check if forge is in PATH
-npm list -g signal-forge
-</code></pre>
-<h3>API Key Issues</h3>
-<pre><code class="language-bash"># Verify .env file exists
-cat .env
+        <h3>Next Steps</h3>
+        <p><strong>New Users</strong>: Start with the <a href="user-guide.html">User Guide</a> for a complete walkthrough.</p>
+        <p><strong>Experienced Users</strong>: Bookmark the <a href="quick-reference.html">Quick Reference</a> for fast command lookup.</p>
+        <p><strong>Evaluating</strong>: Review the <a href="outputs-gallery.html">Output Gallery</a> to see what Signal Forge produces.</p>
+      </main>
+    </div>
 
-# Check key format (should start with sk- for OpenAI)
-grep API_KEY .env
-</code></pre>
-<h3>Generation Fails</h3>
-<pre><code class="language-bash"># Check input file exists
-ls -la your-input.md
-
-# Verify content type is valid
-forge generate --help  # See available types
-</code></pre>
-<h3>Poor Output Quality</h3>
-<ol>
-<li>Check voice score in output metadata</li>
-<li>Add more context to input file</li>
-<li>Try <code>--iterate</code> flag for refinement</li>
-<li>See User Guide section on &quot;Improving Voice Quality&quot;</li>
-</ol>
-<p><strong>For detailed troubleshooting</strong>: See the troubleshooting section in the <a href="./user-guide.md">User Guide</a>.</p>
-
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Generated by Signal Forge</p>
-        </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="user-guide.html">User Guide</a>
+        <a href="quick-reference.html">Quick Reference</a>
+        <a href="use-cases-guide.html">Use Cases</a>
+        <a href="outputs-gallery.html">Output Gallery</a>
+      </nav>
+      <p>Signal Forge Documentation</p>
     </footer>
+  </div>
 </body>
 </html>
