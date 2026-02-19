@@ -59,7 +59,7 @@ You focus on hidden risks, resource requirements, and operational feasibility.`
     {
       id: 'technical-auditor',
       provider: 'google',
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       role: 'Technical Auditor',
       focus: 'technical accuracy, vendor claims, and implementation details',
       persona: `You are a principal engineer specializing in e-commerce platforms and migrations.
