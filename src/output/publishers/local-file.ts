@@ -151,7 +151,7 @@ export class LocalFilePublisher implements Publisher {
         break;
 
       case 'pptx':
-        await this.exportPPTX(content, outputPath, title);
+        await this.exportPPTX(content, outputPath, title, options.theme);
         break;
 
       default:
@@ -248,7 +248,8 @@ export class LocalFilePublisher implements Publisher {
   private async exportPPTX(
     content: string,
     outputPath: string,
-    title: string
+    title: string,
+    theme?: string,
   ): Promise<void> {
     if (!this.exportToPPTX) {
       const module = await import('../exporters/pptx-exporter.js');
@@ -259,6 +260,7 @@ export class LocalFilePublisher implements Publisher {
       title,
       content,
       outputPath,
+      theme,
     });
   }
 

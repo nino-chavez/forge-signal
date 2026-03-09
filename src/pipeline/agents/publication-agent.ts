@@ -37,6 +37,8 @@ export interface PublishOptions {
   contentType?: ContentType;
   outputPath?: string;
   metadata?: Record<string, unknown>;
+  /** Presentation theme ID for PPTX export */
+  theme?: string;
 }
 
 // =============================================================================

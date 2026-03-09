@@ -24,6 +24,7 @@ import { exportToHTML } from '../output/exporters/html-exporter.js';
 import { generateSlug } from '../core/utils/slug.js';
 import { ensureDir } from '../core/utils/file-utils.js';
 import { registerAgenticCommands } from './agentic-commands.js';
+import { listThemes } from '../content/design-system/theme-registry.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -67,6 +68,7 @@ program
   .option('-o, --output <file>', 'Output file path')
   .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
   .option('-f, --format <formats>', 'Output formats (comma-separated): word,pdf,pptx,slides,html')
+  .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, bigcommerce, dark)')
   .option('--audience <audience>', 'Target audience')
   .option('--product <product>', 'Product name (for documentation)')
   .option('--no-edit', 'Skip editor review (use ghost writer + copywriter only)')
@@ -248,6 +250,7 @@ program
                 title: baseName,
                 content: finalContent,
                 outputPath: pptxPath,
+                theme: options.theme,
               });
               console.log(`✅ PowerPoint: ${pptxPath}`);
               break;
@@ -291,6 +294,23 @@ program
       }
       process.exit(1);
     }
+  });
+
+// Theme management
+const themesCommand = program
+  .command('themes')
+  .description('Manage presentation themes');
+
+themesCommand
+  .command('list')
+  .description('List available presentation themes')
+  .action(() => {
+    const themes = listThemes();
+    console.log('\nAvailable themes:\n');
+    for (const t of themes) {
+      console.log(`  ${t.id.padEnd(16)} ${t.name} — ${t.description}`);
+    }
+    console.log('');
   });
 
 program.parse();
