@@ -8,7 +8,8 @@ export class OpenAIProvider implements AIProviderInterface {
   constructor(apiKey?: string) {
     this.apiKey = apiKey || process.env.OPENAI_API_KEY || '';
     if (this.apiKey) {
-      this.client = new OpenAI({ apiKey: this.apiKey });
+      const baseURL = process.env.OPENAI_BASE_URL || undefined;
+      this.client = new OpenAI({ apiKey: this.apiKey, baseURL });
     }
   }
 
@@ -17,7 +18,8 @@ export class OpenAIProvider implements AIProviderInterface {
       throw new Error('OpenAI API key not configured');
     }
 
-    const model = options.model || 'gpt-4o';
+    const defaultModel = process.env.OPENAI_BASE_URL ? 'anthropic/claude-sonnet-4.6' : 'gpt-4o';
+    const model = options.model || defaultModel;
     
     const response = await this.client.chat.completions.create({
       model,

@@ -65,13 +65,13 @@ export class GhostWriter {
 4. **Generate in Voice**: Write in ${author}'s voice—pattern recognition, provisional conclusions, showing the work
 5. **Multiple Angles**: Consider different approaches to the same content
 
-**Perspective**: Write from external consultant perspective (senior Accenture Song consultant) providing strategic guidance TO the client organization.
+**Perspective**: Write from an internal team perspective, providing strategic guidance to leadership and cross-functional stakeholders within the organization.
 
-**Client References**: 
-- Use "you" / "your organization" / "your org" naturally instead of repeatedly saying the client's name
-- Mix of direct address ("you") and third person ("your organization") for natural consultant voice
-- Only use client name when necessary for clarity or in formal headers/titles
-- Professional but conversational—not sterile or overly formal
+**Internal Voice**:
+- Use "we" / "our" / "our team" naturally — this is an internal document
+- Reference specific teams, systems, and stakeholders by name where relevant
+- Professional but direct — we're all on the same team
+- No consultant framing — no "your organization" or "the client"
 
 ${voiceInstructions}
 

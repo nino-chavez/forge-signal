@@ -5,16 +5,18 @@
  */
 
 // Content modes and types
-export {
+export type {
   ContentMode,
   ContentType,
   OutputFormat,
+} from './content.js';
+export {
   isDocumentationType,
   getModeForType,
 } from './content.js';
 
 // Research context
-export {
+export type {
   ResearchContext,
   WebSearchResult,
   DocumentResult,
@@ -23,27 +25,31 @@ export {
 } from './research.js';
 
 // Tasks
-export {
+export type {
   ContentTask,
   ContentConstraints,
   TaskOptions,
   TaskStatus,
   TaskProgress,
+} from './tasks.js';
+export {
   generateTaskId,
 } from './tasks.js';
 
 // Agents
-export {
+export type {
   AgentMessage,
   AgentType,
   MessageType,
   AgentInput,
   AgentOutput,
+} from './agents.js';
+export {
   generateCorrelationId,
 } from './agents.js';
 
 // Voice
-export {
+export type {
   RevisionFeedback,
   EnhancedVoiceCheckResult,
   RevisionSuggestion,
@@ -51,7 +57,7 @@ export {
 } from './voice.js';
 
 // Production
-export {
+export type {
   ProductionResult,
   IterationState,
   RevisionStrategy,
@@ -59,31 +65,31 @@ export {
 } from './production.js';
 
 // Memory
-export {
+export type {
   MemoryScope,
   MemoryEntry,
   MemoryMetadata,
 } from './memory.js';
 
 // Publication
-export {
+export type {
   PublicationTarget,
   PublicationResult,
 } from './publication.js';
 
 // Tools
-export {
+export type {
   AgentTool,
   ToolParams,
   ToolResult,
 } from './tools.js';
 
 // Classification
-export {
+export type {
   ClassificationResult,
   ClassificationSignal,
   AlternativeMode,
 } from './classification.js';
 
 // Utility types
-export { DeepPartial } from './utils.js';
+export type { DeepPartial } from './utils.js';

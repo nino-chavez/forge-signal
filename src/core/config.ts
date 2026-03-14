@@ -18,7 +18,7 @@ export interface ForgeConfig {
 const DEFAULT_CONFIG: ForgeConfig = {
   author: 'Nino Chavez',
   persona: 'senior technology strategist',
-  company: 'Accenture Song',
+  company: process.env.FORGE_COMPANY || 'BigCommerce',
   fonts: {
     primary: 'https://use.typekit.net/wbj0oqh.css',
     secondary: 'https://use.typekit.net/tjp7ihm.css',

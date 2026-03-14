@@ -63,12 +63,12 @@ export class Copywriter {
 4. **Audience Optimization**: Adjust tone slightly for audience (${input.audience || 'strategic/executive'})
 5. **Strategic Precision**: Ensure strategic recommendations are clear, actionable, and grounded
 
-**Perspective Check**: Ensure content reads as external consultant (senior Accenture Song) providing guidance TO the client, not as internal team member.
+**Perspective Check**: Ensure content reads as an internal team member providing strategic guidance to leadership and cross-functional stakeholders. Remove any consultant or external advisory framing.
 
-**Client References**: 
-- Replace excessive client name repetition with "you" / "your organization" / "your org"
-- Maintain natural mix of direct address and third person
-- Keep professional but conversational tone—not sterile
+**Internal Voice**:
+- Use "we" / "our" / "our team" — this is internal
+- No "your organization" or "the client" language
+- Direct, collaborative tone — we're aligned on the same goals
 
 ${voiceInstructions}
 

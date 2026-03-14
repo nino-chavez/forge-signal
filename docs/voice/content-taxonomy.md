@@ -13,6 +13,7 @@ This document defines the three content modes Signal Forge supports, ensuring th
 | **Thought Leadership** | Establish expertise, share insights, provoke thinking | Narrative, provisional, question-led | Story arc, tension/resolution | Broad professional audience |
 | **Solution Architecture** | Document technical decisions, enable implementation | Precise, confident, reference-grade | arc42/C4, ADRs, diagrams | Technical teams, architects |
 | **Executive Advisory** | Recommend strategy, align stakeholders | Consultant voice, pattern-based | SCR, Before-After-Breakthrough | Executives, decision-makers |
+| **Internal Strategy** | Drive internal decisions, align teams | Direct, factual, "we/our" | Short prose + tables + bullets | Leadership, cross-functional teams |
 
 ---
 
@@ -157,18 +158,75 @@ BREAKTHROUGH: How to bridge the gap
 
 ---
 
+## Mode 4: Internal Strategy
+
+### When to Use
+- Solution plans and proposals (internal)
+- CX / product strategy documents
+- Sequencing arguments and priority cases
+- Technical proposals with business framing
+- Any internal doc that needs to drive decisions across teams
+
+### Voice Characteristics
+Reference: `docs/voice/internal-strategy-voice.md`
+
+| Principle | Application |
+|-----------|-------------|
+| Scannable first | VP finds risks in 5 sec, the ask in 10 |
+| Short context, then structure | 1-3 sentence paragraphs, then bullets/tables for facts |
+| "We" not "you" | Internal team voice, named people and systems |
+| Options with rationale | Benefit / trade-off / risk for each option |
+| Tables for structured data | Risks, open questions, next steps — always tables |
+
+### Structure Patterns
+
+```
+1. Title + one-line subtitle
+2. Overview (2-3 sentences)
+3. The Problem (short prose + data table)
+4. What's Changing (bullet list)
+5. Options / Approach (numbered with rationale)
+6. What Must Ship (priorities with scope + blockers)
+7. Risks (table: ID | Risk | Impact | Mitigation | Owner)
+8. Open Questions (table: # | Question | Blocks | Owner | Deadline)
+9. Next Steps (table: Action | Owner | Deadline)
+10. Success Metrics (table: Metric | Current | Target)
+```
+
+### Anti-Patterns to Avoid
+- ❌ Narrative arcs (Tension → Pattern → Framework)
+- ❌ Blog voice ("here's where I've landed," "I used to think X")
+- ❌ Dense prose with buried facts (wall of text)
+- ❌ Metadata fluff (Type: POV / Mode: advisory / Status: Provisional)
+- ❌ Consultant framing ("your organization," "I recommend to the client")
+- ❌ Rhetorical questions
+
+### Output Types
+- `plan` - Solution plan or strategy proposal
+- `report` - Internal analysis or assessment
+- `proposal` - Technical or business proposal
+
+### Workflow
+Internal Strategy documents should **not** run through the ghost-writer/copywriter pipeline, which applies blog voice. Write the markdown directly in the correct format, then convert to HTML + Word.
+
+```
+Raw Input → Direct Format (no AI rewrite) → md-to-docs converter → Final
+```
+
+---
+
 ## Content Type Detection
 
 Signal Forge automatically classifies content based on input signals:
 
 ### Classification Signals
 
-| Signal | Thought Leadership | Solution Architecture | Executive Advisory |
-|--------|-------------------|----------------------|-------------------|
-| **Keywords** | "explore", "reflect", "I've been thinking" | "system", "component", "data flow", "API" | "recommend", "strategy", "roadmap", "investment" |
-| **Artifacts** | Notes, observations, questions | Diagrams, schemas, technical specs | Meeting notes, stakeholder concerns, business context |
-| **Audience markers** | "readers", "community" | "engineers", "developers", "ops team" | "leadership", "executives", "stakeholders" |
-| **Output request** | "blog post", "article", "POV" | "architecture", "design doc", "spec" | "deck", "brief", "presentation" |
+| Signal | Thought Leadership | Solution Architecture | Executive Advisory | Internal Strategy |
+|--------|-------------------|----------------------|-------------------|-------------------|
+| **Keywords** | "explore", "reflect", "I've been thinking" | "system", "component", "data flow", "API" | "recommend", "strategy", "roadmap", "investment" | "plan", "proposal", "must ship", "blocker", "owner" |
+| **Artifacts** | Notes, observations, questions | Diagrams, schemas, technical specs | Meeting notes, stakeholder concerns, business context | Research, data analysis, competitive analysis, BRDs |
+| **Audience markers** | "readers", "community" | "engineers", "developers", "ops team" | "leadership", "executives", "stakeholders" | "team", "we", cross-functional names |
+| **Output request** | "blog post", "article", "POV" | "architecture", "design doc", "spec" | "deck", "brief", "presentation" | "plan", "proposal", "report", "document" |
 
 ### Override Mechanism
 
@@ -214,6 +272,8 @@ Some deliverables require multiple modes:
 | Technical whitepaper | Solution Architecture | Executive Advisory | Lead with business context, follow with architecture |
 | Architecture deck for executives | Executive Advisory | Solution Architecture | Visual architecture, minimal technical prose |
 | Thought leadership on architecture patterns | Thought Leadership | Solution Architecture | Narrative wrapper, accurate technical content |
+| Internal solution plan with architecture | Internal Strategy | Solution Architecture | Business framing + tables, ADRs in appendix |
+| Internal CX/product strategy | Internal Strategy | Executive Advisory | "We" voice, not consultant voice; tables for data |
 
 ### Hybrid Documents
 
@@ -264,3 +324,4 @@ For documents that span modes, use clear section breaks:
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2024-11-25 | Initial taxonomy based on RAG-for-AEO learnings |
+| 1.1 | 2026-03-13 | Added Internal Strategy as fourth mode. Learned from P&P deliverable iterations — blog voice and dense prose are wrong for internal strategy docs. |
