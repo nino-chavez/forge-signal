@@ -16,6 +16,7 @@ import { renderMultiColumnImageSlide } from './multi-column-image.js';
 import { renderTableSlide } from './table.js';
 import { renderImageTextSlide } from './image-text.js';
 import { renderFullImageSlide } from './full-image.js';
+import { renderFullImageCleanSlide } from './full-image-clean.js';
 import { renderQuoteSlide } from './quote.js';
 import { renderConclusionSlide } from './conclusion.js';
 
@@ -28,6 +29,7 @@ const layoutRegistry = new Map<SlideLayout, LayoutFunction>([
   ['table', renderTableSlide],
   ['image-text', renderImageTextSlide],
   ['full-image', renderFullImageSlide],
+  ['full-image-clean', renderFullImageCleanSlide],
   ['quote', renderQuoteSlide],
   ['conclusion', renderConclusionSlide],
 ]);

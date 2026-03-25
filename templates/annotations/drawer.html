@@ -1,0 +1,210 @@
+<!--
+  Signal Forge — Annotations Drawer Component
+
+  Reusable side-drawer for embedding section-level rationale in AI-generated documents.
+
+  USAGE:
+  1. Add class="annotated" data-note="sectionKey" to any <h2> you want annotated
+  2. Define annotations in a JS object (see ANNOTATIONS_DATA below)
+  3. Include this file's CSS in <style> and HTML/JS before </body>
+
+  DESIGN PRINCIPLES:
+  - Invisible by default. Document reads clean without annotations.
+  - Accessible on demand. Click a section header to open the drawer.
+  - Stripped on print. @media print hides all annotation UI.
+  - Not auto-generated. Content must come from actual conversation context.
+
+  See: docs/voice/content-taxonomy.md → Annotations Convention
+-->
+
+<!-- ============================================================
+     CSS — paste into your document's <style> block
+     ============================================================ -->
+
+<!--
+<style>
+  /* --- Annotations Drawer --- */
+  :root {
+    --drawer-w: 380px;
+    --accent: #4338ca;
+  }
+
+  .page { transition: max-width 0.25s; }
+  body.drawer-open .page { max-width: 720px; margin-right: calc(var(--drawer-w) + 2rem); }
+
+  .annotated { position: relative; cursor: pointer; }
+  .annotated::after {
+    content: '?';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    margin-left: 8px;
+    vertical-align: middle;
+    transition: background 0.15s, color 0.15s;
+  }
+  .annotated:hover::after { background: var(--accent); color: #fff; }
+  .annotated.active { color: var(--accent); }
+  .annotated.active::after { background: var(--accent); color: #fff; }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: var(--drawer-w);
+    height: 100vh;
+    background: #fafafa;
+    border-left: 1px solid #d4d4d4;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 1.5rem;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  body.drawer-open .drawer { transform: translateX(0); }
+
+  .drawer-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .drawer-close:hover { background: #f7f7f7; }
+
+  .drawer-label {
+    font-family: var(--mono, 'SF Mono', monospace);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .drawer-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-right: 2rem;
+  }
+
+  .drawer p { margin-bottom: 0.6rem; color: #333; }
+  .drawer .origin {
+    font-family: var(--mono, 'SF Mono', monospace);
+    font-size: 11px;
+    color: #555;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #d4d4d4;
+  }
+
+  .drawer-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-family: var(--mono, 'SF Mono', monospace);
+    cursor: pointer;
+    z-index: 101;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .drawer-toggle:hover { opacity: 0.9; }
+  body.drawer-open .drawer-toggle { display: none; }
+
+  @media print {
+    .annotated::after { display: none; }
+    .drawer, .drawer-toggle { display: none; }
+    .page { max-width: 100%; margin: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .drawer { width: 100%; }
+    body.drawer-open .page { display: none; }
+  }
+</style>
+-->
+
+<!-- ============================================================
+     HTML — paste before </body>
+     ============================================================ -->
+
+<div class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+  <div class="drawer-label">Strategic Thinking</div>
+  <div class="drawer-title" id="drawer-title"></div>
+  <div id="drawer-body"></div>
+</div>
+
+<button class="drawer-toggle" onclick="document.querySelector('.annotated').click()">? Show strategic context</button>
+
+<!-- ============================================================
+     JS — paste before </body>
+
+     Replace ANNOTATIONS_DATA with your document's annotations.
+     Each key matches a data-note="key" attribute on an <h2>.
+
+     Annotation schema:
+     {
+       title: string,           // "Why this section exists"
+       body: string (HTML),     // Rationale paragraphs. Use <p> tags.
+                                // End with <p class="origin">source info</p>
+     }
+     ============================================================ -->
+
+<script>
+// Replace this with your document's annotations
+const ANNOTATIONS_DATA = {
+  // example: {
+  //   title: "Why this section exists",
+  //   body: `<p>Rationale paragraph.</p>
+  //          <p>Another paragraph explaining what changed and why.</p>
+  //          <p class="origin">Source: conversation + API research.</p>`
+  // }
+};
+
+function closeDrawer() {
+  document.body.classList.remove('drawer-open');
+  document.querySelectorAll('.annotated.active').forEach(el => el.classList.remove('active'));
+}
+
+document.querySelectorAll('.annotated').forEach(el => {
+  el.addEventListener('click', () => {
+    const key = el.dataset.note;
+    const note = ANNOTATIONS_DATA[key];
+    if (!note) return;
+
+    document.querySelectorAll('.annotated.active').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+
+    document.getElementById('drawer-title').textContent = note.title;
+    document.getElementById('drawer-body').innerHTML = note.body;
+    document.body.classList.add('drawer-open');
+    document.getElementById('drawer').scrollTop = 0;
+  });
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+</script>
