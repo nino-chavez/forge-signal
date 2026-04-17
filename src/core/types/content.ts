@@ -2,9 +2,23 @@
  * Content Types and Modes
  *
  * Core type definitions for content classification and output formats.
+<<<<<<< HEAD
  */
 
 export type ContentMode = 'thought-leadership' | 'architecture' | 'advisory' | 'documentation';
+=======
+ * ContentMode is a string to allow custom modes registered at runtime.
+ * BuiltInContentMode provides type safety for the four built-in modes.
+ */
+
+import { getModeForContentType, isContentTypeInMode } from '../registries/mode-registry.js';
+
+/** Runtime content mode identifier — any registered string */
+export type ContentMode = string;
+
+/** Built-in modes for type safety in preset definitions */
+export type BuiltInContentMode = 'thought-leadership' | 'architecture' | 'advisory' | 'documentation';
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 export type ContentType =
   | 'deck'
@@ -23,6 +37,7 @@ export type ContentType =
 export type OutputFormat = 'pptx' | 'docx' | 'pdf' | 'html' | 'slides' | 'markdown';
 
 /**
+<<<<<<< HEAD
  * Check if a content type is documentation
  */
 export function isDocumentationType(type: ContentType): boolean {
@@ -52,4 +67,19 @@ export function getModeForType(type: ContentType): ContentMode {
     tutorial: 'documentation',
   };
   return modeMap[type] || 'advisory';
+=======
+ * Check if a content type is documentation.
+ * Delegates to the mode registry.
+ */
+export function isDocumentationType(type: ContentType): boolean {
+  return isContentTypeInMode(type, 'documentation');
+}
+
+/**
+ * Get the content mode for a content type.
+ * Delegates to the mode registry.
+ */
+export function getModeForType(type: ContentType): ContentMode {
+  return getModeForContentType(type);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 }

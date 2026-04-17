@@ -20,7 +20,11 @@ A VP should find the risks in 5 seconds, the ask in 10, and the key numbers in t
    resolution time was approximately 98 hours compared to under one hour for
    non-billing cases."
 
+<<<<<<< HEAD
 ✅ **Source:** Jayna Fontenot, Jan 2025 – Feb 2026, 2,305 cases.
+=======
+✅ **Source:** [Support Lead], Jan 2025 – Feb 2026, 2,305 cases.
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
    - **91%** of email cases deflectable
    - **59%** are invoice inquiries — single largest category
    - **98x resolution gap:** billing ~4 days vs. non-billing <1 hour
@@ -51,8 +55,13 @@ This is internal. Use "we," "our," "the team." Reference people and systems by n
 ❌ "Your organization should consider implementing a self-service invoice portal."
 ❌ "I recommend the client prioritize billing triage."
 
+<<<<<<< HEAD
 ✅ "The invoice portal must ship by June 1. Jason Schmitt owns the scope decision."
 ✅ "Jayna's team needs to instrument case categorization before launch."
+=======
+✅ "The invoice portal must ship by June 1. [Product Lead] owns the scope decision."
+✅ "The support team needs to instrument case categorization before launch."
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ### 4. Options with Rationale and Rejection
@@ -80,8 +89,13 @@ Risks, open questions, next steps, staffing, comparisons, metrics — all tables
 ```markdown
 | # | Question | Blocks | Owner | Deadline |
 |---|----------|--------|-------|----------|
+<<<<<<< HEAD
 | 1 | C.UI repo access | All CX prototyping | Nicholas Saldivar | **Immediate** |
 | 2 | Invoice portal scope for June 1 | Phase 1 CX | Jason Schmitt | Mar 25 |
+=======
+| 1 | C.UI repo access | All CX prototyping | [Engineering Lead] | **Immediate** |
+| 2 | Invoice portal scope for June 1 | Phase 1 CX | [Product Lead] | Mar 25 |
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ---
@@ -94,7 +108,11 @@ Risks, open questions, next steps, staffing, comparisons, metrics — all tables
 |----------------|---------|
 | **Direct** | "This must ship by June 1." |
 | **Factual** | "2,305 cases tracked. 91% deflectable." |
+<<<<<<< HEAD
 | **Named accountability** | "Ryan Means owns the staffing decision." |
+=======
+| **Named accountability** | "[VP Operations] owns the staffing decision." |
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 | **Trade-off explicit** | "The trade-off: delays revenue by 30-60 days." |
 | **Assertive on blockers** | "Blocker: C.UI repo access. Every day compresses the window." |
 
@@ -157,7 +175,11 @@ Table: Metric | Current | Target
 
 ### Technical Proposal / Solution Plan (Deeper)
 
+<<<<<<< HEAD
 Follow the Mustang pattern:
+=======
+Follow this pattern:
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 - **The Delivery Problem** — narrative context (2-3 paragraphs max)
 - **Who Touches the System** — actors and their needs
 - **Scope** — in scope, out of scope, permanently out of scope (with reasons)
@@ -219,9 +241,15 @@ Follow the Mustang pattern:
 
 ## Reference Examples
 
+<<<<<<< HEAD
 - **Mustang Solution Plan v2:** `projects/mustang/plans/replatform-solution-plan-v2.md` — canonical example of the deeper technical proposal format
 - **Phase 1 Delta Handling Strategy:** Referenced in Mustang project — good example of options with rationale and data tables
 - **P&P CX Strategy:** `content/deck-pp-cx-strategy.md` in the pricing-packaging project — example of the lighter strategy proposal format
+=======
+Reference implementations can be found in local `projects/` directories (gitignored). Internal strategy content typically takes two forms:
+- **Deep technical proposals** — solution plans with options analysis, data tables, and risk matrices
+- **Lighter strategy proposals** — CX strategies, roadmaps with clear recommendations and next steps
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -229,4 +257,8 @@ Follow the Mustang pattern:
 
 | Version | Date | Changes |
 |---------|------|---------|
+<<<<<<< HEAD
 | 1.0 | 2026-03-13 | Initial guide based on P&P deliverable iterations and Mustang solution plan patterns |
+=======
+| 1.0 | 2026-03-13 | Initial guide based on internal deliverable iterations and solution plan patterns |
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

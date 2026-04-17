@@ -798,7 +798,15 @@ async function main() {
   console.log('🏛️  AI Council Red Team Audit');
   console.log('════════════════════════════════════════\n');
 
+<<<<<<< HEAD
   const basePath = '/Users/nino/Workspace/dev/apps/signal-forge/projects/woo-migration';
+=======
+  const basePath = process.argv[2] || process.cwd();
+  if (!process.argv[2]) {
+    console.log('Usage: npx tsx scripts/ai-council-audit.ts <project-directory>\n');
+    console.log(`No directory specified, using current directory: ${basePath}\n`);
+  }
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
   // Load documents
   console.log('📂 Loading documents...');

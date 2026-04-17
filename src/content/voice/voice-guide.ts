@@ -1,9 +1,22 @@
 /**
  * Voice & Tone Guide for Strategic Content
+<<<<<<< HEAD
  * 
  * Adapted from Signal Dispatch blog voice guide for strategic content generation
  */
 
+=======
+ *
+ * This module now delegates to the voice registry for mode-specific
+ * instructions. The legacy exports (VOICE_RULES, PROVISIONAL_PHRASES,
+ * EVOLUTION_PATTERN) are preserved for backward compatibility.
+ */
+
+import { loadConfig } from '../../core/config.js';
+import { getVoiceInstructionsFromRegistry } from '../../core/registries/voice-registry.js';
+import type { Perspective } from '../../core/registries/types.js';
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 export interface VoiceRules {
   openingPatterns: {
     questionFirst: boolean;
@@ -31,6 +44,10 @@ export interface VoiceRules {
   };
 }
 
+<<<<<<< HEAD
+=======
+/** @deprecated Use voice registry instead. Preserved for backward compatibility. */
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 export const VOICE_RULES: VoiceRules = {
   openingPatterns: {
     questionFirst: true,
@@ -83,6 +100,10 @@ export const VOICE_RULES: VoiceRules = {
   },
 };
 
+<<<<<<< HEAD
+=======
+/** @deprecated Use voice registry instead. */
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 export const PROVISIONAL_PHRASES = [
   "Here's where I've landed—for now",
   "This is what I think today",
@@ -90,10 +111,15 @@ export const PROVISIONAL_PHRASES = [
   "Maybe this isn't about X at all. Maybe it's about Y",
 ];
 
+<<<<<<< HEAD
+=======
+/** @deprecated Use voice registry instead. */
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 export const EVOLUTION_PATTERN = {
   template: "I used to [OLD APPROACH]. Now [NEW APPROACH]. That sounds like progress. And it is. But it also brings up a real question: [TENSION].",
 };
 
+<<<<<<< HEAD
 import { loadConfig } from '../../core/config.js';
 
 export function getVoiceInstructions(): string {
@@ -140,3 +166,24 @@ Avoid:
 `;
 }
 
+=======
+/**
+ * Get voice instructions for a specific mode with perspective handling.
+ *
+ * @param mode - Content mode (defaults to 'thought-leadership' for backward compat)
+ * @param perspective - Writing perspective (defaults to config-based or 'consultant')
+ */
+export function getVoiceInstructions(
+  mode: string = 'thought-leadership',
+  perspective?: Perspective
+): string {
+  const config = loadConfig();
+  const effectivePerspective = perspective ?? (config as any).perspective ?? 'consultant';
+
+  return getVoiceInstructionsFromRegistry(mode, effectivePerspective, {
+    author: config.author,
+    persona: config.persona,
+    company: config.company,
+  });
+}
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

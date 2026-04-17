@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Design System: Default Font Pack
 
 ## Rival Sans Font Family (Primary)
@@ -16,6 +17,30 @@
 
 <!-- Rival Sans Project (backup/alternative) -->
 <link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
+=======
+# Design System: Font Configuration
+
+## Overview
+
+Font configuration is per-theme. Each theme in the theme registry specifies its own `fontPrimary`, `fontSecondary`, and `fontBold` values. The default `signal-forge` theme uses Rival Sans via Adobe Fonts (Typekit).
+
+Fonts can be customized per deployment by:
+1. Creating a custom theme with different font families
+2. Updating font URLs in your `~/.signal-forge/config.json` (`fonts.primary`, `fonts.secondary`)
+
+## Default Theme Fonts (Signal Forge)
+
+**Rival Sans** is the default font family for the `signal-forge` theme. It is loaded via Adobe Fonts (Typekit).
+
+### Adobe Fonts Configuration
+
+> **Note**: Typekit kit IDs are tied to specific Adobe Creative Cloud accounts. The IDs below are for the Signal Forge project's Adobe Fonts subscription. If you fork this project, you will need your own Adobe Fonts subscription and kit IDs, or use system fonts instead.
+
+**Font Loading:**
+```html
+<!-- Replace with your own Typekit kit ID -->
+<link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 <!-- Preconnect for faster font loading -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
@@ -115,7 +140,11 @@
 body {
     font-family: "rival-sans", "komet", sans-serif;
     font-weight: 400;
+<<<<<<< HEAD
     color: var(--accenture-text-primary);
+=======
+    color: var(--text-primary);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -124,7 +153,11 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: "rival-sans", "komet", sans-serif;
     font-weight: 700;
+<<<<<<< HEAD
     color: var(--accenture-text-primary);
+=======
+    color: var(--text-primary);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     letter-spacing: -0.01em;
 }
 
@@ -176,10 +209,17 @@ h1, h2, h3, h4, h5, h6 {
     <title>Document Title</title>
     
     <!-- Rival Sans Font from Adobe Fonts (Primary) -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
     
     <!-- Komet Font from Adobe Fonts (Alternate) -->
     <link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
+=======
+    <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
+    
+    <!-- Komet Font from Adobe Fonts (Alternate) -->
+    <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     
@@ -259,6 +299,7 @@ module.exports = {
 ### Notes
 
 - **Adobe Fonts Access:** Requires an active Adobe Creative Cloud subscription with Adobe Fonts access
+<<<<<<< HEAD
 - **Default Project Kit ID:** `wbj0oqh` - Contains all 10 font families (34 fonts total)
 - **Rival Sans Project Kit ID:** `tjp7ihm` - Backup/alternative Rival Sans project
 - **Performance:** Fonts are loaded asynchronously via Adobe Fonts CDN for optimal performance
@@ -273,5 +314,20 @@ module.exports = {
 ---
 
 **Last Updated:** November 2024  
+=======
+- **Per-deployment:** Typekit kit IDs are account-specific. Replace with your own or use system fonts.
+- **Performance:** Fonts are loaded asynchronously via Adobe Fonts CDN for optimal performance
+- **Fallback:** Font stack ensures graceful degradation through the configured font families to system `sans-serif`
+- **Custom themes:** Define your own `fontPrimary`/`fontSecondary`/`fontBold` in a custom theme. See [themes.md](themes.md).
+
+### Related Documentation
+
+- See [colors.md](colors.md) for color palette configuration
+- See [themes.md](themes.md) for theme registry and custom theme creation
+
+---
+
+**Last Updated:** March 2025
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 **Maintained By:** Signal Forge Project
 

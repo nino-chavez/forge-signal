@@ -155,6 +155,7 @@ BREAKTHROUGH: How to bridge the gap
 - `brief` - Executive brief (1-3 pages)
 - `roadmap` - Strategic roadmap document
 - `whitepaper` - Strategy whitepaper
+<<<<<<< HEAD
 - `memo` - High-density 1-page decision memo
 
 ---
@@ -220,6 +221,8 @@ Constraints:
 4. Structure: SCQR → Argument → Solution → Plan → Ask
 Tone: Clinical, decisive, urgent.
 ```
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -384,6 +387,7 @@ For documents that span modes, use clear section breaks:
 
 ---
 
+<<<<<<< HEAD
 ## Annotations Convention
 
 ### The Problem
@@ -433,6 +437,11 @@ The reusable drawer component lives at `templates/annotations/drawer.html`. Anno
 - Auto-generating rationale that wasn't part of the actual conversation
 - Putting annotations in the document body (defeats the separation principle)
 - Using annotations as a substitute for flagging assumptions inline (do both)
+=======
+## Quality Gate
+
+All content, regardless of mode, should pass the Document Quality Audit before sharing. See `docs/voice/document-quality-audit.md` for the four-check framework.
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -441,6 +450,11 @@ The reusable drawer component lives at `templates/annotations/drawer.html`. Anno
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2024-11-25 | Initial taxonomy based on RAG-for-AEO learnings |
+<<<<<<< HEAD
 | 1.1 | 2026-02-05 | Added Mode 3a: High-Density Memo variant for decision memos |
 | 1.2 | 2026-03-13 | Added Internal Strategy as fourth mode. Learned from P&P deliverable iterations — blog voice and dense prose are wrong for internal strategy docs. |
 | 1.3 | 2026-03-25 | Added Annotations Convention. Learned from BigCommerce strategy doc — AI conversations produce reasoning that dies when the session closes. Annotations externalize it. |
+=======
+| 1.1 | 2026-03-13 | Added Internal Strategy as fourth mode. Learned from P&P deliverable iterations — blog voice and dense prose are wrong for internal strategy docs. |
+| 1.2 | 2026-03-15 | Added Quality Gate reference and document-quality-audit.md |
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

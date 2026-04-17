@@ -24,7 +24,11 @@ Generate professional technical specification documents for frameworks, protocol
 
 ### Color Palette
 
+<<<<<<< HEAD
 Based on the established dark theme from bigcommerce and woo-migration projects:
+=======
+Dark theme color palette for specification documents:
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ```css
 :root {
@@ -290,8 +294,16 @@ Before finalizing any specification document:
 
 ## Examples
 
+<<<<<<< HEAD
 Reference implementations:
 - `projects/woo-migration/STRATEGIC_ASSESSMENT.html` - Full assessment document
 - `projects/woo-migration/INDEX.html` - Navigation/index page
 - `projects/bigcommerce/bc-90-day-plan.html` - Plan document
 - `projects/agentic-web-standard/INDEX.html` - Framework specification
+=======
+Reference implementations can be found in local `projects/` directories (gitignored). Generate your own examples using:
+
+```bash
+forge generate spec --input context.md --format html
+```
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

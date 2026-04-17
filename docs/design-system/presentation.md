@@ -99,8 +99,13 @@ font-family: "rival-sans", "komet", "darkmode-off", system-ui, -apple-system, sa
 - **System fonts** - Fallback for optimal performance
 
 **Adobe Fonts Projects:**
+<<<<<<< HEAD
 - Rival Sans: Project ID `tjp7ihm` - Primary font family
 - Komet & Darkmode-Off: Project ID `wbj0oqh` - Alternate font families
+=======
+- Rival Sans: Project ID `YOUR_KIT_ID` - Primary font family
+- Komet & Darkmode-Off: Project ID `YOUR_KIT_ID` - Alternate font families
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 #### Font Sizes
 

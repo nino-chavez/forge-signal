@@ -9,7 +9,11 @@ Content (Markdown + directives)
         ↓
    parseDeckFromMarkdownV2()     → DeckData (theme-agnostic)
         ↓
+<<<<<<< HEAD
    PPTX Engine (pptx-engine.ts)  ← getTheme('bigcommerce')
+=======
+   PPTX Engine (pptx-engine.ts)  ← getTheme('signal-forge')
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
         ↓
    Layout Registry               → selects layout function per slide
         ↓
@@ -25,7 +29,10 @@ PptxGenJS does not support presentation-level theme colors. Every element receiv
 | Theme ID | Name | Primary | Font | Dimensions |
 |----------|------|---------|------|------------|
 | `signal-forge` | Signal Forge | `7c3aed` (violet) | Rival Sans | 13.33" x 7.5" |
+<<<<<<< HEAD
 | `bigcommerce` | BigCommerce | `6058FF` (BC purple) | DM Sans | 10" x 5.625" |
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 | `dark` | Dark | `818cf8` (indigo) | Arial | 13.33" x 7.5" |
 
 ## Usage
@@ -35,7 +42,11 @@ PptxGenJS does not support presentation-level theme colors. Every element receiv
 forge generate deck --input strategy.md -f pptx
 
 # Specify a theme
+<<<<<<< HEAD
 forge generate deck --input strategy.md --theme bigcommerce -f pptx
+=======
+forge generate deck --input strategy.md --theme dark -f pptx
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 # List available themes
 forge themes list
@@ -120,6 +131,7 @@ export const acmeCorpTheme: PresentationTheme = {
 };
 ```
 
+<<<<<<< HEAD
 2. Register it in `src/content/design-system/theme-registry.ts`:
 
 ```typescript
@@ -127,6 +139,25 @@ import { acmeCorpTheme } from './themes/acme-corp.js';
 
 // Add to the initialization block:
 themes.set(acmeCorpTheme.id, acmeCorpTheme);
+=======
+2. Register it. You have two options:
+
+**Option A** — Add to built-in presets (if you control the codebase):
+```typescript
+// In src/presets/index.ts, import and register:
+import { registerTheme } from '../content/design-system/theme-registry.js';
+import { acmeCorpTheme } from './themes/acme-corp.js';
+
+registerTheme(acmeCorpTheme);
+```
+
+**Option B** — Register at runtime (for external/plugin usage):
+```typescript
+import { registerTheme } from 'signal-forge/content/design-system/theme-registry.js';
+import { acmeCorpTheme } from './my-themes/acme-corp.js';
+
+registerTheme(acmeCorpTheme);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 3. Use it:

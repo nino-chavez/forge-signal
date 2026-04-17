@@ -119,6 +119,7 @@ The PPTX engine supports multiple themes. Each theme controls colors, fonts, siz
 
 | Theme | Fonts | Primary Color | Dimensions | Best For |
 |-------|-------|--------------|------------|----------|
+<<<<<<< HEAD
 | `signal-forge` (default) | Rival Sans | Violet `#7c3aed` | 13.33" x 7.5" | Internal / Signal Forge brand |
 | `bigcommerce` | DM Sans | BC Purple `#6058FF` | 10" x 5.625" | BigCommerce client decks |
 | `dark` | Arial | Indigo `#818cf8` | 13.33" x 7.5" | Dark mode presentations |
@@ -127,6 +128,16 @@ The PPTX engine supports multiple themes. Each theme controls colors, fonts, siz
 
 ```bash
 forge generate deck --input strategy.md --theme bigcommerce -f pptx
+=======
+| `signal-forge` (default) | Rival Sans | Violet `#7c3aed` | 13.33" x 7.5" | Default brand presentations |
+| `dark` | Arial | Indigo `#818cf8` | 13.33" x 7.5" | Dark mode presentations |
+
+Custom themes can be registered via `registerTheme()`. See the extensibility guide.
+
+### Usage
+
+```bash
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 forge generate deck --input strategy.md --theme dark -f pptx
 forge generate deck --input strategy.md -f pptx   # defaults to signal-forge
 ```
@@ -138,7 +149,10 @@ When generating slide content, match density to the target theme:
 | Theme | Bullets per slide | Body font size | Guideline |
 |-------|-------------------|---------------|-----------|
 | `signal-forge` | 6-8 | 14pt | Generous spacing, fewer items |
+<<<<<<< HEAD
 | `bigcommerce` | 10-12 | 11pt | Dense, compact slides |
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 | `dark` | 6-8 | 14pt | Same as signal-forge |
 
 ## Layout Directives (PPTX)

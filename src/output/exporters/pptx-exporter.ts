@@ -14,7 +14,11 @@ export interface PPTXExportOptions {
   content: string;
   outputPath: string;
   author?: string;
+<<<<<<< HEAD
   /** Theme ID (e.g. 'signal-forge', 'bigcommerce', 'dark'). Defaults to 'signal-forge'. */
+=======
+  /** Theme ID (e.g. 'signal-forge', 'dark'). Defaults to 'signal-forge'. */
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   theme?: string;
 }
 

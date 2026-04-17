@@ -1,19 +1,37 @@
+<<<<<<< HEAD
 # Signal Dispatch: Voice & Tone Guide
 ## Copy Editor and Ghostwriter Touchstone
 
 **Version**: 1.0
 **Last Updated**: 2025-12-14
 **Source**: Empirical analysis of 156 blog posts, 15 deep-read corpus sample
+=======
+# Thought Leadership Voice Guide
+
+**Version**: 2.0
+**Last Updated**: 2025-03-15
+**Origin**: Empirical analysis of 156 blog posts (Signal Dispatch corpus)
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
 ## Purpose
 
+<<<<<<< HEAD
 This guide defines the **actual voice** of Signal Dispatch based on production content analysis, not aspirational principles. Use this as the primary reference for:
 - Editing existing posts for consistency
 - Ghostwriting new content in Nino's voice
 - Evaluating AI-generated drafts
 - Maintaining tonal coherence across all posts
+=======
+This guide defines the voice principles for **Thought Leadership** content in Signal Forge. The principles were derived from production content analysis and refined through iterative generation. Use this as the primary reference for:
+- Configuring thought leadership voice presets
+- Editing thought leadership content for consistency
+- Ghostwriting new thought leadership content
+- Evaluating AI-generated drafts
+
+> **Note**: The examples in this guide originate from the Signal Dispatch blog. They illustrate the principles — your thought leadership content should reflect your own voice and perspective while following these structural patterns.
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -195,6 +213,7 @@ Instead:
 
 ---
 
+<<<<<<< HEAD
 ## Strategic Content: Client Perspective & Tone
 
 When writing strategic content (decks, POVs, papers) as an external consultant, maintain these principles:
@@ -255,6 +274,63 @@ Reference actual meetings/discussions:
 - "Ram put it bluntly in the November 21 review..."
 - "Amy asked the question everyone's thinking..."
 - Shows you were there, listening, understanding their specific situation
+=======
+## Strategic Content: Perspective & Tone
+
+When writing strategic content (decks, POVs, papers), the perspective adapts based on the `perspective` setting in your Signal Forge configuration (`~/.signal-forge/config.json`).
+
+### Perspective Modes
+
+Signal Forge supports three perspectives, configured via the `perspective` field:
+
+**`consultant`** (default) — External advisor perspective:
+- "You" / "your organization" / "your team" framing
+- Pattern recognition: "I've seen this across retail, manufacturing, and enterprise clients"
+- "I recommend..." (consultant guidance)
+- Ground recommendations in actual client context
+
+**`internal`** — Internal team member perspective:
+- "We" / "our" / "our team" framing
+- Reference specific teams and stakeholders by name
+- Professional but direct — no consultant framing
+- No "your organization" or "the client" language
+
+**`neutral`** — No perspective framing:
+- Content stands on its own without pronoun-based framing
+- Useful for industry publications, whitepapers, or open-source documentation
+
+### Natural References (all perspectives)
+
+**Do:**
+- Use natural pronouns for your perspective (see above)
+- Mix direct address and organizational references for variety
+- Use specific names only when necessary for clarity
+
+**Avoid:**
+- Repeatedly using an organization name when pronouns are more natural
+- Overly formal language that sounds robotic
+- Sterile corporate language that creates distance
+
+**Example — Consultant perspective:**
+
+> "You must implement strict Schema.org standards across your catalog. This ensures that when an external agent scans your site, it retrieves accurate pricing."
+
+**Example — Internal perspective:**
+
+> "We need to implement strict Schema.org standards across our catalog. This ensures that when an external agent scans our site, it retrieves accurate pricing."
+
+### Pattern Recognition
+
+Show that you've seen this before:
+- "This isn't unique — I've seen this tension across retail, manufacturing, and enterprise contexts."
+- Ground insights in cross-industry experience, not just theory
+
+### Grounding in Context
+
+Reference actual discussions and stakeholders:
+- Shows you were there, listening, understanding the specific situation
+- Builds credibility through specificity
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -546,12 +622,19 @@ If it sounds like someone thinking out loud while figuring out something hard—
 
 ---
 
+<<<<<<< HEAD
 ## Appendix: Corpus Analysis Summary
+=======
+## Appendix: Origin — Signal Dispatch Corpus Analysis
+
+The voice principles in this guide were derived from empirical analysis of the Signal Dispatch blog.
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 **Total Posts Analyzed**: 156
 **Deep-Read Sample**: 15 representative posts
 **Publication Range**: June 2025 - October 2025
 
+<<<<<<< HEAD
 **Most Common Categories**:
 1. AI & Automation (technical, practical)
 2. Meta/Personal Growth (self-reflective)
@@ -576,3 +659,22 @@ Posts maintain consistent voice even across different topics. Strongest consiste
 **Last Updated**: 2025-12-14
 **Next Review**: Quarterly or after 50 new posts
 **Maintained By**: Signal Dispatch Editorial (AI-assisted)
+=======
+**Voice Consistency Score**: 8.5/10
+
+**Core Voice Markers Identified**:
+- Question-first openings
+- Provisional conclusions (directional, varied phrasing)
+- Self-interrogation without self-doubt
+- Bold section headers for scannability
+- Intentional fragments for rhythm
+- Evolution patterns ("I used to think X, now Y")
+- Pattern recognition across domains
+
+These markers inform the built-in thought leadership voice preset at `src/presets/voices/thought-leadership.ts`.
+
+---
+
+**Last Updated**: 2025-03-15
+**Maintained By**: Signal Forge Project
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

@@ -40,7 +40,11 @@ export function registerAgenticCommands(program: Command): void {
     .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
     .option('-f, --format <formats>', 'Output formats (comma-separated): markdown,html,docx,pdf,pptx')
     .option('-m, --mode <mode>', 'Content mode: thought-leadership, architecture, advisory, documentation')
+<<<<<<< HEAD
     .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, bigcommerce, dark)')
+=======
+    .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, dark)')
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     .option('--research', 'Enable research agent before production')
     .option('--iterate', 'Enable feedback loop until voice approval')
     .option('--max-iterations <n>', 'Maximum revision iterations (default: 5)', '5')

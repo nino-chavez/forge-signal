@@ -86,7 +86,11 @@ export async function renderDeckToPptx(options: RenderDeckOptions): Promise<void
     }
 
     // Add logo (skip title and full-image slides)
+<<<<<<< HEAD
     if (slideData.layout !== 'title' && slideData.layout !== 'full-image' && slideData.layout !== 'full-image-clean') {
+=======
+    if (slideData.layout !== 'title' && slideData.layout !== 'full-image') {
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
       addLogo(pptxSlide, theme);
     }
 

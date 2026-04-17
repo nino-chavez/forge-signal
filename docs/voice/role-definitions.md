@@ -1,15 +1,24 @@
 # Role Definitions
 
+<<<<<<< HEAD
 Signal Forge uses specialized roles based on content type. The workflow and roles vary depending on whether you're generating Thought Leadership, Solution Architecture, or Executive Advisory content.
 
 ---
 
 ## Content Type Determines Workflow
+=======
+Signal Forge uses specialized roles organized into workflows. Workflow routing is registry-driven — the system looks up the registered workflow for the detected content mode via `getWorkflowForMode()`.
+
+---
+
+## Workflow Routing
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ```
                          Raw Input
                              ↓
                     ┌────────┴────────┐
+<<<<<<< HEAD
                     │   CLASSIFIER    │
                     │ (Detect Mode)   │
                     └────────┬────────┘
@@ -27,6 +36,34 @@ Signal Forge uses specialized roles based on content type. The workflow and role
       Final Output      Final Output      Final Output
 ```
 
+=======
+                    │  MODE DETECTION  │
+                    │  (--mode flag    │
+                    │   or classifier) │
+                    └────────┬────────┘
+                             ↓
+                    ┌────────┴────────┐
+                    │ WORKFLOW LOOKUP  │
+                    │ (registry-based) │
+                    └────────┬────────┘
+              ┌──────────────┴──────────────┐
+              ↓                              ↓
+    STANDARD WORKFLOW               DOCUMENTATION WORKFLOW
+    (thought-leadership,            (documentation)
+     architecture, advisory)
+              ↓                              ↓
+       Ghost Writer                  Documentation Writer
+              ↓                              ↓
+        Copywriter                     Final Output
+              ↓
+          Editor
+              ↓
+       Final Output
+```
+
+Workflows are defined in `src/presets/workflows/` and registered via `registerWorkflow()`. Custom workflows can be added without modifying core code.
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ---
 
 ## Thought Leadership Roles
@@ -285,9 +322,49 @@ Signal Forge uses specialized roles based on content type. The workflow and role
 
 ---
 
+<<<<<<< HEAD
+=======
+## Documentation Roles
+
+### Documentation Writer
+
+**Purpose**: Generate user-focused documentation from raw input
+
+**Voice Guide**: `docs/voice/documentation-voice.md`
+
+**Responsibilities**:
+- Transform raw notes into instructional, task-oriented content
+- Lead with what the user will accomplish
+- Use imperative verbs, numbered steps, tables, and code blocks
+- Direct "you" address throughout
+- Include troubleshooting sections
+
+**Input**: Product notes, feature descriptions, workflow documentation
+**Output**: User guide, tutorial, or reference document
+
+**Voice Principles**:
+- Imperative: "Run this command" not "You should run"
+- Direct: No questions, no provisional language
+- Structured: Numbered steps, tables over prose
+- Copy-paste ready: Code blocks with commands
+
+**Quality Markers**:
+- [ ] Opens with user benefit statement
+- [ ] All procedures use numbered steps
+- [ ] Code blocks are copy-paste ready
+- [ ] Tables used for options/commands
+- [ ] Troubleshooting section included
+
+---
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ## Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | Initial | Three-role workflow for thought leadership |
 | 2.0 | 2024-11-25 | Expanded to three content modes with specialized roles |
+<<<<<<< HEAD
+=======
+| 3.0 | 2025-03-15 | Registry-driven workflow routing, added Documentation Writer role |
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

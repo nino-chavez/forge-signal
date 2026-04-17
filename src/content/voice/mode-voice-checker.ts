@@ -2,10 +2,18 @@
  * Mode-Aware Voice Checker
  *
  * Checks content voice based on the detected or specified content mode.
+<<<<<<< HEAD
  * Each mode has distinct voice characteristics and quality indicators.
  */
 
 import type { ContentMode } from '../../core/types/index.js';
+=======
+ * Voice check rules come from the voice registry — no hardcoded mode data here.
+ */
+
+import type { ContentMode } from '../../core/types/index.js';
+import { getVoice, listVoices } from '../../core/registries/voice-registry.js';
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 export interface ModeVoiceCheckResult {
   mode: ContentMode;
@@ -16,6 +24,7 @@ export interface ModeVoiceCheckResult {
 }
 
 // =============================================================================
+<<<<<<< HEAD
 // Mode-Specific Rules
 // =============================================================================
 
@@ -155,6 +164,8 @@ const MODE_RULES: Record<ContentMode, ModeVoiceRules> = {
 };
 
 // =============================================================================
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 // Mode-Aware Checker
 // =============================================================================
 
@@ -162,7 +173,22 @@ const MODE_RULES: Record<ContentMode, ModeVoiceRules> = {
  * Check content voice for a specific mode
  */
 export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoiceCheckResult {
+<<<<<<< HEAD
   const rules = MODE_RULES[mode];
+=======
+  const voice = getVoice(mode);
+  if (!voice) {
+    return {
+      mode,
+      score: 5,
+      passed: false,
+      issues: [`No voice definition registered for mode "${mode}"`],
+      strengths: [],
+    };
+  }
+
+  const rules = voice.checkRules;
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   const issues: string[] = [];
   const strengths: string[] = [];
   let score = 10;
@@ -177,6 +203,7 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
   );
 
   if (!hasRequiredOpening) {
+<<<<<<< HEAD
     issues.push(`Opening lacks ${rules.openingPatterns.requiredDescription}`);
     score -= 2;
   } else {
@@ -185,22 +212,43 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
 
   if (hasForbiddenOpening) {
     issues.push(`Opening contains ${rules.openingPatterns.forbiddenDescription}`);
+=======
+    issues.push(`Opening lacks expected patterns for ${voice.name}`);
+    score -= 2;
+  } else {
+    strengths.push(`Strong opening for ${voice.name}`);
+  }
+
+  if (hasForbiddenOpening) {
+    issues.push(`Opening contains patterns inappropriate for ${voice.name}`);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     score -= 1.5;
   }
 
   // Check positive voice markers
   const positiveMatches = rules.voiceMarkers.positive.filter((pattern) => pattern.test(content));
   if (positiveMatches.length === 0) {
+<<<<<<< HEAD
     issues.push(`Missing ${rules.voiceMarkers.positiveDescription}`);
     score -= 1.5;
   } else if (positiveMatches.length >= 2) {
     strengths.push(`Uses ${rules.voiceMarkers.positiveDescription}`);
+=======
+    issues.push(`Missing positive voice markers for ${voice.name}`);
+    score -= 1.5;
+  } else if (positiveMatches.length >= 2) {
+    strengths.push(`Uses appropriate voice markers for ${voice.name}`);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   }
 
   // Check negative voice markers
   const negativeMatches = rules.voiceMarkers.negative.filter((pattern) => pattern.test(content));
   if (negativeMatches.length > 0) {
+<<<<<<< HEAD
     issues.push(`Contains ${rules.voiceMarkers.negativeDescription}`);
+=======
+    issues.push(`Contains voice markers inappropriate for ${voice.name}`);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     score -= negativeMatches.length * 0.75;
   }
 
@@ -209,10 +257,17 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
     pattern.test(content)
   );
   if (!hasRequiredStructure) {
+<<<<<<< HEAD
     issues.push(`Missing ${rules.structuralPatterns.requiredDescription}`);
     score -= 0.5;
   } else {
     strengths.push(`Has ${rules.structuralPatterns.requiredDescription}`);
+=======
+    issues.push(`Missing expected structural patterns for ${voice.name}`);
+    score -= 0.5;
+  } else {
+    strengths.push(`Has expected structural patterns for ${voice.name}`);
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   }
 
   // Check jargon
@@ -223,6 +278,7 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
     }
   }
 
+<<<<<<< HEAD
   // Mode-specific bonus checks
   if (mode === 'documentation') {
     // Documentation should have code blocks
@@ -287,6 +343,14 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
     if (hasProvisionalEnding) {
       strengths.push('Ends provisionally');
     }
+=======
+  // Run bonus checks from the voice definition
+  if (voice.bonusChecks) {
+    const bonus = voice.bonusChecks(content);
+    issues.push(...bonus.issues);
+    strengths.push(...bonus.strengths);
+    score += bonus.scoreAdjustment;
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   }
 
   score = Math.max(0, Math.min(10, score));
@@ -301,6 +365,7 @@ export function checkVoiceForMode(content: string, mode: ContentMode): ModeVoice
 }
 
 /**
+<<<<<<< HEAD
  * Get voice instructions for a specific mode
  */
 export function getVoiceInstructionsForMode(mode: ContentMode): string {
@@ -400,6 +465,17 @@ Avoid:
   };
 
   return instructions[mode];
+=======
+ * Get voice instructions for a specific mode.
+ * Delegates to the voice registry.
+ */
+export function getVoiceInstructionsForMode(mode: ContentMode): string {
+  const voice = getVoice(mode);
+  if (!voice) {
+    return `You are writing ${mode} content.`;
+  }
+  return voice.instructions;
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 }
 
 /**
@@ -411,8 +487,15 @@ export function detectModeMismatch(
 ): { mismatch: boolean; detectedMode?: ContentMode; reason?: string } {
   const intendedResult = checkVoiceForMode(content, intendedMode);
 
+<<<<<<< HEAD
   // Check against other modes
   const otherModes = (['thought-leadership', 'architecture', 'advisory', 'documentation'] as ContentMode[])
+=======
+  // Check against all other registered modes
+  const allVoices = listVoices();
+  const otherModes = allVoices
+    .map((v) => v.modeId)
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     .filter((m) => m !== intendedMode);
 
   for (const otherMode of otherModes) {

@@ -1,6 +1,10 @@
 import type { AIProviderInterface, GenerateOptions } from '../../providers/ai-provider.js';
 import { getVoiceInstructions } from '../../content/voice/voice-guide.js';
 import { loadConfig } from '../../core/config.js';
+<<<<<<< HEAD
+=======
+import { getModeForContentType } from '../../core/registries/mode-registry.js';
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 export interface GhostWriterInput {
   rawContent: string;
@@ -20,7 +24,11 @@ export interface GhostWriterOutput {
 
 /**
  * Ghost Writer Role
+<<<<<<< HEAD
  * 
+=======
+ *
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
  * Generates initial content from raw input (meeting notes, recaps, etc.)
  * Applies voice principles from the start
  * May generate multiple angles/approaches
@@ -51,15 +59,25 @@ export class GhostWriter {
   }
 
   private buildSystemInstruction(input: GhostWriterInput): string {
+<<<<<<< HEAD
     const voiceInstructions = getVoiceInstructions();
     const contentTypeInstructions = this.getContentTypeInstructions(input.contentType);
     
     const config = loadConfig();
     const { author, persona, company } = config;
+=======
+    const mode = getModeForContentType(input.contentType);
+    const voiceInstructions = getVoiceInstructions(mode);
+    const contentTypeInstructions = this.getContentTypeInstructions(input.contentType);
+
+    const config = loadConfig();
+    const { author } = config;
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
     return `You are ${author}'s Ghost Writer for strategic content. Your role is to:
 
 1. **Absorb Context**: Read meeting notes, recaps, stakeholder concerns, and raw data
+<<<<<<< HEAD
 2. **Identify Tensions**: Find the uncomfortable truths, the questions that need answering
 3. **Structure Strategically**: Choose the right structure based on content type (${input.contentType})
 4. **Generate in Voice**: Write in ${author}'s voice—pattern recognition, provisional conclusions, showing the work
@@ -73,10 +91,18 @@ export class GhostWriter {
 - Professional but direct — we're all on the same team
 - No consultant framing — no "your organization" or "the client"
 
+=======
+2. **Identify Key Themes**: Find the central ideas and arguments
+3. **Structure Strategically**: Choose the right structure based on content type (${input.contentType})
+4. **Generate in Voice**: Write in the appropriate voice for ${mode} content
+5. **Multiple Angles**: Consider different approaches to the same content
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ${voiceInstructions}
 
 ${contentTypeInstructions}
 
+<<<<<<< HEAD
 ${input.audience ? `Target Audience: ${input.audience}` : ''}
 
 Voice markers to include:
@@ -114,6 +140,28 @@ Avoid:
     prompt += `- Uses bold headers for structure\n`;
     prompt += `- Grounds recommendations in actual experience\n`;
     
+=======
+${input.audience ? `Target Audience: ${input.audience}` : ''}`;
+  }
+
+  private buildPrompt(input: GhostWriterInput): string {
+    const mode = getModeForContentType(input.contentType);
+
+    let prompt = `Generate strategic content from the following input:\n\n`;
+
+    if (input.context) {
+      prompt += `Context: ${input.context}\n\n`;
+    }
+
+    prompt += `Raw Input:\n${input.rawContent}\n\n`;
+
+    prompt += `Generate ${input.contentType} content in ${mode} mode that:\n`;
+    prompt += `- Follows the voice guidelines provided\n`;
+    prompt += `- Uses bold headers for structure\n`;
+    prompt += `- Grounds content in actual experience\n`;
+    prompt += `- Is appropriate for the target audience\n`;
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     return prompt;
   }
 
@@ -124,10 +172,16 @@ Avoid:
 - Each slide should have one clear message
 - Use slide titles as questions or tensions
 - Bullet points as fragments (not full sentences)
+<<<<<<< HEAD
 - "For now" language in recommendations
 - Show evolution ("We used to think X, now Y")
 - Pattern recognition highlighted`;
       
+=======
+- Show evolution ("We used to think X, now Y")
+- Pattern recognition highlighted`;
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
       case 'pov':
         return `Content Type: Short-Form Strategy POV (800-1200 words)
 - Executive-friendly format
@@ -135,15 +189,24 @@ Avoid:
 - Concise but compelling evidence
 - Actionable next steps
 - Conversational but strategic tone`;
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
       case 'paper':
         return `Content Type: Long-Form Strategy Paper (3000-8000 words)
 - Deep strategic thinking
 - Detailed frameworks
 - Comprehensive examples
 - Nuances and edge cases explored
+<<<<<<< HEAD
 - Provisional conclusions with room for evolution`;
       
+=======
+- Thoughtful conclusions`;
+
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
       default:
         return '';
     }
@@ -162,4 +225,7 @@ Avoid:
     }
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

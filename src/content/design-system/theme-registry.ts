@@ -7,7 +7,10 @@
 
 import type { PresentationTheme } from './theme-types.js';
 import { signalForgeTheme } from './themes/signal-forge.js';
+<<<<<<< HEAD
 import { bigcommerceTheme } from './themes/bigcommerce.js';
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 import { darkTheme } from './themes/dark.js';
 
 export const DEFAULT_THEME_ID = 'signal-forge';
@@ -16,7 +19,10 @@ const themes = new Map<string, PresentationTheme>();
 
 // Register built-in themes
 themes.set(signalForgeTheme.id, signalForgeTheme);
+<<<<<<< HEAD
 themes.set(bigcommerceTheme.id, bigcommerceTheme);
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 themes.set(darkTheme.id, darkTheme);
 
 /**

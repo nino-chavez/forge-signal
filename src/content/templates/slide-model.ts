@@ -23,7 +23,10 @@ export type SlideLayout =
   | 'table'              // Title + data table
   | 'image-text'         // Image on one side, text on other
   | 'full-image'         // Full-bleed image with overlay
+<<<<<<< HEAD
   | 'full-image-clean'   // Full-bleed image, no overlay text
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   | 'quote'              // Large quote with attribution
   | 'conclusion';        // Closing / thank-you slide
 
@@ -122,7 +125,10 @@ const LAYOUT_DIRECTIVE_RE = /<!--\s*layout:\s*(\S+)\s*-->/i;
 const SECTION_DIRECTIVE_RE = /<!--\s*section\s*-->/i;
 const NOTES_DIRECTIVE_RE = /<!--\s*notes\s*-->/i;
 const NOTES_END_RE = /<!--\s*\/notes\s*-->/i;
+<<<<<<< HEAD
 const NOTES_INLINE_RE = /<!--\s*notes\s*:\s*(.+?)\s*-->/i;
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 const TABLE_HEADER_RE = /^\|(.+)\|$/;
 const TABLE_SEPARATOR_RE = /^\|[-:\s|]+\|$/;
 const IMAGE_RE = /^!\[([^\]]*)\]\(([^)]+)\)/;
@@ -259,6 +265,7 @@ export function parseDeckFromMarkdownV2(markdown: string): DeckData {
       continue;
     }
 
+<<<<<<< HEAD
     // --- Directive: inline notes (<!-- notes: content here -->)
     const inlineNotesMatch = trimmed.match(NOTES_INLINE_RE);
     if (inlineNotesMatch) {
@@ -270,6 +277,8 @@ export function parseDeckFromMarkdownV2(markdown: string): DeckData {
       continue;
     }
 
+=======
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     // --- Directive: notes block
     if (NOTES_DIRECTIVE_RE.test(trimmed) && !NOTES_END_RE.test(trimmed)) {
       inNotes = true;

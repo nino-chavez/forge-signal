@@ -7,6 +7,10 @@
 // Content modes and types
 export type {
   ContentMode,
+<<<<<<< HEAD
+=======
+  BuiltInContentMode,
+>>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   ContentType,
   OutputFormat,
 } from './content.js';
