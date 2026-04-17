@@ -1,0 +1,18 @@
+{
+  "voice": "l30f87tf05uxyknGdDw6",
+  "model": "eleven_multilingual_v2",
+  "defaultHoldSeconds": 0.5,
+  "scenes": [
+    {
+      "image": "scene-01-hook.png",
+      "title": "Scene title — short, scannable",
+      "caption": "Narration goes here. Conversational, not scripted. Explain why it matters, not what's on screen."
+    },
+    {
+      "image": "scene-02-demo.png",
+      "title": "Second scene",
+      "caption": "Each scene should have a functional, technical, and architectural layer — woven in, not labeled.",
+      "captionPosition": "top"
+    }
+  ]
+}
