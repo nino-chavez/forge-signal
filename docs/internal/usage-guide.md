@@ -13,11 +13,6 @@
    # Edit .env and add your API keys
    ```
 
-<<<<<<< HEAD
-3. **Generate content**:
-   ```bash
-   npm run generate deck --input recap.md --output deck.pptx
-=======
 3. **Initialize user config**:
    ```bash
    forge init
@@ -27,13 +22,10 @@
 4. **Generate content**:
    ```bash
    forge generate deck --input recap.md --format pptx,html
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
    ```
 
 ## Commands
 
-<<<<<<< HEAD
-=======
 ### Initialize Configuration
 
 ```bash
@@ -47,7 +39,6 @@ Creates `~/.signal-forge/config.json` with fields:
 - `defaultMode` — fallback content mode (default: `advisory`)
 - `perspective` — writing perspective: `consultant`, `internal`, or `neutral`
 
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ### Generate Content
 
 ```bash
@@ -55,19 +46,6 @@ forge generate <type> [options]
 ```
 
 **Content Types**:
-<<<<<<< HEAD
-- `deck` - Strategic slide deck
-- `pov` - Short-form strategy POV (800-1200 words)
-- `paper` - Long-form strategy paper (3000-8000 words)
-
-**Options**:
-- `-i, --input <file>` - Input file (meeting notes, recap, etc.)
-- `-o, --output <file>` - Output file path
-- `-p, --provider <provider>` - AI provider: openai, anthropic, google, perplexity
-- `-f, --format <formats>` - Output formats (comma-separated): word,pdf,pptx,slides
-- `--audience <audience>` - Target audience
-- `--no-edit` - Skip editor review
-=======
 - `deck` — Strategic slide deck
 - `pov` — Short-form strategy POV (800-1200 words)
 - `paper` — Long-form strategy paper (3000-8000 words)
@@ -107,26 +85,17 @@ forge agent generate <type> [options]
 ```bash
 forge themes list
 ```
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ## Examples
 
 ### Generate a Deck
 
 ```bash
-<<<<<<< HEAD
-# From meeting recap
-forge generate deck --input meeting-recap.md --output strategy-deck.pptx
-
-# With specific provider
-forge generate deck --input recap.md --provider claude --format pptx,pdf
-=======
 # From meeting recap with default theme
 forge generate deck --input meeting-recap.md --format pptx,html
 
 # With specific provider and theme
 forge generate deck --input recap.md --provider anthropic --theme dark --format pptx
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ### Generate a POV
@@ -139,16 +108,6 @@ forge generate pov --input notes.txt --format word,pdf
 forge generate pov --input context.md --audience executive --format word
 ```
 
-<<<<<<< HEAD
-### Generate a Paper
-
-```bash
-# Long-form strategy paper
-forge generate paper --input research-context.md --format word,pdf
-
-# Skip editor review (faster, less polished)
-forge generate paper --input context.md --no-edit --format word
-=======
 ### Generate Documentation
 
 ```bash
@@ -167,24 +126,10 @@ forge generate reference --input cli-docs.md
 ```bash
 # Research-backed deck with iterative refinement
 forge agent generate deck --input strategy-notes.md --research --iterate --max-iterations 3
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ## Output Formats
 
-<<<<<<< HEAD
-- **word/docx** - Microsoft Word document
-- **pdf** - PDF document
-- **pptx/powerpoint** - PowerPoint presentation
-- **slides/googleslides** - Google Slides (requires credentials)
-- **html/web/webpage** - Standalone HTML web page (interactive for decks, formatted for POVs/papers)
-
-## Configuration
-
-### Environment Variables
-
-Set in `.env` file:
-=======
 | Format | Flag values | Notes |
 |--------|-------------|-------|
 | Word | `word`, `docx` | Microsoft Word document |
@@ -201,7 +146,6 @@ Set in `.env` file:
 ## Configuration
 
 ### Environment Variables (`.env`)
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ```env
 OPENAI_API_KEY=your_key
@@ -210,16 +154,6 @@ GOOGLE_API_KEY=your_key
 PERPLEXITY_API_KEY=your_key
 DEFAULT_AI_PROVIDER=anthropic
 GOOGLE_SLIDES_CREDENTIALS_PATH=path/to/credentials.json
-<<<<<<< HEAD
-```
-
-### Google Slides Setup
-
-1. Create a service account in Google Cloud Console
-2. Enable Google Slides API
-3. Download credentials JSON
-4. Set `GOOGLE_SLIDES_CREDENTIALS_PATH` in `.env`
-=======
 FORGE_COMPANY=override_company_name
 ```
 
@@ -238,27 +172,11 @@ FORGE_COMPANY=override_company_name
   }
 }
 ```
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ## Tips
 
 1. **Input Quality**: Better input = better output. Include context, stakeholder concerns, and key questions.
 
-<<<<<<< HEAD
-2. **Provider Selection**: 
-   - Anthropic (Claude) - Best for strategic thinking
-   - OpenAI (GPT-4) - Good general purpose
-   - Google (Gemini) - Strong for technical content
-   - Perplexity - Best for research-heavy content
-
-3. **Voice Consistency**: The system automatically applies voice principles. Review output to ensure it matches your style.
-
-4. **Iteration**: If output doesn't match expectations, try:
-   - Different provider
-   - More detailed input context
-   - Adjusting audience parameter
-
-=======
 2. **Provider Selection**:
    - Anthropic (Claude) — Best for strategic thinking
    - OpenAI (GPT-4) — Good general purpose
@@ -277,4 +195,3 @@ FORGE_COMPANY=override_company_name
    - More detailed input context
    - Explicit `--mode` flag
    - Adjusting audience parameter
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

@@ -1,29 +1,13 @@
-<<<<<<< HEAD
-# Signal Dispatch: Voice & Tone Guide
-## Copy Editor and Ghostwriter Touchstone
-
-**Version**: 1.0
-**Last Updated**: 2025-12-14
-**Source**: Empirical analysis of 156 blog posts, 15 deep-read corpus sample
-=======
 # Thought Leadership Voice Guide
 
 **Version**: 2.0
 **Last Updated**: 2025-03-15
 **Origin**: Empirical analysis of 156 blog posts (Signal Dispatch corpus)
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
 ## Purpose
 
-<<<<<<< HEAD
-This guide defines the **actual voice** of Signal Dispatch based on production content analysis, not aspirational principles. Use this as the primary reference for:
-- Editing existing posts for consistency
-- Ghostwriting new content in Nino's voice
-- Evaluating AI-generated drafts
-- Maintaining tonal coherence across all posts
-=======
 This guide defines the voice principles for **Thought Leadership** content in Signal Forge. The principles were derived from production content analysis and refined through iterative generation. Use this as the primary reference for:
 - Configuring thought leadership voice presets
 - Editing thought leadership content for consistency
@@ -31,7 +15,6 @@ This guide defines the voice principles for **Thought Leadership** content in Si
 - Evaluating AI-generated drafts
 
 > **Note**: The examples in this guide originate from the Signal Dispatch blog. They illustrate the principles — your thought leadership content should reflect your own voice and perspective while following these structural patterns.
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -213,68 +196,6 @@ Instead:
 
 ---
 
-<<<<<<< HEAD
-## Strategic Content: Client Perspective & Tone
-
-When writing strategic content (decks, POVs, papers) as an external consultant, maintain these principles:
-
-### **External Consultant Perspective**
-
-Write FROM the perspective of a senior Accenture Song consultant providing strategic guidance TO the client organization.
-
-**Key Principles:**
-- You are the advisor, not the internal team member
-- Show pattern recognition across clients/industries: "I've seen this tension across retail, manufacturing, and enterprise clients"
-- Ground recommendations in actual client context from meetings/discussions
-- Professional but conversational—not sterile or overly formal
-
-### **Client References: Natural and Conversational**
-
-**✅ DO:**
-- Use "you" / "your organization" / "your org" naturally
-- Mix direct address ("you") and third person ("your organization") for natural consultant voice
-- Use client name only when necessary for clarity or in formal headers/titles
-- Example: "For your organization, that tension is playing out in real-time as you plan for FY'27."
-
-**❌ DON'T:**
-- Repeatedly use client name when "you" / "your organization" is more natural
-- Overly formal consultant-speak that sounds robotic
-- Sterile corporate language that distances you from the client
-
-**Example Evolution:**
-
-❌ **Too Formal/Sterile:**
-> "Best Buy must implement strict Schema.org standards across Best Buy's catalog. This ensures that when an external agent scans Best Buy's site, Best Buy retrieves accurate pricing."
-
-✅ **Natural Consultant Voice:**
-> "You must implement strict Schema.org standards across your catalog. This ensures that when an external agent scans your site, it retrieves accurate pricing."
-
-### **Professional but Conversational**
-
-**Tone Markers:**
-- "Here's where I've landed—for now" (provisional, not prescriptive)
-- "I recommend..." (consultant guidance, not internal directive)
-- "I've seen this tension across..." (pattern recognition from experience)
-- "For your organization..." (acknowledging client context)
-
-**Avoid:**
-- "Best Buy should always..." (too prescriptive, too formal)
-- "The organization must..." (sterile, corporate)
-- "We recommend..." (implies internal team, not consultant)
-
-### **Pattern Recognition Across Clients**
-
-Show that you've seen this before:
-- "This isn't unique to your organization. I've seen this tension across retail, manufacturing, and enterprise clients."
-- Ground insights in cross-client experience, not just theory
-
-### **Grounding in Client Context**
-
-Reference actual meetings/discussions:
-- "Ram put it bluntly in the November 21 review..."
-- "Amy asked the question everyone's thinking..."
-- Shows you were there, listening, understanding their specific situation
-=======
 ## Strategic Content: Perspective & Tone
 
 When writing strategic content (decks, POVs, papers), the perspective adapts based on the `perspective` setting in your Signal Forge configuration (`~/.signal-forge/config.json`).
@@ -330,7 +251,6 @@ Show that you've seen this before:
 Reference actual discussions and stakeholders:
 - Shows you were there, listening, understanding the specific situation
 - Builds credibility through specificity
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -622,44 +542,14 @@ If it sounds like someone thinking out loud while figuring out something hard—
 
 ---
 
-<<<<<<< HEAD
-## Appendix: Corpus Analysis Summary
-=======
 ## Appendix: Origin — Signal Dispatch Corpus Analysis
 
 The voice principles in this guide were derived from empirical analysis of the Signal Dispatch blog.
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 **Total Posts Analyzed**: 156
 **Deep-Read Sample**: 15 representative posts
 **Publication Range**: June 2025 - October 2025
 
-<<<<<<< HEAD
-**Most Common Categories**:
-1. AI & Automation (technical, practical)
-2. Meta/Personal Growth (self-reflective)
-3. Leadership (systems, teams, coaching)
-4. Consulting Practice (strategy, authenticity)
-
-**Voice Consistency Score**: 8.5/10
-Posts maintain consistent voice even across different topics. Strongest consistency in opening hooks, structural patterns, and provisional conclusions. Slight variation in technical depth based on topic.
-
-**Unique Voice Markers**:
-- Meta-awareness (writing about writing)
-- Photography metaphors
-- Spanish cultural references
-- Volleyball coaching examples
-- Provisional conclusions (directional, varied phrasing)
-- Question-first openings
-- Bold section headers
-- Intentional fragments
-
----
-
-**Last Updated**: 2025-12-14
-**Next Review**: Quarterly or after 50 new posts
-**Maintained By**: Signal Dispatch Editorial (AI-assisted)
-=======
 **Voice Consistency Score**: 8.5/10
 
 **Core Voice Markers Identified**:
@@ -677,4 +567,3 @@ These markers inform the built-in thought leadership voice preset at `src/preset
 
 **Last Updated**: 2025-03-15
 **Maintained By**: Signal Forge Project
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

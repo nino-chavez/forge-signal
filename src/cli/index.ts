@@ -1,20 +1,16 @@
 #!/usr/bin/env node
 /**
- * Signal Forge CLI
- * 
- * Strategic content generation tool
+ * Forge Signal CLI
+ *
+ * Voice-aware content generation tool
  */
 
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import dotenv from 'dotenv';
 import { readFileContent } from '../core/utils/file-utils.js';
-<<<<<<< HEAD
-import { createDefaultConfig } from '../core/config.js';
-=======
 import { createDefaultConfig, loadConfig, saveConfig, configExists, getDefaultConfigPath } from '../core/config.js';
 import type { Perspective } from '../core/registries/types.js';
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 import { createProvider, getDefaultProvider, getConfiguredProviders } from '../providers/index.js';
 import type { AIProvider } from '../providers/ai-provider.js';
 import { GhostWriter } from '../pipeline/roles/ghost-writer.js';
@@ -30,16 +26,11 @@ import { generateSlug } from '../core/utils/slug.js';
 import { ensureDir } from '../core/utils/file-utils.js';
 import { registerAgenticCommands } from './agentic-commands.js';
 import { listThemes } from '../content/design-system/theme-registry.js';
-<<<<<<< HEAD
-import path from 'path';
-import { fileURLToPath } from 'url';
-=======
 import { getModeForContentType } from '../core/registries/mode-registry.js';
 import { getWorkflowForMode } from '../core/registries/workflow-registry.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { registerBuiltInPresets } from '../presets/index.js';
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,17 +38,14 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 dotenv.config();
 
-<<<<<<< HEAD
-=======
 // Register built-in content modes, voices, workflows, and templates
 registerBuiltInPresets();
 
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 const program = new Command();
 
 program
   .name('forge')
-  .description('Signal Forge - Strategic content generation system')
+  .description('Forge Signal - Voice-aware content generation system')
   .version('1.0.0');
 
 // Register agentic commands (forge agent ...)
@@ -65,20 +53,10 @@ registerAgenticCommands(program);
 
 // Valid content types
 const VALID_TYPES = ['deck', 'pov', 'paper', 'guide', 'reference', 'tutorial'];
-<<<<<<< HEAD
-const DOCUMENTATION_TYPES = ['guide', 'reference', 'tutorial'];
-=======
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 program
   .command('init')
-  .description('Initialize Signal Forge configuration')
-<<<<<<< HEAD
-  .action(() => {
-    try {
-      createDefaultConfig();
-      console.log('✨ Initialization complete.');
-=======
+  .description('Initialize Forge Signal configuration')
   .option('--non-interactive', 'Skip prompts and write defaults')
   .action(async (options) => {
     try {
@@ -102,7 +80,7 @@ program
         if (!overwrite) return;
       }
 
-      console.log('\nSignal Forge Setup\n');
+      console.log('\nForge Signal Setup\n');
 
       const answers = await inquirer.prompt([
         {
@@ -159,7 +137,6 @@ program
 
       saveConfig(config);
       console.log(`\n✨ Configuration saved to ${getDefaultConfigPath()}`);
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     } catch (error) {
       console.error('❌ Initialization failed:', (error as Error).message);
     }
@@ -173,11 +150,7 @@ program
   .option('-o, --output <file>', 'Output file path')
   .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
   .option('-f, --format <formats>', 'Output formats (comma-separated): word,pdf,pptx,slides,html')
-<<<<<<< HEAD
-  .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, bigcommerce, dark)')
-=======
   .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, dark)')
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   .option('--audience <audience>', 'Target audience')
   .option('--product <product>', 'Product name (for documentation)')
   .option('--no-edit', 'Skip editor review (use ghost writer + copywriter only)')
@@ -236,10 +209,6 @@ program
 
       let finalContent = '';
 
-<<<<<<< HEAD
-      // Use different workflow for documentation types
-      if (DOCUMENTATION_TYPES.includes(type)) {
-=======
       // Determine workflow from mode registry
       const mode = getModeForContentType(type);
       const workflow = getWorkflowForMode(mode);
@@ -247,7 +216,6 @@ program
       const isDocWorkflow = workflowSteps.includes('documentation-writer');
 
       if (isDocWorkflow) {
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
         // Documentation workflow
         console.log('📚 Documentation Writer: Generating documentation...');
         const docWriter = new DocumentationWriter(provider);
@@ -260,11 +228,7 @@ program
         finalContent = docOutput.draft;
         console.log('✅ Documentation Writer complete\n');
       } else {
-<<<<<<< HEAD
-        // Standard thought-leadership/advisory workflow
-=======
         // Standard multi-pass workflow
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
         // Ghost Writer
         console.log('👻 Ghost Writer: Generating initial draft...');
         const ghostWriter = new GhostWriter(provider);
@@ -276,24 +240,6 @@ program
         console.log('✅ Ghost Writer complete\n');
 
         // Copywriter
-<<<<<<< HEAD
-        console.log('✍️  Copywriter: Refining content...');
-        const copywriter = new Copywriter(provider);
-        const copywriterOutput = await copywriter.refine({
-          draft: ghostOutput.draft,
-          contentType: type as 'deck' | 'pov' | 'paper',
-          audience: options.audience,
-        });
-        console.log('✅ Copywriter complete\n');
-
-        // Editor
-        finalContent = copywriterOutput.refined;
-        if (!options.noEdit) {
-          console.log('📝 Editor: Reviewing content...');
-          const editor = new Editor(provider);
-          const editorOutput = await editor.review({
-            content: copywriterOutput.refined,
-=======
         if (workflowSteps.includes('copywriter')) {
           console.log('✍️  Copywriter: Refining content...');
           const copywriter = new Copywriter(provider);
@@ -314,7 +260,6 @@ program
           const editor = new Editor(provider);
           const editorOutput = await editor.review({
             content: finalContent,
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
             contentType: type as 'deck' | 'pov' | 'paper',
           });
 
@@ -341,11 +286,7 @@ program
       let defaultFormats: string[];
       if (type === 'deck') {
         defaultFormats = ['pptx', 'html'];
-<<<<<<< HEAD
-      } else if (DOCUMENTATION_TYPES.includes(type)) {
-=======
       } else if (isDocWorkflow) {
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
         defaultFormats = ['html']; // Documentation defaults to HTML
       } else {
         defaultFormats = ['word', 'pdf', 'html'];

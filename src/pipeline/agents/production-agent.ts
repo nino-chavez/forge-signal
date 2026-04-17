@@ -29,12 +29,8 @@ import type {
   ProductionResult,
   ResearchContext,
 } from '../../core/types/index.js';
-<<<<<<< HEAD
-import { isDocumentationType, getModeForType } from '../../core/types/index.js';
-=======
 import { getModeForContentType } from '../../core/registries/mode-registry.js';
 import { getWorkflowForMode } from '../../core/registries/workflow-registry.js';
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 // =============================================================================
 // Production Agent Configuration
@@ -139,13 +135,6 @@ export class ProductionAgent extends BaseAgent {
    */
   async produce(task: ContentTask, config: ProductionConfig): Promise<ProductionResult> {
     // Determine mode from task type if not specified
-<<<<<<< HEAD
-    const mode = task.mode || getModeForType(task.type);
-    this.log('Starting production', { type: task.type, mode });
-
-    // Route to appropriate workflow based on mode
-    if (isDocumentationType(task.type)) {
-=======
     const mode = task.mode || getModeForContentType(task.type);
     this.log('Starting production', { type: task.type, mode });
 
@@ -153,7 +142,6 @@ export class ProductionAgent extends BaseAgent {
     const workflow = getWorkflowForMode(mode);
     const workflowSteps = workflow?.steps.map(s => s.role) ?? [];
     if (workflowSteps.includes('documentation-writer')) {
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
       return this.produceDocumentation(task, config, mode);
     }
 

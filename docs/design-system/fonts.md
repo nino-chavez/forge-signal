@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-# Design System: Default Font Pack
-
-## Rival Sans Font Family (Primary)
-
-**Rival Sans** is the default font family for all generated content in this project. It is loaded via Adobe Fonts (Typekit).
-
-### Adobe Fonts Configuration
-
-**Default Project - Typekit Kit ID:** `wbj0oqh` (includes all fonts below)  
-**Rival Sans Project - Typekit Kit ID:** `tjp7ihm` (backup/alternative)
-
-**Font Loading:**
-```html
-<!-- Default Project: All fonts (Rival Sans, Komet, Darkmode-Off, Apparat, Elza, Articulat) -->
-<link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
-
-<!-- Rival Sans Project (backup/alternative) -->
-<link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
-=======
 # Design System: Font Configuration
 
 ## Overview
@@ -40,7 +20,6 @@ Fonts can be customized per deployment by:
 ```html
 <!-- Replace with your own Typekit kit ID -->
 <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 <!-- Preconnect for faster font loading -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
@@ -140,11 +119,7 @@ Fonts can be customized per deployment by:
 body {
     font-family: "rival-sans", "komet", sans-serif;
     font-weight: 400;
-<<<<<<< HEAD
-    color: var(--accenture-text-primary);
-=======
     color: var(--text-primary);
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -153,11 +128,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: "rival-sans", "komet", sans-serif;
     font-weight: 700;
-<<<<<<< HEAD
-    color: var(--accenture-text-primary);
-=======
     color: var(--text-primary);
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     letter-spacing: -0.01em;
 }
 
@@ -209,17 +180,10 @@ h1, h2, h3, h4, h5, h6 {
     <title>Document Title</title>
     
     <!-- Rival Sans Font from Adobe Fonts (Primary) -->
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://use.typekit.net/tjp7ihm.css">
-    
-    <!-- Komet Font from Adobe Fonts (Alternate) -->
-    <link rel="stylesheet" href="https://use.typekit.net/wbj0oqh.css">
-=======
     <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
     
     <!-- Komet Font from Adobe Fonts (Alternate) -->
     <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css">
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
     
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     
@@ -299,22 +263,6 @@ module.exports = {
 ### Notes
 
 - **Adobe Fonts Access:** Requires an active Adobe Creative Cloud subscription with Adobe Fonts access
-<<<<<<< HEAD
-- **Default Project Kit ID:** `wbj0oqh` - Contains all 10 font families (34 fonts total)
-- **Rival Sans Project Kit ID:** `tjp7ihm` - Backup/alternative Rival Sans project
-- **Performance:** Fonts are loaded asynchronously via Adobe Fonts CDN for optimal performance
-- **Fallback:** Font stack ensures graceful degradation: Rival Sans → Komet → Darkmode-Off → Apparat → Elza → Articulat → System fonts
-- **Total Available Fonts:** 34 fonts across 10 font families
-
-### Related Documentation
-
-- See `docs/design-system-colors.md` for color palette configuration
-- See `docs/strategic-content-voice-guide.md` for content guidelines
-
----
-
-**Last Updated:** November 2024  
-=======
 - **Per-deployment:** Typekit kit IDs are account-specific. Replace with your own or use system fonts.
 - **Performance:** Fonts are loaded asynchronously via Adobe Fonts CDN for optimal performance
 - **Fallback:** Font stack ensures graceful degradation through the configured font families to system `sans-serif`
@@ -328,6 +276,5 @@ module.exports = {
 ---
 
 **Last Updated:** March 2025
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 **Maintained By:** Signal Forge Project
 

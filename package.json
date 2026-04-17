@@ -1,16 +1,12 @@
 {
-  "name": "signal-forge",
+  "name": "forge-signal",
   "version": "1.0.0",
-<<<<<<< HEAD
-  "description": "Strategic content generation system for decks, POVs, and papers",
-=======
   "description": "Voice-aware content generation with mode-specific AI pipelines and multi-format export",
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   "type": "module",
   "main": "dist/cli/index.js",
   "bin": {
     "forge": "./dist/cli/index.js",
-    "signal-forge": "./dist/cli/index.js"
+    "forge-signal": "./dist/cli/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -22,18 +18,12 @@
   "keywords": [
     "content-generation",
     "ai",
-<<<<<<< HEAD
-    "strategy",
-    "presentations",
-    "documents"
-=======
     "voice-consistency",
     "presentations",
     "documents",
     "architecture",
     "thought-leadership",
     "multi-provider"
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
   ],
   "author": "Nino Chavez",
   "license": "MIT",

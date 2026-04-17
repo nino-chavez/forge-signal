@@ -1,5 +1,5 @@
-# Signal Forge
-> AI-powered presentation and document generation CLI
+# Forge Signal
+> Voice-aware content generation CLI with multi-format export
 
 ## Docs Index
 

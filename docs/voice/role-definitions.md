@@ -1,42 +1,15 @@
 # Role Definitions
 
-<<<<<<< HEAD
-Signal Forge uses specialized roles based on content type. The workflow and roles vary depending on whether you're generating Thought Leadership, Solution Architecture, or Executive Advisory content.
-
----
-
-## Content Type Determines Workflow
-=======
 Signal Forge uses specialized roles organized into workflows. Workflow routing is registry-driven — the system looks up the registered workflow for the detected content mode via `getWorkflowForMode()`.
 
 ---
 
 ## Workflow Routing
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ```
                          Raw Input
                              ↓
                     ┌────────┴────────┐
-<<<<<<< HEAD
-                    │   CLASSIFIER    │
-                    │ (Detect Mode)   │
-                    └────────┬────────┘
-           ┌─────────────────┼─────────────────┐
-           ↓                 ↓                 ↓
-    THOUGHT            SOLUTION          EXECUTIVE
-    LEADERSHIP        ARCHITECTURE        ADVISORY
-           ↓                 ↓                 ↓
-    Ghost Writer        Architect         Strategist
-           ↓                 ↓                 ↓
-    Copywriter       Tech Reviewer        Copywriter
-           ↓                 ↓                 ↓
-       Editor            Editor             Editor
-           ↓                 ↓                 ↓
-      Final Output      Final Output      Final Output
-```
-
-=======
                     │  MODE DETECTION  │
                     │  (--mode flag    │
                     │   or classifier) │
@@ -63,7 +36,6 @@ Signal Forge uses specialized roles organized into workflows. Workflow routing i
 
 Workflows are defined in `src/presets/workflows/` and registered via `registerWorkflow()`. Custom workflows can be added without modifying core code.
 
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ---
 
 ## Thought Leadership Roles
@@ -322,8 +294,6 @@ Workflows are defined in `src/presets/workflows/` and registered via `registerWo
 
 ---
 
-<<<<<<< HEAD
-=======
 ## Documentation Roles
 
 ### Documentation Writer
@@ -357,14 +327,10 @@ Workflows are defined in `src/presets/workflows/` and registered via `registerWo
 
 ---
 
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ## Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | Initial | Three-role workflow for thought leadership |
 | 2.0 | 2024-11-25 | Expanded to three content modes with specialized roles |
-<<<<<<< HEAD
-=======
 | 3.0 | 2025-03-15 | Registry-driven workflow routing, added Documentation Writer role |
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967

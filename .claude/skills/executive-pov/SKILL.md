@@ -45,15 +45,9 @@ Write FROM the perspective of a senior consultant providing strategic guidance T
 
 ```markdown
 ❌ Too Formal/Sterile:
-<<<<<<< HEAD
-"Best Buy must implement strict Schema.org standards across Best Buy's
-catalog. This ensures that when an external agent scans Best Buy's site,
-Best Buy retrieves accurate pricing."
-=======
 "Acme Corp must implement strict Schema.org standards across Acme Corp's
 catalog. This ensures that when an external agent scans Acme Corp's site,
 Acme Corp retrieves accurate pricing."
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ✅ Natural Consultant Voice:
 "You must implement strict Schema.org standards across your catalog.
@@ -72,11 +66,7 @@ Use these phrases to establish consultant voice:
 - "Based on our discussions..." (grounding in meetings)
 
 **Avoid:**
-<<<<<<< HEAD
-- "Best Buy should always..." (too prescriptive)
-=======
 - "[Client] should always..." (too prescriptive)
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 - "The organization must..." (sterile)
 - "We recommend..." (implies internal team)
 
@@ -145,16 +135,10 @@ visibility within 12-18 months."
 Ground insights in meetings:
 
 ```markdown
-<<<<<<< HEAD
-"Ram put it bluntly in the November 21 review: 'We can't measure what
-we can't see.' That observation captures the core challenge—you need
-visibility infrastructure before optimization is possible."
-=======
 "Your engineering lead put it bluntly in the last review: 'We can't
 measure what we can't see.' That observation captures the core
 challenge—you need visibility infrastructure before optimization
 is possible."
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ## Tone Balance

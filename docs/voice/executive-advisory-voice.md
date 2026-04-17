@@ -4,13 +4,9 @@
 
 This guide defines voice, structure, and quality standards for **Executive Advisory** content in Signal Forge. Use this when generating strategy decks, executive briefings, client presentations, and stakeholder alignment materials.
 
-<<<<<<< HEAD
-**Position in Taxonomy**: Executive Advisory sits between Thought Leadership (narrative, exploratory) and Solution Architecture (precise, technical). It combines consultant voice with structured recommendations.
-=======
 **Position in Taxonomy**: Executive Advisory sits between Thought Leadership (narrative, exploratory) and Solution Architecture (precise, technical). It combines confident recommendations with structured clarity.
 
 **Perspective**: Examples in this guide use the `consultant` perspective ("I recommend", "your organization"). If your `perspective` is set to `internal`, adjust to "we recommend" / "our organization" framing. See the thought leadership voice guide for perspective details.
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -53,11 +49,7 @@ Reference actual conversations, stakeholder concerns, and specific situations.
 ```markdown
 ❌ "Stakeholders often express concerns about measurement."
 
-<<<<<<< HEAD
-✅ "Ram put it directly in the November review: 'We can't justify investment without before/after proof.' This architecture addresses that by pre-calculating weekly deltas."
-=======
 ✅ "Your VP of Engineering put it directly in the last review: 'We can't justify investment without before/after proof.' This architecture addresses that by pre-calculating weekly deltas."
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 ```
 
 ### 5. Structured Clarity
@@ -281,22 +273,14 @@ Best for: Decision documents, investment cases
 - Repeated client name when "you" works better
 - "We recommend" (implies internal team)
 - "The organization should" (too distant)
-<<<<<<< HEAD
-- "Best Buy must implement" (too formal)
-=======
 - "[Client] must implement" (too formal)
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ### Grounding in Actual Context
 
 Reference real conversations and stakeholders:
 
 ```markdown
-<<<<<<< HEAD
-✅ "Amy raised this in our last session: 'We're optimizing for metrics we can see while ignoring the channel we can't measure.' This architecture gives you that measurement."
-=======
 ✅ "Your CMO raised this in our last session: 'We're optimizing for metrics we can see while ignoring the channel we can't measure.' This architecture gives you that measurement."
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ✅ "The concern Ram expressed—'How do we know it worked?'—is addressed by the pre-calculated reporting layer."
 

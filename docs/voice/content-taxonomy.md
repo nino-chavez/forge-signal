@@ -155,74 +155,6 @@ BREAKTHROUGH: How to bridge the gap
 - `brief` - Executive brief (1-3 pages)
 - `roadmap` - Strategic roadmap document
 - `whitepaper` - Strategy whitepaper
-<<<<<<< HEAD
-- `memo` - High-density 1-page decision memo
-
----
-
-## Mode 3a: High-Density Memo (Executive Advisory Variant)
-
-### When to Use
-- Decision memos requiring immediate action
-- Cross-functional alignment under time pressure
-- Any document where the reader has < 5 minutes
-- Strategy pivots or go/no-go decisions
-
-### Voice Characteristics
-Reference: `docs/voice/high-density-memo-voice.md`
-
-| Principle | Application |
-|-----------|-------------|
-| One page maximum | Constraint forces ruthless prioritization |
-| High entropy | Every sentence introduces new information |
-| No prose lists | Write in paragraphs; dates embedded in narrative |
-| Clinical tone | State facts, draw conclusions, no hedging |
-| SCQR structure | Situation-Complication-Question-Recommendation |
-
-### Structure Pattern
-```
-MEMORANDUM
-To / From / Date / Subject
-
-EXECUTIVE SUMMARY (SCQR)
-- Situation: 1 sentence
-- Complication: 1 sentence
-- Question: 1 sentence
-- Recommendation: 1 sentence
-
-THE ARGUMENT (1 paragraph)
-Why the recommended path is correct; why alternatives fail.
-
-THE SOLUTION (1 paragraph)
-Technical approach in plain language.
-
-THE PLAN (1 paragraph)
-Phases described as narrative, not date lists.
-
-THE ASK (3 bullets)
-Blocking decisions required to proceed.
-```
-
-### Anti-Patterns to Avoid
-- ❌ Narrative bloat ("It's worth noting that...")
-- ❌ Passive recommendations ("We might consider...")
-- ❌ Vertical date lists (embed in prose)
-- ❌ Unquantified claims ("many merchants" → "~60% of merchants")
-- ❌ Hedging language ("possibly", "might", "could")
-
-### Prompt Template
-```
-Role: You are a Principal Product Manager at Stripe.
-Task: Rewrite the attached document as a High-Density 1-Page Memo.
-Constraints:
-1. Maximum Length: 1 page (~500 words). No exceptions.
-2. No Lists/Tables in Body: Prose paragraphs only. Exception: SCQR header, final Ask.
-3. High Entropy: Remove filler. If it works without an adjective, remove it.
-4. Structure: SCQR → Argument → Solution → Plan → Ask
-Tone: Clinical, decisive, urgent.
-```
-=======
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -387,61 +319,9 @@ For documents that span modes, use clear section breaks:
 
 ---
 
-<<<<<<< HEAD
-## Annotations Convention
-
-### The Problem
-
-AI-generated documents lose their reasoning the moment the conversation closes. The reader sees the conclusion but not the discovery process, the rejected alternatives, or the assumptions that shaped the structure. When a team inherits the document, they cannot distinguish grounded claims from plausible guesses.
-
-### The Convention
-
-Any document generated from an AI conversation SHOULD carry an optional **annotations layer** — structured rationale for each section, captured during generation.
-
-### What Goes in an Annotation
-
-Each annotation answers four questions about its section:
-
-| Field | Question | Example |
-|-------|----------|---------|
-| **Why this section exists** | What decision or discovery created it? | "Added after API research showed Promotions API is still beta" |
-| **What changed** | How does it differ from earlier drafts? | "First draft stated underutilization as fact; flagged as assumption after audit" |
-| **Source tier** | Confirmed, internal knowledge, or assumption? | "Platform readiness column: API research only. Bucket names: conversation." |
-| **Origin** | Where did the thinking come from? | "Nino's framing + Gemini brainstorm + BigCommerce REST API docs" |
-
-### When to Include Annotations
-
-| Mode | Annotations? | Rationale |
-|------|-------------|-----------|
-| **Internal Strategy** | Yes | Teams inherit these docs. Reasoning prevents misinterpretation. |
-| **Executive Advisory** | Yes | Stakeholders need to trace recommendations to evidence. |
-| **Solution Architecture** | Optional | ADRs already capture rationale; annotations add conversation context. |
-| **Thought Leadership** | No | The thinking IS the content. Annotations would be redundant. |
-| **Documentation** | No | Reasoning is less relevant; the instructions stand alone. |
-| **High-Density Memo** | No | One page maximum. No room for meta-layer. |
-
-### Implementation
-
-Annotations are delivered as a **side drawer** in HTML output — a slide-out panel triggered by clicking section headers. Design principles:
-
-- **Invisible by default.** The document reads clean without annotations.
-- **Accessible on demand.** Click a section header to see its rationale.
-- **Stripped on print.** Annotations do not appear in printed or PDF output.
-- **Not auto-generated.** Annotations must come from the actual conversation, not be hallucinated after the fact.
-
-The reusable drawer component lives at `templates/annotations/drawer.html`. Annotations are passed as a JSON object keyed by section ID.
-
-### Anti-Patterns
-
-- Annotating every document regardless of audience (blog posts don't need it)
-- Auto-generating rationale that wasn't part of the actual conversation
-- Putting annotations in the document body (defeats the separation principle)
-- Using annotations as a substitute for flagging assumptions inline (do both)
-=======
 ## Quality Gate
 
 All content, regardless of mode, should pass the Document Quality Audit before sharing. See `docs/voice/document-quality-audit.md` for the four-check framework.
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
 
 ---
 
@@ -450,11 +330,5 @@ All content, regardless of mode, should pass the Document Quality Audit before s
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2024-11-25 | Initial taxonomy based on RAG-for-AEO learnings |
-<<<<<<< HEAD
-| 1.1 | 2026-02-05 | Added Mode 3a: High-Density Memo variant for decision memos |
-| 1.2 | 2026-03-13 | Added Internal Strategy as fourth mode. Learned from P&P deliverable iterations — blog voice and dense prose are wrong for internal strategy docs. |
-| 1.3 | 2026-03-25 | Added Annotations Convention. Learned from BigCommerce strategy doc — AI conversations produce reasoning that dies when the session closes. Annotations externalize it. |
-=======
 | 1.1 | 2026-03-13 | Added Internal Strategy as fourth mode. Learned from P&P deliverable iterations — blog voice and dense prose are wrong for internal strategy docs. |
 | 1.2 | 2026-03-15 | Added Quality Gate reference and document-quality-audit.md |
->>>>>>> 8c57b9390e87db3ee279163f2b3dc44ab01a7967
