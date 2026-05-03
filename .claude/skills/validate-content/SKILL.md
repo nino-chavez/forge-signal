@@ -16,6 +16,32 @@ Compare generated content against source materials to identify inconsistencies a
 
 ## Validation Protocol
 
+### Pass 0: Glossary & Brand Canon Validation
+
+Before checking implementation drift, validate against the project's own canonical language.
+
+**Glossary check.** Load the project glossary in this order:
+1. `CONTEXT.md` at project root (canonical glossary)
+2. `forge-signal/.claude/CLAUDE.md` Content Taxonomy section (mode + voice taxonomy)
+3. `docs/voice/*.md` (per-mode voice guides — authoritative for terminology)
+
+For each canonical term, scan the content for:
+- **Conflicts** — content uses the term to mean something different than the glossary defines
+- **Drift** — content uses a synonym (e.g., "deck" when the glossary says "presentation") that erodes consistency
+- **Missing terms** — content invents new terminology for a concept the glossary already names
+
+**Brand canon check.** If the project links to a forge-brand kit (look for `brand-kit.json` reference in config or a sibling `*.voice.json` file produced by `forge brand export signal-forge-voice`):
+
+1. Load the voice rules JSON.
+2. For each `voice.attributes` entry, check the content reflects the trait.
+3. For each `voice.antiPatterns` entry, scan the content for the pattern. Any match = drift.
+4. For `openingPatterns`: if `questionFirst` is required, the content must open with a question or tension. If `avoidAcademic` lists terms, the content must not use them in the opening.
+5. Score the alignment 0–10 (10 = full alignment, 0 = directly contradicts).
+
+**ADR check.** If `docs/adr/` exists, scan ADRs that touch the content's subject area. Surface any contradictions: "Content claims X, but ADR-0007 standardized on Y."
+
+Report Pass 0 findings before moving to source verification — these are higher-priority than implementation drift because they affect every consumer of the content.
+
 ### Pass 1: Source Material Inventory
 
 Identify authoritative sources:
@@ -90,6 +116,9 @@ Categorize findings:
 | ✅ Verified | X |
 | ⚠️ Unverifiable | X |
 | ❌ Drift Detected | X |
+| 📖 Glossary Conflicts | X |
+| 🎨 Brand Voice Score | X/10 |
+| 📋 ADR Contradictions | X |
 
 **Overall Status:** [Pass | Needs Update | Requires Review]
 

@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Native Organization Operating Playbook</title>
+    <style>
+        :root {
+            --color-brand-primary: #7c3aed;
+            --color-brand-secondary: #5b21b6;
+            --color-brand-light: #ede9fe;
+            --color-navy: #1e1b4b;
+            --color-text-primary: #171717;
+            --color-text-secondary: #525252;
+            --color-text-muted: #737373;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #fafafa;
+            --color-bg-tertiary: #f5f5f5;
+            --color-border: #e5e5e5;
+            --color-border-light: #f0f0f0;
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-error: #dc2626;
+            --color-info: #0284c7;
+            --sidebar-width: 300px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text-primary);
+            background: var(--color-bg-secondary);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--color-navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-left: 16px;
+            padding-left: 16px;
+            border-left: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .header-meta {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            background: var(--color-bg-primary);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: 24px 0;
+            z-index: 100;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-muted);
+            padding: 0 24px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 24px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--color-brand-light);
+            color: var(--color-brand-primary);
+            border-left-color: var(--color-brand-primary);
+            font-weight: 500;
+        }
+
+        .sidebar-nav .sub-item a {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 40px 60px;
+            max-width: 1000px;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-navy);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-brand-primary);
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-brand-light);
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text-secondary);
+        }
+
+        .lead {
+            font-size: 17px;
+            color: var(--color-text-primary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        /* Document Meta */
+        .doc-meta {
+            background: var(--color-bg-tertiary);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .doc-meta-item {
+            text-align: center;
+        }
+
+        .doc-meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-muted);
+            margin-bottom: 4px;
+        }
+
+        .doc-meta-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--color-navy);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: var(--color-bg-tertiary);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--color-text-secondary);
+        }
+
+        li strong {
+            color: var(--color-text-primary);
+        }
+
+        /* Callouts */
+        .callout {
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border-left: 4px solid;
+        }
+
+        .callout-info {
+            background: #eff6ff;
+            border-left-color: var(--color-info);
+        }
+
+        .callout-warning {
+            background: #fffbeb;
+            border-left-color: var(--color-warning);
+        }
+
+        .callout-success {
+            background: #ecfdf5;
+            border-left-color: var(--color-success);
+        }
+
+        .callout-error {
+            background: #fef2f2;
+            border-left-color: var(--color-error);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Code */
+        code {
+            background: var(--color-bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+
+        pre {
+            background: var(--color-navy);
+            color: #e5e5e5;
+            padding: 20px 24px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .card {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-brand-primary);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Process Steps */
+        .process-steps {
+            margin: 24px 0;
+        }
+
+        .process-step {
+            display: flex;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--color-brand-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 6px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        /* RACI Matrix */
+        .raci-matrix td:nth-child(2),
+        .raci-matrix td:nth-child(3),
+        .raci-matrix td:nth-child(4),
+        .raci-matrix td:nth-child(5) {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .raci-r { color: var(--color-brand-primary); }
+        .raci-a { color: var(--color-error); }
+        .raci-c { color: var(--color-warning); }
+        .raci-i { color: var(--color-text-muted); }
+
+        /* Timeline */
+        .timeline {
+            margin: 24px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--color-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--color-brand-primary);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--color-brand-primary);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .timeline-period {
+            font-size: 13px;
+            color: var(--color-brand-primary);
+            margin-bottom: 8px;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: var(--color-border);
+            margin: 48px 0;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-primary { background: var(--color-brand-light); color: var(--color-brand-primary); }
+        .badge-success { background: #d1fae5; color: var(--color-success); }
+        .badge-warning { background: #fef3c7; color: var(--color-warning); }
+        .badge-error { background: #fee2e2; color: var(--color-error); }
+
+        /* Print */
+        @media print {
+            .sidebar, .header { display: none; }
+            .main { margin: 0; padding: 20px; max-width: 100%; }
+            .callout { page-break-inside: avoid; }
+            h2, h3 { page-break-after: avoid; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 24px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .doc-meta { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div style="display: flex; align-items: center;">
+                <span class="header-title">AI-Native Organization Operating Playbook</span>
+                <span class="header-subtitle">From Sales-Led to Product-Led Growth with AI-First Operations</span>
+            </div>
+            <span class="header-meta">v1.0 | December 2025</span>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+                <li><a href="#introduction" class="active">Introduction</a></li>
+                <li><a href="#how-to-use">How to Use This Playbook</a></li>
+                <li><a href="#core-principles">Core Principles</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Part I: Role Archetypes</div>
+            <ul class="sidebar-nav">
+                <li><a href="#role-evolution">Role Evolution Framework</a></li>
+                <li><a href="#role-engineer">AI-Augmented Engineer</a></li>
+                <li><a href="#role-pm">Product Architect</a></li>
+                <li><a href="#role-growth">Growth Engineer</a></li>
+                <li><a href="#role-support">Support Architect</a></li>
+                <li><a href="#role-data">Analytics Architect</a></li>
+                <li><a href="#role-ops">AI Operations Manager</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Part II: Transition Phases</div>
+            <ul class="sidebar-nav">
+                <li><a href="#phase-0">Phase 0: Foundation</a></li>
+                <li><a href="#phase-1">Phase 1: Pilot</a></li>
+                <li><a href="#phase-2">Phase 2: Scale</a></li>
+                <li><a href="#phase-3">Phase 3: Optimize</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Part III: Metrics</div>
+            <ul class="sidebar-nav">
+                <li><a href="#metrics-framework">Metrics Framework</a></li>
+                <li><a href="#metrics-productivity">Productivity Metrics</a></li>
+                <li><a href="#metrics-quality">Quality Metrics</a></li>
+                <li><a href="#metrics-plg">PLG Metrics</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Part IV: Change Mgmt</div>
+            <ul class="sidebar-nav">
+                <li><a href="#change-strategy">Change Strategy</a></li>
+                <li><a href="#communication">Communication Plan</a></li>
+                <li><a href="#resistance">Managing Resistance</a></li>
+                <li><a href="#upskilling">Upskilling Programs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Appendices</div>
+            <ul class="sidebar-nav">
+                <li><a href="#templates">Templates & Checklists</a></li>
+                <li><a href="#tools">Recommended Tools</a></li>
+                <li><a href="#glossary">Glossary</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <!-- Introduction -->
+        <section id="introduction">
+            <h1>AI-Native Organization Operating Playbook</h1>
+
+            <div class="doc-meta">
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Version</div>
+                    <div class="doc-meta-value">1.0</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Last Updated</div>
+                    <div class="doc-meta-value">December 2025</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Classification</div>
+                    <div class="doc-meta-value">Internal Strategy</div>
+                </div>
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">Audience</div>
+                    <div class="doc-meta-value">Leadership & Execution Teams</div>
+                </div>
+            </div>
+
+            <p class="lead">
+                This playbook provides the operational detail for transforming from a sales-led organization to an AI-native, product-led growth company. It translates strategic intent into executable actions across roles, processes, metrics, and change management.
+            </p>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Companion Document</div>
+                <p>This playbook accompanies the <strong>Executive POV: Architecting an AI-Native Technology Organization</strong>. Read the POV first for strategic context before diving into operational details.</p>
+            </div>
+
+            <h3>What This Playbook Covers</h3>
+            <ul>
+                <li><strong>Role Archetypes:</strong> Detailed definitions of AI-native roles, competencies, hiring profiles, and career paths</li>
+                <li><strong>Transition Phases:</strong> Week-by-week activities for each transformation phase with exit criteria</li>
+                <li><strong>Metrics Framework:</strong> How to measure productivity, quality, and business impact in an AI-native org</li>
+                <li><strong>Change Management:</strong> Communication templates, resistance patterns, and upskilling programs</li>
+            </ul>
+        </section>
+
+        <section id="how-to-use">
+            <h2>How to Use This Playbook</h2>
+
+            <h3>For Executive Leadership</h3>
+            <p>Focus on <strong>Part II: Transition Phases</strong> and <strong>Part IV: Change Management</strong>. These sections provide the governance framework and communication strategy you'll need to sponsor this transformation effectively.</p>
+
+            <h3>For Functional Leaders (Engineering, Product, Revenue)</h3>
+            <p>Start with <strong>Part I: Role Archetypes</strong> to understand how roles in your function will evolve. Then use <strong>Part III: Metrics</strong> to establish new success criteria for your teams.</p>
+
+            <h3>For HR/People Operations</h3>
+            <p>Focus on <strong>Part I: Role Archetypes</strong> (for job descriptions and leveling) and <strong>Part IV: Change Management</strong> (for upskilling and change programs).</p>
+
+            <h3>For Individual Contributors</h3>
+            <p>Read the archetype most relevant to your current role in <strong>Part I</strong>. Understand how your role evolves and what new competencies you'll need to develop.</p>
+        </section>
+
+        <section id="core-principles">
+            <h2>Core Principles</h2>
+
+            <p>These principles guide every decision in the AI-native transformation. When in doubt, return to these.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">1. Humans for Judgment, AI for Execution</div>
+                    <div class="card-description">AI handles volume work and pattern work. Humans focus on judgment, creativity, and accountability. Every role should maximize time spent on high-judgment activities.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">2. Architect, Don't Execute</div>
+                    <div class="card-description">AI-native roles design systems that execute at scale. The measure of success is system output, not personal output. 10x leverage comes from building, not doing.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">3. Capability Over Headcount</div>
+                    <div class="card-description">Measure capacity in capability units (human + AI), not headcount. Growth comes from expanding capability, which may or may not require more people.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">4. Customer Experience First</div>
+                    <div class="card-description">Every AI implementation must improve customer experience. Internal efficiency gains that degrade customer experience are not acceptable trade-offs.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">5. Learn Fast, Fail Small</div>
+                    <div class="card-description">AI capabilities evolve rapidly. Design for experimentation. Small failures that generate learning are more valuable than slow, "safe" rollouts.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">6. Transparency and Accountability</div>
+                    <div class="card-description">AI systems must be explainable. Human accountability remains even when AI executes. Customers deserve to know when they're interacting with AI.</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Part I: Role Archetypes -->
+        <section id="role-evolution">
+            <h2>Part I: Role Evolution Framework</h2>
+
+            <p class="lead">Every role in an AI-native organization evolves from "doer" to "architect + operator." This section provides detailed archetypes for the most critical role transformations.</p>
+
+            <h3>The Evolution Pattern</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Traditional Role</th>
+                        <th>AI-Native Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Primary Activity</strong></td>
+                        <td>Direct execution of tasks</td>
+                        <td>Design systems, supervise execution, handle exceptions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Output Measure</strong></td>
+                        <td>Personal output (code written, tickets closed)</td>
+                        <td>System output (capability delivered, outcomes achieved)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Key Skills</strong></td>
+                        <td>Domain expertise, execution speed</td>
+                        <td>System design, prompt engineering, quality judgment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time Allocation</strong></td>
+                        <td>80% execution, 20% planning</td>
+                        <td>30% design, 40% supervision, 30% high-judgment work</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Career Path</strong></td>
+                        <td>Individual contributor → Manager → Director</td>
+                        <td>Architect → Senior Architect → Principal (high-IC leverage)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Role Transformation Map</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Traditional Role</th>
+                        <th>AI-Native Role</th>
+                        <th>Key Transformation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Software Engineer</td>
+                        <td>AI-Augmented Engineer</td>
+                        <td>From writing code to specifying + reviewing AI-generated code</td>
+                    </tr>
+                    <tr>
+                        <td>Product Manager</td>
+                        <td>Product Architect</td>
+                        <td>From defining features to defining outcomes + training AI on user patterns</td>
+                    </tr>
+                    <tr>
+                        <td>SDR/BDR</td>
+                        <td>Growth Engineer</td>
+                        <td>From manual outreach to building automated acquisition systems</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Support Rep</td>
+                        <td>Support Architect</td>
+                        <td>From handling tickets to designing AI resolution systems</td>
+                    </tr>
+                    <tr>
+                        <td>Data Analyst</td>
+                        <td>Analytics Architect</td>
+                        <td>From running queries to defining questions + validating AI analysis</td>
+                    </tr>
+                    <tr>
+                        <td>DevOps/SRE</td>
+                        <td>AI Operations Manager</td>
+                        <td>From maintaining systems to orchestrating AI agents + human oversight</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="role-engineer">
+            <h3>AI-Augmented Engineer</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>AI-Augmented Engineers design software systems, specify requirements for AI code generation, review and refine AI output, and handle complex edge cases that require human judgment. They leverage AI to achieve 1.5-2x productivity while maintaining quality standards.</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>System Design:</strong> Architecture decisions, API contracts, data models</li>
+                <li><strong>Specification:</strong> Writing detailed prompts/specs for AI code generation</li>
+                <li><strong>Review & Refinement:</strong> Evaluating AI-generated code for correctness, security, performance</li>
+                <li><strong>Edge Case Handling:</strong> Implementing complex logic AI struggles with</li>
+                <li><strong>AI Tool Optimization:</strong> Improving prompts, training custom models on codebase patterns</li>
+            </ul>
+
+            <h4>Competency Model</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Competency</th>
+                        <th>Junior (L1-L2)</th>
+                        <th>Mid (L3-L4)</th>
+                        <th>Senior (L5+)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AI Tool Proficiency</strong></td>
+                        <td>Uses Copilot effectively for autocomplete</td>
+                        <td>Crafts complex prompts, uses multiple AI tools strategically</td>
+                        <td>Customizes AI tools, trains on codebase, builds internal tooling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Review</strong></td>
+                        <td>Reviews AI output for obvious errors</td>
+                        <td>Catches subtle bugs, security issues, performance problems</td>
+                        <td>Defines review standards, mentors team on AI output evaluation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>System Design</strong></td>
+                        <td>Implements designs specified by others</td>
+                        <td>Designs subsystems, considers AI execution constraints</td>
+                        <td>Architects systems optimized for AI + human collaboration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Specification Writing</strong></td>
+                        <td>Writes basic prompts for simple features</td>
+                        <td>Writes comprehensive specs that AI can implement correctly</td>
+                        <td>Defines specification standards, creates templates for team</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Time Allocation</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Traditional Engineer</th>
+                        <th>AI-Augmented Engineer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Writing code from scratch</td>
+                        <td>60%</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Reviewing/refining AI-generated code</td>
+                        <td>0%</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr>
+                        <td>System design & architecture</td>
+                        <td>15%</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr>
+                        <td>Writing specifications/prompts</td>
+                        <td>5%</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Debugging & troubleshooting</td>
+                        <td>15%</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Meetings & collaboration</td>
+                        <td>5%</td>
+                        <td>5%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Hiring Profile</h4>
+
+            <div class="callout callout-success">
+                <div class="callout-title">What to Look For</div>
+                <ul>
+                    <li>Strong fundamentals (algorithms, data structures, system design) - AI amplifies good judgment</li>
+                    <li>Experience with AI coding tools (Copilot, Cursor, Claude) and ability to articulate what works</li>
+                    <li>Critical evaluation skills - can quickly identify when AI output is wrong or suboptimal</li>
+                    <li>Communication skills - can write clear specifications that both humans and AI understand</li>
+                    <li>Learning velocity - AI tools evolve rapidly, need to stay current</li>
+                </ul>
+            </div>
+
+            <div class="callout callout-warning">
+                <div class="callout-title">Red Flags</div>
+                <ul>
+                    <li>Over-reliance on AI without critical evaluation ("AI wrote it, must be right")</li>
+                    <li>Resistance to AI tools ("I prefer to write everything myself")</li>
+                    <li>Weak fundamentals hidden by AI assistance</li>
+                    <li>Unable to explain AI-generated code they're submitting</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="role-pm">
+            <h3>Product Architect</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>Product Architects define product outcomes, design systems for achieving those outcomes, and train AI systems on user patterns. They shift from "what features to build" to "what systems will achieve user outcomes at scale."</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>Outcome Definition:</strong> Translating business goals into measurable user outcomes</li>
+                <li><strong>System Design:</strong> Designing product systems (not just features) that achieve outcomes</li>
+                <li><strong>AI Training:</strong> Training AI systems on user patterns, edge cases, and judgment calls</li>
+                <li><strong>Experiment Design:</strong> Setting up experiments to learn what AI-driven interventions work</li>
+                <li><strong>Cross-Pod Coordination:</strong> Ensuring capabilities compose into coherent user experiences</li>
+            </ul>
+
+            <h4>Key Transformation: From Features to Systems</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Traditional PM</th>
+                        <th>Product Architect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Writes PRD for "Add export to CSV feature"</td>
+                        <td>Designs "Data Portability System" that uses AI to identify what users want to export and offers appropriate formats</td>
+                    </tr>
+                    <tr>
+                        <td>Prioritizes feature backlog based on customer requests</td>
+                        <td>Designs AI system that identifies customer needs from usage patterns and generates personalized recommendations</td>
+                    </tr>
+                    <tr>
+                        <td>Runs quarterly roadmap planning</td>
+                        <td>Designs continuous experiment system that automatically tests and rolls out improvements</td>
+                    </tr>
+                    <tr>
+                        <td>Reviews customer support tickets for product insights</td>
+                        <td>Trains AI to analyze all customer interactions and surface patterns requiring product attention</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Competency Model</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Competency</th>
+                        <th>Associate (L1-L2)</th>
+                        <th>Product Architect (L3-L4)</th>
+                        <th>Principal (L5+)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Outcome Definition</strong></td>
+                        <td>Translates features to user stories</td>
+                        <td>Defines measurable outcomes, designs success metrics</td>
+                        <td>Sets company-level outcome framework, coaches others</td>
+                    </tr>
+                    <tr>
+                        <td><strong>System Thinking</strong></td>
+                        <td>Understands feature interactions</td>
+                        <td>Designs product systems with AI components</td>
+                        <td>Architects cross-product AI capabilities</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Training</strong></td>
+                        <td>Provides feedback on AI recommendations</td>
+                        <td>Designs training data, evaluates AI performance</td>
+                        <td>Sets AI quality standards, designs evaluation frameworks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experimentation</strong></td>
+                        <td>Runs A/B tests</td>
+                        <td>Designs experiment systems, interprets multi-variate results</td>
+                        <td>Builds experimentation culture, defines statistical standards</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="role-growth">
+            <h3>Growth Engineer</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>Growth Engineers build automated systems for customer acquisition, activation, and expansion. They replace manual sales/marketing motions with AI-driven growth loops.</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>Acquisition Systems:</strong> Building AI-powered content generation, SEO automation, paid campaign optimization</li>
+                <li><strong>Activation Systems:</strong> Designing AI-driven onboarding flows that personalize based on user signals</li>
+                <li><strong>Expansion Systems:</strong> Building AI that identifies expansion opportunities and orchestrates outreach</li>
+                <li><strong>Attribution & Measurement:</strong> Creating systems that track ROI across AI-driven touchpoints</li>
+                <li><strong>High-Value Exceptions:</strong> Handling leads/accounts that require human touch</li>
+            </ul>
+
+            <h4>Key Metrics Owned</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target</th>
+                        <th>How AI Helps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cost per Acquisition (CPA)</td>
+                        <td>50-70% reduction vs. sales-led</td>
+                        <td>AI content generation, automated outreach, campaign optimization</td>
+                    </tr>
+                    <tr>
+                        <td>Time to Value (TTV)</td>
+                        <td>&lt;24 hours for core value</td>
+                        <td>AI onboarding that adapts to user behavior</td>
+                    </tr>
+                    <tr>
+                        <td>Product Qualified Lead (PQL) Rate</td>
+                        <td>&gt;30% of signups</td>
+                        <td>AI identifies high-intent users from behavior patterns</td>
+                    </tr>
+                    <tr>
+                        <td>Expansion Revenue %</td>
+                        <td>&gt;30% of total revenue</td>
+                        <td>AI identifies expansion signals, automates upgrade prompts</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="role-support">
+            <h3>Support Architect</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>Support Architects design and operate AI systems that handle customer support at scale. They shift from resolving individual tickets to building systems that resolve categories of issues automatically.</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>AI Resolution System Design:</strong> Building AI agents that handle common support scenarios</li>
+                <li><strong>Knowledge Management:</strong> Creating and maintaining knowledge bases that AI draws from</li>
+                <li><strong>Escalation Design:</strong> Defining when and how issues escalate to humans</li>
+                <li><strong>Quality Monitoring:</strong> Evaluating AI responses for accuracy and customer satisfaction</li>
+                <li><strong>High-Judgment Escalations:</strong> Handling complex, sensitive, or high-stakes customer issues</li>
+            </ul>
+
+            <h4>Resolution Tier Model</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Handler</th>
+                        <th>Issue Types</th>
+                        <th>Target %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tier 0</strong></td>
+                        <td>Self-serve (docs, in-app)</td>
+                        <td>How-to questions, common issues with documented solutions</td>
+                        <td>40%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tier 1</strong></td>
+                        <td>AI Agent</td>
+                        <td>Account issues, troubleshooting, configuration help</td>
+                        <td>35%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tier 2</strong></td>
+                        <td>Support Architect</td>
+                        <td>Complex technical issues, billing disputes, feature requests</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tier 3</strong></td>
+                        <td>Specialist/Engineering</td>
+                        <td>Bugs, security issues, enterprise escalations</td>
+                        <td>5%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Key Metrics</h4>
+            <ul>
+                <li><strong>AI Resolution Rate:</strong> % of tickets resolved without human intervention (target: &gt;60%)</li>
+                <li><strong>Customer Satisfaction (AI):</strong> CSAT for AI-handled tickets (target: &gt;4.0/5.0)</li>
+                <li><strong>Escalation Rate:</strong> % of AI interactions requiring human escalation (target: &lt;15%)</li>
+                <li><strong>Human Intervention Rate:</strong> % of AI responses requiring human correction (target: &lt;5%)</li>
+            </ul>
+        </section>
+
+        <section id="role-data">
+            <h3>Analytics Architect</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>Analytics Architects define the questions worth answering, design systems for AI-powered analysis, and synthesize insights that require human judgment. They shift from running queries to architecting insight systems.</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>Question Architecture:</strong> Defining the questions that matter for business decisions</li>
+                <li><strong>Analysis System Design:</strong> Building AI systems that answer questions at scale</li>
+                <li><strong>Quality Validation:</strong> Evaluating AI analysis for accuracy and relevance</li>
+                <li><strong>Insight Synthesis:</strong> Combining AI outputs into actionable recommendations</li>
+                <li><strong>Stakeholder Communication:</strong> Translating data into decisions for non-technical audiences</li>
+            </ul>
+
+            <h4>Time Allocation Shift</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Traditional Analyst</th>
+                        <th>Analytics Architect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Writing SQL queries</td>
+                        <td>40%</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Building dashboards</td>
+                        <td>25%</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Defining questions & metrics</td>
+                        <td>10%</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr>
+                        <td>Validating AI analysis</td>
+                        <td>0%</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Synthesizing insights</td>
+                        <td>15%</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr>
+                        <td>Stakeholder communication</td>
+                        <td>10%</td>
+                        <td>10%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="role-ops">
+            <h3>AI Operations Manager</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Role Summary</div>
+                <p>AI Operations Managers orchestrate the deployment, monitoring, and optimization of AI systems across the organization. They ensure AI agents operate reliably and that human oversight is maintained.</p>
+            </div>
+
+            <h4>Core Responsibilities</h4>
+            <ul>
+                <li><strong>AI Agent Deployment:</strong> Rolling out AI systems with appropriate guardrails</li>
+                <li><strong>Performance Monitoring:</strong> Tracking AI system health, accuracy, and efficiency</li>
+                <li><strong>Cost Optimization:</strong> Managing AI compute costs, optimizing for ROI</li>
+                <li><strong>Incident Response:</strong> Handling AI system failures and edge cases</li>
+                <li><strong>Governance:</strong> Ensuring AI systems comply with policies and regulations</li>
+            </ul>
+
+            <h4>Key Dashboards Owned</h4>
+            <ul>
+                <li><strong>AI System Health:</strong> Uptime, latency, error rates for all AI agents</li>
+                <li><strong>Human Intervention Tracker:</strong> When and why humans override AI decisions</li>
+                <li><strong>Cost Center:</strong> AI compute costs by system, trending, ROI</li>
+                <li><strong>Quality Scores:</strong> Accuracy metrics across AI systems</li>
+                <li><strong>Compliance Status:</strong> AI governance policy adherence</li>
+            </ul>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Part II: Transition Phases -->
+        <section id="phase-0">
+            <h2>Part II: Phase 0 - Foundation (Months 1-3)</h2>
+
+            <p class="lead">Phase 0 establishes the assessment baseline, designs the target operating model, and aligns leadership. This phase is critical—skipping it leads to failed transformations.</p>
+
+            <h3>Objectives</h3>
+            <ul>
+                <li>Establish baseline AI maturity across all functions</li>
+                <li>Design target operating model (org structure, roles, metrics)</li>
+                <li>Achieve executive alignment on transformation scope and investment</li>
+                <li>Identify pilot candidates for Phase 1</li>
+                <li>Create change management and communication strategy</li>
+            </ul>
+
+            <h3>Workstreams</h3>
+
+            <h4>Workstream 1: AI Maturity Assessment</h4>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Current State Inventory</div>
+                        <div class="step-description">Document all AI tools currently in use, who uses them, for what purposes, and with what results. Include shadow AI (personal ChatGPT usage, etc.).</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Workflow Analysis</div>
+                        <div class="step-description">Map key workflows in each function. Identify which steps are high-volume/pattern-based (AI candidates) vs. high-judgment (human focus).</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Data Infrastructure Assessment</div>
+                        <div class="step-description">Evaluate data quality, accessibility, and governance. AI systems require clean, accessible data to function effectively.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Cultural Readiness Survey</div>
+                        <div class="step-description">Assess organizational sentiment toward AI: enthusiasm, fear, skepticism. Identify champions and resistors.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Workstream 2: Target Operating Model Design</h4>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Future State Org Design</div>
+                        <div class="step-description">Design capability pod structure. Define which pods exist, what capabilities each delivers, and how they compose.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Role Evolution Mapping</div>
+                        <div class="step-description">Map every current role to its AI-native evolution. Identify skill gaps and training needs.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Metrics Framework Design</div>
+                        <div class="step-description">Define new metrics for productivity, quality, and business impact. Design measurement systems.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Technology Stack Definition</div>
+                        <div class="step-description">Select AI platforms, tools, and infrastructure. Make build vs. buy decisions.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Workstream 3: Leadership Alignment</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Participants</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Executive Workshop</td>
+                        <td>CEO, C-suite</td>
+                        <td>Shared vision, commitment to transformation</td>
+                    </tr>
+                    <tr>
+                        <td>Board Education</td>
+                        <td>Board of Directors</td>
+                        <td>Board understanding and support for investment</td>
+                    </tr>
+                    <tr>
+                        <td>Leadership Assessment</td>
+                        <td>VP+ leaders</td>
+                        <td>Readiness assessment, development plans</td>
+                    </tr>
+                    <tr>
+                        <td>Champion Identification</td>
+                        <td>All levels</td>
+                        <td>Network of transformation champions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exit Criteria for Phase 0</h3>
+
+            <div class="callout callout-success">
+                <div class="callout-title">Phase 0 Complete When:</div>
+                <ul>
+                    <li>AI maturity baseline documented and validated</li>
+                    <li>Target operating model approved by executive team</li>
+                    <li>Board has approved transformation investment</li>
+                    <li>2-3 pilot candidates identified and scoped</li>
+                    <li>Change management strategy documented</li>
+                    <li>Communication plan ready for Phase 1 kickoff</li>
+                </ul>
+            </div>
+
+            <h3>Phase 0 RACI Matrix</h3>
+
+            <table class="raci-matrix">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>CEO</th>
+                        <th>CTO</th>
+                        <th>CHRO</th>
+                        <th>Func. Leaders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Maturity Assessment</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-r">R</td>
+                    </tr>
+                    <tr>
+                        <td>Target Operating Model</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-c">C</td>
+                    </tr>
+                    <tr>
+                        <td>Leadership Alignment</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-i">I</td>
+                    </tr>
+                    <tr>
+                        <td>Pilot Selection</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-i">I</td>
+                        <td class="raci-r">R</td>
+                    </tr>
+                    <tr>
+                        <td>Change Strategy</td>
+                        <td class="raci-a">A</td>
+                        <td class="raci-c">C</td>
+                        <td class="raci-r">R</td>
+                        <td class="raci-c">C</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="phase-1">
+            <h2>Phase 1 - Pilot (Months 4-9)</h2>
+
+            <p class="lead">Phase 1 proves the model with 2-3 carefully selected pilots. Success here builds organizational confidence and generates learnings for scale.</p>
+
+            <h3>Pilot Selection Criteria</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Why It Matters</th>
+                        <th>Score 1-5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>High Volume</strong></td>
+                        <td>AI provides leverage on volume work; low-volume won't show ROI</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pattern-Based</strong></td>
+                        <td>Current AI works best on pattern recognition; novel judgment harder</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Measurable</strong></td>
+                        <td>Must be able to measure before/after clearly</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contained Risk</strong></td>
+                        <td>Failure shouldn't damage customers or revenue significantly</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Champion Available</strong></td>
+                        <td>Need a leader who will advocate for success</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Ready</strong></td>
+                        <td>Required data must be accessible and clean</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Recommended Pilot Candidates</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">Pilot A: AI-Powered Support</div>
+                    <div class="card-description">
+                        <p><strong>Scope:</strong> Deploy AI agent for Tier 1 support on one product line</p>
+                        <p><strong>Success Metric:</strong> >50% AI resolution rate with CSAT >4.0</p>
+                        <p><strong>Timeline:</strong> 8 weeks to live, 4 weeks measurement</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Pilot B: AI-Augmented Engineering</div>
+                    <div class="card-description">
+                        <p><strong>Scope:</strong> One engineering team adopts AI-first development workflow</p>
+                        <p><strong>Success Metric:</strong> 2x velocity on comparable work</p>
+                        <p><strong>Timeline:</strong> 4 weeks adoption, 8 weeks measurement</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Pilot C: PLG Onboarding</div>
+                    <div class="card-description">
+                        <p><strong>Scope:</strong> AI-personalized onboarding flow for new signups</p>
+                        <p><strong>Success Metric:</strong> 30% improvement in activation rate</p>
+                        <p><strong>Timeline:</strong> 6 weeks build, 6 weeks A/B test</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Pilot Governance</h3>
+
+            <ul>
+                <li><strong>Weekly:</strong> Pilot team standup, metrics review</li>
+                <li><strong>Bi-weekly:</strong> Steering committee review (sponsor + functional leader)</li>
+                <li><strong>Monthly:</strong> Executive update (CEO + C-suite)</li>
+                <li><strong>End of Phase:</strong> Formal readout with go/no-go for Phase 2</li>
+            </ul>
+
+            <h3>Exit Criteria for Phase 1</h3>
+
+            <div class="callout callout-success">
+                <div class="callout-title">Phase 1 Complete When:</div>
+                <ul>
+                    <li>At least 2 of 3 pilots meet success criteria</li>
+                    <li>Learnings documented and incorporated into playbook</li>
+                    <li>Role evolution validated (at least 5 people operating in new model)</li>
+                    <li>Metrics framework validated (can measure what matters)</li>
+                    <li>Executive confidence sufficient to approve Phase 2 investment</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="phase-2">
+            <h2>Phase 2 - Scale (Months 10-18)</h2>
+
+            <p class="lead">Phase 2 systematically rolls out AI-native capabilities across the organization. This is where the transformation happens at scale.</p>
+
+            <h3>Rollout Sequence</h3>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-period">Months 10-12</div>
+                    <div class="timeline-title">Customer-Facing AI</div>
+                    <p>Full deployment of AI support, AI-powered onboarding, and PLG automation. Customer experience improves while costs decrease.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Months 12-14</div>
+                    <div class="timeline-title">Engineering Transformation</div>
+                    <p>All engineering teams adopt AI-augmented workflows. New tooling deployed. Productivity metrics active.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Months 14-16</div>
+                    <div class="timeline-title">Go-to-Market Evolution</div>
+                    <p>Growth engineering replaces traditional SDR model. AI-driven acquisition and expansion systems live.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Months 16-18</div>
+                    <div class="timeline-title">Org Restructure</div>
+                    <p>Capability pods fully operational. New roles filled. Traditional org structure deprecated.</p>
+                </div>
+            </div>
+
+            <h3>Headcount Implications</h3>
+
+            <div class="callout callout-warning">
+                <div class="callout-title">Critical: Handle with Care</div>
+                <p>AI-native transformation changes headcount needs. This must be handled with transparency and humanity:</p>
+                <ul>
+                    <li><strong>Upskilling First:</strong> Invest heavily in helping current employees transition to new roles</li>
+                    <li><strong>Attrition Absorption:</strong> Use natural attrition to reduce headcount where appropriate</li>
+                    <li><strong>Redeployment:</strong> Move people to higher-value work before considering separations</li>
+                    <li><strong>Generous Transitions:</strong> When separations are necessary, provide generous severance and support</li>
+                </ul>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Current State</th>
+                        <th>AI-Native State</th>
+                        <th>Net Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Engineering</td>
+                        <td>100 engineers</td>
+                        <td>70 AI-augmented engineers (3x output)</td>
+                        <td>-30% headcount, +200% output</td>
+                    </tr>
+                    <tr>
+                        <td>Support</td>
+                        <td>40 support reps</td>
+                        <td>15 support architects + AI</td>
+                        <td>-60% headcount, +50% capacity</td>
+                    </tr>
+                    <tr>
+                        <td>Sales/BDR</td>
+                        <td>30 SDRs/BDRs</td>
+                        <td>10 growth engineers + AI</td>
+                        <td>-65% headcount, +100% pipeline</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td>15 analysts</td>
+                        <td>8 analytics architects + AI</td>
+                        <td>-45% headcount, +150% insight velocity</td>
+                    </tr>
+                    <tr>
+                        <td>AI/ML Platform</td>
+                        <td>5 ML engineers</td>
+                        <td>20 AI operations + platform</td>
+                        <td>+300% headcount (new capability)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exit Criteria for Phase 2</h3>
+
+            <div class="callout callout-success">
+                <div class="callout-title">Phase 2 Complete When:</div>
+                <ul>
+                    <li>All customer-facing functions operating with AI systems</li>
+                    <li>Engineering productivity metrics show 2-3x improvement</li>
+                    <li>Org restructure complete, capability pods operational</li>
+                    <li>New metrics framework fully deployed</li>
+                    <li>CAC reduced by 40%+ vs. baseline</li>
+                    <li>Gross margin improved by 5+ points</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="phase-3">
+            <h2>Phase 3 - Optimize (Months 19-24)</h2>
+
+            <p class="lead">Phase 3 focuses on continuous improvement: making AI systems self-improving, optimizing human-AI collaboration, and establishing competitive moat.</p>
+
+            <h3>Focus Areas</h3>
+
+            <h4>1. AI System Self-Improvement</h4>
+            <ul>
+                <li>Implement feedback loops where human corrections improve AI models</li>
+                <li>Build systems that identify when they're underperforming</li>
+                <li>Automate model retraining on new data patterns</li>
+            </ul>
+
+            <h4>2. Human-AI Collaboration Optimization</h4>
+            <ul>
+                <li>Refine escalation criteria based on Phase 2 learnings</li>
+                <li>Reduce human intervention rate through targeted AI improvements</li>
+                <li>Increase human time on high-judgment activities</li>
+            </ul>
+
+            <h4>3. Competitive Moat Establishment</h4>
+            <ul>
+                <li>Proprietary AI capabilities that are hard to replicate</li>
+                <li>Data advantages from PLG scale</li>
+                <li>Organizational capability (people who know how to work AI-native)</li>
+            </ul>
+
+            <h3>Steady-State Metrics</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target</th>
+                        <th>Monitoring Frequency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Revenue per Employee</td>
+                        <td>$600K+ (2x industry)</td>
+                        <td>Quarterly</td>
+                    </tr>
+                    <tr>
+                        <td>AI Resolution Rate</td>
+                        <td>>75%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td>Human Intervention Rate</td>
+                        <td><5%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td>CAC (Blended)</td>
+                        <td><$3,000</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td>Gross Margin</td>
+                        <td>>85%</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td>Engineering Velocity</td>
+                        <td>3x baseline</td>
+                        <td>Bi-weekly</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Part III: Metrics -->
+        <section id="metrics-framework">
+            <h2>Part III: Metrics Framework</h2>
+
+            <p class="lead">Traditional metrics become meaningless or misleading in AI-native organizations. This framework provides the new measurement system.</p>
+
+            <h3>Metrics Philosophy</h3>
+
+            <div class="callout callout-info">
+                <div class="callout-title">Core Principle</div>
+                <p>Measure <strong>outcomes</strong> (customer value, business results) and <strong>capability</strong> (what we can do), not <strong>activity</strong> (what people are doing) or <strong>headcount</strong> (how many people we have).</p>
+            </div>
+
+            <h3>Metrics Categories</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>What It Measures</th>
+                        <th>Why It Matters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Productivity</strong></td>
+                        <td>Output per capability unit</td>
+                        <td>Captures AI leverage, not just human effort</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quality</strong></td>
+                        <td>Accuracy, reliability, human intervention needs</td>
+                        <td>Ensures AI systems meet quality standards</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Efficiency</strong></td>
+                        <td>Cost per outcome</td>
+                        <td>Focuses on value delivered, not resources consumed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PLG Health</strong></td>
+                        <td>Self-serve acquisition, activation, expansion</td>
+                        <td>Tracks PLG transformation progress</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning</strong></td>
+                        <td>AI improvement rate, experiment velocity</td>
+                        <td>Captures organizational learning capability</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="metrics-productivity">
+            <h3>Productivity Metrics</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Definition</th>
+                        <th>Target</th>
+                        <th>Measurement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Revenue per Employee</strong></td>
+                        <td>ARR / FTE count</td>
+                        <td>$450K-$600K</td>
+                        <td>Quarterly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engineering Velocity</strong></td>
+                        <td>Story points / engineer / sprint (normalized)</td>
+                        <td>2-3x baseline</td>
+                        <td>Bi-weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support Capacity</strong></td>
+                        <td>Tickets resolved / support architect</td>
+                        <td>5-10x traditional</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Content Velocity</strong></td>
+                        <td>Publishable content / content creator</td>
+                        <td>10x traditional</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Leverage Ratio</strong></td>
+                        <td>AI-assisted output / total output</td>
+                        <td>>70%</td>
+                        <td>Monthly</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="metrics-quality">
+            <h3>Quality Metrics</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Definition</th>
+                        <th>Target</th>
+                        <th>Measurement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Human Intervention Rate</strong></td>
+                        <td>% of AI outputs requiring human correction</td>
+                        <td><5%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Accuracy</strong></td>
+                        <td>% of AI decisions that are correct (sampled)</td>
+                        <td>>90%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Satisfaction (AI)</strong></td>
+                        <td>CSAT for AI-handled interactions</td>
+                        <td>>4.2/5.0</td>
+                        <td>Continuous</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Escalation Rate</strong></td>
+                        <td>% of interactions requiring human escalation</td>
+                        <td><15%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Quality (AI)</strong></td>
+                        <td>Defect rate in AI-generated code</td>
+                        <td>Equal to human</td>
+                        <td>Per release</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="metrics-plg">
+            <h3>PLG Metrics</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Definition</th>
+                        <th>Target</th>
+                        <th>Measurement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Self-Serve Conversion</strong></td>
+                        <td>% of signups that convert without sales touch</td>
+                        <td>>50%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time to Value</strong></td>
+                        <td>Time from signup to core value moment</td>
+                        <td><24 hours</td>
+                        <td>Continuous</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product Qualified Lead Rate</strong></td>
+                        <td>% of signups reaching PQL threshold</td>
+                        <td>>30%</td>
+                        <td>Weekly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expansion Revenue %</strong></td>
+                        <td>% of revenue from existing customer expansion</td>
+                        <td>>30%</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CAC Payback</strong></td>
+                        <td>Months to recover customer acquisition cost</td>
+                        <td><6 months</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Net Revenue Retention</strong></td>
+                        <td>Revenue from existing customers YoY</td>
+                        <td>>120%</td>
+                        <td>Monthly</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Part IV: Change Management -->
+        <section id="change-strategy">
+            <h2>Part IV: Change Strategy</h2>
+
+            <p class="lead">AI-native transformation fails more often from change management failure than from technology failure. This section provides the human side of the equation.</p>
+
+            <h3>Change Management Principles</h3>
+
+            <ul>
+                <li><strong>Transparency Over Comfort:</strong> Tell people what's changing and why, even when it's uncomfortable</li>
+                <li><strong>Investment Over Abandonment:</strong> Invest in helping people transition, don't just replace them</li>
+                <li><strong>Evidence Over Assertion:</strong> Show results from pilots before demanding broader adoption</li>
+                <li><strong>Inclusion Over Imposition:</strong> Involve people in designing their new roles</li>
+                <li><strong>Speed Over Perfection:</strong> Move quickly, learn from mistakes, iterate</li>
+            </ul>
+
+            <h3>Stakeholder Map</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stakeholder Group</th>
+                        <th>Primary Concern</th>
+                        <th>Key Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Executives</strong></td>
+                        <td>Business results, risk</td>
+                        <td>"This is how we compete in the next decade"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Board</strong></td>
+                        <td>ROI, governance</td>
+                        <td>"Structured investment with clear milestones"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Managers</strong></td>
+                        <td>Team disruption, their role</td>
+                        <td>"Your role evolves to AI orchestration, not elimination"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Individual Contributors</strong></td>
+                        <td>Job security, skill relevance</td>
+                        <td>"We're investing in your transition to higher-value work"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customers</strong></td>
+                        <td>Service quality, data privacy</td>
+                        <td>"Better, faster service with human oversight"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="communication">
+            <h3>Communication Plan</h3>
+
+            <h4>Phase 0 Communications</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Audience</th>
+                        <th>Message</th>
+                        <th>Channel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Executive team</td>
+                        <td>Transformation vision and commitment</td>
+                        <td>Executive offsite</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Board</td>
+                        <td>Strategic rationale and investment ask</td>
+                        <td>Board meeting</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>All managers</td>
+                        <td>What's coming, how to talk to teams</td>
+                        <td>Manager all-hands</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>All employees</td>
+                        <td>Vision, timeline, commitment to people</td>
+                        <td>Company all-hands</td>
+                    </tr>
+                    <tr>
+                        <td>5-12</td>
+                        <td>All employees</td>
+                        <td>Weekly progress updates</td>
+                        <td>Email/Slack</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Key Messages by Phase</h4>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">Phase 0: "We're Exploring"</div>
+                    <div class="card-description">We're assessing how AI can help us compete. We're designing thoughtfully. Your input matters.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Phase 1: "We're Proving"</div>
+                    <div class="card-description">We're running pilots to learn what works. Early results are promising. We're learning fast.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Phase 2: "We're Scaling"</div>
+                    <div class="card-description">Pilots succeeded. We're rolling out broadly. Training is available. Your role is evolving.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Phase 3: "We're Optimizing"</div>
+                    <div class="card-description">This is how we work now. We're getting better every day. Thank you for the journey.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resistance">
+            <h3>Managing Resistance</h3>
+
+            <h4>Common Resistance Patterns</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>What You'll Hear</th>
+                        <th>Response Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fear</strong></td>
+                        <td>"Am I going to lose my job?"</td>
+                        <td>Acknowledge fear. Be honest about changes. Commit to transition support.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Skepticism</strong></td>
+                        <td>"AI isn't ready for real work"</td>
+                        <td>Show evidence from pilots. Let skeptics evaluate firsthand.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Identity</strong></td>
+                        <td>"I'm a software engineer, not a prompt writer"</td>
+                        <td>Reframe role evolution as growth. Celebrate new skills.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Control</strong></td>
+                        <td>"I don't trust AI to do this right"</td>
+                        <td>Design systems with human oversight. Build trust gradually.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inertia</strong></td>
+                        <td>"We've always done it this way"</td>
+                        <td>Create urgency around competitive threat. Show what's possible.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Intervention Framework</h4>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Listen First</div>
+                        <div class="step-description">Understand the specific concern. Don't dismiss or argue immediately.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Acknowledge Validity</div>
+                        <div class="step-description">Most concerns have some validity. Acknowledge what's true.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Provide Context</div>
+                        <div class="step-description">Share the bigger picture: why this matters, what alternatives exist.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Offer Agency</div>
+                        <div class="step-description">Give people choices and involvement in how changes affect them.</div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Follow Up</div>
+                        <div class="step-description">Check back. Adjust based on feedback. Show you heard them.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="upskilling">
+            <h3>Upskilling Programs</h3>
+
+            <h4>Learning Tracks</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Track</th>
+                        <th>Audience</th>
+                        <th>Duration</th>
+                        <th>Outcomes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AI Foundations</strong></td>
+                        <td>All employees</td>
+                        <td>4 hours</td>
+                        <td>Basic AI literacy, tool familiarity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI-Augmented Engineering</strong></td>
+                        <td>Engineers</td>
+                        <td>40 hours</td>
+                        <td>Prompt engineering, AI code review, system design for AI</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support Architecture</strong></td>
+                        <td>Support team</td>
+                        <td>24 hours</td>
+                        <td>AI system design, escalation handling, quality monitoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Growth Engineering</strong></td>
+                        <td>Sales/Marketing</td>
+                        <td>32 hours</td>
+                        <td>AI acquisition systems, automation, analytics</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Leadership</strong></td>
+                        <td>Managers</td>
+                        <td>16 hours</td>
+                        <td>Leading AI-native teams, metrics, change management</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Learning Principles</h4>
+
+            <ul>
+                <li><strong>Learn by Doing:</strong> 80% hands-on, 20% theory</li>
+                <li><strong>Real Projects:</strong> Apply learning to actual work, not exercises</li>
+                <li><strong>Peer Learning:</strong> Cohort-based with collaboration</li>
+                <li><strong>Continuous:</strong> Ongoing learning, not one-time training</li>
+                <li><strong>Measured:</strong> Track skill development and application</li>
+            </ul>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Appendices -->
+        <section id="templates">
+            <h2>Appendix A: Templates & Checklists</h2>
+
+            <h3>AI Maturity Assessment Template</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Level 1 (Ad-hoc)</th>
+                        <th>Level 2 (Emerging)</th>
+                        <th>Level 3 (Established)</th>
+                        <th>Level 4 (Optimizing)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tool Adoption</strong></td>
+                        <td>No AI tools</td>
+                        <td>Individual use (Copilot, ChatGPT)</td>
+                        <td>Team-level tools, some integration</td>
+                        <td>Enterprise AI platform, full integration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Process Integration</strong></td>
+                        <td>No AI in processes</td>
+                        <td>AI assists individuals</td>
+                        <td>AI embedded in workflows</td>
+                        <td>AI-first process design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Readiness</strong></td>
+                        <td>Siloed, inconsistent</td>
+                        <td>Some integration</td>
+                        <td>Accessible, governed</td>
+                        <td>AI-ready data infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Skills</strong></td>
+                        <td>No AI skills</td>
+                        <td>Basic prompt use</td>
+                        <td>Prompt engineering, AI evaluation</td>
+                        <td>AI system design, governance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Culture</strong></td>
+                        <td>AI-skeptical</td>
+                        <td>AI-curious</td>
+                        <td>AI-embracing</td>
+                        <td>AI-native mindset</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Pilot Proposal Template</h3>
+
+            <pre><code>PILOT PROPOSAL: [Name]
+
+1. OBJECTIVE
+What outcome are we trying to achieve?
+
+2. SCOPE
+- Which team/function?
+- Which workflows?
+- Which AI capabilities?
+
+3. SUCCESS CRITERIA
+- Primary metric:
+- Secondary metrics:
+- Minimum viable success:
+
+4. TIMELINE
+- Preparation: X weeks
+- Execution: X weeks
+- Measurement: X weeks
+
+5. RESOURCES
+- People:
+- Tools:
+- Budget:
+
+6. RISKS
+- Risk 1: [Mitigation]
+- Risk 2: [Mitigation]
+
+7. STAKEHOLDERS
+- Sponsor:
+- Champion:
+- Team lead:</code></pre>
+
+            <h3>Role Evolution Mapping Template</h3>
+
+            <pre><code>ROLE EVOLUTION: [Current Role] → [AI-Native Role]
+
+CURRENT STATE
+- Primary activities:
+- Time allocation:
+- Key skills:
+- Success metrics:
+
+FUTURE STATE
+- Primary activities:
+- Time allocation:
+- Key skills:
+- Success metrics:
+
+TRANSITION PLAN
+- Skills to develop:
+- Training required:
+- Timeline:
+- Support needed:</code></pre>
+        </section>
+
+        <section id="tools">
+            <h2>Appendix B: Recommended Tools</h2>
+
+            <h3>AI Development & Productivity</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Tool</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Code Generation</strong></td>
+                        <td>GitHub Copilot, Cursor, Claude</td>
+                        <td>AI-augmented engineering</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Support</strong></td>
+                        <td>Intercom Fin, Zendesk AI, Custom</td>
+                        <td>AI support resolution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Content Generation</strong></td>
+                        <td>Claude, GPT-4, Jasper</td>
+                        <td>Marketing, documentation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analytics</strong></td>
+                        <td>ThoughtSpot, Mode, Custom</td>
+                        <td>AI-powered analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Workflow Automation</strong></td>
+                        <td>Zapier AI, Make, Custom agents</td>
+                        <td>Process automation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Platform</strong></td>
+                        <td>OpenAI, Anthropic, AWS Bedrock</td>
+                        <td>Foundation models</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>PLG & Growth</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Tool</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Product Analytics</strong></td>
+                        <td>Amplitude, Mixpanel, Heap</td>
+                        <td>User behavior tracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experimentation</strong></td>
+                        <td>LaunchDarkly, Split, Optimizely</td>
+                        <td>A/B testing, feature flags</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Onboarding</strong></td>
+                        <td>Appcues, Pendo, Chameleon</td>
+                        <td>User onboarding flows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Success</strong></td>
+                        <td>Gainsight, ChurnZero, Vitally</td>
+                        <td>Health monitoring, expansion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="glossary">
+            <h2>Appendix C: Glossary</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AI-Native</strong></td>
+                        <td>Organization designed from the ground up assuming AI as a core capability, not an add-on tool</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architect-Operator Model</strong></td>
+                        <td>Role design where humans design systems that execute at scale and then operate those systems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capability Pod</strong></td>
+                        <td>Cross-functional team organized around a specific capability delivered to customers or the business</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capability Unit</strong></td>
+                        <td>Abstraction representing a unit of work capacity, combining human and AI resources</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Human Intervention Rate</strong></td>
+                        <td>Percentage of AI system outputs requiring human review, correction, or override</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PLG (Product-Led Growth)</strong></td>
+                        <td>Go-to-market strategy where the product itself drives customer acquisition, conversion, and expansion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PQL (Product Qualified Lead)</strong></td>
+                        <td>User who has demonstrated buying intent through product usage patterns</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time to Value</strong></td>
+                        <td>Duration from user signup to experiencing core product value</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Resolution Rate</strong></td>
+                        <td>Percentage of customer interactions fully resolved by AI without human involvement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Leverage Ratio</strong></td>
+                        <td>Proportion of work output generated or significantly assisted by AI systems</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section>
+            <p style="text-align: center; color: var(--color-text-muted); font-size: 14px;">
+                <strong>AI-Native Organization Operating Playbook</strong><br>
+                Version 1.0 | December 2025<br>
+                Generated via Signal Forge
+            </p>
+        </section>
+    </main>
+
+    <script>
+        // Active navigation highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
