@@ -29,7 +29,14 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { loadKey, createTTS, probeDuration, probeDimensions, renderCaptionPng } from './lib.mjs'
+import {
+	loadKey,
+	createTTS,
+	probeDuration,
+	probeDimensions,
+	renderCaptionPng,
+	CAPTION_BAND_H
+} from './lib.mjs'
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url))
 const AUDIO_DIR = path.join(ROOT, 'audio')
@@ -54,7 +61,8 @@ const leadInSec = Math.max(0, (manifest.leadInMs || 0) / 1000)
 const rallyEnv = path.resolve(process.env.HOME || '', 'Workspace/dev/apps/rally-hq/.env.local')
 const elevenLabsKey = loadKey('ELEVENLABS_API_KEY', [rallyEnv, path.join(ROOT, '.env')])
 const openAiKey = loadKey('OPENAI_API_KEY', [rallyEnv, path.join(ROOT, '.env')])
-const voice = process.env.TTS_VOICE || (elevenLabsKey ? 'george' : 'onyx')
+// Default narration voice: the chosen ElevenLabs voice (override with TTS_VOICE).
+const voice = process.env.TTS_VOICE || (elevenLabsKey ? 'S9NKLs1GeSTKzXd9D0Lf' : 'onyx')
 const model =
 	process.env.TTS_MODEL || (elevenLabsKey ? 'eleven_multilingual_v2' : 'gpt-4o-mini-tts')
 const tts = createTTS({ elevenLabsKey, openAiKey, voice, model, instructions: manifest.instructions })
@@ -70,8 +78,11 @@ async function main() {
 	console.log(`  output:   ${OUT}\n`)
 
 	// Caption overlays must match the actual recorded video size, not a fixed constant.
+	// The caption band is appended BELOW the video (the frame is padded by CAPTION_BAND_H)
+	// so the product screenshot stays full-frame, never covered by the band.
 	const { width, height } = probeDimensions(VIDEO)
-	console.log(`  video size: ${width}x${height}`)
+	const outH = height + CAPTION_BAND_H
+	console.log(`  video size: ${width}x${height} → output ${width}x${outH} (caption band below)`)
 
 	// 1. Per-step narration + caption overlay
 	console.log('[1/3] TTS + caption overlays')
@@ -88,7 +99,9 @@ async function main() {
 		} else {
 			console.log(`  ${idx} cached`)
 		}
-		renderCaptionPng({ caption: steps[i].speechText, position: 'bottom', width, height }, framePath)
+		// Caption canvas is the PADDED height so the band lands in the appended bottom
+		// strip (y = height), clear of the screenshot above it.
+		renderCaptionPng({ caption: steps[i].speechText, position: 'bottom', width, height: outH }, framePath)
 		audioPaths.push(audioPath)
 		framePaths.push(framePath)
 	}
@@ -102,8 +115,12 @@ async function main() {
 	const nFrames = framePaths.length
 	const filters = []
 
+	// Pad the video into the taller output frame (black band appended at the bottom) so
+	// the screenshot is full-frame at top and the captions overlay the padding, not the UI.
+	filters.push(`[0:v]pad=${width}:${outH}:0:0:black[base]`)
+
 	// Caption overlay chain — each caption is visible only on its [start, end] window.
-	let vlabel = '0:v'
+	let vlabel = 'base'
 	steps.forEach((s, i) => {
 		const start = sec(s.startMs)
 		const end = sec(s.startMs + s.durationMs)
