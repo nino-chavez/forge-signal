@@ -61,11 +61,10 @@ export function createTTS({ elevenLabsKey, openAiKey, voice, model, instructions
 				'Content-Type': 'application/json',
 				Accept: 'audio/mpeg'
 			},
-			body: JSON.stringify({
-				text,
-				model_id: model,
-				voice_settings: { stability: 0.55, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true }
-			})
+			// No voice_settings — use the voice id's OWN default config (stability/style/
+			// etc. configured on the voice). Overriding them here fought those defaults and
+			// made delivery inconsistent across lines.
+			body: JSON.stringify({ text, model_id: model })
 		})
 		if (!res.ok) throw new Error(`ElevenLabs TTS failed (${res.status}): ${await res.text()}`)
 		fs.writeFileSync(outputPath, Buffer.from(await res.arrayBuffer()))

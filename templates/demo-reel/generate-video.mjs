@@ -58,9 +58,13 @@ if (steps.length === 0) throw new Error('Manifest has no narrated steps')
 const leadInSec = Math.max(0, (manifest.leadInMs || 0) / 1000)
 
 // ─── TTS backend ─────────────────────────────────────────────────────
+// Key search order: process.env → forge-signal repo-root .env (gitignored, canonical
+// local secret location) → this template's .env → rally-hq/.env.local.
+const repoEnv = path.resolve(ROOT, '../../.env')
 const rallyEnv = path.resolve(process.env.HOME || '', 'Workspace/dev/apps/rally-hq/.env.local')
-const elevenLabsKey = loadKey('ELEVENLABS_API_KEY', [rallyEnv, path.join(ROOT, '.env')])
-const openAiKey = loadKey('OPENAI_API_KEY', [rallyEnv, path.join(ROOT, '.env')])
+const envSearch = [repoEnv, path.join(ROOT, '.env'), rallyEnv]
+const elevenLabsKey = loadKey('ELEVENLABS_API_KEY', envSearch)
+const openAiKey = loadKey('OPENAI_API_KEY', envSearch)
 // Default narration voice: the chosen ElevenLabs voice (override with TTS_VOICE).
 const voice = process.env.TTS_VOICE || (elevenLabsKey ? 'S9NKLs1GeSTKzXd9D0Lf' : 'onyx')
 const model =
