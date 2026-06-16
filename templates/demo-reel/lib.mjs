@@ -52,8 +52,15 @@ export function createTTS({ elevenLabsKey, openAiKey, voice, model, instructions
 	}
 	const backend = elevenLabsKey ? 'elevenlabs' : 'openai'
 
-	async function elevenLabs(text, outputPath) {
+	async function elevenLabs(text, outputPath, ctx = {}) {
 		const voiceId = ELEVENLABS_VOICES[voice?.toLowerCase()] || voice
+		// No voice_settings — use the voice id's OWN default config (overriding it fought
+		// those defaults and made delivery inconsistent). previous_text/next_text give the
+		// model the surrounding lines so prosody stays consistent across separately-
+		// generated clips — without that, an individual clip can drift in timbre/voice.
+		const body = { text, model_id: model }
+		if (ctx.previousText) body.previous_text = ctx.previousText
+		if (ctx.nextText) body.next_text = ctx.nextText
 		const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
 			method: 'POST',
 			headers: {
@@ -61,10 +68,7 @@ export function createTTS({ elevenLabsKey, openAiKey, voice, model, instructions
 				'Content-Type': 'application/json',
 				Accept: 'audio/mpeg'
 			},
-			// No voice_settings — use the voice id's OWN default config (stability/style/
-			// etc. configured on the voice). Overriding them here fought those defaults and
-			// made delivery inconsistent across lines.
-			body: JSON.stringify({ text, model_id: model })
+			body: JSON.stringify(body)
 		})
 		if (!res.ok) throw new Error(`ElevenLabs TTS failed (${res.status}): ${await res.text()}`)
 		fs.writeFileSync(outputPath, Buffer.from(await res.arrayBuffer()))

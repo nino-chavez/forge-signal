@@ -98,7 +98,11 @@ async function main() {
 		const framePath = path.join(FRAMES_DIR, `cap-${idx}.png`)
 		if (!(skipTTS && fs.existsSync(audioPath))) {
 			console.log(`  ${idx} → ${steps[i].speechText.length} chars`)
-			await tts.generate(steps[i].speechText, audioPath)
+			// Pass neighbouring lines so ElevenLabs keeps prosody consistent across clips.
+			await tts.generate(steps[i].speechText, audioPath, {
+				previousText: steps[i - 1]?.speechText,
+				nextText: steps[i + 1]?.speechText
+			})
 			await new Promise((r) => setTimeout(r, 600))
 		} else {
 			console.log(`  ${idx} cached`)
