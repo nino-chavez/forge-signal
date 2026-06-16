@@ -1,0 +1,10 @@
+# Generator build artifacts — TTS audio, rendered frames, per-scene clips, output reels.
+# Inputs (screenshots/, captions.json) are provided per project; the *.template is tracked.
+audio/
+frames/
+clips/
+out/
+screenshots/
+concat.txt
+captions.json
+_test/

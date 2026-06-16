@@ -21,6 +21,20 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import {
+	loadKey,
+	createTTS,
+	probeDuration,
+	VIDEO_W,
+	VIDEO_H,
+	CAPTION_BAND_H,
+	CAPTION_PAD_X,
+	CAPTION_PAD_TOP,
+	TITLE_FONT_SIZE,
+	CAPTION_FONT_SIZE,
+	BG_COLOR,
+	ACCENT_COLOR
+} from './lib.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -32,131 +46,31 @@ const OUT_DIR = path.join(ROOT, 'out');
 
 for (const d of [AUDIO_DIR, FRAMES_DIR, CLIPS_DIR, OUT_DIR]) fs.mkdirSync(d, { recursive: true });
 
-// ─── env ───────────────────────────────────────────────────────────
-// ─── env ───────────────────────────────────────────────────────────
-// Supports two TTS backends:
-//   1. ElevenLabs (default if ELEVENLABS_API_KEY is set)
-//   2. OpenAI (fallback)
-
-function loadKey(name, searchPaths = []) {
-	if (process.env[name]) return process.env[name];
-	for (const p of searchPaths) {
-		if (!fs.existsSync(p)) continue;
-		const match = fs.readFileSync(p, 'utf-8').match(new RegExp(`^${name}=(.+)$`, 'm'));
-		if (match) return match[1].trim().replace(/^["']|["']$/g, '');
-	}
-	return null;
-}
-
+// ─── config ────────────────────────────────────────────────────────
+// TTS keys (backend resolved by createTTS — ElevenLabs preferred, OpenAI fallback).
 const rallyEnv = path.resolve(process.env.HOME || '', 'Workspace/dev/apps/rally-hq/.env.local');
 const ELEVENLABS_API_KEY = loadKey('ELEVENLABS_API_KEY', [rallyEnv, path.join(ROOT, '.env')]);
-const OPENAI_API_KEY = loadKey('OPENAI_API_KEY', [rallyEnv]);
-const TTS_BACKEND = ELEVENLABS_API_KEY ? 'elevenlabs' : 'openai';
+const OPENAI_API_KEY = loadKey('OPENAI_API_KEY', [rallyEnv, path.join(ROOT, '.env')]);
 
-if (!ELEVENLABS_API_KEY && !OPENAI_API_KEY) {
-	throw new Error('Set ELEVENLABS_API_KEY (preferred) or OPENAI_API_KEY for TTS');
-}
-
-// ─── config ────────────────────────────────────────────────────────
 const captions = JSON.parse(fs.readFileSync(path.join(ROOT, 'captions.json'), 'utf-8'));
 const VOICE = process.env.TTS_VOICE || captions.voice || 'coral';
 const TTS_MODEL = process.env.TTS_MODEL || captions.model || 'eleven_multilingual_v2';
 const TTS_INSTRUCTIONS = captions.instructions || null;
 const DEFAULT_HOLD_S = captions.defaultHoldSeconds ?? 0.4;
-
-// ElevenLabs voice IDs for pre-built voices good for demos/narration
-const ELEVENLABS_VOICES = {
-	'george': 'JBFqnCBsd6RMkjVDRZzb',    // British, warm, narration
-	'rachel': '21m00Tcm4TlvDq8ikWAM',     // American, clear, professional
-	'adam': 'pNInz6obpgDQGcFmaJgB',        // American, deep, confident
-	'josh': 'TxGEqnHWrfWFTfGW9XjX',       // American, conversational
-	'sam': 'yoZ06aMxZJJ28mfd3POQ',         // American, casual
-	'charlie': 'IKne3meq5aSn9XLyUdCD',     // Australian, friendly
-};
-
-// Landscape 16:10 matching the recaptured Playwright viewport (1440×900).
-// Screenshots composite full-bleed; captions overlay as a translucent band at the bottom.
-const VIDEO_W = 1440;
-const VIDEO_H = 900;
-const CAPTION_BAND_H = 220;
-const CAPTION_PAD_X = 60;
-const CAPTION_PAD_TOP = 22;
-const TITLE_FONT_SIZE = 30;
-const CAPTION_FONT_SIZE = 20;
 const COUNTER_FONT_SIZE = 14;
-const BG_COLOR = '#0a0a0a';
-const ACCENT_COLOR = '#10b981';
+
+const tts = createTTS({
+	elevenLabsKey: ELEVENLABS_API_KEY,
+	openAiKey: OPENAI_API_KEY,
+	voice: VOICE,
+	model: TTS_MODEL,
+	instructions: TTS_INSTRUCTIONS
+});
 
 // ─── helpers ───────────────────────────────────────────────────────
-function sh(cmd, args, opts = {}) {
-	return execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'inherit'], ...opts }).toString().trim();
-}
-
-async function generateTTS(text, outputPath) {
-	if (TTS_BACKEND === 'elevenlabs') {
-		return generateTTS_ElevenLabs(text, outputPath);
-	}
-	return generateTTS_OpenAI(text, outputPath);
-}
-
-async function generateTTS_ElevenLabs(text, outputPath) {
-	const voiceId = ELEVENLABS_VOICES[VOICE.toLowerCase()] || VOICE;
-	const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-		method: 'POST',
-		headers: {
-			'xi-api-key': ELEVENLABS_API_KEY,
-			'Content-Type': 'application/json',
-			'Accept': 'audio/mpeg',
-		},
-		body: JSON.stringify({
-			text,
-			model_id: TTS_MODEL,
-			voice_settings: {
-				stability: 0.55,         // balanced — natural, not robotic
-				similarity_boost: 0.80,
-				style: 0.25,             // subtle style, not theatrical
-				use_speaker_boost: true,
-			},
-		}),
-	});
-	if (!res.ok) throw new Error(`ElevenLabs TTS failed (${res.status}): ${await res.text()}`);
-	const buf = Buffer.from(await res.arrayBuffer());
-	fs.writeFileSync(outputPath, buf);
-}
-
-async function generateTTS_OpenAI(text, outputPath) {
-	const payload = {
-		model: TTS_MODEL,
-		voice: VOICE,
-		input: text,
-		response_format: 'mp3',
-	};
-	if (TTS_INSTRUCTIONS && TTS_MODEL.startsWith('gpt-4o')) {
-		payload.instructions = TTS_INSTRUCTIONS;
-	}
-	const res = await fetch('https://api.openai.com/v1/audio/speech', {
-		method: 'POST',
-		headers: {
-			'Authorization': `Bearer ${OPENAI_API_KEY}`,
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(payload),
-	});
-	if (!res.ok) throw new Error(`OpenAI TTS failed (${res.status}): ${await res.text()}`);
-	const buf = Buffer.from(await res.arrayBuffer());
-	fs.writeFileSync(outputPath, buf);
-}
-
-function probeDuration(mp3Path) {
-	const out = sh('ffprobe', [
-		'-v', 'error',
-		'-show_entries', 'format=duration',
-		'-of', 'default=noprint_wrappers=1:nokey=1',
-		mp3Path,
-	]);
-	return parseFloat(out);
-}
-
+// loadKey, createTTS, probeDuration, and the layout/brand constants live in lib.mjs,
+// shared with generate-video.mjs. buildFrame stays here — it burns the caption INTO the
+// screenshot (full-bleed still), whereas the video pipeline overlays a transparent band.
 function buildFrame(scene, index, framePath) {
 	const src = path.join(SCREENSHOTS_DIR, scene.image);
 	if (!fs.existsSync(src)) throw new Error(`Screenshot not found: ${src}`);
@@ -263,7 +177,7 @@ async function main() {
 	const skipFrames = process.env.SKIP_FRAMES === '1';
 
 	console.log(`\nDemo reel generator`);
-	console.log(`  voice: ${VOICE} (${TTS_BACKEND}: ${TTS_MODEL})`);
+	console.log(`  voice: ${VOICE} (${tts.backend}: ${TTS_MODEL})`);
 	console.log(`  scenes: ${captions.scenes.length}`);
 	console.log(`  output: ${path.join(OUT_DIR, 'demo-reel.mp4')}\n`);
 
@@ -278,7 +192,7 @@ async function main() {
 			continue;
 		}
 		console.log(`  ${idx} → ${scene.caption.length} chars`);
-		await generateTTS(scene.caption, audioPath);
+		await tts.generate(scene.caption, audioPath);
 		await new Promise((r) => setTimeout(r, 800));
 	}
 
