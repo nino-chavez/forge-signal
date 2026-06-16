@@ -86,6 +86,19 @@ export function createTTS({ elevenLabsKey, openAiKey, voice, model, instructions
 	return { backend, generate: backend === 'elevenlabs' ? elevenLabs : openAi }
 }
 
+/** Pixel dimensions { width, height } of a video's first video stream, via ffprobe. */
+export function probeDimensions(videoPath) {
+	const out = execFileSync(
+		'ffprobe',
+		['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', videoPath],
+		{ stdio: ['ignore', 'pipe', 'inherit'] }
+	)
+		.toString()
+		.trim()
+	const [width, height] = out.split(',').map((n) => parseInt(n, 10))
+	return { width, height }
+}
+
 /** Duration of an audio/video file in seconds, via ffprobe. */
 export function probeDuration(mediaPath) {
 	const out = execFileSync(
@@ -102,26 +115,30 @@ export function probeDuration(mediaPath) {
  * Render a TRANSPARENT caption overlay PNG (band + accent hairline + title + wrapped
  * body), sized to the full frame so ffmpeg can overlay it at 0,0 and toggle it per
  * step with `enable='between(t,...)'`. Position 'top' or 'bottom' anchors the band.
+ *
+ * width/height default to the stills constants but are passed explicitly for video —
+ * the overlay MUST match the actual video dimensions (a captured reel can be any size),
+ * otherwise the band overflows / sits at the wrong Y.
  */
 export function renderCaptionPng(
-	{ title, caption, position = 'bottom' },
+	{ title, caption, position = 'bottom', width = VIDEO_W, height = VIDEO_H },
 	framePath
 ) {
-	const textWidth = VIDEO_W - CAPTION_PAD_X * 2
-	const bandY = position === 'top' ? 0 : VIDEO_H - CAPTION_BAND_H
+	const textWidth = width - CAPTION_PAD_X * 2
+	const bandY = position === 'top' ? 0 : height - CAPTION_BAND_H
 	const accentY = position === 'top' ? CAPTION_BAND_H - 2 : bandY
 	const titleY = bandY + CAPTION_PAD_TOP
 	const bodyY = titleY + TITLE_FONT_SIZE + 14
 
 	const args = [
 		// Transparent full-frame canvas
-		'-size', `${VIDEO_W}x${VIDEO_H}`,
+		'-size', `${width}x${height}`,
 		'xc:none',
 		// Translucent band
-		'(', '-size', `${VIDEO_W}x${CAPTION_BAND_H}`, 'xc:rgba(10,10,10,0.88)', ')',
+		'(', '-size', `${width}x${CAPTION_BAND_H}`, 'xc:rgba(10,10,10,0.88)', ')',
 		'-gravity', 'northwest', '-geometry', `+0+${bandY}`, '-composite',
 		// Accent hairline
-		'(', '-size', `${VIDEO_W}x2`, `xc:${ACCENT_COLOR}`, ')',
+		'(', '-size', `${width}x2`, `xc:${ACCENT_COLOR}`, ')',
 		'-gravity', 'northwest', '-geometry', `+0+${accentY}`, '-composite'
 	]
 	if (title) {

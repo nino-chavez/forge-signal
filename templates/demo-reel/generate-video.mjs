@@ -29,7 +29,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { loadKey, createTTS, probeDuration, renderCaptionPng } from './lib.mjs'
+import { loadKey, createTTS, probeDuration, probeDimensions, renderCaptionPng } from './lib.mjs'
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url))
 const AUDIO_DIR = path.join(ROOT, 'audio')
@@ -69,6 +69,10 @@ async function main() {
 	console.log(`  voice:    ${voice} (${tts.backend}: ${model})`)
 	console.log(`  output:   ${OUT}\n`)
 
+	// Caption overlays must match the actual recorded video size, not a fixed constant.
+	const { width, height } = probeDimensions(VIDEO)
+	console.log(`  video size: ${width}x${height}`)
+
 	// 1. Per-step narration + caption overlay
 	console.log('[1/3] TTS + caption overlays')
 	const audioPaths = []
@@ -84,7 +88,7 @@ async function main() {
 		} else {
 			console.log(`  ${idx} cached`)
 		}
-		renderCaptionPng({ caption: steps[i].speechText, position: 'bottom' }, framePath)
+		renderCaptionPng({ caption: steps[i].speechText, position: 'bottom', width, height }, framePath)
 		audioPaths.push(audioPath)
 		framePaths.push(framePath)
 	}
