@@ -185,6 +185,14 @@ Best for: Decision documents, investment cases
 ## Summary (1 paragraph)
 [Problem + Recommendation + Expected outcome in 3-4 sentences]
 
+## Sources & Confidence (REQUIRED — no advisory doc ships without it)
+[Every factual claim in this document belongs to one of these tiers. State which, per claim or per claim-group:]
+- **Fetched at source**: [claims verified by reading the source page/API/doc in-session — the only tier allowed to carry "verified/confirmed" language]
+- **Search-derived**: [claims from search results or summaries — label them so the reader knows to confirm before committing; if a source blocks direct reads (G2, Trustpilot), say so]
+- **Internal knowledge**: [what the author knows firsthand]
+- **Assumption**: [flagged inline; each needs a validation path]
+[Vendor and competitor content are marketing, not evidence — cite who owns the domain when a comparison is load-bearing.]
+
 ## Context
 [Why this matters now—market forces, competitive pressure, client-specific drivers]
 
@@ -339,6 +347,13 @@ Reference real conversations and stakeholders:
 - [ ] Appropriate level of detail for audience
 - [ ] Diagrams and visuals where appropriate
 - [ ] No jargon without explanation
+
+### Evidence (enforced by the FactAuditor pipeline role — src/pipeline/roles/fact-auditor.ts)
+- [ ] Sources & Confidence section present, all claims tiered
+- [ ] No "verified/confirmed/checked directly" language without a fetched-at-source ledger entry
+- [ ] Sources that block direct reads named as such, their numbers downgraded to search-derived
+- [ ] No vendor or competitor marketing cited as if it were review-platform or first-party data
+- [ ] Reference exemplar: output/bigcommerce-enterprise-for-smb-strategy.html (its Sources & Confidence section and drawer annotations came out of a "how do you know this?" audit pass — that pass is now this checklist)
 
 ### Client Alignment
 - [ ] Addresses known stakeholder concerns
