@@ -3,7 +3,7 @@ import type { WorkflowDefinition } from '../../core/registries/types.js';
 /**
  * Documentation workflow: single-pass Documentation Writer
  *
- * Used for guides, references, and tutorials.
+ * Used for guides, references, tutorials, and explanations.
  */
 export const documentationWorkflow: WorkflowDefinition = {
   id: 'documentation',

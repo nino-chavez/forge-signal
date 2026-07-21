@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "project": "Forge Signal",
+  "defaults": {
+    "reader": "a content practitioner configuring Forge Signal or extending a generation workflow",
+    "job": "choose the right content mode, configure a generation run, and understand how reader contracts affect output",
+    "assumedKnowledge": [
+      "basic command-line use",
+      "common document and presentation formats",
+      "general AI content-generation concepts"
+    ],
+    "plainness": "practitioner",
+    "precisionLocks": [
+      "CLI commands and flags",
+      "provider and format names",
+      "content-mode distinctions",
+      "reader-contract field names"
+    ]
+  },
+  "surfaces": [
+    {
+      "name": "operator documentation",
+      "renderedRoots": [
+        "README.md",
+        "docs/guides"
+      ],
+      "sourceRoots": [
+        "README.md",
+        "docs/guides",
+        "docs/voice"
+      ],
+      "allowTerms": [
+        "AI",
+        "API",
+        "CLI",
+        "ADR",
+        "HTML",
+        "PDF",
+        "PPTX",
+        "Diátaxis"
+      ],
+      "denyTerms": [],
+      "maxWordsPerText": 100
+    }
+  ]
+}

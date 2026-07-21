@@ -29,6 +29,8 @@ export type {
 export type {
   ContentTask,
   ContentConstraints,
+  ReaderContract,
+  ReaderPlainness,
   TaskOptions,
   TaskStatus,
   TaskProgress,

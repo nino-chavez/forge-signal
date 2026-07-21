@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This guide defines voice, structure, and quality standards for **Documentation** content in Signal Forge. Use this when generating user guides, tutorials, quick references, and technical documentation intended to instruct users.
+This guide defines voice, structure, and quality standards for **Documentation** content in Signal Forge. Use this when generating task guides, tutorials, references, and explanations.
 
-**Critical Distinction**: Documentation voice is neither exploratory (thought leadership) nor authoritative-technical (architecture). It is **instructional, clear, and user-focused**. The reader should be able to follow steps, understand features, and accomplish tasks.
+**Critical distinction**: Documentation is **clear, reader-focused, and matched to one job**. A tutorial helps someone learn, a guide helps someone complete a task, a reference helps someone look up exact information, and an explanation helps someone understand how or why. Do not force all four into one universal document structure.
 
 ---
 
@@ -42,7 +42,7 @@ This guide defines voice, structure, and quality standards for **Documentation**
 
 **Thought Leadership**: Narrative flow with intentional fragments
 **Architecture**: Complete technical specifications
-**Documentation**: Numbered, scannable steps
+**Procedural documentation**: Numbered, scannable steps. References and explanations do not need artificial step sequences.
 
 ```markdown
 ❌ "First you'll want to install. Then configure. Finally, run."
@@ -56,9 +56,9 @@ This guide defines voice, structure, and quality standards for **Documentation**
 4. Run your first command: `forge generate deck --input notes.md`
 ```
 
-### 4. Tables Over Paragraphs for Reference
+### 4. Use Tables for Comparable Reference Data
 
-When listing options, commands, or configurations, use tables.
+When readers need to compare options, commands, or configurations, use a table. Do not turn an explanation into a table when sequence or causality matters more than comparison.
 
 ```markdown
 ❌ The format option accepts pptx for PowerPoint, docx for Word documents, pdf for PDF files, and html for web pages.
@@ -72,9 +72,9 @@ When listing options, commands, or configurations, use tables.
 | html | Web page | Interactive viewing |
 ```
 
-### 5. Show Before You Tell
+### 5. Show Before You Tell When an Example Carries the Idea
 
-Lead with examples, then explain.
+For commands and concrete usage, lead with an example and then explain it. For conceptual explanations, lead with the conclusion or mental model instead.
 
 ```markdown
 ❌ "The --mode flag overrides automatic mode detection and forces a specific content mode."
@@ -86,9 +86,9 @@ forge generate deck --input notes.md --mode architecture
 Use `--mode` to override automatic detection when your content needs a specific voice.
 ```
 
-### 6. Use Code Blocks Generously
+### 6. Make Executable Documentation Copy-Paste Ready
 
-Documentation should be copy-paste friendly.
+Commands and code should be copy-paste ready. Do not add code blocks to a reader job that does not require code.
 
 ```markdown
 ❌ Run the forge generate command with deck as the type and your input file.
@@ -103,14 +103,13 @@ forge generate deck --input meeting-recap.md
 
 ## Document Structure
 
-### User Guide Structure
+### Task Guide Structure
 
-1. **Overview** - What this does and why it matters (2-3 sentences)
-2. **Quick Start** - Get running in 60 seconds
-3. **Core Concepts** - What users need to understand
-4. **Features** - Detailed feature explanations
-5. **Examples** - Real-world usage scenarios
-6. **Troubleshooting** - Common issues and solutions
+1. **Outcome** - What the reader will accomplish
+2. **Before you start** - Only the prerequisites that actually apply
+3. **Steps** - The shortest safe path through the task
+4. **Verify** - How to recognize success
+5. **Recovery or next step** - Only when the task has a likely failure or continuation
 
 ### Tutorial Structure
 
@@ -124,8 +123,16 @@ forge generate deck --input meeting-recap.md
 
 1. **Commands** - All commands with brief descriptions
 2. **Options** - Table of all options
-3. **Examples** - Common command patterns
-4. **Troubleshooting** - Quick fixes
+3. **Examples** - Common command patterns when they reduce lookup time
+4. **Failure meanings** - Only errors the reader is likely to encounter
+
+### Explanation Structure
+
+1. **Conclusion** - The idea the reader should leave with
+2. **Mental model** - The smallest model that makes the behavior predictable
+3. **How the parts relate** - Sequence, cause, constraints, or tradeoffs
+4. **Concrete example** - When it helps test the model
+5. **Implication** - What the reader should understand or decide differently
 
 ---
 
@@ -142,7 +149,7 @@ forge generate deck --input meeting-recap.md
 ### DON'T
 
 - **No questions or tension**: This isn't thought leadership
-- **No excessive technical depth**: This isn't architecture docs
+- **No unearned technical depth**: Match detail to the declared reader and job
 - **No provisional language**: "You might want to..." → "To do this..."
 - **No jargon without explanation**: Define terms on first use
 - **No walls of text**: Break up content with headers, bullets, code blocks
@@ -161,12 +168,12 @@ forge generate deck --input meeting-recap.md
 ### Documentation Quality Indicators
 
 - [ ] Opens with user benefit, not feature description
-- [ ] All procedures are numbered steps
-- [ ] Code examples are copy-paste ready
-- [ ] Tables used for options/commands/references
+- [ ] Procedures use numbered steps; non-procedural documents are not forced into them
+- [ ] Executable examples are copy-paste ready
+- [ ] Tables are used where readers compare or look up values
 - [ ] No provisional or exploratory language
 - [ ] Expected outputs shown where relevant
-- [ ] Troubleshooting section included
+- [ ] Recovery guidance is included when a likely failure mode warrants it
 
 ---
 

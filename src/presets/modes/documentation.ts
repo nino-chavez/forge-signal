@@ -3,8 +3,8 @@ import type { ContentModeDefinition } from '../../core/registries/types.js';
 export const documentationMode: ContentModeDefinition = {
   id: 'documentation',
   name: 'Documentation',
-  description: 'User guides, tutorials, quick references, and technical documentation',
-  defaultFor: ['guide', 'reference', 'tutorial'],
+  description: 'Task guides, tutorials, reference, explanation, and technical documentation',
+  defaultFor: ['guide', 'reference', 'tutorial', 'explanation'],
   signals: {
     keywords: [
       'how to',
@@ -19,6 +19,7 @@ export const documentationMode: ContentModeDefinition = {
       'guide',
       'tutorial',
       'reference',
+      'explanation',
       'documentation',
       'quick start',
       'quickstart',

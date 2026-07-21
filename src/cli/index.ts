@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import { readFileContent } from '../core/utils/file-utils.js';
 import { createDefaultConfig, loadConfig, saveConfig, configExists, getDefaultConfigPath } from '../core/config.js';
 import type { Perspective } from '../core/registries/types.js';
+import type { ReaderContract } from '../core/types/index.js';
 import { createProvider, getDefaultProvider, getConfiguredProviders } from '../providers/index.js';
 import type { AIProvider } from '../providers/ai-provider.js';
 import { GhostWriter } from '../pipeline/roles/ghost-writer.js';
@@ -31,6 +32,7 @@ import { getWorkflowForMode } from '../core/registries/workflow-registry.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { registerBuiltInPresets } from '../presets/index.js';
+import { loadProjectReaderContract, mergeReaderContracts, parseReaderPlainness } from '../content/reader-contract.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,7 +54,10 @@ program
 registerAgenticCommands(program);
 
 // Valid content types
-const VALID_TYPES = ['deck', 'pov', 'paper', 'guide', 'reference', 'tutorial'];
+const VALID_TYPES = ['deck', 'pov', 'paper', 'guide', 'reference', 'tutorial', 'explanation'];
+const splitList = (value: unknown): string[] | undefined => typeof value === 'string'
+  ? value.split(',').map((item) => item.trim()).filter(Boolean)
+  : undefined;
 
 program
   .command('init')
@@ -145,13 +150,20 @@ program
 program
   .command('generate')
   .description('Generate strategic content')
-  .argument('<type>', 'Content type: deck, pov, paper, guide, reference, or tutorial')
+  .argument('<type>', 'Content type: deck, pov, paper, guide, reference, tutorial, or explanation')
   .option('-i, --input <file>', 'Input file (meeting notes, recap, etc.)')
   .option('-o, --output <file>', 'Output file path')
   .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
   .option('-f, --format <formats>', 'Output formats (comma-separated): word,pdf,pptx,slides,html')
   .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, dark)')
   .option('--audience <audience>', 'Target audience')
+  .option('--reader-job <job>', 'What the reader must understand, decide, or do')
+  .option('--assumed-knowledge <items>', 'Comma-separated knowledge the reader already has')
+  .option('--plainness <level>', 'Reader plainness: lay, practitioner, or specialist')
+  .option('--precision-locks <items>', 'Comma-separated terms, facts, or voice traits to preserve')
+  .option('--reader-contract <file>', 'Reader contract JSON (defaults to ./reader-contract.json when present)')
+  .option('--surface <name>', 'Named surface from a project reader contract')
+  .option('--ignore-reader-contract', 'Do not load ./reader-contract.json')
   .option('--product <product>', 'Product name (for documentation)')
   .option('--no-edit', 'Skip editor review (use ghost writer + copywriter only)')
   .action(async (type: string, options) => {
@@ -160,6 +172,19 @@ program
         console.error(`❌ Invalid content type: ${type}. Must be one of: ${VALID_TYPES.join(', ')}`);
         process.exit(1);
       }
+
+      const fileReaderContract = await loadProjectReaderContract({
+        file: options.readerContract,
+        surface: options.surface,
+        ignore: options.ignoreReaderContract,
+      });
+      const readerContract: ReaderContract = mergeReaderContracts(fileReaderContract, {
+        reader: options.audience,
+        job: options.readerJob,
+        assumedKnowledge: splitList(options.assumedKnowledge),
+        plainness: parseReaderPlainness(options.plainness),
+        precisionLocks: splitList(options.precisionLocks),
+      });
 
       // Get input
       let inputContent = '';
@@ -224,6 +249,7 @@ program
           documentationType: type as DocumentationType,
           audience: options.audience,
           productName: options.product,
+          readerContract,
         });
         finalContent = docOutput.draft;
         console.log('✅ Documentation Writer complete\n');
@@ -236,6 +262,7 @@ program
           rawContent: inputContent,
           contentType: type as 'deck' | 'pov' | 'paper',
           audience: options.audience,
+          readerContract,
         });
         console.log('✅ Ghost Writer complete\n');
 
@@ -247,6 +274,7 @@ program
             draft: ghostOutput.draft,
             contentType: type as 'deck' | 'pov' | 'paper',
             audience: options.audience,
+            readerContract,
           });
           console.log('✅ Copywriter complete\n');
           finalContent = copywriterOutput.refined;
@@ -261,6 +289,7 @@ program
           const editorOutput = await editor.review({
             content: finalContent,
             contentType: type as 'deck' | 'pov' | 'paper',
+            readerContract,
           });
 
           if (editorOutput.approved) {
@@ -363,7 +392,7 @@ program
                 title: baseName,
                 content: finalContent,
                 outputPath: htmlPath,
-                contentType: type as 'deck' | 'pov' | 'paper' | 'guide' | 'reference' | 'tutorial',
+                contentType: type as 'deck' | 'pov' | 'paper' | 'guide' | 'reference' | 'tutorial' | 'explanation',
               });
               console.log(`✅ Web page: ${htmlPath}`);
               break;
@@ -405,4 +434,3 @@ themesCommand
   });
 
 program.parse();
-

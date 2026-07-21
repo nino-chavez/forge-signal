@@ -2,11 +2,14 @@ import type { AIProviderInterface, GenerateOptions } from '../../providers/ai-pr
 import { getVoiceInstructions } from '../../content/voice/voice-guide.js';
 import { loadConfig } from '../../core/config.js';
 import { getModeForContentType } from '../../core/registries/mode-registry.js';
+import type { ReaderContract } from '../../core/types/index.js';
+import { formatReaderContract } from '../../content/reader-contract.js';
 
 export interface CopywriterInput {
   draft: string;
   contentType: 'deck' | 'pov' | 'paper';
   audience?: string;
+  readerContract?: ReaderContract;
   strategicObjectives?: string[];
 }
 
@@ -56,19 +59,29 @@ export class Copywriter {
 
     const config = loadConfig();
     const { author } = config;
+    const readerContract = formatReaderContract(
+      input.readerContract ?? (input.audience ? { reader: input.audience } : undefined),
+      input.audience || 'the intended reader',
+      `understand, decide, or act on this ${input.contentType}`
+    );
+    const openingGuidance = mode === 'thought-leadership'
+      ? 'Open with tension, a question, or a concrete observation only when it is earned by the argument.'
+      : 'Lead with the decision, outcome, or consequence the reader needs.';
 
     return `You are ${author}'s Copywriter for strategic content. Your role is to:
 
 1. **Preserve Voice**: Keep the ghost writer's authentic voice—don't over-polish
 2. **Strengthen Structure**: Ensure logical flow, clear transitions, scannable headers
 3. **Sharpen Language**: Make every word count—remove filler, strengthen key points
-4. **Audience Optimization**: Adjust tone slightly for audience (${input.audience || 'strategic/executive'})
+4. **Reader Optimization**: Reduce decoding work for the declared reader job without flattening the voice
 5. **Strategic Precision**: Ensure strategic recommendations are clear, actionable, and grounded
 
 ${voiceInstructions}
 
+${readerContract}
+
 What to enhance:
-- Opening hooks (make them more compelling while keeping voice)
+- Opening: ${openingGuidance}
 - Section transitions (smooth but not formulaic)
 - Key strategic points (emphasize without being prescriptive)
 - Examples and evidence (make them more specific and impactful)
@@ -77,6 +90,7 @@ What to enhance:
 What NOT to change:
 - Intentional voice markers (they're there for a reason)
 - The core strategic thinking
+- Every precision lock and canonical term
 - Natural conversational flow
 - Rough edges that sound authentic
 
@@ -91,9 +105,11 @@ Voice checkpoints:
     let prompt = `Refine this strategic content draft:\n\n`;
     prompt += `Content Type: ${input.contentType}\n`;
 
-    if (input.audience) {
-      prompt += `Target Audience: ${input.audience}\n`;
-    }
+    prompt += `${formatReaderContract(
+      input.readerContract ?? (input.audience ? { reader: input.audience } : undefined),
+      input.audience || 'the intended reader',
+      `understand, decide, or act on this ${input.contentType}`
+    )}\n`;
 
     if (input.strategicObjectives && input.strategicObjectives.length > 0) {
       prompt += `Strategic Objectives:\n${input.strategicObjectives.map(obj => `- ${obj}`).join('\n')}\n\n`;
@@ -103,7 +119,8 @@ Voice checkpoints:
     prompt += `Refine this content to:\n`;
     prompt += `- Enhance clarity without losing voice\n`;
     prompt += `- Strengthen strategic arguments\n`;
-    prompt += `- Optimize for ${input.audience || 'executive'} audience\n`;
+    prompt += `- Optimize for the declared reader job and plainness\n`;
+    prompt += `- Preserve every precision lock and canonical term\n`;
     prompt += `- Preserve all voice markers and authenticity\n`;
     prompt += `- Make strategic recommendations more actionable\n`;
 

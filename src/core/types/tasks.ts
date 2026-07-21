@@ -20,8 +20,28 @@ export interface ContentTask {
   options?: TaskOptions;
 }
 
-export interface ContentConstraints {
+export type ReaderPlainness = 'lay' | 'practitioner' | 'specialist';
+
+export interface ReaderContract {
+  /** The person who will encounter the generated artifact. */
+  reader?: string;
+  /** What the reader must understand, decide, or do. */
+  job?: string;
+  /** Knowledge the generator may safely assume before first use. */
+  assumedKnowledge?: string[];
+  /** How much domain vocabulary/connective complexity the reader can carry. */
+  plainness?: ReaderPlainness;
+  /** Facts, terms, commands, claims, citations, and voice traits to preserve. */
+  precisionLocks?: string[];
+  /** Canonical terms to retain, even when simplifying connective prose. */
+  keepTerms?: string[];
+  /** Internal or misleading terms mapped to their reader-facing replacement. */
+  avoidTerms?: Record<string, string>;
+}
+
+export interface ContentConstraints extends ReaderContract {
   maxTokens?: number;
+  /** Legacy alias for reader; reader takes precedence when both are set. */
   targetAudience?: string;
   clientName?: string;
   strategicObjectives?: string[];

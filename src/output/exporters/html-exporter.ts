@@ -7,7 +7,7 @@ export interface HTMLExportOptions {
   title: string;
   content: string;
   outputPath: string;
-  contentType: 'deck' | 'pov' | 'paper' | 'guide' | 'reference' | 'tutorial';
+  contentType: 'deck' | 'pov' | 'paper' | 'guide' | 'reference' | 'tutorial' | 'explanation';
   author?: string;
 }
 
@@ -29,7 +29,7 @@ export async function exportToHTML(options: HTMLExportOptions): Promise<void> {
     html = generateDeckHTML(title, content, htmlContent, author);
   } else if (contentType === 'pov') {
     html = generatePOVHTML(title, htmlContent, author);
-  } else if (contentType === 'guide' || contentType === 'reference' || contentType === 'tutorial') {
+  } else if (contentType === 'guide' || contentType === 'reference' || contentType === 'tutorial' || contentType === 'explanation') {
     html = generateDocumentationHTML(title, htmlContent, author, contentType);
   } else {
     html = generatePaperHTML(title, htmlContent, author);
@@ -911,11 +911,12 @@ function generatePaperHTML(title: string, htmlContent: string, author: string): 
 </html>`;
 }
 
-function generateDocumentationHTML(title: string, htmlContent: string, author: string, docType: 'guide' | 'reference' | 'tutorial'): string {
+function generateDocumentationHTML(title: string, htmlContent: string, author: string, docType: 'guide' | 'reference' | 'tutorial' | 'explanation'): string {
   const docTypeLabels = {
     guide: 'User Guide',
     reference: 'Reference',
     tutorial: 'Tutorial',
+    explanation: 'Explanation',
   };
   const docTypeLabel = docTypeLabels[docType];
 

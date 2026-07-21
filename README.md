@@ -13,7 +13,7 @@ Content generation tools produce generic output. An architecture doc shouldn't r
 | **Thought Leadership** | Blog posts, POVs, papers | Narrative, provisional, question-led |
 | **Solution Architecture** | Architecture docs, ADRs, specs | Definitive, diagram-heavy, precise |
 | **Executive Advisory** | Strategy decks, briefs, roadmaps | Confident, outcome-focused |
-| **Documentation** | Guides, tutorials, references | Instructional, direct, copy-paste ready |
+| **Documentation** | Guides, tutorials, references, explanations | Task-matched, direct, reader-aware |
 
 Modes are extensible — add your own via the registry system without modifying core code.
 
@@ -100,6 +100,7 @@ npm run dev -- generate brief --input meeting-notes.md
 # Documentation
 npm run dev -- generate guide --input product-notes.md
 npm run dev -- generate tutorial --input workflow-notes.md
+npm run dev -- generate explanation --input system-context.md
 
 # Explicit mode override
 npm run dev -- generate deck --mode architecture --input tech-context.md
@@ -107,6 +108,24 @@ npm run dev -- generate deck --mode architecture --input tech-context.md
 # Agentic mode with research and iterative refinement
 npm run dev -- agent generate deck --input strategy.md --research --iterate
 ```
+
+### Reader contracts
+
+Every generation path can state who will read the artifact and what they need from it. `--audience` names the reader; `--reader-job` names the decision, understanding, or action the artifact must enable. Use `--assumed-knowledge` to avoid explaining what the reader already knows, `--plainness` to choose `lay`, `practitioner`, or `specialist`, and `--precision-locks` for terms, facts, or voice traits that must survive revision.
+
+When the current repository contains `reader-contract.json`, Forge loads it automatically. A single declared surface is selected automatically; for a multi-surface project, pass `--surface "merchant documentation"`. Use `--reader-contract path/to/file.json` for another contract or `--ignore-reader-contract` to opt out. CLI reader flags override the selected file values.
+
+```bash
+npm run dev -- generate explanation \
+  --input architecture-notes.md \
+  --audience "support lead" \
+  --reader-job "explain why retries can arrive out of order" \
+  --assumed-knowledge "webhooks,HTTP status codes" \
+  --plainness practitioner \
+  --precision-locks "idempotency,event ID"
+```
+
+The content type still controls the artifact's job: tutorials teach by doing, guides help complete a task, references support lookup, and explanations build understanding. Reader plainness changes the language inside that job; it does not force every document into the same structure.
 
 ### Demo Reels
 

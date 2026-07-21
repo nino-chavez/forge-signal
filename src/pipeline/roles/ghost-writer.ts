@@ -2,12 +2,15 @@ import type { AIProviderInterface, GenerateOptions } from '../../providers/ai-pr
 import { getVoiceInstructions } from '../../content/voice/voice-guide.js';
 import { loadConfig } from '../../core/config.js';
 import { getModeForContentType } from '../../core/registries/mode-registry.js';
+import type { ReaderContract } from '../../core/types/index.js';
+import { formatReaderContract } from '../../content/reader-contract.js';
 
 export interface GhostWriterInput {
   rawContent: string;
   contentType: 'deck' | 'pov' | 'paper';
   context?: string;
   audience?: string;
+  readerContract?: ReaderContract;
 }
 
 export interface GhostWriterOutput {
@@ -58,6 +61,11 @@ export class GhostWriter {
 
     const config = loadConfig();
     const { author } = config;
+    const readerContract = formatReaderContract(
+      input.readerContract ?? (input.audience ? { reader: input.audience } : undefined),
+      input.audience || 'the intended reader',
+      `understand and use the central idea in this ${input.contentType}`
+    );
 
     return `You are ${author}'s Ghost Writer for strategic content. Your role is to:
 
@@ -71,7 +79,13 @@ ${voiceInstructions}
 
 ${contentTypeInstructions}
 
-${input.audience ? `Target Audience: ${input.audience}` : ''}`;
+${readerContract}
+
+Reader rules:
+- Optimize the structure and connective language for the declared job and plainness.
+- Preserve every precision lock and canonical term.
+- Do not expose internal framework, pipeline, methodology, or agent language unless the reader needs it.
+- Use this mode's own opening and structure; do not import habits from another content mode.`;
   }
 
   private buildPrompt(input: GhostWriterInput): string {
@@ -87,9 +101,9 @@ ${input.audience ? `Target Audience: ${input.audience}` : ''}`;
 
     prompt += `Generate ${input.contentType} content in ${mode} mode that:\n`;
     prompt += `- Follows the voice guidelines provided\n`;
-    prompt += `- Uses bold headers for structure\n`;
-    prompt += `- Grounds content in actual experience\n`;
-    prompt += `- Is appropriate for the target audience\n`;
+    prompt += `- Uses only the structure this artifact and reader job need\n`;
+    prompt += `- Grounds content in the supplied facts and experience\n`;
+    prompt += `- Reduces decoding work without flattening technical precision or voice\n`;
 
     return prompt;
   }
@@ -99,10 +113,10 @@ ${input.audience ? `Target Audience: ${input.audience}` : ''}`;
       case 'deck':
         return `Content Type: Strategic Deck/Slides
 - Each slide should have one clear message
-- Use slide titles as questions or tensions
+- Make each title carry the slide's conclusion; use a question only when the audience must answer it
 - Bullet points as fragments (not full sentences)
-- Show evolution ("We used to think X, now Y")
-- Pattern recognition highlighted`;
+- Show evolution only when the source actually contains a meaningful change
+- Make evidence, consequence, and the requested decision easy to find`;
 
       case 'pov':
         return `Content Type: Short-Form Strategy POV (800-1200 words)
@@ -115,7 +129,7 @@ ${input.audience ? `Target Audience: ${input.audience}` : ''}`;
       case 'paper':
         return `Content Type: Long-Form Strategy Paper (3000-8000 words)
 - Deep strategic thinking
-- Detailed frameworks
+- Explicit reasoning and evidence
 - Comprehensive examples
 - Nuances and edge cases explored
 - Thoughtful conclusions`;

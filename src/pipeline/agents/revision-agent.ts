@@ -72,7 +72,8 @@ export class RevisionAgent extends BaseAgent {
     try {
       const revisedContent = await this.revise(
         input.previousOutput?.content ?? '',
-        input.feedback
+        input.feedback,
+        input.task
       );
 
       return this.successOutput(revisedContent, {
@@ -89,26 +90,26 @@ export class RevisionAgent extends BaseAgent {
   /**
    * Revise content based on feedback
    */
-  async revise(content: string, feedback: RevisionFeedback): Promise<string> {
+  async revise(content: string, feedback: RevisionFeedback, task?: ContentTask): Promise<string> {
     const strategy = this.determineStrategy(feedback);
     this.log(`Using revision strategy: ${strategy}`);
 
     switch (strategy) {
       case 'targeted':
-        return this.targetedRevise(content, feedback);
+        return this.targetedRevise(content, feedback, task);
       case 'strategic':
-        return this.strategicRevise(content, feedback);
+        return this.strategicRevise(content, feedback, task);
       case 'rewrite':
-        return this.fullRewrite(content, feedback);
+        return this.fullRewrite(content, feedback, task);
       default:
-        return this.targetedRevise(content, feedback);
+        return this.targetedRevise(content, feedback, task);
     }
   }
 
   /**
    * Targeted revision: Fix specific identified issues
    */
-  async targetedRevise(content: string, feedback: RevisionFeedback): Promise<string> {
+  async targetedRevise(content: string, feedback: RevisionFeedback, task?: ContentTask): Promise<string> {
     const { voiceCheck } = feedback;
     const highPrioritySuggestions = voiceCheck.suggestions.filter(
       (s) => s.priority === 'high'
@@ -117,7 +118,7 @@ export class RevisionAgent extends BaseAgent {
       (s) => s.priority !== 'high'
     );
 
-    const systemInstruction = this.buildTargetedSystemInstruction(feedback);
+    const systemInstruction = this.buildTargetedSystemInstruction(feedback, task);
     const prompt = this.buildTargetedPrompt(
       content,
       highPrioritySuggestions,
@@ -136,23 +137,8 @@ export class RevisionAgent extends BaseAgent {
   /**
    * Strategic revision: Restructure for better voice alignment
    */
-  async strategicRevise(content: string, feedback: RevisionFeedback): Promise<string> {
-    const systemInstruction = `You are a strategic content editor specializing in authentic, thought-leadership voice.
-
-Your task is to restructure and rewrite content to achieve a voice score of ${feedback.targetScore}/10.
-
-Current score: ${feedback.voiceCheck.score}/10
-
-Key voice principles to apply:
-1. **Question-first opening**: Start with tension, a question, or an uncomfortable truth
-2. **Provisional language**: Use "for now," "today," "as I see it" - show current thinking, not absolute truth
-3. **Evolution pattern**: Include "I used to think X, now I see Y" moments
-4. **Self-interrogation**: Add "But that brings up..." or "I wonder if..." moments
-5. **No corporate jargon**: Replace "leverage," "synergy," "move the needle" with plain language
-6. **No academic distance**: Use "I think" not "Research shows," use "In my experience" not "Studies indicate"
-7. **No prescriptive authority**: Offer guidance, don't dictate
-
-Preserve what's working while restructuring what isn't.`;
+  async strategicRevise(content: string, feedback: RevisionFeedback, task?: ContentTask): Promise<string> {
+    const systemInstruction = this.buildStrategicSystemInstruction(feedback, task);
 
     const prompt = `Content to revise (current score: ${feedback.voiceCheck.score}/10):
 
@@ -168,7 +154,7 @@ ${feedback.preserveStrengths.map((s) => `- ${s}`).join('\n')}
 
 ---
 
-Rewrite this content to achieve a voice score of ${feedback.targetScore}/10. Maintain the core message and strategic content while fundamentally improving voice consistency.`;
+Rewrite this content to achieve a voice score of ${feedback.targetScore}/10. Maintain the core meaning, reader job, and precision locks while improving the mode-appropriate voice.`;
 
     return this.generate({
       prompt,
@@ -181,22 +167,8 @@ Rewrite this content to achieve a voice score of ${feedback.targetScore}/10. Mai
   /**
    * Full rewrite: Complete content regeneration with voice focus
    */
-  async fullRewrite(content: string, feedback: RevisionFeedback): Promise<string> {
-    const systemInstruction = `You are rewriting content from scratch while preserving its core message.
-
-The original content failed voice checks repeatedly. Your job is to extract the key ideas and completely rewrite them in an authentic, engaging voice.
-
-Voice requirements:
-1. Open with a question or tension
-2. Use first person, experiential language
-3. Show evolution of thinking
-4. Include moments of self-doubt or questioning
-5. Use provisional language ("for now," "today")
-6. No jargon, no academic distance, no prescriptive authority
-7. Use intentional fragments for rhythm
-8. Make bold statements followed by nuance
-
-Target voice score: ${feedback.targetScore}/10`;
+  async fullRewrite(content: string, feedback: RevisionFeedback, task?: ContentTask): Promise<string> {
+    const systemInstruction = this.buildFullRewriteSystemInstruction(feedback, task);
 
     const prompt = `Original content to rewrite:
 
@@ -209,7 +181,7 @@ ${this.extractKeyMessages(content)}
 
 ---
 
-Completely rewrite this content in an authentic voice that would score ${feedback.targetScore}/10 on our voice checker. Focus on making it genuinely engaging while keeping the strategic content intact.`;
+Completely rewrite this content in the declared mode's voice so it would score ${feedback.targetScore}/10 on our voice checker. Preserve the reader job, core meaning, and precision locks.`;
 
     return this.generate({
       prompt,
@@ -240,7 +212,82 @@ Completely rewrite this content in an authentic voice that would score ${feedbac
     return 'targeted';
   }
 
-  private buildTargetedSystemInstruction(feedback: RevisionFeedback): string {
+  private effectiveMode(task?: ContentTask): string {
+    if (task?.mode) return task.mode;
+    if (task && ['guide', 'reference', 'tutorial', 'explanation'].includes(task.type)) return 'documentation';
+    return 'advisory';
+  }
+
+  private formatReaderContract(task?: ContentTask): string {
+    const constraints = task?.constraints;
+    const reader = constraints?.reader || constraints?.targetAudience || 'not declared';
+    const job = constraints?.job || 'not declared';
+    const assumed = constraints?.assumedKnowledge?.join(', ') || 'no internal project history';
+    const plainness = constraints?.plainness || 'practitioner';
+    const locks = constraints?.precisionLocks?.join(', ') || 'facts, commands, field names, numbers, citations, and deliberate voice';
+    const keep = constraints?.keepTerms?.join(', ') || 'none declared';
+    const avoid = constraints?.avoidTerms && Object.keys(constraints.avoidTerms).length
+      ? Object.entries(constraints.avoidTerms).map(([from, to]) => `${from} → ${to}`).join('; ')
+      : 'none declared';
+    return `Reader contract:
+- Reader: ${reader}
+- Job: ${job}
+- Assumed knowledge: ${assumed}
+- Plainness: ${plainness}
+- Precision locks: ${locks}
+- Keep terms: ${keep}
+- Avoid/replace terms: ${avoid}`;
+  }
+
+  private buildModeInstruction(task?: ContentTask): string {
+    const mode = this.effectiveMode(task);
+    if (mode === 'thought-leadership') {
+      return `Mode: thought leadership.
+- Open with tension, a question, or an uncomfortable truth when earned.
+- Use first-person experience, provisional language, evolution of thought, and self-interrogation.
+- Offer guidance without pretending one experience is universal.
+- Remove corporate jargon and academic distance.`;
+    }
+    if (mode === 'documentation') {
+      return `Mode: documentation.
+- Lead with the answer, outcome, or action the reader came for.
+- Use one Diátaxis job appropriate to the requested type; do not force Quick Start, examples, tables, code, or troubleshooting into every document.
+- Use direct, ordinary connective language. Keep and define load-bearing technical terms.
+- Do not add question-first hooks, first-person reflection, self-doubt, evolution-of-thinking anecdotes, or provisional blog cadence.`;
+    }
+    if (mode === 'architecture') {
+      return `Mode: solution architecture.
+- Be precise, definitive, and explicit about contracts, constraints, trade-offs, and evidence.
+- Preserve canonical technical terms, field names, commands, diagrams, and citations.
+- Do not add narrative hooks, first-person reflection, or manufactured uncertainty.`;
+    }
+    return `Mode: executive advisory.
+- Lead with the decision, business outcome, and consequence.
+- Use confident, concrete recommendations with named evidence and risks.
+- Do not add blog-style self-interrogation, autobiographical evolution, or question-first hooks by reflex.`;
+  }
+
+  private buildStrategicSystemInstruction(feedback: RevisionFeedback, task?: ContentTask): string {
+    return `You are restructuring content that scored ${feedback.voiceCheck.score}/10 toward ${feedback.targetScore}/10.
+
+${this.buildModeInstruction(task)}
+
+${this.formatReaderContract(task)}
+
+Preserve what is working. Restructure only what prevents the declared reader from understanding, deciding, or acting. Never import voice markers from another content mode.`;
+  }
+
+  private buildFullRewriteSystemInstruction(feedback: RevisionFeedback, task?: ContentTask): string {
+    return `The original content repeatedly failed its voice checks. Rewrite it from scratch while preserving its core meaning and every precision lock.
+
+${this.buildModeInstruction(task)}
+
+${this.formatReaderContract(task)}
+
+Target voice score: ${feedback.targetScore}/10. Do not invent facts, examples, output, commands, citations, or product behavior.`;
+  }
+
+  private buildTargetedSystemInstruction(feedback: RevisionFeedback, task?: ContentTask): string {
     return `You are a precision content editor. Your task is to apply specific fixes to content while preserving everything else.
 
 Rules:
@@ -249,6 +296,11 @@ Rules:
 3. Preserve the overall structure and flow
 4. Maintain the authentic voice where it exists
 5. Apply fixes surgically - minimal changes for maximum impact
+6. Follow the content mode and reader contract below; do not import another mode's voice markers
+
+${this.buildModeInstruction(task)}
+
+${this.formatReaderContract(task)}
 
 Target: Improve voice score from ${feedback.voiceCheck.score}/10 to ${feedback.targetScore}/10`;
   }

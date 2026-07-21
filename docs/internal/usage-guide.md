@@ -52,6 +52,7 @@ forge generate <type> [options]
 - `guide` — User guide
 - `reference` — Quick reference document
 - `tutorial` — Step-by-step tutorial
+- `explanation` — Conceptual explanation of how or why something works
 
 **Options**:
 | Flag | Description |
@@ -62,6 +63,13 @@ forge generate <type> [options]
 | `-f, --format <formats>` | Output formats (comma-separated): word, pdf, pptx, slides, html |
 | `-t, --theme <theme>` | Presentation theme for PPTX (e.g. signal-forge, dark) |
 | `--audience <audience>` | Target audience |
+| `--reader-job <job>` | What the reader must understand, decide, or do |
+| `--assumed-knowledge <items>` | Comma-separated knowledge the reader already has |
+| `--plainness <level>` | `lay`, `practitioner`, or `specialist` |
+| `--precision-locks <items>` | Comma-separated facts, terms, or voice traits to preserve |
+| `--reader-contract <file>` | Load a reader contract other than `./reader-contract.json` |
+| `--surface <name>` | Select a named surface from a multi-surface project contract |
+| `--ignore-reader-contract` | Skip automatic project reader-contract loading |
 | `--product <product>` | Product name (for documentation) |
 | `--no-edit` | Skip editor review (use ghost writer + copywriter only) |
 
@@ -119,6 +127,13 @@ forge generate tutorial --input workflow-notes.md --format html
 
 # Quick reference
 forge generate reference --input cli-docs.md
+
+# Conceptual explanation for a specific reader job
+forge generate explanation --input retry-notes.md \
+  --audience "support lead" \
+  --reader-job "explain why retries can arrive out of order" \
+  --plainness practitioner \
+  --precision-locks "idempotency,event ID"
 ```
 
 ### Agentic Generation with Research

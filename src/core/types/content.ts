@@ -26,7 +26,8 @@ export type ContentType =
   | 'roadmap'
   | 'guide'
   | 'reference'
-  | 'tutorial';
+  | 'tutorial'
+  | 'explanation';
 
 export type OutputFormat = 'pptx' | 'docx' | 'pdf' | 'html' | 'slides' | 'markdown';
 

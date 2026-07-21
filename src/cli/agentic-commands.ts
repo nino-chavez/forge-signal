@@ -20,6 +20,7 @@ import { JsonFileStore } from '../pipeline/memory/long-term-store.js';
 import { createLocalFilePublisher } from '../output/publishers/local-file.js';
 import { generateTaskId } from '../core/types/index.js';
 import type { ContentMode, ContentTask, OutputFormat } from '../core/types/index.js';
+import { loadProjectReaderContract, mergeReaderContracts, parseReaderPlainness } from '../content/reader-contract.js';
 
 // =============================================================================
 // Register Agentic Commands
@@ -34,12 +35,20 @@ export function registerAgenticCommands(program: Command): void {
   agentCommand
     .command('generate')
     .description('Generate content with optional research and iterative refinement')
-    .argument('<type>', 'Content type: deck, pov, paper, brief, architecture, guide, reference, tutorial')
+    .argument('<type>', 'Content type: deck, pov, paper, brief, architecture, guide, reference, tutorial, explanation')
     .option('-i, --input <file>', 'Input file (meeting notes, recap, etc.)')
     .option('-o, --output <path>', 'Output directory or file path')
     .option('-p, --provider <provider>', 'AI provider: openai, anthropic, google, perplexity')
     .option('-f, --format <formats>', 'Output formats (comma-separated): markdown,html,docx,pdf,pptx')
     .option('-m, --mode <mode>', 'Content mode: thought-leadership, architecture, advisory, documentation')
+    .option('--audience <audience>', 'The reader who will encounter the artifact')
+    .option('--reader-job <job>', 'What the reader must understand, decide, or do')
+    .option('--assumed-knowledge <items>', 'Comma-separated knowledge the reader already has')
+    .option('--plainness <level>', 'Reader plainness: lay, practitioner, or specialist')
+    .option('--precision-locks <items>', 'Comma-separated terms, facts, or voice traits to preserve')
+    .option('--reader-contract <file>', 'Reader contract JSON (defaults to ./reader-contract.json when present)')
+    .option('--surface <name>', 'Named surface from a project reader contract')
+    .option('--ignore-reader-contract', 'Do not load ./reader-contract.json')
     .option('-t, --theme <theme>', 'Presentation theme for PPTX (e.g. signal-forge, dark)')
     .option('--research', 'Enable research agent before production')
     .option('--iterate', 'Enable feedback loop until voice approval')
@@ -87,7 +96,7 @@ async function runAgenticGenerate(type: string, options: Record<string, unknown>
 
   try {
     // Validate content type
-    const validTypes = ['deck', 'pov', 'paper', 'brief', 'architecture', 'adr', 'roadmap', 'guide', 'reference', 'tutorial'];
+    const validTypes = ['deck', 'pov', 'paper', 'brief', 'architecture', 'adr', 'roadmap', 'guide', 'reference', 'tutorial', 'explanation'];
     if (!validTypes.includes(type)) {
       console.error(`❌ Invalid content type: ${type}. Must be one of: ${validTypes.join(', ')}`);
       process.exit(1);
@@ -155,6 +164,19 @@ async function runAgenticGenerate(type: string, options: Record<string, unknown>
     orchestrator.registerProductionAgent(productionAgent);
     orchestrator.registerPublicationAgent(publicationAgent);
 
+    const fileReaderContract = await loadProjectReaderContract({
+      file: options.readerContract as string | undefined,
+      surface: options.surface as string | undefined,
+      ignore: options.ignoreReaderContract as boolean | undefined,
+    });
+    const readerContract = mergeReaderContracts(fileReaderContract, {
+      reader: options.audience as string | undefined,
+      job: options.readerJob as string | undefined,
+      assumedKnowledge: splitList(options.assumedKnowledge),
+      plainness: parseReaderPlainness(options.plainness),
+      precisionLocks: splitList(options.precisionLocks),
+    });
+
     // Build content task
     const task: ContentTask = {
       id: generateTaskId(),
@@ -162,6 +184,10 @@ async function runAgenticGenerate(type: string, options: Record<string, unknown>
       input: inputContent,
       outputFormats: formats,
       mode,
+      constraints: {
+        ...readerContract,
+        targetAudience: readerContract.reader,
+      },
       options: {
         enableResearch: options.research as boolean,
         enableIteration: options.iterate as boolean,
@@ -209,6 +235,11 @@ async function runAgenticGenerate(type: string, options: Record<string, unknown>
     console.error('❌ Error:', error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
+}
+
+function splitList(value: unknown): string[] | undefined {
+  if (typeof value !== 'string' || !value.trim()) return undefined;
+  return value.split(',').map((item) => item.trim()).filter(Boolean);
 }
 
 // =============================================================================

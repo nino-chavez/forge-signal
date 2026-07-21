@@ -98,6 +98,7 @@ export class ProductionAgent extends BaseAgent {
       'guide',
       'reference',
       'tutorial',
+      'explanation',
     ];
     return supportedTypes.includes(task.type);
   }
@@ -155,6 +156,7 @@ export class ProductionAgent extends BaseAgent {
       contentType: roleContentType,
       context: this.buildContext(task.context),
       audience: task.constraints?.targetAudience,
+      readerContract: task.constraints,
     };
 
     const ghostWriterOutput = await this.ghostWriter.generate(ghostWriterInput);
@@ -167,6 +169,7 @@ export class ProductionAgent extends BaseAgent {
       draft: content,
       contentType: roleContentType,
       audience: task.constraints?.targetAudience,
+      readerContract: task.constraints,
       strategicObjectives: task.constraints?.strategicObjectives,
     };
 
@@ -180,6 +183,7 @@ export class ProductionAgent extends BaseAgent {
       content,
       contentType: roleContentType,
       strategicObjectives: task.constraints?.strategicObjectives,
+      readerContract: task.constraints,
     };
 
     const editorOutput = await this.editor.review(editorInput);
@@ -315,6 +319,7 @@ export class ProductionAgent extends BaseAgent {
       documentationType: task.type as DocumentationType,
       context: this.buildContext(task.context),
       audience: task.constraints?.targetAudience,
+      readerContract: task.constraints,
     });
 
     let content = docOutput.draft;

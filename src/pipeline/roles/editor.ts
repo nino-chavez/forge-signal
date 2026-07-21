@@ -2,11 +2,14 @@ import type { AIProviderInterface, GenerateOptions } from '../../providers/ai-pr
 import { checkVoiceForMode, type ModeVoiceCheckResult } from '../../content/voice/mode-voice-checker.js';
 import { loadConfig } from '../../core/config.js';
 import { getModeForContentType } from '../../core/registries/mode-registry.js';
+import type { ReaderContract } from '../../core/types/index.js';
+import { formatReaderContract } from '../../content/reader-contract.js';
 
 export interface EditorInput {
   content: string;
   contentType: 'deck' | 'pov' | 'paper';
   strategicObjectives?: string[];
+  readerContract?: ReaderContract;
 }
 
 export interface EditorOutput {
@@ -79,11 +82,13 @@ export class Editor {
   private checkStrategicAccuracy(input: EditorInput): { passed: boolean; issues: string[] } {
     const issues: string[] = [];
     const content = input.content.toLowerCase();
+    const mode = getModeForContentType(input.contentType);
 
-    // Check for clear strategic recommendations
-    const hasRecommendations = /recommend|suggest|should|next steps|action/i.test(input.content);
-    if (!hasRecommendations && input.contentType !== 'paper') {
-      issues.push('Missing clear strategic recommendations');
+    // Advisory work must drive a decision; thought leadership may legitimately
+    // end in a changed mental model rather than a recommendation block.
+    if (mode === 'advisory') {
+      const hasRecommendations = /recommend|suggest|should|next steps|action/i.test(input.content);
+      if (!hasRecommendations) issues.push('Missing clear strategic recommendation');
     }
 
     // Check for evidence/examples
@@ -94,8 +99,8 @@ export class Editor {
 
     // Check for next steps
     const hasNextSteps = /next steps|action items|recommendations|implementation/i.test(content);
-    if (!hasNextSteps && input.contentType !== 'paper') {
-      issues.push('Missing clear next steps or action items');
+    if (mode === 'advisory' && !hasNextSteps) {
+      issues.push('Missing clear next step or decision');
     }
 
     return {
@@ -137,12 +142,21 @@ export class Editor {
 
     const config = loadConfig();
     const mode = getModeForContentType(input.contentType);
-    const systemInstruction = `You are an editor fixing voice consistency issues for ${mode} content. Fix the content to match ${config.author}'s voice while preserving the strategic content.`;
+    const readerContract = formatReaderContract(
+      input.readerContract,
+      'the intended reader',
+      `understand, decide, or act on this ${input.contentType}`
+    );
+    const systemInstruction = `You are an editor fixing voice consistency issues for ${mode} content. Fix the content to match ${config.author}'s voice while preserving the strategic content.
+
+${readerContract}
+
+Preserve every precision lock. Improve clarity for the reader's job without importing voice or structure from another content mode.`;
 
     const prompt = `Fix the following content to address voice consistency issues:\n\n` +
       `Issues to fix:\n${voiceCheck.issues.map(i => `- ${i}`).join('\n')}\n\n` +
       `Original content:\n${input.content}\n\n` +
-      `Fix the voice issues while preserving all strategic content and recommendations.`;
+      `Fix the voice issues while preserving all strategic content, precision locks, and mode-appropriate structure.`;
 
     try {
       const result = await this.provider.generate({
