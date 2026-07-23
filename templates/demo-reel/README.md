@@ -2,6 +2,15 @@
 
 Produces TTS-narrated MP4 videos from screenshots + captions. Each scene is a still image with a translucent caption overlay and AI-generated voiceover.
 
+> **Interactive walkthroughs + silent motion video live in render-kit.** The click-through
+> player and a silent Ken-Burns/spotlight walkthrough video are both emitters over one shared
+> capture manifest — `render-kit walkthrough <manifest> --emit interactive|video`
+> (see `render-kit/templates/walkthrough/CONTRACT.md`). The old `generate-interactive.mjs`
+> was removed; `publish-demos.sh` calls render-kit directly. This template remains the
+> **narrated** video lane (`generate.mjs` / `generate-video.mjs`); folding that into render-kit
+> as a narrated emitter is a separate, not-yet-done consolidation — it needs TTS in the engine,
+> not just motion.
+
 ## Quick start
 
 ```bash
