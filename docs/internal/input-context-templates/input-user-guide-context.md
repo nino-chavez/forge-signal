@@ -17,7 +17,7 @@ Signal Forge is a CLI-based content generation system that transforms raw inputs
 
 ### Key Differentiators
 1. **Voice-aware generation**: Applies mode-specific voice principles automatically
-2. **Quality gates**: Built-in voice checker ensures content meets quality standards
+2. **Voice checks**: Built-in checks report detectable mode-rule violations; human review still judges voice, evidence, and factual quality
 3. **Agentic workflow**: Optional research and iterative refinement loops
 4. **Multi-format output**: Exports to PPTX, DOCX, PDF, HTML, and Google Slides
 
@@ -27,16 +27,14 @@ Signal Forge is a CLI-based content generation system that transforms raw inputs
 
 ### Mode 1: Thought Leadership
 **Purpose**: Blog posts, articles, POVs exploring ideas
-**Voice**: Narrative, provisional, question-led, show-the-work
+**Voice**: Composed, evidence-aware, reader-first, provisional where warranted
 **Output types**: `pov`, `paper`, `post`
 
 **Voice principles**:
-- Open with tension or questions, never thesis statements
-- Show the evolution of thinking, not just conclusions
-- Include self-interrogation without self-doubt
-- End provisionally ("Here's what I think today")
-- Use intentional fragments for rhythm
-- Ground in actual experience, not theory
+- State the controlling point within the first 150 words and choose an opening the argument earns
+- Ground claims and first-person statements in the supplied source material
+- Use counts, investigation, corrections, and adverse evidence only when they change what the reader can assess
+- Use questions, fragments, headings, and endings deliberately, without quotas or stock phrasing
 
 **Example use cases**:
 - Writing a blog post about emerging technology trends
@@ -194,14 +192,14 @@ GOOGLE_SLIDES_CREDENTIALS_PATH=path/to/credentials.json
 
 ## Quality and Voice
 
-Signal Forge includes a voice checker that scores content on a 0-10 scale. The agentic workflow iterates until the voice score reaches 7 or higher.
+Signal Forge includes a voice checker that scores detected rule violations on a 0-10 scale. A passing score is not proof of voice, evidence, or factual quality. The agentic workflow can iterate until the score reaches 7 or higher.
 
-### Voice Score Components
-- Appropriate opening (tension/question for thought leadership, conclusions for architecture)
-- Consistent tone throughout
-- Mode-appropriate language (provisional vs. definitive)
-- Structure alignment
-- Audience appropriateness
+### What the Score Checks
+The checker matches configured words and patterns. Some modes require opening,
+language, or structural markers; thought leadership has no required positive
+markers or form quotas. It still flags configured forbidden patterns, retired
+phrases, and jargon. Empty content fails. A reader must judge whether the
+argument, tone, evidence, and structure work for the audience.
 
 ### Iteration Strategies
 1. **Targeted fixes**: Address specific issues identified by voice checker

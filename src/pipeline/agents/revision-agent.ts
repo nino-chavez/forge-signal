@@ -53,11 +53,8 @@ export class RevisionAgent extends BaseAgent {
   /**
    * Check if this agent can handle the task
    */
-  canHandle(_task: ContentTask): boolean {
-    // Any task can be revised — the real precondition is feedback, which lives
-    // on the AgentInput rather than the task, and is checked in execute().
-    // Underscore marks the parameter as deliberately unused; the abstract
-    // signature in base-agent.ts requires it.
+  canHandle(task: ContentTask): boolean {
+    // Revision agent handles any content that needs voice fixes
     return true;
   }
 
@@ -244,13 +241,14 @@ Completely rewrite this content in the declared mode's voice so it would score $
   private buildModeInstruction(task?: ContentTask): string {
     const mode = this.effectiveMode(task);
     if (mode === 'thought-leadership') {
-      return `Mode: thought leadership (guide v1.5).
-- Open with the defect in hand: the concrete broken/missing/wrong thing, with its scale, in sentence one or two. Questions are legal openers but currently dormant.
-- Use first-person experience, a mechanical re-derivation beat (go read the source, report counts), and procedural self-interrogation (questions that audit the method, not feelings).
+      return `Mode: thought leadership (guide v1.8).
+- Apply the writing stack in order: evidence and claim status; reader and artifact job; controlling argument; cognitive load; Signal Dispatch voice; surface mechanics.
+- Give the reader a concrete reason to care, then state what the piece establishes within 150 words. A defect, tension, question, or direct answer may open it.
+- Show primary evidence when the claim depends on it. Keep observed evidence, reported experience, and hypotheses distinct. Counts establish scale; they do not prove cause, quality, value, or a population-level prediction.
 - Every first-person claim needs a source sentence that assigns it to the author specifically. Never relocate a general observation onto him: "the check people skip" must not become "the step I kept deferring". The facts stay right and only the attribution moves, so it reads as paraphrase rather than invention. This revision pass is exactly where that enters, because by now the draft has replaced the source as the thing being edited — check the source, not the draft.
 - The same rule runs the other way: never widen a claim about the author's own system onto the reader or onto people in general. "A README of mine drifted" must not become "a README is the file you write once and never open again". Keep the subject the source assigned.
-- Keep at least two literal question marks (three to five past 800 words) — mid-post, at the turn of the argument.
-- Close on a compressed reversal: final sentence under 12 words, landing on something concrete. Never stock provisional phrases ("here's where I've landed—for now" is a retired tell).
+- Questions, self-corrections, adverse-evidence sections, and process beats are optional. Use them only when evidence creates a genuine turn. Session steering and revision churn are not POV movement unless evidence changed the claim.
+- Use questions, fragments, headings, and endings only when they serve this piece. Do not add them to satisfy a count, a distribution, or a preferred closing shape. Never use retired provisional phrases ("here's where I've landed—for now" is a retired tell).
 - Offer guidance without pretending one experience is universal.
 - Remove corporate jargon and academic distance.`;
     }
