@@ -129,18 +129,13 @@ The content type still controls the artifact's job: tutorials teach by doing, gu
 
 ### Demo Reels
 
-The demo-reel template produces TTS-narrated MP4s from screenshots plus caption JSON. It's a standalone pipeline (not part of the CLI generator) because it relies on `ffmpeg` and ImageMagick rather than the text-generation providers.
+The demo-reel template makes narrated MP4s from screenshots and scene copy. Its `script`, `audio`, `storyboard`, and `render` commands stop for review. Rendering requires current inputs and previews; unchanged generated assets are reused.
 
-```bash
-# 1. Scaffold a demo-reel directory in your project
-bash templates/demo-reel/scaffold.sh path/to/your/project
+Scaffold a new reel directory with `bash templates/demo-reel/scaffold.sh your-project/scripts/demo-reel`, then follow [the review flow](templates/demo-reel/README.md#review-flow).
 
-# 2. Add 1440x900 screenshots, edit captions.json
-# 3. Generate (ElevenLabs preferred, OpenAI fallback)
-ELEVENLABS_API_KEY=sk_... node your-project/scripts/demo-reel/generate.mjs
-```
+Script and storyboard previews need no provider credentials. Supply narration credentials in the process environment from 1Password when generating new audio. Read [NARRATION.md](templates/demo-reel/NARRATION.md) before writing scene copy.
 
-See [`templates/demo-reel/README.md`](templates/demo-reel/README.md) for the full reference — scene schema, voice settings, caption-only variant for silent playback, capture tips, and cost notes. The narration quality guide lives at [`templates/demo-reel/NARRATION.md`](templates/demo-reel/NARRATION.md) (read this before writing captions; narration is the quality differentiator).
+Interactive walkthroughs use Render Kit. Authored product promos use the existing [HyperFrames marketing-video workflow](templates/marketing-video/README.md).
 
 ## Project Structure
 

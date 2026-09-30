@@ -8,6 +8,39 @@
  */
 import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
+
+// A filename is not evidence that an asset still matches its inputs. Keep the
+// recipe and output digest together; legacy files without a receipt are stale.
+export function fingerprint(value) {
+	const normalize = (item) => Array.isArray(item)
+		? item.map(normalize)
+		: item && typeof item === 'object'
+			? Object.fromEntries(Object.keys(item).sort().map((key) => [key, normalize(item[key])]))
+			: item
+	return createHash('sha256').update(JSON.stringify(normalize(value))).digest('hex')
+}
+
+export function fileFingerprint(file) {
+	return createHash('sha256').update(fs.readFileSync(file)).digest('hex')
+}
+
+export function artifactIsCurrent(file, inputs) {
+	try {
+		const receipt = JSON.parse(fs.readFileSync(`${file}.cache.json`, 'utf8'))
+		return receipt.version === 1 && receipt.inputs === fingerprint(inputs)
+			&& receipt.output === fileFingerprint(file) && fs.statSync(file).size > 0
+	} catch {
+		return false
+	}
+}
+
+export function recordArtifact(file, inputs) {
+	if (fs.statSync(file).size === 0) throw new Error(`Empty generated asset: ${file}`)
+	fs.writeFileSync(`${file}.cache.json`, JSON.stringify({
+		version: 1, inputs: fingerprint(inputs), output: fileFingerprint(file)
+	}, null, 2) + '\n')
+}
 
 // ─── layout / brand constants ───────────────────────────────────────
 export const VIDEO_W = 1440
