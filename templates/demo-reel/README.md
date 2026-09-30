@@ -1,70 +1,82 @@
-# Demo Reel Template
+# demo-reel
 
-Produces TTS-narrated MP4 videos from screenshots + captions. Each scene is a still image with a translucent caption overlay and AI-generated voiceover.
+Make a narrated MP4 from screenshots and scene copy. Generate the script, narration, and storyboard separately so you can review each before rendering.
 
-> **Interactive walkthroughs + silent motion video live in render-kit.** The click-through
-> player and a silent Ken-Burns/spotlight walkthrough video are both emitters over one shared
-> capture manifest — `render-kit walkthrough <manifest> --emit interactive|video`
-> (see `render-kit/templates/walkthrough/CONTRACT.md`). The old `generate-interactive.mjs`
-> was removed; `publish-demos.sh` calls render-kit directly. This template remains the
-> **narrated** video lane (`generate.mjs` / `generate-video.mjs`); folding that into render-kit
-> as a narrated emitter is a separate, not-yet-done consolidation — it needs TTS in the engine,
-> not just motion.
+`generate.mjs` owns this staged screenshot workflow. `generate-video.mjs` remains the separate recorded-video compositor; it does not use these stage commands.
 
-## Quick start
+Interactive walkthroughs and silent motion over captured app screens belong to Render Kit. Authored product promos use the existing [marketing-video workflow](../marketing-video/README.md).
+
+## Setup
+
+Run the scaffold once for a new reel directory:
 
 ```bash
-# 1. Create a demo-reel directory in your project
-mkdir -p scripts/demo-reel/screenshots
-
-# 2. Copy the generator and template
-cp templates/demo-reel/generate.mjs your-project/scripts/demo-reel/
-cp templates/demo-reel/captions.template.json your-project/scripts/demo-reel/captions.json
-
-# 3. Capture screenshots at 1440x900
-# 4. Edit captions.json with your scenes
-# 5. Generate
-
-ELEVENLABS_API_KEY=sk_... node scripts/demo-reel/generate.mjs
+bash templates/demo-reel/scaffold.sh your-project/scripts/demo-reel
 ```
 
-## Prerequisites
+It copies the generator, shared helper, narration guide, and scene template. It refuses to overwrite an existing `captions.json`.
 
-- `ffmpeg`, `ffprobe`, `magick` (ImageMagick 7+) installed
-- ElevenLabs API key (preferred) or OpenAI API key (fallback)
-- Screenshots at 1440x900 resolution
+Capture your screenshots into `screenshots/` at 1440 × 900. Read `NARRATION.md`, then replace the example scenes in `captions.json`.
 
-## Pipeline
+The generator needs Node.js 20+, ImageMagick 7 (`magick`), `ffmpeg`, and `ffprobe`. Script export needs only Node.js.
 
-```
-captions.json → TTS audio per scene → ImageMagick caption overlay → ffmpeg clips → concat → MP4
-```
+## Review flow
 
-## File structure
+Run one stage, review its output, then run the next. These commands stop after their named stage.
 
-```
-scripts/demo-reel/
-├── captions.json      # Voice, model, scenes array
-├── generate.mjs       # Pipeline runner
-├── screenshots/       # 1440x900 PNGs (demo-NN-slug.png)
-├── audio/             # [generated] TTS MP3s
-├── frames/            # [generated] Screenshots with caption burn-in
-├── clips/             # [generated] Per-scene MP4s
-└── out/               # [generated] Final MP4
-```
+| Stage | Command inside the reel directory | What to review |
+|---|---|---|
+| Script | `node generate.mjs script` | Read `out/script.txt` aloud. Check the claims and scene order. |
+| Audio | `node generate.mjs audio` | Open `out/audio.html`. Listen for pronunciation, pace, and continuity. |
+| Storyboard | `node generate.mjs storyboard` | Open `out/storyboard.html`. Check captions and composition. Expand each full-size frame. |
+| Render | `node generate.mjs render` | Play `out/demo-reel.mp4`. Check the complete result. |
 
-## captions.json
+The previews embed their media, so they can be opened without a server. A storyboard can be generated before narration, but regenerate it after audio is ready.
+
+The render stage checks that the script, frames, narration, and previews still match their inputs. It refuses missing or changed work. It does not generate speech or replace reviewed frames.
+
+The commands provide review pauses. They do not record human approval or authorize publication.
+
+## generate.mjs
+
+    node generate.mjs [script|audio|storyboard|render|all] [options]
+
+- `--root directory`: use that directory's `captions.json`, screenshots, and output folders. The default is the generator's own directory.
+- `--silent`: omit narration. Each scene's `holdSeconds` is its complete duration and must be positive.
+- `--force`: regenerate the selected stage's output. The render stage still checks its prerequisites.
+- `--help`: show the stages and options without reading a scene file.
+- `all`, or no stage argument: run every stage without review pauses. Use this for an intentional unattended run.
+
+For a captions-only reel, use `--silent` on each stage, or run `node generate.mjs all --silent`. Set scene durations with `holdSeconds` or `defaultHoldSeconds`.
+
+`REEL_NO_AUDIO=1` also selects silent mode. A stage cannot combine `--force` with its corresponding skip flag.
+
+## Narration
+
+Supply `ELEVENLABS_API_KEY` or `OPENAI_API_KEY` in the process environment from 1Password when generating new audio. ElevenLabs is preferred when both are supplied.
+
+`generate.mjs` no longer searches sibling projects' `.env` files. Current audio, script export, storyboard generation, and rendering need no provider credentials.
+
+- `TTS_VOICE` overrides `captions.json`'s `voice`.
+- `TTS_MODEL` overrides its `model`.
+- When neither is specified, defaults follow the selected provider: `george` / `eleven_multilingual_v2` for ElevenLabs; `coral` / `gpt-4o-mini-tts` for OpenAI.
+- The scaffold's example voice and model are for ElevenLabs. Set both fields to OpenAI values when using that provider.
+- `instructions` supplies optional narration guidance to the existing provider helper.
+
+The audio stage saves effective provider, voice, model, and instruction settings in `audio/settings.json`. Credentials are excluded. Those settings let later stages verify the take without needing a key.
+
+## Scene data
 
 ```json
 {
-  "voice": "l30f87tf05uxyknGdDw6",
+  "voice": "george",
   "model": "eleven_multilingual_v2",
   "defaultHoldSeconds": 0.5,
   "scenes": [
     {
-      "image": "demo-01-slug.png",
+      "image": "scene-01.png",
       "title": "Short scene title",
-      "caption": "Narration text.",
+      "caption": "The words to speak and display.",
       "captionPosition": "bottom",
       "holdSeconds": 0.8
     }
@@ -72,81 +84,64 @@ scripts/demo-reel/
 }
 ```
 
-| Field | Required | Default | Description |
-|---|---|---|---|
-| `voice` | yes | — | ElevenLabs voice ID or name from the built-in map |
-| `model` | no | `eleven_multilingual_v2` | TTS model |
-| `defaultHoldSeconds` | no | `0.4` | Silence after each scene's audio |
-| `scenes[].image` | yes | — | Filename in `screenshots/` |
-| `scenes[].title` | yes | — | Bold title burned into the caption band |
-| `scenes[].caption` | yes | — | Narration text (also rendered as body text) |
-| `scenes[].captionPosition` | no | `bottom` | `top` or `bottom` — flip when UI is anchored to the same edge |
-| `scenes[].holdSeconds` | no | `defaultHoldSeconds` | Override per-scene |
-
-## Voices
-
-### Built-in map (pass the name, not the ID)
-| Name | ID | Description |
-|---|---|---|
-| george | JBFqnCBsd6RMkjVDRZzb | British, warm, narration |
-| rachel | 21m00Tcm4TlvDq8ikWAM | American, clear, professional |
-| adam | pNInz6obpgDQGcFmaJgB | American, deep, confident |
-| josh | TxGEqnHWrfWFTfGW9XjX | American, conversational |
-| sam | yoZ06aMxZJJ28mfd3POQ | American, casual |
-| charlie | IKne3meq5aSn9XLyUdCD | Australian, friendly |
-
-Or pass any ElevenLabs voice ID directly.
-
-### Voice settings (in generate.mjs)
-```json
-{
-  "stability": 0.55,       // 0-1. Lower = more expressive, less consistent
-  "similarity_boost": 0.80,
-  "style": 0.25,           // 0-1. Lower = subtle, higher = theatrical
-  "use_speaker_boost": true
-}
-```
-
-For technical demos, keep stability ≥0.5 and style ≤0.3. Theatrical voices sound fake on technical content.
-
-## Runtime options
-
-```bash
-# ElevenLabs (preferred)
-ELEVENLABS_API_KEY=sk_... node generate.mjs
-
-# OpenAI fallback
-OPENAI_API_KEY=sk-... node generate.mjs
-
-# Override voice
-TTS_VOICE=l30f87tf05uxyknGdDw6 node generate.mjs
-
-# Skip steps (reuse cached assets)
-SKIP_TTS=1 node generate.mjs      # reuse audio/*.mp3
-SKIP_FRAMES=1 node generate.mjs   # reuse frames/*.png
-```
-
-## Caption-only variant (no voiceover)
-
-For silent reels with on-screen captions only (e.g., muted exec room playback):
-- Keep captions to 2 lines max per scene
-- Set `defaultHoldSeconds` to 2.0–3.0 so each frame lingers
-- Don't set an API key — the generator skips TTS and creates silent clips
-- The caption overlay still burns in via ImageMagick
-
-## Capturing screenshots
-
-1. Use chrome-devtools MCP or Playwright
-2. Resize to 1440x900: `resize_page({width: 1440, height: 900})`
-3. Drive real interactions — click, type, wait for responses
-4. Capture when visually compelling (response complete, no spinners)
-5. For scrollable content, scroll the inner container first
-6. Close devtools, bookmarks, extra tabs before capture
-
-## Cost
-
-| Provider | Cost per run (~5K chars) |
+| Field | Meaning |
 |---|---|
-| ElevenLabs Starter (30K chars/mo included) | $0.00 within tier |
-| ElevenLabs overage | ~$1.50 per run |
-| OpenAI gpt-4o-mini-tts | ~$0.003 per run |
+| `scenes[].image` | Required filename inside `screenshots/`. |
+| `scenes[].title` | Required title displayed in the caption band. |
+| `scenes[].caption` | Required narration, also displayed as caption text. |
+| `scenes[].captionPosition` | `top` or `bottom`; defaults to `bottom`. Choose the edge that preserves the important UI. |
+| `scenes[].holdSeconds` | Silence after narration, or the whole duration with `--silent`. Overrides `defaultHoldSeconds`. |
+| `defaultHoldSeconds` | Default hold per scene; `0.4` when omitted. |
+| `voice`, `model`, `instructions` | Optional narration settings. |
+
+## Reuse
+
+Generated assets have adjacent `.cache.json` receipts. Each receipt records fingerprints of the inputs and the generated file's bytes.
+
+| Change | Work that becomes stale |
+|---|---|
+| Spoken text, scene order, provider, voice, model, or instructions | The narration take and affected previews. |
+| Screenshot bytes, title, caption placement, or frame layout | Affected frames and the storyboard. |
+| Hold time | Previews and affected clips. |
+| Generated file bytes | That asset and anything that uses it. |
+
+Narration is regenerated as one take when any line changes. This preserves the existing ElevenLabs continuity mechanism across scenes. Title or screenshot edits retain matching audio.
+
+Files from older generators have no receipts and must be regenerated once. Matching files are reused automatically.
+
+`SKIP_TTS=1` and `SKIP_FRAMES=1` now require valid receipts. They fail when work is missing or stale, rather than accepting whatever file exists.
+
+`--force` can refresh unchanged work after a tool upgrade or when you want another narration take.
+
+## Compare treatments
+
+Keep the approved words, audio, scene order, and timing fixed when comparing visual treatments. Judge a representative scene before rendering the whole reel again.
+
+For captured walkthroughs, Render Kit already accepts custom motion HTML through `--template` and brand values through `--tokens`. Use the same capture manifest for each treatment.
+
+For authored promos, keep using [marketing-video](../marketing-video/README.md) and its HyperFrames storyboard. Its visual options should share the same script and narration.
+
+## Files
+
+```text
+scripts/demo-reel/
+├── captions.json         Scene input
+├── generate.mjs          Staged screenshot generator
+├── lib.mjs               Shared media and cache helpers
+├── NARRATION.md           Narration guidance
+├── screenshots/          Source PNGs
+├── audio/                Narration and effective settings
+├── frames/               Captioned PNGs
+├── clips/                Per-scene MP4s
+└── out/
+    ├── script.txt        Ordered script
+    ├── audio.html        Playable narration preview
+    ├── storyboard.html   Composition and audio preview
+    └── demo-reel.mp4      Final reel
+```
+
+## Verification
+
+From the Forge Signal checkout, run `npm run test:demo-reel`. The regression script uses the shipped scaffold and real media tools.
+
+Provider responses are replaced with a locally generated tone. This verifies stage boundaries, cache failures, and MP4 assembly without paying for narration. It does not judge a real voice or establish a publishing approval.
